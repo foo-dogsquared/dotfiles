@@ -1,0 +1,67 @@
+* {
+    /* Theme settings */
+    highlight: bold italic;
+    scrollbar: true;
+    
+    /* Style */
+    text-color: @foreground;
+    background-color: @background;
+}
+
+window {
+    background-color: transparent;
+
+    height: 100%;
+    width: 30%;
+    position: northwest;
+    location: northwest;
+    text-color: @foreground;
+}
+
+mainbox {
+    background-color: @background;
+}
+
+element {
+    padding: 5;
+}
+
+element selected.normal {
+    background-color: @foreground;
+    text-color: @background;
+}
+
+element normal.normal {
+    background-color: @background-light;
+}
+
+element alternate.normal {
+    background-color: @background-dark;
+}
+
+scrollbar {
+    width: 10px;
+    background-color: @background-light;
+    handle-color: @scrollbar-handle;
+    handle-width: 10px;
+    height: 100%;
+    margin: 5;
+    padding: 0;
+}
+
+button,
+prompt,
+inputbar,
+case-indicator,
+entry {
+    padding: 5;
+}
+
+sidebar {
+    padding: 5;
+    margin: 5;
+}
+
+button.selected {
+    background-color: @background-light;
+}

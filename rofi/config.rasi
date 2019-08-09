@@ -1,0 +1,8 @@
+configuration {
+    display-drun: "Activate";
+    display-run: "Execute";
+    display-window: "Window";
+    display-ssh: "SSH";
+    font: "Noto Sans 12";
+    show-icons: true;
+}
