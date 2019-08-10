@@ -10,6 +10,8 @@ image:docs/i3-single-window.png[My i3 setup with single window]
 
 image:docs/i3-no-window.png[My i3 setup with no window]
 
+image:docs/i3-rofi.png[My i3 setup with rofi]
+
 == Specifications
 Here are the main specifications of my machine currently running this
 (as of 2019-08-09):
@@ -21,7 +23,7 @@ Here are the main specifications of my machine currently running this
 * **Shell**: https://www.gnu.org/software/bash/[Bash]
 * **Terminal emulator font**: https://github.com/tonsky/FiraCode[Fira Code]
 
-== Configuration details
+== Configured programs
 Here's a list of the programs with details on the config found in this repo:
 
 === https://www.x.org/wiki/[Xorg]
@@ -101,7 +103,33 @@ for https://tools.suckless.org/dmenu/[dmenu].
 * Minimum version (from `rofi -version`):
 ** `Version: 1.5.4`
 * Main config is `config.rasi`.
-* Beside the main config, I've also created my own theme (named `fds-sidebar`) which 
-simply makes a sidebar. Every variation of my sidebar theme should import the common 
-file (`fds-sidebar-common.rasi`) and only declare the colors. See `fds-sidebar-dark.rasi` for 
-an example. 
+* My i3 setup uses Rofi with my custom theme (`fds-sidebar`) with `$mod+D` (see image above). 
+Every variation of my sidebar theme should import the common file (`fds-sidebar-common.rasi`) 
+and only declare the colors. See `fds-sidebar-dark.rasi` for an example. 
+
+== Additional programs used
+
+=== General purpose programs
+* https://audacious-media-player.org/[Audacious]
+* https://feh.finalrewind.org/[feh]
+* https://www.mozilla.org/en-US/firefox/new/[Firefox]
+* https://docs.xfce.org/xfce/thunar/start[Thunar]
+* https://www.videolan.org/vlc/[VLC Media Player]
+
+=== Drivers
+* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA]
+* https://wiki.archlinux.org/index.php/NetworkManager[GNOME NetworkManager]
+
+=== Fonts
+* https://github.com/googlefonts/noto-fonts[Noto Fonts]
+
+=== Documents
+* https://www.tug.org/texlive/[TeX Live]
+
+=== Development programs
+* https://www.anaconda.com/[Anaconda]
+* https://nodejs.org/[NodeJS]
+* https://www.gnu.org/software/octave/[Octave]
+* https://www.python.org/[Python]
+* https://www.ruby-lang.org/en/[Ruby]
+* https://code.visualstudio.com/[Visual Studio Code]
