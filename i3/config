@@ -14,8 +14,9 @@ set_from_resource $color_6 color6 #aea0c7
 set_from_resource $color_16 color16 #ffffff
 
 set $pictures_directory '~/Pictures'
+set $screenshot_filename '%F-%H-%M-%S-$wx$h.png' 
 
-exec_always feh --bg-scale ~/wallpapers/nebula.jpg
+exec_always feh --bg-scale ~/wallpapers/sand.jpg
 
 # Startup applications
 exec firefox
@@ -37,7 +38,7 @@ font pango:monospace 10
 font pango:Fira Code 10
 
 # Setting up borders for windows of different states
-default_border pixel 10
+default_border pixel 6
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -116,9 +117,9 @@ bindsym $mod+space focus mode_toggle
 #bindsym $mod+d focus child
 
 # Volume keyboard control
-bindsym XF86AudioRaiseVolume exec amixer -q sset Master 1+ unmute
-bindsym XF86AudioLowerVolume exec amixer -q sset Master 1- unmute
-bindsym XF86AudioMute exec amixer -q sset Master mute
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1% ; exec pactl set-sink-mute @DEFAULT_SINK@ 0
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1% ; exec pactl set-sink-mute @DEFAULT_SINK@ 0
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Moving between workspaces
 bindsym XF86Back workspace prev
@@ -130,14 +131,20 @@ bindsym Shift+$mod+Tab workspace prev
 bindsym $mod+z move window to workspace next
 bindsym Shift+$mod+z move window to workspace prev
 
-# Alt + ` (backtick)
+# $mod + ` (backtick)
 bindsym $mod+grave workspace back_and_forth
+bindsym $mod+slash workspace back_and_forth
+
+# Moving windows between workspaces
+# $mod + Shift + ` (backtick)
 bindsym Shift+$mod+grave move window to workspace back_and_forth
+bindsym Shift+$mod+slash move window to workspace back_and_forth
 
 # Application bound shortcuts
-bindsym XF86HomePage exec kitty --class "ranger" ranger
+bindsym XF86HomePage exec alacritty --class "ranger" --command ranger
 bindsym XF86Mail exec thunderbird
-bindsym Print exec scrot '%F-%H-%M-%S-$wx$h.png' -e 'mv $f ~/Pictures'
+bindsym Print exec scrot $screenshot_filename -e 'mv $f ~/Pictures'
+bindsym Shift+Print exec scrot $screenshot_filename -d 3 -e 'mv $f ~/Pictures'
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -155,14 +162,17 @@ set $ws10 "10"
 # automatic back-and-forth switching with $mod+<num>
 workspace_auto_back_and_forth yes
 
-assign [class="^(?i)code-oss$"] $code_ws
+assign [instance="^(?i)vim$"] $vim_ws
 assign [class="^(?i)vim$"] $vim_ws
-assign [class="^(?i)ranger"] $file_ws
-assign [class="^(?i)thunar"] $file_ws
+
+assign [instance="^(?i)ranger$"] $file_ws
+assign [class="^(?i)ranger$"] $file_ws
+
+assign [class="^(?i)code-oss$"] $code_ws
+assign [class="^(?i)thunar$"] $file_ws
 assign [class="^(?i)firefox$"] $web_ws
 assign [class="^(?i)inkscape$"] $graphics_ws
 assign [class="^(?i)thunderbird$"] $mail_ws
-assign [class="^(?i)zathura$"] $w7
 
 # switch to workspace
 bindsym $mod+1 workspace $web_ws
@@ -197,20 +207,17 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-    # These bindings trigger as soon as you enter the resize mode
-    # Pressing left will shrink the window’s width.
-    # Pressing right will grow the window’s width.
-    # Pressing up will shrink the window’s height.
-    # Pressing down will grow the window’s height.
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize grow height 10 px or 10 ppt
     bindsym k resize shrink height 10 px or 10 ppt
     bindsym l resize grow width 10 px or 10 ppt
+
     # same bindings, but for the arrow keys
     bindsym Left resize shrink width 10 px or 10 ppt
     bindsym Down resize grow height 10 px or 10 ppt
     bindsym Up resize shrink height 10 px or 10 ppt
     bindsym Right resize grow width 10 px or 10 ppt
+
     # back to normal: Enter or Escape or $mod+r
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -231,10 +238,10 @@ mode "applications" {
     bindsym c exec code 
     bindsym f exec firefox 
     bindsym v exec inkscape
-    bindsym r exec kitty --class "ranger" ranger
+    bindsym r exec alacritty --class "ranger" --command ranger
     bindsym t exec thunderbird
     bindsym a exec thunar
-    bindsym x exec kitty --class "vim" vim
+    bindsym x exec alacritty --class "vim" --command vim
     bindsym z exec zathura
 	
     # Ways to exit the mode
@@ -266,6 +273,6 @@ bar {
 }
 
 # Setting the gaps
-gaps inner 10
+gaps inner 6
 smart_gaps on
-smart_borders on
+smart_borders on 
