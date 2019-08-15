@@ -102,6 +102,7 @@ tabspaces: 8
 font:
   # Normal (roman) font face
   normal: 
+    family: Fira Code
     family: Iosevka
   #normal:
     # Font family
