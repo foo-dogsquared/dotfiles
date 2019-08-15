@@ -1,16 +1,19 @@
 = dotfiles
 
-My dotfiles for my Linux-based system setup.
+My dotfiles for my Linux-based system setup. 
+The structure of this repo is designed to be managed with 
+https://www.gnu.org/software/stow/[GNU Stow], a symlinks 
+farm manager.
 
 == Screenshots
 
-image:docs/i3-multiple-windows.png[My i3 setup with multiple windows]
+image:docs/i3-multiple-windows.png[My i3 setup with multiple windows, width=100%]
 
-image:docs/i3-single-window.png[My i3 setup with single window]
+image:docs/i3-single-window.png[My i3 setup with single window, width=100%]
 
-image:docs/i3-no-window.png[My i3 setup with no window]
+image:docs/i3-no-window.png[My i3 setup with no window, width=100%]
 
-image:docs/i3-rofi.png[My i3 setup with rofi]
+image:docs/i3-rofi.png[My i3 setup with rofi, width=100%]
 
 == Specifications
 Here are the main specifications of my machine currently running this
@@ -28,13 +31,31 @@ The picture is used to generate the color pallete is
 https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[this one]. 
 It's also the wallpaper used in the screenshots.
 
+== Wallpapers
+Here are the wallpapers' filename along with their sources:
+
+* https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[`nebula.jpg`]
+* https://www.reddit.com/r/wallpapers/comments/co9t14/sand/[`sand.jpg`]
+
 == Configured programs
-Here's a list of the programs with details on the config found in this repo:
+Here's a list of the programs with details on the config found in this repo. 
+Each of the directory is designed to be used/managed with 
+https://www.gnu.org/software/stow/[GNU Stow] at the indicated target path.
+
+=== https://www.zsh.org/[Zsh]
+A Unix shell and an alternative to the Bash.
+
+* Config found at link:zsh/[`zsh/`] directory.
+* The usual target path for a user is at `$HOME/`.
+** `zsh 5.7.1 (x86_64-pc-linux-gnu)`
+* Take note that the configuration assumes that you install 
+https://github.com/robbyrussell/oh-my-zsh/[Oh My Zsh!] after.
 
 === https://www.x.org/wiki/[Xorg]
 A display server implementing X window system.
 
 * Config found at link:xorg/[`xorg/`] directory.
+* The usual target path for a user is at `$HOME/`.
 * Minimum version (from `Xorg -version`):
 ** `X.Org X Server 1.20.5`
 ** `X Protocol Version 11, Revision 0`
@@ -45,6 +66,7 @@ foreground, and the background)
 A modal text editor.
 
 * Config located at link:vim/[`vim/`] directory.
+* The usual target path for a user is at `$HOME/`.
 * Minimum version (from `vim --version`): 
 ** `8.1 (2018 May 18, compiled Jul 29 2019 20:38:53)`
 * Contains my plugin list and editor configurations at `.vimrc`.
@@ -58,6 +80,7 @@ A Vim-based file browser.
 https://github.com/ranger/ranger/wiki[Here's their config documentation for it.]
 
 * Config located at link:ranger/[`ranger/`] directory.
+* The usual target path for a user is at `$HOME/.config/ranger/`.
 * Minimum version (from `ranger --version`):
 ** `ranger version: ranger 1.9.2`
 ** `Python version: 3.7.4 (default, Jul 16 2019, 07:12:58) [GCC 9.1.0]`
@@ -73,6 +96,7 @@ Similar to https://sw.kovidgoyal.net/kitty[Kitty] , it's a GPU-based terminal
 emulator.
 
 * Config located at link:alacritty/[`alacritty/`] directory.
+* The usual target path for a user is at `$HOME/.config/alacritty/`.
 * Minimum version (from `alacritty --version`):
 ** `alacritty 0.3.3`
 * Contains a single `alacritty.yaml` as the config file. Not much has changed except 
@@ -85,6 +109,7 @@ https://i3wm.org/docs[Here's the documentation page of the program.]
 * If it's any of importance, the configuration is prone to be moved for the 
 https://github.com/i3/i3/[original version of i3] since 
 https://github.com/i3/i3/issues/3724[there's consideration for merging of gaps into i3].
+* The usual target path for a user is at `$HOME/.config/i3/`.
 * Config located at link:i3/[`i3/`] directory.
 * Minimum version (from `i3 --version`):
 ** `i3 version 4.17 (04.08.2019) © 2009 Michael Stapelberg and contributors`
@@ -101,6 +126,7 @@ The application switcher and launcher. Also serves as a replacement
 for https://tools.suckless.org/dmenu/[dmenu].
 
 * Config located at link:rofi/[`rofi/`].
+* The usual target path for a user is at `$HOME/.config/rofi/`.
 * Minimum version (from `rofi -version`):
 ** `Version: 1.5.4`
 * Main config is `config.rasi`.
@@ -114,47 +140,83 @@ A library for creating programs with graphical user interface (GUI).
 
 There are often two versions when configuring GTK: version 2 and 3.
 
+* Version depends on the program itself since it is usually statically 
+linked within the GUI program.
 * GTK3 config located at link:gtk3/[`gtk3/`].
-* Version depends on the program itself.
+* The usual target path of GTK3 for a user is at `$HOME/.config/gtk-3.0/`.
 * Simply contains a `settings.ini` file that contains common configuration 
 that'll be applied for most GTK3 apps (Thunar, Inkscape, etc.).
+* GTK2 config located at link:gtk2/[`gkt2/`].
+* The usual target path of GTK2 for a user is at `$HOME/` because of the 
+`.gtkrc-2.0` file needs to at `$HOME/`.
 * GTK color and icon theme is https://github.com/NicoHood/arc-theme[Arc theme] 
 and uses the light dark variation (`arc-darker`).
 
 == Additional programs used
 As much as possible, I use free and open source software for all of my needs. 
 
+=== System administration
+TIP: I recommend to start at this list especially if you're starting with a bare 
+minimum of a Linux installation.
+
+* https://github.com/lxde/lxsession[lxsession] - A session manager and an 
+authentication agent for Polkit; very useful if you're usually using with a user-level account.
+* https://www.freedesktop.org/wiki/Software/polkit/[Polkit] - A program for bridging 
+unprivileged processes to privileged access.
+* https://wiki.archlinux.org/index.php/Systemd-boot[systemd-boot] - The UEFI boot manager.
+* https://www.freedesktop.org/wiki/Software/udisks/[udisks] - A manager for mounting filesystems.
+* https://github.com/coldfix/udiskie[udiskie] - An automounter for removable media.
+
 === General purpose programs
-* https://audacious-media-player.org/[Audacious] - audio player
-* https://feh.finalrewind.org/[feh] - image viewer
-* https://www.mozilla.org/en-US/firefox/new/[Firefox] - web browser
-* https://github.com/naelstrof/maim[maim] - screenshot utility
-* https://obsproject.com/[OBS Studio] - streaming and recording utility
-* https://www.openshot.org/[OpenShot] - video editor
-* https://docs.xfce.org/xfce/thunar/start[Thunar] - file manager
-* https://www.videolan.org/vlc/[VLC Media Player] - multimedia player
+* https://audacious-media-player.org/[Audacious] - An audio player with various listening options.
+* https://feh.finalrewind.org/[feh] - A minimal image viewer.
+* https://www.mozilla.org/en-US/firefox/new/[Firefox] - One of the major web browser second to Chrome.
+* https://github.com/naelstrof/maim[maim] - A simple screenshot utility.
+* https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos.
+* https://www.openshot.org/[OpenShot] - An intuitive video editor.
+* https://docs.xfce.org/xfce/thunar/start[Thunar] - A file manager. A part of the Xfce desktop environment.
+* https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player.
 
 === Device drivers and servers
-* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - Linux sound driver
-* https://ffmpeg.org/[ffmpeg] - multimedia codec including for MP4, FLV, and more
+* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux 
+sound driver.
+* https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more.
 * https://wiki.archlinux.org/index.php/NetworkManager[GNOME NetworkManager]
 
+=== Music production
+* https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio 
+plug-in formats such as VST2/3, SF2, and SFZ.
+* https://lmms.io/[LMMS] - A digital audio workstation for beat production.
+
 === Design
-* https://blender.org/[Blender] - 3D modelling program
-* https://www.freecadweb.org/[FreeCAD] - a general purpose 3D computer-aided design program
-* https://inkscape.org/[Inkscape] - a vector illustration/editing program
+* https://blender.org/[Blender] - A top-notch 3D modelling program.
+* https://www.freecadweb.org/[FreeCAD] - A general purpose 3D computer-aided design program.
+* https://inkscape.org/[Inkscape] - A vector illustration/editing program.
 
 === Fonts
-* https://github.com/tonsky/FiraCode[Fira Code] - a programmer-oriented font that supports ligatures
+* https://github.com/tonsky/FiraCode[Fira Code] - A programmer-oriented font that supports ligatures.
 * https://github.com/be5invis/iosevka[Iosevka]
 * https://github.com/googlefonts/noto-fonts[Noto Fonts]
 
 === Documents
-* https://www.libreoffice.org/[LibreOffice] - a office productivity suite and serves as a free alternative 
-to Microsoft Office suite
-* https://www.tug.org/texlive/[TeX Live] - a LaTeX distribution for compiling LaTeX files
+* https://asciidoctor.org/[Asciidoctor] - A text formatting language suitable for creating 
+books, documentations, and writings. Highlights a heavier feature set compared to Markdown.
+* https://www.libreoffice.org/[LibreOffice] - An office productivity suite and serves as a 
+free alternative to Microsoft Office suite.
+* https://www.tug.org/texlive/[TeX Live] - A cross-platform LaTeX distribution for compiling LaTeX files.
 
-=== Development programs
-* https://www.anaconda.com/[Anaconda] - a mathematical environment distribution
-* https://www.gnu.org/software/octave/[Octave] - mathematical computational environment similar to Matlab
-* https://code.visualstudio.com/[Visual Studio Code] - a text editor that comes with lightweight IDE features
+=== Mathematical tools
+* https://www.anaconda.com/[Anaconda] - A mathematical environment distribution.
+* https://www.gnu.org/software/octave/[Octave] - A mathematical computational environment similar to Matlab.
+
+=== Software development
+* https://cmake.org/[CMake] - A cross-platform build system that takes care of build configurations.
+* https://gcc.gnu.org/[GCC] - A set of compilers from GNU. I mainly use it for developing and compiling 
+C and C++ languages.
+* https://git-scm.com/[Git] - My one and only version control system.
+* https://www.gnu.org/software/make/[Make] - A build automation system.
+* https://code.visualstudio.com/[Visual Studio Code] - A text editor that comes with lightweight IDE features.
+* The programming language runtime for https://www.python.org/[Python], 
+https://www.ruby-lang.org/en/[Ruby], https://www.java.com/[Java], 
+https://www.rust-lang.org/[Rust], and https://golang.org/[Go].
+
