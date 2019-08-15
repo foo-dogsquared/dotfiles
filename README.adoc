@@ -19,9 +19,14 @@ Here are the main specifications of my machine currently running this
 * **Operating system**: https://www.archlinux.org/[Arch Linux]
 * **Display server**: X Window System using https://www.x.org/wiki/[Xorg]
 * **Window manager**: https://i3wm.org/[i3] (specifically https://github.com/Airblader/i3[i3-gaps])
-* **Terminal emulator**: https://sw.kovidgoyal.net/kitty[Kitty]
+* **Terminal emulator**: https://github.com/jwilm/alacritty/[Alacritty]
 * **Shell**: https://www.gnu.org/software/bash/[Bash]
-* **Terminal emulator font**: https://github.com/tonsky/FiraCode[Fira Code]
+* **Terminal emulator font**: https://github.com/be5invis/iosevka[Iosevka]
+
+Terminal color scheme was generated with https://github.com/dylanaraps/pywal[pywal]. 
+The picture is used to generate the color pallete is  
+https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[this one]. 
+It's also the wallpaper used in the screenshots.
 
 == Configured programs
 Here's a list of the programs with details on the config found in this repo:
@@ -61,21 +66,15 @@ keybinding and their variants for opening my go-to programs such as
 https://code.visualstudio.com/[Visual Studio Code].
 * `rifle.conf` contains configuration for opening a list of programs. 
 
-=== https://sw.kovidgoyal.net/kitty[Kitty] 
-A GPU-based terminal emulator. 
-https://sw.kovidgoyal.net/kitty/conf.html[Here's the configuration doc for it.]
+=== https://github.com/jwilm/alacritty/[Alacritty]
+Similar to https://sw.kovidgoyal.net/kitty[Kitty] , it's a GPU-based terminal 
+emulator.
 
-* Config located at link:kitty/[`kitty/`] directory.
-* Minimum version (from `kitty --version`):
-** `kitty 0.14.3 created by Kovid Goyal`
-* Main config file is `kitty.conf` and it simply sets the font 
-(https://github.com/tonsky/FiraCode[Fira Code]) and the color pallete in 
-`colors.conf`.
-* `colors.conf` contains the same color scheme in `.Xresources`. 
-* As a simple reminder: unless you use other than Kitty, the colors 
-defined in this `colors.conf` is the one to be used as default color 
-pallete in terminal-based programs such as Vim or Ranger, 
-not the `.Xresources` file.
+* Config located at link:alacritty/[`alacritty/`] directory.
+* Minimum version (from `alacritty --version`):
+** `alacritty 0.3.3`
+* Contains a single `alacritty.yaml` as the config file. Not much has changed except 
+for the color scheme and the font being used.
 
 === https://github.com/Airblader/i3[i3-gaps] 
 A fork of i3 window manager. 
@@ -103,33 +102,57 @@ for https://tools.suckless.org/dmenu/[dmenu].
 * Minimum version (from `rofi -version`):
 ** `Version: 1.5.4`
 * Main config is `config.rasi`.
-* My i3 setup uses Rofi with my custom theme (`fds-sidebar`) with `$mod+D` (see image above). 
-Every variation of my sidebar theme should import the common file (`fds-sidebar-common.rasi`) 
-and only declare the colors. See `fds-sidebar-dark.rasi` for an example. 
+* My i3 setup uses Rofi with my custom theme (`fds-sidebar`) with 
+`$mod+D` (see image above). Every variation of my sidebar theme should 
+import the common file (`fds-sidebar-common.rasi`) and only declare 
+the colors. See `fds-sidebar-dark.rasi` for an example. 
+
+=== https://www.gtk.org/[GTK]
+A library for creating programs with graphical user interface (GUI).
+
+There are often two versions when configuring GTK: version 2 and 3.
+
+* GTK3 config located at link:gtk3/[`gtk3/`].
+* Version depends on the program itself.
+* Simply contains a `settings.ini` file that contains common configuration 
+that'll be applied for most GTK3 apps (Thunar, Inkscape, etc.).
+* GTK color and icon theme is https://github.com/NicoHood/arc-theme[Arc theme] 
+and uses the light dark variation (`arc-darker`).
 
 == Additional programs used
+As much as possible, I use free and open source software for all of my needs. 
 
 === General purpose programs
-* https://audacious-media-player.org/[Audacious]
-* https://feh.finalrewind.org/[feh]
-* https://www.mozilla.org/en-US/firefox/new/[Firefox]
-* https://docs.xfce.org/xfce/thunar/start[Thunar]
-* https://www.videolan.org/vlc/[VLC Media Player]
+* https://audacious-media-player.org/[Audacious] - audio player
+* https://feh.finalrewind.org/[feh] - image viewer
+* https://www.mozilla.org/en-US/firefox/new/[Firefox] - web browser
+* https://github.com/naelstrof/maim[maim] - screenshot utility
+* https://obsproject.com/[OBS Studio] - streaming and recording utility
+* https://www.openshot.org/[OpenShot] - video editor
+* https://docs.xfce.org/xfce/thunar/start[Thunar] - file manager
+* https://www.videolan.org/vlc/[VLC Media Player] - multimedia player
 
-=== Drivers
-* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA]
+=== Device drivers and servers
+* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - Linux sound driver
+* https://ffmpeg.org/[ffmpeg] - multimedia codec including for MP4, FLV, and more
 * https://wiki.archlinux.org/index.php/NetworkManager[GNOME NetworkManager]
 
+=== Design
+* https://blender.org/[Blender] - 3D modelling program
+* https://www.freecadweb.org/[FreeCAD] - a general purpose 3D computer-aided design program
+* https://inkscape.org/[Inkscape] - a vector illustration/editing program
+
 === Fonts
+* https://github.com/tonsky/FiraCode[Fira Code] - a programmer-oriented font that supports ligatures
+* https://github.com/be5invis/iosevka[Iosevka]
 * https://github.com/googlefonts/noto-fonts[Noto Fonts]
 
 === Documents
-* https://www.tug.org/texlive/[TeX Live]
+* https://www.libreoffice.org/[LibreOffice] - a office productivity suite and serves as a free alternative 
+to Microsoft Office suite
+* https://www.tug.org/texlive/[TeX Live] - a LaTeX distribution for compiling LaTeX files
 
 === Development programs
-* https://www.anaconda.com/[Anaconda]
-* https://nodejs.org/[NodeJS]
-* https://www.gnu.org/software/octave/[Octave]
-* https://www.python.org/[Python]
-* https://www.ruby-lang.org/en/[Ruby]
-* https://code.visualstudio.com/[Visual Studio Code]
+* https://www.anaconda.com/[Anaconda] - a mathematical environment distribution
+* https://www.gnu.org/software/octave/[Octave] - mathematical computational environment similar to Matlab
+* https://code.visualstudio.com/[Visual Studio Code] - a text editor that comes with lightweight IDE features
