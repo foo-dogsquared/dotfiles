@@ -47,6 +47,9 @@ inoremap jk <Esc>
 " setting number lines in the gutter
 set number relativenumber
 
+" setting line highlighting based on the position of the cursor
+set cursorline
+
 " set tab to enter spaces, instead
 set expandtab
 

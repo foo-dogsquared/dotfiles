@@ -239,11 +239,11 @@ mode "applications" {
     bindsym f exec firefox 
     bindsym v exec inkscape
     bindsym r exec alacritty --class "ranger" --command ranger
-    bindsym R exec alacritty --command ranger
+    bindsym Shift+r exec alacritty --command ranger
     bindsym t exec thunderbird
     bindsym a exec thunar
     bindsym x exec alacritty --class "vim" --command vim
-    bindsym X exec alacritty --command vim
+    bindsym Shift+x exec alacritty --command vim
     bindsym z exec zathura
 	
     # Ways to exit the mode
