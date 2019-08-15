@@ -1,0 +1,31 @@
+global !p
+from datetime import datetime, timedelta
+
+def relative_date(days):
+    time_difference = timedelta(days=int(days))
+    calculated_date = datetime.today() + time_difference
+
+    return calculated_date  
+endglobal
+
+snippet "reldate (\d+)" "Prints out the relative date in ISO format." ri
+`!p 
+reldate = relative_date(match.group(1))
+snip.rv = reldate.strftime("%F")
+`
+endsnippet
+
+snippet today "Prints out today's date in ISO format" i
+`!p
+from datetime import datetime
+
+snip.rv = datetime.today().strftime("%F")
+`
+endsnippet
+
+snippet sign "Quick signature" i
+${1:Sincerely,}
+${2:Gabriel Arazas}
+$0
+endsnippet
+

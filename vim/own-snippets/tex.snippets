@@ -1,0 +1,868 @@
+global !p
+texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C', 'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS', 'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+
+texIgnoreMathZones = ['texMathText']
+
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+
+ignore = texIgnoreMathZoneIds[0]
+
+def smart_space(next_str, auto_str=" "):
+    if next_str and next_str[0] in [",", ".", "-", "!", "?", " "]:
+        snip.rv = auto_str
+    else:
+        snip.rv = ""
+endglobal
+
+snippet template "Main template (that should work without relying with style files)" bi
+\documentclass[class=memoir, crop=false, oneside, 14pt]{standalone}
+
+% all of the packages to be used
+\usepackage[nocomments]{standalone}
+\usepackage{chngcntr}
+\usepackage{import}
+\usepackage[utf8]{inputenc}
+\usepackage{fontawesome}
+\usepackage[english]{babel}
+\usepackage[rgb]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{fancyhdr}
+\usepackage{minted}
+\usepackage[most]{tcolorbox}
+\usepackage[colorlinks=true, linkcolor=., urlcolor=blue]{hyperref}
+\usepackage{kpfonts}
+
+% using the fancy header package
+% http://linorg.usp.br/CTAN/macros/latex/contrib/fancyhdr/fancyhdr.pdf
+\pagestyle{fancy}
+
+% fill the header with the format
+\fancyhead[L]{\doctitle}
+\fancyhead[R]{\nouppercase{\rightmark}}
+
+% fill the footer with the format
+\fancyfoot[C]{\nouppercase{\leftmark}}
+\fancyfoot[R]{\thepage}
+
+% set the width of the horizontal bars in the header
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+
+% set the paragraph formatting
+\renewcommand{\baselinestretch}{1.35}
+
+% set chapter style
+\chapterstyle{bianchi}
+
+% set chapter spacing for easier reading on digital screen
+\setlength{\beforechapskip}{-\beforechapskip}
+
+% document metadata
+\author{${1:"Gabriel Arazas"}}
+\title{${2:"New Title"}}
+\date{`!p
+`}
+
+\begin{document}
+% Frontmatter of the class note if it's compiled standalone
+\renewcommand{\abstractname}{Summary}
+\maketitle
+\newpage
+
+\frontmatter
+\chapter{Preface}
+$3
+\newpage
+
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\mainmatter
+% Core content (HINT: always start with chapter LaTeX tag)
+
+$0
+\end{document}
+endsnippet
+
+# Document structure tags
+snippet chapter "Chapter element" bi
+\chapter{$1}
+\label{ch:$1}
+$0
+endsnippet
+
+snippet section "Section tag" bi
+\section{$1}
+\label{sec:$1}
+$0
+endsnippet
+
+snippet subsec "Subsection tag" bi
+\subsection{$1}
+\label{subsec:$1}
+$0
+endsnippet  
+
+# Common commands
+snippet pack "Use package command" i
+\usepackage`!p smart_space(t[2], "[")`$2`!p smart_space(t[2], "]")`{$1}
+$0
+endsnippet
+
+snippet letter "Make at letter block" i
+\makeatletter
+$1
+\makeatother
+$0
+endsnippet
+
+snippet label "Create a label" i
+\label{$1}
+$0
+endsnippet
+
+snippet ref "Create a reference for a label" i
+\ref{${1:<label to be referenced>}} $0
+endsnippet
+
+snippet foot "Footnote"
+\footnote{${1:<text>}} $0
+endsnippet
+
+# Common environments
+snippet begin "Simple empty environment" bi
+\begin{$1}
+$2
+\end{$1}
+$0
+endsnippet
+
+snippet ml "Math mode (inline)" i
+$${1}$`!p smart_space(t[2])`$2
+endsnippet
+
+snippet mb "Math block" bi
+\begin{equation*}
+$1
+\end{equation*}
+$0
+endsnippet
+
+snippet equation "Equation environment for mathematical typesetting" bi
+\begin{equation}
+\label{eq:$1}
+$2
+\end{equation}
+$0
+endsnippet
+
+snippet figure "Figure environment" bi
+\begin{figure}
+\centering
+\label{fig:$1}
+$2
+\caption{${3:$1}}
+\end{figure}
+$0
+endsnippet
+
+snippet plot "Quickly plot a graph" bi
+\begin{figure}[$1]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+	xlabel=$x$,
+	ylabel=$y$,
+	xmin= ${2:-10}, xmax= ${3:10},
+	ymin= ${4:-10}, ymax = ${5:10},
+	axis lines = middle,
+    ]
+	\addplot[domain=$2:$3, samples=${6:100}]{$7};
+    \end{axis}
+\end{tikzpicture}
+\caption{$8}
+\label{fig:${9:$8}}
+\end{figure}
+$0
+endsnippet
+
+snippet iplot "Quickly plot a graph with integers" bi
+\begin{figure}[$1]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+	xlabel=$x$,
+	ylabel=$y$,
+	axis lines = middle,
+    ]
+	\addplot[domain=$2:$3, samples=`!p snip.rv=abs(t[2]) + abs(t[3]) + 1`]{$4};
+    \end{axis}
+\end{tikzpicture}
+\caption{$5}
+\label{${9:$6}}
+\end{figure}
+$0
+endsnippet
+
+# Common mathematical functions and symbols 
+# Also take note that most expressions are prepended with 'M' to mean mathematical usage
+snippet === "Equivalent to" i
+\equiv
+endsnippet
+
+snippet ~= "Congruent to" i
+\cong
+endsnippet
+
+snippet ~~ "Approximately equal to" i
+\approx
+endsnippet
+
+snippet p= "Proportional to" i
+\propto
+endsnippet
+
+snippet != "Not equal" i
+\neq
+endsnippet
+
+snippet <= "Greater than or equal to" i
+\geq
+endsnippet
+
+snippet !> "Not greater than" i
+\ngtr
+endsnippet
+
+snippet >= "Less than or equal to" i
+\leq
+endsnippet
+
+snippet !< "Not less than" i
+\nless
+endsnippet
+
+snippet <-- "Precedes symbol" i
+\prec
+endsnippet
+
+snippet =<- "Precedes or equals" i
+\preceq
+endsnippet
+
+snippet !<- "Not precedes" i
+\nprec
+endsnippet
+
+snippet --> "Succeeds symbol" i
+\succ
+endsnippet
+
+snippet =-> "Succeeds or equals" i
+\succeq
+endsnippet
+
+snippet !-> "Not succeeds" i
+\nsucc
+endsnippet
+
+snippet << "Less order than" i
+\ll
+endsnippet
+
+snippet >> "Greater order than" i
+\gg
+endsnippet
+
+snippet int "Integral symbol" i
+\int
+endsnippet
+
+snippet -int "Integral with values" i
+\int_{${1:<lower bound>}}^{${2:<upper bound}}$0
+endsnippet
+
+snippet OO "Empty set" i
+\O
+endsnippet
+
+snippet -sq "Square superscript" i
+^{2}$0
+endsnippet
+
+snippet -cb "Cube superscript" i
+^{3}$0
+endsnippet
+
+snippet -- "Superscript" iA
+^{$1}$0
+endsnippet
+
+snippet __ "Subscript" iA
+_{$1}$0
+endsnippet
+
+snippet ... "Ellipsis" i
+\ldots
+endsnippet
+
+snippet c.. "Centered ellipsis" i
+\cdots
+endsnippet
+
+snippet v.. "Vertical ellipsis" i
+\vdots
+endsnippet
+
+snippet d.. "Diagonal ellipsis" i
+\ddots
+endsnippet
+
+snippet Mbc "Mathematical because symbol" i
+\because
+endsnippet
+
+snippet Mth "Mathematical therefore symbol" i
+\therefore
+endsnippet
+
+snippet exp "Expression" i
+\exp(${1:x}} $0
+endsnippet
+
+snippet frac "Fraction" i
+\frac{${1:<enumerator>}{${2:<denominator}}
+$0
+endsnippet
+
+snippet "-(\d+|\w+) over (\d+|\w+)-" "Quick fraction" riA
+`!p snip.rv = f"\\frac{{{match.group(1)}}}{{{match.group(2)}}}"`
+$0
+endsnippet
+
+snippet "-(\d+|\w+) / (\d+|\w+)-" "Quick fraction" riA
+`!p snip.rv = f"\\frac{{{match.group(1)}}}{{{match.group(2)}}}"`
+$0
+endsnippet
+
+snippet mod "Mod operator (as binary operator)" i
+\bmod $0
+endsnippet
+
+## Common notations
+snippet sum "Sigma notation symbol" i
+\sum
+endsnippet
+
+snippet -sum "Sigma notation" i
+\sum_{${1:<lower bound>}^{${2:<upper bound>}} f(${3:<function expression>})
+$0
+endsnippet
+
+snippet prod "Product notation symbol" i
+\prod
+endsnippet
+
+snippet -prod "Product notation" i 
+\prod_{${1:<lower bound>}^{${2:upper bound}} f(${3:<function expression>})
+$0
+endsnippet
+
+snippet lim "Limit keyword" i
+\lim
+endsnippet
+
+snippet -lim "Limit operator" i
+\lim\limits_{${1:x \to \infty}}
+endsnippet
+
+snippet ooo "Infinity symbol" i
+\infty
+endsnippet
+
+snippet inf "Infinity symbol" i
+\infty
+endsnippet
+
+snippet choose "Choose function" i
+\binom{${1:<range>}}{${2:<N>}}
+$0
+endsnippet
+
+snippet "-(\d+|\w+) choose (\d+|\w+)-" "Quick choose function" riA
+`!p snip.rv = f"\\binom{{{match.group(1)}}}{{{match.group(2)}}}"`
+$0
+endsnippet
+
+## Common sets of numbers
+snippet SN "Set of natural numbers" i
+\N
+endsnippet
+
+snippet SZ "Set of integers" i
+\Z
+endsnippet
+
+snippet SQ "Set of rational numbers" i
+\Q
+endsnippet
+
+snippet SA "Set of algebraic numbers" i
+\mathbb{A}
+endsnippet
+
+snippet SR "Set of real numbers" i
+\R
+endsnippet
+
+snippet SC "Set of complex numbers" i
+\C
+endsnippet
+
+## Common mathematical logic symbols
+snippet Lin "Logical in symbol" i
+\in
+endsnippet
+
+snippet L!in "Logical not in symbol" i
+\notin
+endsnippet
+
+snippet Lon "Logical owns symbol" i
+\ni
+endsnippet
+
+snippet LSu "Logical set union" i
+\cup
+endsnippet
+
+snippet LSi "Logical set interaction" i
+\cap
+endsnippet
+
+snippet LSd "Logical set difference" i
+\setminus
+endsnippet
+
+snippet Lex "There exists at least one" i
+\exists
+endsnippet
+
+snippet Lex! "There exists one and only one" i
+\exists!
+endsnippet
+
+snippet L!ex "Not exists" i
+\nexists
+endsnippet
+
+snippet Lfa "For all" i
+\forall
+endsnippet
+
+snippet Lor "Logical 'or' symbol" i
+\lor
+endsnippet
+
+snippet Land "Logical 'and' symbol" i
+\land
+endsnippet
+
+snippet Lnot "Logical 'not' symbol" i
+\neg
+endsnippet
+
+snippet => "Implies" Ai
+\implies
+endsnippet
+
+snippet =< "Implied by" Ai
+\impliedby
+endsnippet
+
+snippet <=> "If and only if" i
+\iff
+endsnippet
+
+snippet iff "If and only if" i
+\iff
+endsnippet
+
+snippet (( "Subset" i
+\subset
+endsnippet
+
+snippet !( "Not a proper subset" i
+\not\subset
+endsnippet
+
+snippet =( "Subset is equal to" i
+\subseteq
+endsnippet
+
+snippet !=( "Not a subset of" i
+\nsubseteq
+endsnippet
+
+snippet )) "A proper subset of" i
+\supset
+endsnippet
+
+snippet !) "Not a proper superset of" i
+\not\supset
+endsnippet
+
+snippet =) "A subset of" i
+\supseteq
+endsnippet
+
+snippet !=) "Not a superset of" i
+\nsupseteq
+endsnippet
+
+## Common functions
+### Trigonometric functions
+snippet Msin "Sine function" i
+\sin`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mcos "Cosine function" i
+\cos`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mtan "Tangent function" i
+\tan`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mcsc "Cosecant function" i
+\csc`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Msec "Secant function" i
+\sec`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mcot "Cotangent function" i
+\cot`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+### Inverse trigonometric functions
+snippet M!sin "Inverse sine keyword" i
+\arcsin`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!cos "Inverse cosine keyword" i
+\arccos`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!tan "Inverse tangent keyword" i
+\arctan`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!csc "Inverse cosecant keyword" i
+\arccsc`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!sec "Inverse secant keyword" i
+\arcsec`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!cot "Inverse cotangent" i
+\arccot`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+### Hyperbolic trigonometric functions
+snippet Msinh "Hyperbolic sine" i
+\sinh`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mcosh "Hyperbolic cosine" i
+\cosh`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mtanh "Hyperbolic tangent" i
+\tanh`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mcsch "Hyperbolic cosecant" i
+\operatorname{csch}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Msech "Hyperbolic secant" i
+\operatorname{sech}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet Mcoth "Hyperbolic cotangent" i
+\coth`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+### Inverse hyperbolic trigonometric functions
+snippet M!sinh "Inverse hyperbolic sine" i
+\operatorname{arsinh}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!cosh "Inverse hyperbolic cosine" i
+\operatorname{arcosh}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!tanh "Inverse hyperbolic tangent" i
+\operatorname{artanh}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!csch "Inverse hyperbolic cosecant" i
+\operatorname{arcsch}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!sech "Inverse hyperbolic secant" i
+\operatorname{arsech}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+snippet M!coth "Inverse hyperbolic cotangent" i
+\operatorname{arcoth}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+endsnippet
+
+## Common symbols found in geometry
+snippet Gov "Overline" i
+\overline{$1}
+endsnippet
+
+snippet ----- "Overline" i
+\overline{$1}
+endsnippet
+
+snippet Gra "Right arrow" i
+\overrightarrow{$1}
+endsnippet
+
+snippet ----> "Right arrow" i
+\overrightarrow{$1}
+endsnippet
+
+snippet Gang "Angle symbol" i
+\angle
+endsnippet
+
+snippet Gman "Measured angle symbol" i
+\measuredangle
+endsnippet
+
+snippet Gtri "Triangle" i
+\triangle
+endsnippet
+
+snippet Gpar "Parallel with" i
+\|
+endsnippet
+
+snippet G!par "Not parallel with" i
+\nparallel
+endsnippet
+
+snippet Gper "Perpendicular to" i
+\perp
+endsnippet
+
+snippet G!per "Not perpendicular to" i
+\not\perp
+endsnippet
+
+# Text formatting
+snippet bf "Boldface text" i
+\textbf{$1}$0
+endsnippet
+
+snippet it "Italic text" i
+\emph{$1}$0
+endsnippet
+
+snippet tt "Teletype font" i
+\texttt{$1}$0
+endsnippet
+
+snippet ol "Enumerated list (ordered list)" i
+\begin{enumerate}
+$1
+\end{enumerate}
+$0
+endsnippet
+
+snippet ul "Itemized list (unordered list)" i
+\begin{itemize}
+$1
+\end{itemize}
+$0
+endsnippet
+
+snippet li "List item for the OL/UL lists" i
+\item{$1}
+$0
+endsnippet
+    
+snippet a "URL links (with description)" i
+\href{${1:<url>}{${2:<description>}}$0
+endsnippet
+
+snippet al "Reference links with label" i
+\autoref{${1:<label>}}$0
+endsnippet
+
+# Greek letters
+snippet GAA "Uppercase Greek letter alpha" 
+\Alpha
+endsnippet
+
+snippet GAa "Lowercase Greek letter alpha"
+\alpha
+endsnippet
+
+snippet GBB "Uppercase Greek letter beta"
+\Beta
+endsnippet
+
+snippet GBb "Lowercase Greek letter beta"
+\beta
+endsnippet
+
+snippet GCC "Uppercase Greek letter gamma"
+\Gamma
+endsnippet
+
+snippet GCc "Lowercase Greek letter gamma"
+\gamma
+endsnippet
+
+snippet GDD "Uppercase Greek letter delta"
+\Delta
+endsnippet
+
+snippet GDd "Lowercase Greek letter delta"
+\delta
+endsnippet
+
+snippet GEE "Uppercase Greek letter epsilon"
+\Epsilon
+endsnippet
+
+snippet GEe "Lowercase Greek letter epsilon"
+\epsilon
+endsnippet
+
+snippet GVEe "Variation Greek letter epsilon"
+\varepsilon
+endsnippet
+
+snippet GTT "Uppercase Greek letter theta"
+\Theta
+endsnippet
+
+snippet GTt "Lowercase Greek letter theta"
+\theta
+endsnippet
+
+snippet GLL "Uppercase Greek letter lambda"
+\Lambda
+endsnippet
+
+snippet GLl "Lowercase Greek letter lambda"
+\lambda
+endsnippet
+
+snippet GPP "Uppercase Greek letter pi"
+\Pi
+endsnippet
+
+snippet GPp "Lowercase Greek letter pi"
+\pi
+endsnippet
+
+snippet GVPp "Variation Greek letter pi"
+\varpi
+endsnippet
+
+snippet GSS "Uppercase Greek letter sigma"
+\Sigma
+endsnippet
+
+snippet GSs "Lowercase Greek letter sigma"
+\sigma
+endsnippet
+
+snippet GPH "Uppercase Greek letter phi"
+\Phi
+endsnippet
+
+snippet GPh "Lowercase Greek letter phi"
+\phi
+endsnippet
+
+snippet GVPh "Variation Greek letter phi"
+\varphi
+endsnippet
+
+snippet GPS "Uppercase Greek letter psi"
+\Psi
+endsnippet
+
+snippet GPs "Lowercase Greek letter psi"
+\psi
+endsnippet
+
+snippet GOO "Uppercase Greek letter omega"
+\Omega
+endsnippet
+
+snippet GOo "Lowercase Greek letter omega"
+\omega
+endsnippet
+
+# Custom commands and environment (for my class notes)
+snippet dnote "Doc note admonition block" i
+\begin{-doc-note}
+$1
+\end{-doc-note}
+$0
+endsnippet
+    
+snippet dinfo "Doc info admonition block" i
+\begin{-doc-info}
+$1
+\end{-doc-info}
+$0
+endsnippet
+
+snippet dtheo "Doc theorem block" i
+\begin{-doc-theorem}
+$1
+\end{-doc-theorem}
+$0
+endsnippet
+
+snippet ddef "Doc definition block" i
+\begin{-doc-definition}
+$1
+\end{-doc-definition}
+$0
+endsnippet
+
+snippet dwarn "Doc warning callout block" i
+\begin{-doc-warning}
+$1
+\end{-doc-warning}
+$0
+endsnippet
+
+snippet dcrit "Doc critical callout block" i
+\begin{-doc-critical}
+$1
+\end{-doc-critical}
+$0
+endsnippet
+
