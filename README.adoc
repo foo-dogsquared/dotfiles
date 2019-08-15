@@ -20,7 +20,7 @@ Here are the main specifications of my machine currently running this
 * **Display server**: X Window System using https://www.x.org/wiki/[Xorg]
 * **Window manager**: https://i3wm.org/[i3] (specifically https://github.com/Airblader/i3[i3-gaps])
 * **Terminal emulator**: https://github.com/jwilm/alacritty/[Alacritty]
-* **Shell**: https://www.gnu.org/software/bash/[Bash]
+* **Shell**: http://www.zsh.org/[Zsh]
 * **Terminal emulator font**: https://github.com/be5invis/iosevka[Iosevka]
 
 Terminal color scheme was generated with https://github.com/dylanaraps/pywal[pywal]. 
@@ -47,9 +47,11 @@ A modal text editor.
 * Config located at link:vim/[`vim/`] directory.
 * Minimum version (from `vim --version`): 
 ** `8.1 (2018 May 18, compiled Jul 29 2019 20:38:53)`
-* Contains my plugin list and editor configurations at `.vimrc`
-* Eventually my https://github.com/sirver/UltiSnips[UltiSnips] snippets
-will also be added
+* Contains my plugin list and editor configurations at `.vimrc`.
+* There are also some https://github.com/sirver/UltiSnips[UltiSnips] snippets
+stored in `own-snippets` folder (since `snippets` is a reserved folder name). 
+One of the largest snippet file is the snippets for LaTeX files. It is based 
+on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips snippets for LaTeX].
 
 === https://ranger.github.io/[Ranger]
 A Vim-based file browser. 
