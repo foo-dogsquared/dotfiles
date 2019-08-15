@@ -13,7 +13,7 @@ set_from_resource $color_4 color4 #b5659a
 set_from_resource $color_6 color6 #aea0c7
 set_from_resource $color_16 color16 #ffffff
 
-set $pictures_directory '~/Pictures'
+set $pictures_directory '~/pictures'
 set $screenshot_filename '%F-%H-%M-%S-$wx$h.png' 
 
 exec_always feh --bg-scale ~/wallpapers/sand.jpg
