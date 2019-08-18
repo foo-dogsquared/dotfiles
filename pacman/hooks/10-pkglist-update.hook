@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Depends = pacman
+Description = Update package list at $HOME/dotfiles/pkglist
+When = PostTransaction
+Exec = /usr/bin/pacman -Qqne >> ~/dotfiles/pkglist.txt
