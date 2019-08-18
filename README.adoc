@@ -7,13 +7,13 @@ farm manager.
 
 == Screenshots
 
-image:docs/i3-multiple-windows.png[My i3 setup with multiple windows, width=100%]
+image::docs/i3-multiple-windows.png[My i3 setup with multiple windows]
 
-image:docs/i3-single-window.png[My i3 setup with single window, width=100%]
+image::docs/i3-single-window.png[My i3 setup with single window]
 
-image:docs/i3-no-window.png[My i3 setup with no window, width=100%]
+image::docs/i3-no-window.png[My i3 setup with no window]
 
-image:docs/i3-rofi.png[My i3 setup with rofi, width=100%]
+image::docs/i3-rofi.png[My i3 setup with rofi]
 
 == Specifications
 Here are the main specifications of my machine currently running this
@@ -36,6 +36,10 @@ Here are the wallpapers' filename along with their sources:
 
 * https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[`nebula.jpg`]
 * https://www.reddit.com/r/wallpapers/comments/co9t14/sand/[`sand.jpg`]
+
+== Custom scripts
+My own scripts is in link:.scripts/[`.scripts/`] and should be linked in `$HOME/.scripts`.
+This is mostly used for using scripts from different configs such as from i3 and dunst.
 
 == Configured programs
 Here's a list of the programs with details on the config found in this repo. 
@@ -93,7 +97,8 @@ https://code.visualstudio.com/[Visual Studio Code].
 
 === https://github.com/jwilm/alacritty/[Alacritty]
 Similar to https://sw.kovidgoyal.net/kitty[Kitty] , it's a GPU-based terminal 
-emulator.
+emulator. It's documentation for the configuration can be viewed at the 
+config file itself being filled with comments.
 
 * Config located at link:alacritty/[`alacritty/`] directory.
 * The usual target path for a user is at `$HOME/.config/alacritty/`.
@@ -120,6 +125,8 @@ config added into it. Not much to say here except I use `i3bar` (the default bar
 https://github.com/i3/i3status[`i3status`] (the default status bar config) to fill in.
 * The config for `i3status` is located in a different directory at link:i3status[`i3status/`]
 containing a single `config` file (for now).
+* Also, it uses scripts from the link:.scripts/[`.scripts/`] directory so be sure to put those 
+in the appropriate location as well.
 
 === https://github.com/davatorium/rofi[Rofi]
 The application switcher and launcher. Also serves as a replacement 
@@ -152,6 +159,16 @@ that'll be applied for most GTK3 apps (Thunar, Inkscape, etc.).
 * GTK color and icon theme is https://github.com/NicoHood/arc-theme[Arc theme] 
 and uses the light dark variation (`arc-darker`).
 
+=== https://dunst-project.org/[Dunst]
+It's a notification daemon used to display notifications sent by notifiers 
+(programs that send messages/notifications).
+
+* Config location is at link:dunst/[`dunst/`].
+* The usual target path for a user is at `$HOME/.config/dunst/`.
+* Minimum version (from `dunst --version`):
+** `Dunst - A customizable and lightweight notification-daemon 1.4.1 (2019-07-03)`
+* Simply contains a `dunstrc` configuring appearance of the notifications.
+
 == Additional programs used
 As much as possible, I use free and open source software for all of my needs. 
 
@@ -159,8 +176,10 @@ As much as possible, I use free and open source software for all of my needs.
 TIP: I recommend to start at this list especially if you're starting with a bare 
 minimum of a Linux installation.
 
+* https://hisham.hm/htop/[htop] - A process viewer and manager.
 * https://github.com/lxde/lxsession[lxsession] - A session manager and an 
-authentication agent for Polkit; very useful if you're usually using with a user-level account.
+authentication agent for Polkit; very useful if you're usually using with 
+a user-level account.
 * https://www.freedesktop.org/wiki/Software/polkit/[Polkit] - A program for bridging 
 unprivileged processes to privileged access.
 * https://wiki.archlinux.org/index.php/Systemd-boot[systemd-boot] - The UEFI boot manager.
@@ -175,23 +194,31 @@ unprivileged processes to privileged access.
 * https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos.
 * https://www.openshot.org/[OpenShot] - An intuitive video editor.
 * https://docs.xfce.org/xfce/thunar/start[Thunar] - A file manager. A part of the Xfce desktop environment.
+* https://www.thunderbird.net/[Thunderbird] - A email client.
 * https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player.
+* https://weechat.org/[Weechat] - An IRC client on the command line.
 
 === Device drivers and servers
 * https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux 
 sound driver.
 * https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more.
 * https://wiki.archlinux.org/index.php/NetworkManager[GNOME NetworkManager]
+* https://www.nvidia.com/Download/index.aspx?lang=en-us[NVIDIA Driver] - Since 
+I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that. I also have to 
+use the https://www.archlinux.org/packages/extra/x86_64/nvidia-390xx/[legacy version].
 
 === Music production
 * https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio 
 plug-in formats such as VST2/3, SF2, and SFZ.
 * https://lmms.io/[LMMS] - A digital audio workstation for beat production.
+* https://musescore.org/[Musescore] - A music composition and notation software.
 
 === Design
 * https://blender.org/[Blender] - A top-notch 3D modelling program.
 * https://www.freecadweb.org/[FreeCAD] - A general purpose 3D computer-aided design program.
-* https://inkscape.org/[Inkscape] - A vector illustration/editing program.
+* https://inkscape.org/[Inkscape] - A vector illustration/editing program. Alternative to 
+Adobe Illustrator.
+* https://krita.org/en/[Krita] - A painting/illustration program. 
 
 === Fonts
 * https://github.com/tonsky/FiraCode[Fira Code] - A programmer-oriented font that supports ligatures.
@@ -214,6 +241,7 @@ free alternative to Microsoft Office suite.
 * https://gcc.gnu.org/[GCC] - A set of compilers from GNU. I mainly use it for developing and compiling 
 C and C++ languages.
 * https://git-scm.com/[Git] - My one and only version control system.
+* https://godotengine.org/[Godot Engine] - A game engine with its own interface.
 * https://www.gnu.org/software/make/[Make] - A build automation system.
 * https://code.visualstudio.com/[Visual Studio Code] - A text editor that comes with lightweight IDE features.
 * The programming language runtime for https://www.python.org/[Python], 
