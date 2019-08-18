@@ -13,8 +13,8 @@ set_from_resource $color_4 color4 #b5659a
 set_from_resource $color_6 color6 #aea0c7
 set_from_resource $color_16 color16 #ffffff
 
-set $pictures_directory '~/pictures'
 set $screenshot_filename '%F-%H-%M-%S-$wx$h.png' 
+set $scrot_move_directory_command 'mv $f ~/screenshots'
 
 exec_always feh --bg-scale ~/wallpapers/sand.jpg
 
@@ -36,6 +36,7 @@ font pango:monospace 10
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 font pango:Fira Code 10
+font pango:Iosevka 11
 
 # Setting up borders for windows of different states
 default_border pixel 6
@@ -143,8 +144,8 @@ bindsym Shift+$mod+slash move window to workspace back_and_forth
 # Application bound shortcuts
 bindsym XF86HomePage exec alacritty --class "ranger" --command ranger
 bindsym XF86Mail exec thunderbird
-bindsym Print exec scrot $screenshot_filename -e 'mv $f ~/Pictures'
-bindsym Shift+Print exec scrot $screenshot_filename -d 3 -e 'mv $f ~/Pictures'
+bindsym Print exec ~/.scripts/maim-screenshot.sh
+bindsym Control+Print exec ~/.scripts/maim-selection-screenshot.sh
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -257,7 +258,8 @@ bindsym $mod+a mode "applications"; exec sleep 1 && i3-msg mode "default"
 # i3 bar
 bar {
     height 35
-    font pango:Noto Sans 11
+    font pango:Fira Code 10
+    font pango:Iosevka 11
     position top
     separator_symbol " "
     status_command i3status

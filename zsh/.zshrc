@@ -1,5 +1,10 @@
+# My custom variables (only applicable at user level)
+PICTURES_DIRECTORY=$HOME/Pictures
+DOCUMENTS_DIRECTORY=$HOME/Documents
+BIN_DIRECTORY=$HOME/bin
+
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$BIN_DIRECTORY:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/foo-dogsquared/.oh-my-zsh"
