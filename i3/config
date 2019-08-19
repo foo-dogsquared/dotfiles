@@ -144,8 +144,14 @@ bindsym Shift+$mod+slash move window to workspace back_and_forth
 # Application bound shortcuts
 bindsym XF86HomePage exec alacritty --class "ranger" --command ranger
 bindsym XF86Mail exec thunderbird
+
+# Screenshot capture
 bindsym Print exec ~/.scripts/maim-screenshot.sh
 bindsym Control+Print exec ~/.scripts/maim-selection-screenshot.sh
+
+# Delayed screenshot capture
+bindsym Shift+Print exec ~/.scripts/maim-screenshot.sh 3
+bindsym Control+Shift+Print exec ~/.scripts/maim-selection-screenshot.sh 3
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
