@@ -5,8 +5,8 @@ Plug 'sirver/ultisnips'
 " setting my private snippets in a consistent home directory
 let g:UltiSnipsSnippetDirectories = [$HOME . "/.vim/own-snippets"]
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 Plug 'scrooloose/nerdtree'
 
@@ -51,7 +51,7 @@ set number relativenumber
 set cursorline
 
 " set tab to enter spaces, instead
-set expandtab
+set expandtab tabstop=4 shiftwidth=4
 
 let template_list = [
 \    ["_minted-", ""],

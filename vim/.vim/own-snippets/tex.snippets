@@ -13,6 +13,23 @@ def smart_space(next_str, auto_str=" "):
         snip.rv = auto_str
     else:
         snip.rv = ""
+
+def add_variable_numbers(*inputs, **kwargs):
+    absolute = kwargs.pop("absolute", False)
+    total = 0
+
+    for t in inputs:
+        try:
+            i = int(t)
+            if absolute is True:
+                total += abs(i)
+            else:
+                total += i
+        except ValueError:
+            continue
+    
+    return total
+
 endglobal
 
 snippet template "Main template (that should work without relying with style files)" bi
@@ -179,13 +196,17 @@ snippet plot "Quickly plot a graph" bi
 \centering
 \begin{tikzpicture}
     \begin{axis}[
-	xlabel=$x$,
-	ylabel=$y$,
-	xmin= ${2:-10}, xmax= ${3:10},
-	ymin= ${4:-10}, ymax = ${5:10},
-	axis lines = middle,
+    xlabel=$x$,
+    ylabel=$y$,
+    xmin= ${2:-10}, xmax= ${3:10},
+    ymin= ${4:-10}, ymax = ${5:10},
+    axis lines = middle,
+    grid=major,
+    axis equal=false,
+    major tick style=thick,
+    scale only axis,
     ]
-	\addplot[domain=$2:$3, samples=${6:100}]{$7};
+    \addplot[domain=$2:$3, samples=${6: `!p snip.rv = add_variable_numbers(t[2], t[3], absolute=True)`}]{$7};
     \end{axis}
 \end{tikzpicture}
 \caption{$8}
@@ -199,11 +220,11 @@ snippet iplot "Quickly plot a graph with integers" bi
 \centering
 \begin{tikzpicture}
     \begin{axis}[
-	xlabel=$x$,
-	ylabel=$y$,
-	axis lines = middle,
+    xlabel=$x$,
+    ylabel=$y$,
+    axis lines = middle,
     ]
-	\addplot[domain=$2:$3, samples=`!p snip.rv=abs(t[2]) + abs(t[3]) + 1`]{$4};
+    \addplot[domain=$2:$3, samples=`!p snip.rv=abs(t[2]) + abs(t[3]) + 1`]{$4};
     \end{axis}
 \end{tikzpicture}
 \caption{$5}
