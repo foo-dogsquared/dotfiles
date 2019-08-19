@@ -21,13 +21,29 @@ function error_cleanup() {
 # setting up a exit trap in case of error
 trap 'error_cleanup $LINENO' ERR
 
+delay=0
+
+if [[ -n "$1" || "$1" -gt 0 ]]; then
+    delay=$1
+fi
+
 pic_directory=${PICTURES_DIRECTORY:-"$HOME/Pictures"}
 
 geometry_coordinates=$(slop)
+
+if [[ -z $geometry_coordinates ]]; then
+   exit 1;
+fi
+
 date_format=$(date +%F-%H-%M-%S)
 
-pic_filepath=$pic_directory/$date_format-$geometry_coordinates.png 
+pic_filepath="$pic_directory/$date_format-$geometry_coordinates.png"
 
-maim_process=$(maim $pic_filepath --geometry=$geometry_coordinates)
+if [[ $delay -gt 0 ]]; then
+    notify-send "Delayed screenshot" "A delayed screenshot is about to be taken in $delay seconds." --expire-time=$(( ($delay * 1000) - 1000 ))
+fi
 
-notify-send "screenshot" --hint:string:path:$pic_filepath
+maim_process=$(maim $pic_filepath --hidecursor --delay=$delay --geometry=$geometry_coordinates)
+
+notify-send "Screenshot taken" "It is saved at $pic_filepath."
+

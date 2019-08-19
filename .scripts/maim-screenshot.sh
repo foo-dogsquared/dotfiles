@@ -17,6 +17,12 @@ function error_cleanup() {
     printf "$red An error occurred on line $1\n $reset"
 }
 
+delay=0
+
+if [[ -n "$1" || "$1" -gt 0 ]]; then
+    delay=$1
+fi
+
 # setting up a exit trap in case of error
 trap 'error_cleanup $LINENO' ERR
 
@@ -24,9 +30,13 @@ pic_directory=${PICTURES_DIRECTORY:-"$HOME/Pictures"}
 
 date_format=$(date +%F-%H-%M-%S)
 
-pic_filepath=$pic_directory/$date_format.png 
+pic_filepath="$pic_directory/$date_format.png" 
 
-maim_process=$(maim $pic_filepath --hidecursor)
+if [[ $delay -gt 0 ]]; then
+    notify-send "Delayed screenshot" "A delayed screenshot is about to be taken in $delay seconds." --expire-time=$(( ($delay * 1000) - 1000))
+fi
 
-notify-send "Screenshot taken" "It is saved at $(pic_filepath)."
+maim_process=$(maim $pic_filepath --hidecursor --delay=$delay)
+
+notify-send "Screenshot taken" "It is saved at $pic_filepath."
 
