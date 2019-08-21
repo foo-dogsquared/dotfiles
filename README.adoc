@@ -5,6 +5,10 @@ The structure of this repo is designed to be managed with
 https://www.gnu.org/software/stow/[GNU Stow], a symlinks 
 farm manager.
 
+Don't blindly apply these dotfiles unless you know what you're 
+doing. Review the code first, change the setting accordingly, 
+and apply it.
+
 == Screenshots
 
 image::docs/i3-multiple-windows.png[My i3 setup with multiple windows]
@@ -192,7 +196,7 @@ unprivileged processes to privileged access.
 * https://www.mozilla.org/en-US/firefox/new/[Firefox] - One of the major web browser second to Chrome.
 * https://github.com/naelstrof/maim[maim] - A simple screenshot utility.
 * https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos.
-* https://www.openshot.org/[OpenShot] - An intuitive video editor.
+* https://www.shotcut.org/[Shotcut] - A video editor built with the https://www.mltframework.org/[MLT Framework].
 * https://docs.xfce.org/xfce/thunar/start[Thunar] - A file manager. A part of the Xfce desktop environment.
 * https://www.thunderbird.net/[Thunderbird] - A email client.
 * https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player.
@@ -208,8 +212,9 @@ I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that. I also h
 use the https://www.archlinux.org/packages/extra/x86_64/nvidia-390xx/[legacy version].
 
 === Music production
+* https://kx.studio/Applications:Cadence[Cadence] - A set of audio tools. Part of the KX Studio project.
 * https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio 
-plug-in formats such as VST2/3, SF2, and SFZ.
+plug-in formats such as VST2/3, SF2, and SFZ. Part of the KX Studio project.
 * https://lmms.io/[LMMS] - A digital audio workstation for beat production.
 * https://musescore.org/[Musescore] - A music composition and notation software.
 
