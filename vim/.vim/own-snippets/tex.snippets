@@ -199,12 +199,11 @@ snippet plot "Quickly plot a graph" bi
     xlabel=$x$,
     ylabel=$y$,
     xmin= ${2:-10}, xmax= ${3:10},
-    ymin= ${4:-10}, ymax = ${5:10},
     axis lines = middle,
     grid=major,
     axis equal=false,
-    major tick style=thick,
-    scale only axis,
+    tick style={very thick},
+    major tick style=thick,`!p snip.rv = smart_space(t[4], "\n\t")`$4
     ]
     \addplot[domain=$2:$3, samples=${6: `!p snip.rv = add_variable_numbers(t[2], t[3], absolute=True)`}]{$7};
     \end{axis}

@@ -1,0 +1,112 @@
+# Text formatting
+snippet "h(\d)" "Quick header snippet" biw
+`!p
+header_level = int(match.group(1))
+legit_header_level = True if header_level >= 1 and header_level <= 6 else False
+
+snip.rv = "#" * header_level if legit_header_level else ""
+`
+$0
+endsnippet
+
+snippet dt "Definition term" bi
+${1:<term>}::
+${2:<definition>}
+$0
+endsnippet
+
+snippet ul "Unordered list item" bi
+* ${1:<list item>}
+$0
+endsnippet
+
+snippet ol "Ordered list item" bi
+. ${1:<list item>}
+$0
+endsnippet
+
+snippet -ol "Reversed ordered list (use it only once in a list)" bi
+[%reversed]
+. ${1:<list item>}
+endsnippet
+
+snippet bquote "Blockquote" bi
+----
+$1
+----
+$0
+endsnippet
+
+snippet src "Source code listings" bi
+[source,${1:<language>}]
+----
+${2:<source code>}
+----
+$0
+endsnippet
+
+snippet "-table (\d+)-" "Make a quick table" bir
+[cols="`!p snip.rv = match.group(1)`*"]
+|===
+
+$1
+
+|===
+$0
+endsnippet
+
+# Images
+snippet figure "Image block with caption" bi
+.${2:<caption>}
+image::${1:<image path>}[${3:width=100%,height=100%}]
+$0
+endsnippet
+
+snippet -figure "Inline image" i
+image:${1:<image path>}[${2}] $0
+endsnippet
+
+# Video blocks
+snippet video "Video block" bi
+video::${1:<image path>}[$2]
+$0
+endsnippet
+
+snippet youtube "YouTube video block" bi
+video::${1:<YouTube video ID>}[youtube]
+$0
+endsnippet
+
+snippet vimeo "Vimeo video block" bi
+video::${1:<Vimeo video ID>}[vimeo]
+$0
+endsnippet
+
+# Other features
+snippet incl "Include document" bi
+include::${1:<file path>}[${2:<options>}]
+$0
+endsnippet
+
+snippet oblock "Open block" bi
+--
+$1
+--
+$0
+endsnippet
+
+snippet sidebar "Sidebar as an open block" bi
+[sidebar]
+.${1:<title>}
+--
+$2
+--
+$0
+endsnippet
+
+snippet abstract "Abstract block" bi
+[abstract]
+== ${1:Summary}
+$0
+endsnippet
+

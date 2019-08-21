@@ -51,7 +51,7 @@ set number relativenumber
 set cursorline
 
 " set tab to enter spaces, instead
-set expandtab tabstop=4 shiftwidth=4
+set expandtab tabstop=4 shiftwidth=4 smartindent
 
 let template_list = [
 \    ["_minted-", ""],
@@ -75,13 +75,24 @@ augroup vimtex_events
     " auto-clean
     au User VimtexEventQuit     call vimtex#compiler#clean(1)
     au User VimtexEventQuit     call VimtexAdditionalCleanup(template_list)
-    
+
     " auto-compile
     au User VimtexEventInitPost call vimtex#compiler#compile()
 augroup END
 
 " open nerd-tree at the start of each file opening
 autocmd vimenter * NERDTree
+
+" set list and other listing characters (:h listchars)
+set list listchars=tab:→\ ,trail:·
+
+" show leading spaces
+" SOURCE: https://www.reddit.com/r/vim/comments/5fxsfy/show_leading_spaces/
+hi Conceal guibg=NONE ctermbg=NONE ctermfg=DarkGrey
+autocmd BufWinEnter * setl conceallevel=2 concealcursor=nv
+autocmd BufWinEnter * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
+autocmd BufReadPre * setl conceallevel=2 concealcursor=nv
+autocmd BufReadPre * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
 
 " spell checker (for your local language, anyway)
 setlocal spell
