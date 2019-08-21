@@ -1,12 +1,13 @@
 [Trigger]
 Operation = Install
+Operation = Upgrade
 Operation = Remove
 Type = Package
 Target = *
 
 [Action]
 Depends = pacman
-Description = Update package list at $HOME/dotfiles/pkglist
+Description = Do a system sync first before doing any operations
 When = PostTransaction
-Exec = /bin/sh /usr/local/bin/create-pacman-pkglist.sh
+Exec = /usr/bin/pacman -Syu
 
