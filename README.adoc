@@ -10,14 +10,22 @@ doing. Review the code first, change the setting accordingly,
 and apply it.
 
 == Screenshots
+My setup was made by the FOSS gang. 
 
-image::docs/i3-multiple-windows.png[My i3 setup with multiple windows]
+.i3 setup with multiple windows
+image::docs/i3-multiple-windows.png[i3 setup with multiple windows]
 
-image::docs/i3-single-window.png[My i3 setup with single window]
+.i3 setup with single window
+image::docs/i3-single-window.png[i3 setup with single window]
 
-image::docs/i3-no-window.png[My i3 setup with no window]
+.i3 setup with no window
+image::docs/i3-no-window.png[i3 setup with no window]
 
-image::docs/i3-rofi.png[My i3 setup with rofi]
+.rofi setup
+image::docs/i3-rofi.png[rofi setup]
+
+.vim and zathura (and LaTeX) setup
+image::docs/vim-and-zathura.png[vim and zathura (and LaTeX) setup]
 
 == Specifications
 Here are the main specifications of my machine currently running this
