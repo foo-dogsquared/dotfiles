@@ -3,6 +3,6 @@ configuration {
     display-run: "Execute";
     display-window: "Window";
     display-ssh: "SSH";
-    font: "Noto Sans 12";
+    font: "Iosevka 14";
     show-icons: true;
 }

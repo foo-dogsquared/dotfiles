@@ -8,6 +8,7 @@
 set_from_resource $bg background #0c080b
 set_from_resource $fg foreground #e5e3e3
 
+set_from_resource $color_1 color1 #a83d63
 set_from_resource $color_2 color2 #d09177
 set_from_resource $color_4 color4 #b5659a
 set_from_resource $color_6 color6 #aea0c7
@@ -40,6 +41,9 @@ font pango:Iosevka 11
 
 # Setting up borders for windows of different states
 default_border pixel 6
+client.focused $color_2 $color_2 #ffffff
+client.focused_inactive $color_2 $color_2 #ffffff
+client.urgent $color_1 $color_1 #ffffff
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -147,11 +151,11 @@ bindsym XF86Mail exec thunderbird
 
 # Screenshot capture
 bindsym Print exec ~/.scripts/maim-screenshot.sh
-bindsym Control+Print exec ~/.scripts/maim-selection-screenshot.sh
+bindsym Control+Print exec ~/.scripts/maim-screenshot.sh --select
 
 # Delayed screenshot capture
-bindsym Shift+Print exec ~/.scripts/maim-screenshot.sh 3
-bindsym Control+Shift+Print exec ~/.scripts/maim-selection-screenshot.sh 3
+bindsym Shift+Print exec ~/.scripts/maim-screenshot.sh --delay 3
+bindsym Control+Shift+Print exec ~/.scripts/maim-screenshot.sh --select --delay 3
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -161,7 +165,7 @@ set $code_ws "3"
 set $vim_ws "4"
 set $graphics_ws "5"
 set $file_ws "6"
-set $ws7 "7"
+set $music_ws "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
@@ -176,8 +180,6 @@ assign [instance="^(?i)ranger$"] $file_ws
 assign [class="^(?i)ranger$"] $file_ws
 
 assign [class="^(?i)code-oss$"] $code_ws
-assign [class="^(?i)thunar$"] $file_ws
-assign [class="^(?i)firefox$"] $web_ws
 assign [class="^(?i)inkscape$"] $graphics_ws
 assign [class="^(?i)thunderbird$"] $mail_ws
 
@@ -188,7 +190,7 @@ bindsym $mod+3 workspace $code_ws
 bindsym $mod+4 workspace $vim_ws
 bindsym $mod+5 workspace $graphics_ws
 bindsym $mod+6 workspace $file_ws
-bindsym $mod+7 workspace $ws7
+bindsym $mod+7 workspace $music_ws
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
@@ -200,7 +202,7 @@ bindsym $mod+Shift+3 move container to workspace $code_ws
 bindsym $mod+Shift+4 move container to workspace $vim_ws
 bindsym $mod+Shift+5 move container to workspace $graphics_ws
 bindsym $mod+Shift+6 move container to workspace $file_ws
-bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+7 move container to workspace $music_ws
 bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
@@ -251,8 +253,9 @@ mode "applications" {
     bindsym a exec thunar
     bindsym x exec alacritty --class "vim" --command vim
     bindsym Shift+x exec alacritty --command vim
+    bindsym o exec obs
     bindsym z exec zathura
-	
+
     # Ways to exit the mode
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -278,7 +281,7 @@ bar {
         focused_workspace 	$color_2 	$color_2	#ffffff
         active_workspace 	$color_4	$color_4 	#ffffff
         inactive_workspace 	$bg 		$bg		#888888
-        urgent_workspace 	$color_4	$color_4 	#ffffff
+        urgent_workspace 	$color_1	$color_1 	#ffffff
     }
 }
 
