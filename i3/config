@@ -22,7 +22,6 @@ exec_always feh --bg-scale ~/wallpapers/sand.jpg
 # Startup applications
 exec firefox
 exec thunderbird
-exec thunar
 
 # i3 config file (v4)
 #

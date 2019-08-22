@@ -2,9 +2,10 @@
 PICTURES_DIRECTORY=$HOME/Pictures
 DOCUMENTS_DIRECTORY=$HOME/Documents
 BIN_DIRECTORY=$HOME/bin
+SCRIPTS_DIRECTORY=$HOME/.scripts/
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$BIN_DIRECTORY:/usr/local/bin:.cargo/bin:$PATH
+export PATH=$BIN_DIRECTORY:$SCRIPTS_DIRECTORY:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/foo-dogsquared/.oh-my-zsh"
@@ -102,3 +103,18 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/foo-dogsquared/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/foo-dogsquared/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/foo-dogsquared/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/foo-dogsquared/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
