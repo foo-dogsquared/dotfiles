@@ -27,6 +27,7 @@ image::docs/i3-rofi.png[rofi setup]
 .vim and zathura (and LaTeX) setup
 image::docs/vim-and-zathura.png[vim and zathura (and LaTeX) setup]
 
+
 == Specifications
 Here are the main specifications of my machine currently running this
 (as of 2019-08-09):
@@ -43,15 +44,18 @@ The picture is used to generate the color pallete is
 https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[this one]. 
 It's also the wallpaper used in the screenshots.
 
+
 == Wallpapers
 Here are the wallpapers' filename along with their sources:
 
 * https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[`nebula.jpg`]
 * https://www.reddit.com/r/wallpapers/comments/co9t14/sand/[`sand.jpg`]
 
+
 == Custom scripts
 My own scripts is in link:.scripts/[`.scripts/`] and should be linked in `$HOME/.scripts`.
 This is mostly used for using scripts from different configs such as from i3 and dunst.
+
 
 == Configured programs
 Here's a list of the programs with details on the config found in this repo. 
@@ -78,6 +82,18 @@ A display server implementing X window system.
 * The configuration is found at `.Xresources` containing the colors (0 to 15, 
 foreground, and the background)
 
+=== https://github.com/yshui/compton[Compton]
+A window compositor that adds off-screen buffers and additional 
+effects and animations to the window. Can be used for adding 
+style to your setup.
+
+* Config found at link:compton/[`compton/`] directory.
+* The usual target path for a user is at `$HOME/.config/compton`.
+* Minimum version (from `compton --version`):
+** `v7.2`
+* The config is copied from `/etc/xorg/compton.conf` and edited 
+a few parameters.
+
 === https://www.vim.org/[Vim]
 A modal text editor.
 
@@ -88,7 +104,7 @@ A modal text editor.
 * Contains my plugin list and editor configurations at `.vimrc`.
 * There are also some https://github.com/sirver/UltiSnips[UltiSnips] snippets
 stored in `own-snippets` folder (since `snippets` is a reserved folder name). 
-One of the largest snippet file is the snippets for LaTeX files. It is based 
+* One of the largest snippet file is the snippets for LaTeX files. It is based 
 on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips snippets for LaTeX].
 
 === https://ranger.github.io/[Ranger]
@@ -180,6 +196,7 @@ It's a notification daemon used to display notifications sent by notifiers
 * Minimum version (from `dunst --version`):
 ** `Dunst - A customizable and lightweight notification-daemon 1.4.1 (2019-07-03)`
 * Simply contains a `dunstrc` configuring appearance of the notifications.
+
 
 == Additional programs used
 As much as possible, I use free and open source software for all of my needs. 
