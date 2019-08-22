@@ -7,6 +7,7 @@ let g:UltiSnipsSnippetDirectories = [$HOME . "/.vim/own-snippets"]
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="context"
 
 Plug 'scrooloose/nerdtree'
 
@@ -51,7 +52,7 @@ set number relativenumber
 set cursorline
 
 " set tab to enter spaces, instead
-set expandtab tabstop=4 shiftwidth=4 smartindent
+set expandtab
 
 let template_list = [
 \    ["_minted-", ""],

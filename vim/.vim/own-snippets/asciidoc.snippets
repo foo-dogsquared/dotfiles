@@ -1,3 +1,16 @@
+global !p
+def smart_space(next_str, auto_str=" ", loose=False):
+    next_word = ""
+
+    if next_str:
+        if loose == True:
+            next_word = auto_str
+        elif next_str[0] in [",", ".", "-", "!", "?", " "]:
+            next_word = auto_str
+
+    return next_word
+endglobal
+
 # Text formatting
 snippet "h(\d)" "Quick header snippet" biw
 `!p
@@ -7,6 +20,22 @@ legit_header_level = True if header_level >= 1 and header_level <= 6 else False
 snip.rv = "#" * header_level if legit_header_level else ""
 `
 $0
+endsnippet
+
+snippet tt "Monospace" biw
+`$1` $0
+endsnippet
+
+snippet hl "Highlighted text" biw
+#$1# $0
+endsnippet
+
+snippet sp "Superscript" biw
+^$1^ $0
+endsnippet
+
+snippet sb "Subscript" biw
+~$1~ $0
 endsnippet
 
 snippet dt "Definition term" bi
@@ -55,7 +84,7 @@ $1
 $0
 endsnippet
 
-# Images
+# Multimedia blocks
 snippet figure "Image block with caption" bi
 .${2:<caption>}
 image::${1:<image path>}[${3:width=100%,height=100%}]
@@ -66,7 +95,6 @@ snippet -figure "Inline image" i
 image:${1:<image path>}[${2}] $0
 endsnippet
 
-# Video blocks
 snippet video "Video block" bi
 video::${1:<image path>}[$2]
 $0
@@ -79,6 +107,11 @@ endsnippet
 
 snippet vimeo "Vimeo video block" bi
 video::${1:<Vimeo video ID>}[vimeo]
+$0
+endsnippet
+
+snippet audio "Audio block" bi
+audio::${1:<image path>}[`!p snip.rv=smart_space(t[2], "options=", loose=True)`$2]
 $0
 endsnippet
 

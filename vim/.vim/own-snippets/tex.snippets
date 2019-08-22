@@ -8,11 +8,28 @@ texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')
 
 ignore = texIgnoreMathZoneIds[0]
 
-def smart_space(next_str, auto_str=" "):
-    if next_str and next_str[0] in [",", ".", "-", "!", "?", " "]:
-        snip.rv = auto_str
-    else:
-        snip.rv = ""
+def math():
+    synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+    try:
+        first = next(
+            i for i in reversed(synstackids)
+            if i in texIgnoreMathZoneIds or i in texMathZoneIds
+        )
+        return first != ignore
+    except StopIteration:
+        return False
+
+
+def smart_space(next_str, auto_str=" ", loose=False):
+    next_word = ""
+
+    if next_str:
+        if loose == True:
+            next_word = auto_str
+        elif next_str[0] in [",", ".", "-", "!", "?", " "]:
+            next_word = auto_str
+
+    return next_word
 
 def add_variable_numbers(*inputs, **kwargs):
     absolute = kwargs.pop("absolute", False)
@@ -37,8 +54,6 @@ snippet template "Main template (that should work without relying with style fil
 
 % all of the packages to be used
 \usepackage[nocomments]{standalone}
-\usepackage{chngcntr}
-\usepackage{import}
 \usepackage[utf8]{inputenc}
 \usepackage{fontawesome}
 \usepackage[english]{babel}
@@ -129,28 +144,28 @@ $0
 endsnippet  
 
 # Common commands
-snippet pack "Use package command" i
-\usepackage`!p smart_space(t[2], "[")`$2`!p smart_space(t[2], "]")`{$1}
+snippet pack "Use package command" bis
+\usepackage`!p snip.rv=smart_space(t[2], "[",loose=True)`$2`!p snip.rv=smart_space(t[2], "]",loose=True)`{$1}
 $0
 endsnippet
 
-snippet letter "Make at letter block" i
+snippet letter "Make at letter block" bis
 \makeatletter
 $1
 \makeatother
 $0
 endsnippet
 
-snippet label "Create a label" i
+snippet label "Create a label" bi
 \label{$1}
 $0
 endsnippet
 
-snippet ref "Create a reference for a label" i
+snippet ref "Create a reference for a label" bi
 \ref{${1:<label to be referenced>}} $0
 endsnippet
 
-snippet foot "Footnote"
+snippet foot "Footnote" w
 \footnote{${1:<text>}} $0
 endsnippet
 
@@ -173,7 +188,7 @@ $1
 $0
 endsnippet
 
-snippet equation "Equation environment for mathematical typesetting" bi
+snippet equation "Equation environment for mathematical typesetting" biw
 \begin{equation}
 \label{eq:$1}
 $2
@@ -181,7 +196,7 @@ $2
 $0
 endsnippet
 
-snippet figure "Figure environment" bi
+snippet figure "Figure environment" biw
 \begin{figure}
 \centering
 \label{fig:$1}
@@ -191,695 +206,813 @@ $2
 $0
 endsnippet
 
-snippet plot "Quickly plot a graph" bi
-\begin{figure}[$1]
+snippet graph "Quickly make a graph" bi
+\begin{figure}[${1:ht}]
 \centering
 \begin{tikzpicture}
     \begin{axis}[
-    xlabel=$x$,
-    ylabel=$y$,
-    xmin= ${2:-10}, xmax= ${3:10},
+    xlabel=${2:$x$},
+    ylabel=${3:$y$},
     axis lines = middle,
     grid=major,
     axis equal=false,
     tick style={very thick},
-    major tick style=thick,`!p snip.rv = smart_space(t[4], "\n\t")`$4
+    major tick style=thick,
+    domain=${4:-10}:${5:10},`!p snip.rv = smart_space(t[6], "\n\t", loose=True)`$6
     ]
-    \addplot[domain=$2:$3, samples=${6: `!p snip.rv = add_variable_numbers(t[2], t[3], absolute=True)`}]{$7};
+        \addplot[samples=${7:`!p snip.rv = add_variable_numbers(t[4], t[5], 1, absolute=True)`},$8]{${9:x}};
     \end{axis}
 \end{tikzpicture}
-\caption{$8}
-\label{fig:${9:$8}}
+\caption{$10}
+\label{fig:${11:$10}}
 \end{figure}
 $0
 endsnippet
 
-snippet iplot "Quickly plot a graph with integers" bi
-\begin{figure}[$1]
+snippet agraph "Quickly plot a graph without considering integers" bi
+\begin{figure}[${1:ht}]
 \centering
 \begin{tikzpicture}
     \begin{axis}[
-    xlabel=$x$,
-    ylabel=$y$,
+    xlabel=${2:$x$},
+    ylabel=${3:$y$},
     axis lines = middle,
+    grid=major,
+    axis equal=false,
+    tick style={very thick},
+    major tick style=thick,
+    minor tick num=2,
+    domain=${4:-10}:${5:10},`!p snip.rv=smart_space(t[6], "\n\t", loose=True)`$6
     ]
-    \addplot[domain=$2:$3, samples=`!p snip.rv=abs(t[2]) + abs(t[3]) + 1`]{$4};
+        \addplot[samples=${7:`!p snip.rv=add_variable_numbers(t[4], t[5], absolute=True)`}, $8]{${9:x}};
     \end{axis}
 \end{tikzpicture}
-\caption{$5}
-\label{${9:$6}}
+\caption{$10}
+\label{fig:${11:$10}}
 \end{figure}
 $0
 endsnippet
 
+snippet plot "Add a plot line" i
+\addplot[domain=$1:$2, samples=${3:`!p snip.rv=add_variable_numbers(t[1], t[2], 1, absolute=true)`}]`!p snip.rv=smart_space(t[4], ", ")`$4{${5: x}}
+$0
+endsnippet
+
+
 # Common mathematical functions and symbols 
 # Also take note that most expressions are prepended with 'M' to mean mathematical usage
-snippet === "Equivalent to" i
+snippet === "Equivalent to" iw
 \equiv
 endsnippet
 
-snippet ~= "Congruent to" i
+snippet ~= "Congruent to" iw
 \cong
 endsnippet
 
-snippet ~~ "Approximately equal to" i
+snippet ~~ "Approximately equal to" iw
 \approx
 endsnippet
 
-snippet p= "Proportional to" i
+snippet p= "Proportional to" iw
 \propto
 endsnippet
 
-snippet != "Not equal" i
+snippet != "Not equal" iw
 \neq
 endsnippet
 
-snippet <= "Greater than or equal to" i
+snippet <= "Greater than or equal to" iw
 \geq
 endsnippet
 
-snippet !> "Not greater than" i
+snippet !> "Not greater than" iw
 \ngtr
 endsnippet
 
-snippet >= "Less than or equal to" i
+snippet >= "Less than or equal to" iw
 \leq
 endsnippet
 
-snippet !< "Not less than" i
+snippet !< "Not less than" iw
 \nless
 endsnippet
 
-snippet <-- "Precedes symbol" i
+snippet <-- "Precedes symbol" iw
 \prec
 endsnippet
 
-snippet =<- "Precedes or equals" i
+snippet =<- "Precedes or equals" iw
 \preceq
 endsnippet
 
-snippet !<- "Not precedes" i
+snippet !<- "Not precedes" iw
 \nprec
 endsnippet
 
-snippet --> "Succeeds symbol" i
+snippet --> "Succeeds symbol" iw
 \succ
 endsnippet
 
-snippet =-> "Succeeds or equals" i
+snippet =-> "Succeeds or equals" iw
 \succeq
 endsnippet
 
-snippet !-> "Not succeeds" i
+snippet !-> "Not succeeds" iw
 \nsucc
 endsnippet
 
-snippet << "Less order than" i
+snippet << "Less order than" iw
 \ll
 endsnippet
 
-snippet >> "Greater order than" i
+snippet >> "Greater order than" iw
 \gg
 endsnippet
 
-snippet int "Integral symbol" i
+context "math()"
+snippet int "Integral symbol" iw
 \int
 endsnippet
 
-snippet -int "Integral with values" i
+context "math()"
+snippet -int "Integral with values" iw
 \int_{${1:<lower bound>}}^{${2:<upper bound}}$0
 endsnippet
 
-snippet OO "Empty set" i
+context "math()"
+snippet OO "Empty set" iw
 \O
 endsnippet
 
-snippet -sq "Square superscript" i
+context "math()"
+snippet -sq "Square superscript" iw
 ^{2}$0
 endsnippet
 
-snippet -cb "Cube superscript" i
+context "math()"
+snippet -cb "Cube superscript" iw
 ^{3}$0
 endsnippet
 
-snippet -- "Superscript" iA
+context "math()"
+snippet -- "Superscript" iwA
 ^{$1}$0
 endsnippet
 
-snippet __ "Subscript" iA
+context "math()"
+snippet __ "Subscript" iwA
 _{$1}$0
 endsnippet
 
-snippet ... "Ellipsis" i
+snippet ... "Ellipsis" iw
 \ldots
 endsnippet
 
-snippet c.. "Centered ellipsis" i
+snippet c.. "Centered ellipsis" iw
 \cdots
 endsnippet
 
-snippet v.. "Vertical ellipsis" i
+snippet v.. "Vertical ellipsis" iw
 \vdots
 endsnippet
 
-snippet d.. "Diagonal ellipsis" i
+snippet d.. "Diagonal ellipsis" iw
 \ddots
 endsnippet
 
-snippet Mbc "Mathematical because symbol" i
+context "math()"
+snippet Mbc "Mathematical because symbol" iw
 \because
 endsnippet
 
-snippet Mth "Mathematical therefore symbol" i
+context "math()"
+snippet Mth "Mathematical therefore symbol" iw
 \therefore
 endsnippet
 
-snippet exp "Expression" i
+context "math()"
+snippet exp "Expression" iw
 \exp(${1:x}} $0
 endsnippet
 
-snippet frac "Fraction" i
+context "math()"
+snippet frac "Fraction" iw
 \frac{${1:<enumerator>}{${2:<denominator}}
 $0
 endsnippet
 
-snippet "-(\d+|\w+) over (\d+|\w+)-" "Quick fraction" riA
+context "math()"
+snippet "-(\d+|\w+) over (\d+|\w+)-" "Quick fraction" riwA
 `!p snip.rv = f"\\frac{{{match.group(1)}}}{{{match.group(2)}}}"`
 $0
 endsnippet
 
-snippet "-(\d+|\w+) / (\d+|\w+)-" "Quick fraction" riA
+context "math()"
+snippet "-(\d+|\w+) / (\d+|\w+)-" "Quick fraction" riwA
 `!p snip.rv = f"\\frac{{{match.group(1)}}}{{{match.group(2)}}}"`
 $0
 endsnippet
 
-snippet mod "Mod operator (as binary operator)" i
+context "math()"
+snippet mod "Mod operator (as binary operator)" iw
 \bmod $0
 endsnippet
 
 ## Common notations
-snippet sum "Sigma notation symbol" i
+context "math()"
+snippet sum "Sigma notation symbol" iw
 \sum
 endsnippet
 
-snippet -sum "Sigma notation" i
+context "math()"
+snippet -sum "Sigma notation" iw
 \sum_{${1:<lower bound>}^{${2:<upper bound>}} f(${3:<function expression>})
 $0
 endsnippet
 
-snippet prod "Product notation symbol" i
+context "math()"
+snippet prod "Product notation symbol" iw
 \prod
 endsnippet
 
-snippet -prod "Product notation" i 
+context "math()"
+snippet -prod "Product notation" iw
 \prod_{${1:<lower bound>}^{${2:upper bound}} f(${3:<function expression>})
 $0
 endsnippet
 
-snippet lim "Limit keyword" i
+context "math()"
+snippet lim "Limit keyword" iw
 \lim
 endsnippet
 
-snippet -lim "Limit operator" i
+context "math()"
+snippet -lim "Limit operator" iw
 \lim\limits_{${1:x \to \infty}}
 endsnippet
 
-snippet ooo "Infinity symbol" i
+context "math()"
+snippet ooo "Infinity symbol" iw
 \infty
 endsnippet
 
-snippet inf "Infinity symbol" i
+context "math()"
+snippet inf "Infinity symbol" iw
 \infty
 endsnippet
 
-snippet choose "Choose function" i
+context "math()"
+snippet choose "Choose function" iw
 \binom{${1:<range>}}{${2:<N>}}
 $0
 endsnippet
 
-snippet "-(\d+|\w+) choose (\d+|\w+)-" "Quick choose function" riA
+context "math()"
+snippet "-(\d+|\w+) choose (\d+|\w+)-" "Quick choose function" riwA
 `!p snip.rv = f"\\binom{{{match.group(1)}}}{{{match.group(2)}}}"`
 $0
 endsnippet
 
 ## Common sets of numbers
-snippet SN "Set of natural numbers" i
+context "math()"
+snippet SN "Set of natural numbers" iw
 \N
 endsnippet
 
-snippet SZ "Set of integers" i
+context "math()"
+snippet SZ "Set of integers" iw
 \Z
 endsnippet
 
-snippet SQ "Set of rational numbers" i
+context "math()"
+snippet SQ "Set of rational numbers" iw
 \Q
 endsnippet
 
-snippet SA "Set of algebraic numbers" i
+context "math()"
+snippet SA "Set of algebraic numbers" iw
 \mathbb{A}
 endsnippet
 
-snippet SR "Set of real numbers" i
+context "math()"
+snippet SR "Set of real numbers" iw
 \R
 endsnippet
 
-snippet SC "Set of complex numbers" i
+context "math()"
+snippet SC "Set of complex numbers" iw
 \C
 endsnippet
 
 ## Common mathematical logic symbols
-snippet Lin "Logical in symbol" i
+context "math()"
+snippet Lin "Logical in symbol" iw
 \in
 endsnippet
 
-snippet L!in "Logical not in symbol" i
+context "math()"
+snippet L!in "Logical not in symbol" iw
 \notin
 endsnippet
 
-snippet Lon "Logical owns symbol" i
+context "math()"
+snippet Lon "Logical owns symbol" iw
 \ni
 endsnippet
 
-snippet LSu "Logical set union" i
+context "math()"
+snippet LSu "Logical set union" iw
 \cup
 endsnippet
 
-snippet LSi "Logical set interaction" i
+context "math()"
+snippet LSi "Logical set interaction" iw
 \cap
 endsnippet
 
-snippet LSd "Logical set difference" i
+context "math()"
+snippet LSd "Logical set difference" iw
 \setminus
 endsnippet
 
-snippet Lex "There exists at least one" i
+context "math()"
+snippet Lex "There exists at least one" iw
 \exists
 endsnippet
 
-snippet Lex! "There exists one and only one" i
+context "math()"
+snippet Lex! "There exists one and only one" iw
 \exists!
 endsnippet
 
-snippet L!ex "Not exists" i
+context "math()"
+snippet L!ex "Not exists" iw
 \nexists
 endsnippet
 
-snippet Lfa "For all" i
+context "math()"
+snippet Lfa "For all" iw
 \forall
 endsnippet
 
-snippet Lor "Logical 'or' symbol" i
+context "math()"
+snippet Lor "Logical 'or' symbol" iw
 \lor
 endsnippet
 
-snippet Land "Logical 'and' symbol" i
+context "math()"
+snippet Land "Logical 'and' symbol" iw
 \land
 endsnippet
 
-snippet Lnot "Logical 'not' symbol" i
+context "math()"
+snippet Lnot "Logical 'not' symbol" iw
 \neg
 endsnippet
 
-snippet => "Implies" Ai
+context "math()"
+snippet => "Implies" Aiw
 \implies
 endsnippet
 
-snippet =< "Implied by" Ai
+context "math()"
+snippet =< "Implied by" Aiw
 \impliedby
 endsnippet
 
-snippet <=> "If and only if" i
+context "math()"
+snippet <=> "If and only if" iw
 \iff
 endsnippet
 
-snippet iff "If and only if" i
+context "math()"
+snippet iff "If and only if" iw
 \iff
 endsnippet
 
-snippet (( "Subset" i
+context "math()"
+snippet (( "Subset" iw
 \subset
 endsnippet
 
-snippet !( "Not a proper subset" i
+context "math()"
+snippet !( "Not a proper subset" iw
 \not\subset
 endsnippet
 
-snippet =( "Subset is equal to" i
+context "math()"
+snippet =( "Subset is equal to" iw
 \subseteq
 endsnippet
 
-snippet !=( "Not a subset of" i
+context "math()"
+snippet !=( "Not a subset of" iw
 \nsubseteq
 endsnippet
 
-snippet )) "A proper subset of" i
+context "math()"
+snippet )) "A proper subset of" iw
 \supset
 endsnippet
 
-snippet !) "Not a proper superset of" i
+context "math()"
+snippet !) "Not a proper superset of" iw
 \not\supset
 endsnippet
 
-snippet =) "A subset of" i
+context "math()"
+snippet =) "A subset of" iw
 \supseteq
 endsnippet
 
-snippet !=) "Not a superset of" i
+context "math()"
+snippet !=) "Not a superset of" iw
 \nsupseteq
 endsnippet
 
 ## Common functions
 ### Trigonometric functions
-snippet Msin "Sine function" i
-\sin`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Msin "Sine function" iw
+\sin`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Mcos "Cosine function" i
-\cos`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mcos "Cosine function" iw
+\cos`!p smart_space(t[1], "(", loose=True)`$1`!p smart_space(t[1], ")", loose=True)`
 endsnippet
 
-snippet Mtan "Tangent function" i
-\tan`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mtan "Tangent function" iw
+\tan`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Mcsc "Cosecant function" i
-\csc`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mcsc "Cosecant function" iw
+\csc`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Msec "Secant function" i
-\sec`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Msec "Secant function" iw
+\sec`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Mcot "Cotangent function" i
-\cot`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mcot "Cotangent function" iw
+\cot`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
 ### Inverse trigonometric functions
-snippet M!sin "Inverse sine keyword" i
-\arcsin`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!sin "Inverse sine keyword" iw
+\arcsin`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!cos "Inverse cosine keyword" i
-\arccos`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!cos "Inverse cosine keyword" iw
+\arccos`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!tan "Inverse tangent keyword" i
-\arctan`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!tan "Inverse tangent keyword" iw
+\arctan`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!csc "Inverse cosecant keyword" i
-\arccsc`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!csc "Inverse cosecant keyword" iw
+\arccsc`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!sec "Inverse secant keyword" i
-\arcsec`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!sec "Inverse secant keyword" iw
+\arcsec`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!cot "Inverse cotangent" i
-\arccot`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!cot "Inverse cotangent" iw
+\arccot`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
 ### Hyperbolic trigonometric functions
-snippet Msinh "Hyperbolic sine" i
-\sinh`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Msinh "Hyperbolic sine" iw
+\sinh`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Mcosh "Hyperbolic cosine" i
-\cosh`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mcosh "Hyperbolic cosine" iw
+\cosh`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Mtanh "Hyperbolic tangent" i
-\tanh`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mtanh "Hyperbolic tangent" iw
+\tanh`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Mcsch "Hyperbolic cosecant" i
-\operatorname{csch}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mcsch "Hyperbolic cosecant" iw
+\operatorname{csch}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Msech "Hyperbolic secant" i
-\operatorname{sech}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Msech "Hyperbolic secant" iw
+\operatorname{sech}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet Mcoth "Hyperbolic cotangent" i
-\coth`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet Mcoth "Hyperbolic cotangent" iw
+\coth`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
 ### Inverse hyperbolic trigonometric functions
-snippet M!sinh "Inverse hyperbolic sine" i
-\operatorname{arsinh}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!sinh "Inverse hyperbolic sine" iw
+\operatorname{arsinh}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!cosh "Inverse hyperbolic cosine" i
-\operatorname{arcosh}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!cosh "Inverse hyperbolic cosine" iw
+\operatorname{arcosh}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!tanh "Inverse hyperbolic tangent" i
-\operatorname{artanh}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!tanh "Inverse hyperbolic tangent" iw
+\operatorname{artanh}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!csch "Inverse hyperbolic cosecant" i
-\operatorname{arcsch}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!csch "Inverse hyperbolic cosecant" iw
+\operatorname{arcsch}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!sech "Inverse hyperbolic secant" i
-\operatorname{arsech}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!sech "Inverse hyperbolic secant" iw
+\operatorname{arsech}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
-snippet M!coth "Inverse hyperbolic cotangent" i
-\operatorname{arcoth}`!p smart_space(t[1], "(")`$1`!p smart_space(t[1], ")")`
+context "math()"
+snippet M!coth "Inverse hyperbolic cotangent" iw
+\operatorname{arcoth}`!p snip.rv=smart_space(t[1], "(", loose=True)`$1`!p snip.rv=smart_space(t[1], ")", loose=True)` $0
 endsnippet
 
 ## Common symbols found in geometry
-snippet Gov "Overline" i
+snippet Gov "Overline" iw
 \overline{$1}
 endsnippet
 
-snippet ----- "Overline" i
+snippet ----- "Overline" iw
 \overline{$1}
 endsnippet
 
-snippet Gra "Right arrow" i
+snippet Gra "Right arrow" iw
 \overrightarrow{$1}
 endsnippet
 
-snippet ----> "Right arrow" i
+snippet ----> "Right arrow" iw
 \overrightarrow{$1}
 endsnippet
 
-snippet Gang "Angle symbol" i
+snippet Gang "Angle symbol" iw
 \angle
 endsnippet
 
-snippet Gman "Measured angle symbol" i
+snippet Gman "Measured angle symbol" iw
 \measuredangle
 endsnippet
 
-snippet Gtri "Triangle" i
+snippet Gtri "Triangle" iw
 \triangle
 endsnippet
 
-snippet Gpar "Parallel with" i
+snippet Gpar "Parallel with" iw
 \|
 endsnippet
 
-snippet G!par "Not parallel with" i
+snippet G!par "Not parallel with" iw
 \nparallel
 endsnippet
 
-snippet Gper "Perpendicular to" i
+snippet Gper "Perpendicular to" iw
 \perp
 endsnippet
 
-snippet G!per "Not perpendicular to" i
+snippet G!per "Not perpendicular to" iw
 \not\perp
 endsnippet
 
 # Text formatting
-snippet bf "Boldface text" i
+snippet bf "Boldface text" iw
 \textbf{$1}$0
 endsnippet
 
-snippet it "Italic text" i
+snippet it "Italic text" iw
 \emph{$1}$0
 endsnippet
 
-snippet tt "Teletype font" i
+snippet tt "Teletype font" iw
 \texttt{$1}$0
 endsnippet
 
-snippet ol "Enumerated list (ordered list)" i
+snippet ol "Enumerated list (ordered list)" iw
 \begin{enumerate}
 $1
 \end{enumerate}
 $0
 endsnippet
 
-snippet ul "Itemized list (unordered list)" i
+snippet ul "Itemized list (unordered list)" iw
 \begin{itemize}
 $1
 \end{itemize}
 $0
 endsnippet
 
-snippet li "List item for the OL/UL lists" i
+snippet li "List item for the OL/UL lists" iw
 \item{$1}
 $0
 endsnippet
     
-snippet a "URL links (with description)" i
+snippet a "URL links (with description)" iw
 \href{${1:<url>}{${2:<description>}}$0
 endsnippet
 
-snippet al "Reference links with label" i
+snippet al "Reference links with label" iw
 \autoref{${1:<label>}}$0
 endsnippet
 
 # Greek letters
-snippet GAA "Uppercase Greek letter alpha" 
+context "math()"
+snippet GAA "Uppercase Greek letter alpha" w
 \Alpha
 endsnippet
 
-snippet GAa "Lowercase Greek letter alpha"
+context "math()"
+snippet GAa "Lowercase Greek letter alpha" w
 \alpha
 endsnippet
 
-snippet GBB "Uppercase Greek letter beta"
+context "math()"
+snippet GBB "Uppercase Greek letter beta" w
 \Beta
 endsnippet
 
-snippet GBb "Lowercase Greek letter beta"
+context "math()"
+snippet GBb "Lowercase Greek letter beta" w
 \beta
 endsnippet
 
-snippet GCC "Uppercase Greek letter gamma"
+context "math()"
+snippet GCC "Uppercase Greek letter gamma" w
 \Gamma
 endsnippet
 
-snippet GCc "Lowercase Greek letter gamma"
+context "math()"
+snippet GCc "Lowercase Greek letter gamma" w
 \gamma
 endsnippet
 
-snippet GDD "Uppercase Greek letter delta"
+context "math()"
+snippet GDD "Uppercase Greek letter delta" w
 \Delta
 endsnippet
 
-snippet GDd "Lowercase Greek letter delta"
+context "math()"
+snippet GDd "Lowercase Greek letter delta" w
 \delta
 endsnippet
 
-snippet GEE "Uppercase Greek letter epsilon"
+context "math()"
+snippet GEE "Uppercase Greek letter epsilon" w
 \Epsilon
 endsnippet
 
-snippet GEe "Lowercase Greek letter epsilon"
+context "math()"
+snippet GEe "Lowercase Greek letter epsilon" w
 \epsilon
 endsnippet
 
-snippet GVEe "Variation Greek letter epsilon"
+context "math()"
+snippet GVEe "Variation Greek letter epsilon" w
 \varepsilon
 endsnippet
 
-snippet GTT "Uppercase Greek letter theta"
+context "math()"
+snippet GTT "Uppercase Greek letter theta" w
 \Theta
 endsnippet
 
-snippet GTt "Lowercase Greek letter theta"
+context "math()"
+snippet GTt "Lowercase Greek letter theta" w
 \theta
 endsnippet
 
-snippet GLL "Uppercase Greek letter lambda"
+context "math()"
+snippet GLL "Uppercase Greek letter lambda" w
 \Lambda
 endsnippet
 
-snippet GLl "Lowercase Greek letter lambda"
+context "math()"
+snippet GLl "Lowercase Greek letter lambda" w
 \lambda
 endsnippet
 
-snippet GPP "Uppercase Greek letter pi"
+context "math()"
+snippet GPP "Uppercase Greek letter pi" w
 \Pi
 endsnippet
 
-snippet GPp "Lowercase Greek letter pi"
+context "math()"
+snippet GPp "Lowercase Greek letter pi" w
 \pi
 endsnippet
 
-snippet GVPp "Variation Greek letter pi"
+context "math()"
+snippet GVPp "Variation Greek letter pi" w
 \varpi
 endsnippet
 
-snippet GSS "Uppercase Greek letter sigma"
+context "math()"
+snippet GSS "Uppercase Greek letter sigma" w
 \Sigma
 endsnippet
 
-snippet GSs "Lowercase Greek letter sigma"
+context "math()"
+snippet GSs "Lowercase Greek letter sigma" w
 \sigma
 endsnippet
 
-snippet GPH "Uppercase Greek letter phi"
+context "math()"
+snippet GPH "Uppercase Greek letter phi" w
 \Phi
 endsnippet
 
-snippet GPh "Lowercase Greek letter phi"
+context "math()"
+snippet GPh "Lowercase Greek letter phi" w
 \phi
 endsnippet
 
-snippet GVPh "Variation Greek letter phi"
+context "math()"
+snippet GVPh "Variation Greek letter phi" w
 \varphi
 endsnippet
 
-snippet GPS "Uppercase Greek letter psi"
+context "math()"
+snippet GPS "Uppercase Greek letter psi" w
 \Psi
 endsnippet
 
-snippet GPs "Lowercase Greek letter psi"
+context "math()"
+snippet GPs "Lowercase Greek letter psi" w
 \psi
 endsnippet
 
-snippet GOO "Uppercase Greek letter omega"
+context "math()"
+snippet GOO "Uppercase Greek letter omega" w
 \Omega
 endsnippet
 
-snippet GOo "Lowercase Greek letter omega"
+context "math()"
+snippet GOo "Lowercase Greek letter omega" w
 \omega
 endsnippet
 
-# Custom commands and environment (for my class notes)
-snippet dnote "Doc note admonition block" i
+# Custom commands and environment (for my class notes) w
+snippet dnote "Doc note admonition block" iw
 \begin{-doc-note}
 $1
 \end{-doc-note}
 $0
 endsnippet
     
-snippet dinfo "Doc info admonition block" i
+snippet dinfo "Doc info admonition block" iw
 \begin{-doc-info}
 $1
 \end{-doc-info}
 $0
 endsnippet
 
-snippet dtheo "Doc theorem block" i
+snippet dtheo "Doc theorem block" iw
 \begin{-doc-theorem}
 $1
 \end{-doc-theorem}
 $0
 endsnippet
 
-snippet ddef "Doc definition block" i
+snippet ddef "Doc definition block" iw
 \begin{-doc-definition}
 $1
 \end{-doc-definition}
 $0
 endsnippet
 
-snippet dwarn "Doc warning callout block" i
+snippet dwarn "Doc warning callout block" iw
 \begin{-doc-warning}
 $1
 \end{-doc-warning}
 $0
 endsnippet
 
-snippet dcrit "Doc critical callout block" i
+snippet dcrit "Doc critical callout block" iw
 \begin{-doc-critical}
 $1
 \end{-doc-critical}
