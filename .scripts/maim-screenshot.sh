@@ -72,19 +72,20 @@ else
     pic_filepath="$pic_directory/$date_format.png"
 fi
 
-echo "$pic_filepath"
 maim_command="maim $pic_filepath "
 
 if [[ $SELECT -eq 1 ]]; then
-    geometry_coordinates=$(slop)
+    notify-send "Screenshot capture selection mode" "Select a region to capture the screenshot." --expire-time=1000
 
-    if [[ -z $geometry_coordinates ]]; then
+    geometry_coordinates=$(slop)
+    if [[ $? != 0 ]]; then
+        notify-send "Screenshot capture cancelled" "Selection mode has been exited."
         exit 1;
     fi
 
     maim_command+="--geometry=$geometry_coordinates "
 
-    if [[ -n $OUTPUT ]]; then
+    if [[ -n "$OUTPUT" ]]; then
         pic_filepath="$pic_directory/$date_format-$geometry_coordinates.png"
     fi
 fi
@@ -95,5 +96,4 @@ if [[ $DELAY -gt 0 ]]; then
 fi
 
 maim_process=$($maim_command)
-
 notify-send "Screenshot taken" "It is saved at $pic_filepath."
