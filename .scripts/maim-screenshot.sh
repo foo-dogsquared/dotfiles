@@ -95,5 +95,11 @@ if [[ $DELAY -gt 0 ]]; then
     notify-send "Delayed screenshot" "A delayed screenshot is about to be taken in $DELAY seconds." --expire-time=$(( ($DELAY * 1000) - 1000 ))
 fi
 
-maim_process=$($maim_command)
+$($maim_command)
+
+if [[ $? != 0 ]]; then
+    notify-send "Screenshot capture failed" "There's something wrong in the capture process. Please try again."
+    exit 1
+fi
+
 notify-send "Screenshot taken" "It is saved at $pic_filepath."
