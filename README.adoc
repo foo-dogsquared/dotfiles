@@ -84,8 +84,8 @@ foreground, and the background)
 
 === https://github.com/yshui/compton[Compton]
 A window compositor that adds off-screen buffers and additional 
-effects and animations to the window. Can be used for adding 
-style to your setup.
+effects and animations to the window. 
+Can be used for adding style to your setup.
 
 * Config found at link:compton/[`compton/`] directory.
 * The usual target path for a user is at `$HOME/.config/compton`.
@@ -101,11 +101,15 @@ A modal text editor.
 * The usual target path for a user is at `$HOME/`.
 * Minimum version (from `vim --version`): 
 ** `8.1 (2018 May 18, compiled Jul 29 2019 20:38:53)`
+* Uses https://github.com/junegunn/vim-plug[`vim-plug`] as the 
+plugin manager.
 * Contains my plugin list and editor configurations at `.vimrc`.
-* There are also some https://github.com/sirver/UltiSnips[UltiSnips] snippets
-stored in `own-snippets` folder (since `snippets` is a reserved folder name). 
-* One of the largest snippet file is the snippets for LaTeX files. It is based 
-on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips snippets for LaTeX].
+* There are also some https://github.com/sirver/UltiSnips[UltiSnips] 
+snippets stored in `own-snippets` folder (since `snippets` is a 
+reserved folder name). 
+* One of the largest snippet file is the snippets for LaTeX files. 
+It is based on 
+https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips LaTeX snippets].
 
 === https://ranger.github.io/[Ranger]
 A Vim-based file browser. 
@@ -125,7 +129,8 @@ https://code.visualstudio.com/[Visual Studio Code].
 
 === https://github.com/jwilm/alacritty/[Alacritty]
 Similar to https://sw.kovidgoyal.net/kitty[Kitty] , it's a GPU-based terminal 
-emulator. It's documentation for the configuration can be viewed at the 
+emulator. 
+It's documentation for the configuration can be viewed at the 
 config file itself being filled with comments.
 
 * Config located at link:alacritty/[`alacritty/`] directory.
@@ -157,8 +162,8 @@ containing a single `config` file (for now).
 in the appropriate location as well.
 
 === https://github.com/davatorium/rofi[Rofi]
-The application switcher and launcher. Also serves as a replacement 
-for https://tools.suckless.org/dmenu/[dmenu].
+The application switcher and launcher. 
+Also serves as a replacement for https://tools.suckless.org/dmenu/[dmenu].
 
 * Config located at link:rofi/[`rofi/`].
 * The usual target path for a user is at `$HOME/.config/rofi/`.
@@ -197,6 +202,18 @@ It's a notification daemon used to display notifications sent by notifiers
 ** `Dunst - A customizable and lightweight notification-daemon 1.4.1 (2019-07-03)`
 * Simply contains a `dunstrc` configuring appearance of the notifications.
 
+=== https://www.archlinux.org/pacman/[pacman]
+The default package manager for Arch Linux.
+
+* Config location is at link:pacman/[`pacman/`]
+* The usual target path is at `/etc/pacman.d`.
+* Minimum version (from `pacman --version`):
+** `Pacman v5.1.3 - libalpm v11.0.3`
+* Contains the configuration file, a `mirrorlist` file, and some 
+https://www.archlinux.org/mirrorlist/?ip_version=6[pacman hooks].
+* For the mirrorlist, change it accordingly or 
+https://www.archlinux.org/mirrorlist/?ip_version=6[generate another one].
+
 
 == Additional programs used
 As much as possible, I use free and open source software for all of my needs. 
@@ -230,7 +247,7 @@ unprivileged processes to privileged access.
 === Device drivers and servers
 * https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux 
 sound driver.
-* https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more.
+* https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more. Also can be used as a recorder.
 * https://wiki.archlinux.org/index.php/NetworkManager[GNOME NetworkManager]
 * https://www.nvidia.com/Download/index.aspx?lang=en-us[NVIDIA Driver] - Since 
 I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that. I also have to 
@@ -251,6 +268,7 @@ Adobe Illustrator.
 * https://krita.org/en/[Krita] - A painting/illustration program. 
 
 === Fonts
+* https://github.com/belluzj/fantasque-sans[Fantasque Sans Mono]
 * https://github.com/tonsky/FiraCode[Fira Code] - A programmer-oriented font that supports ligatures.
 * https://github.com/be5invis/iosevka[Iosevka]
 * https://github.com/googlefonts/noto-fonts[Noto Fonts]
