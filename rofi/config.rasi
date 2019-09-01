@@ -5,4 +5,5 @@ configuration {
     display-ssh: "SSH";
     font: "Iosevka 14";
     show-icons: true;
+    theme: "fds-sidebar-dark";
 }

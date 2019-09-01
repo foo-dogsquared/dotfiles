@@ -8,6 +8,6 @@ Target = *
 [Action]
 Depends = pacman
 Description = Do a system sync first before doing any operations
-When = PostTransaction
+When = PreTransaction
 Exec = /usr/bin/pacman -Syu
 
