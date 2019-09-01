@@ -1,4 +1,5 @@
 = dotfiles
+:toc:
 
 My dotfiles for my Linux-based system setup. 
 The structure of this repo is designed to be managed with 
@@ -296,3 +297,10 @@ C and C++ languages.
 https://www.ruby-lang.org/en/[Ruby], https://www.java.com/[Java], 
 https://www.rust-lang.org/[Rust], and https://golang.org/[Go].
 
+=== Browser extensions 
+* https://bitwarden.com/[Bitwarden] 
+* Internet Archive Web Extension 
+(https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak[Chrome] 
+and https://addons.mozilla.org/en-US/firefox/addon/wayback-machine_new/[Firefox] version)
+* https://github.com/gorhill/uBlock[uBlock Origin]
+* https://github.com/brunolemos/simplified-twitter[Simplified Twitter]
