@@ -269,6 +269,10 @@ bindsym $mod+a mode "applications"; exec sleep 1 && i3-msg mode "default"
 bindsym $mod+c [class="code"] focus
 bindsym $mod+Shift+c [instance="vim"] focus
 
+# Creating a lecture (it needs the custom lecture manager I created at 
+# https://github.com/foo-dogsquared/a-remote-repo-full-of-notes-of-things-i-do-not-know-about/)
+bindsym $mod+Shift+s exec ~/.scripts/lecture-manager-shortcut.sh
+
 # i3 bar
 bar {
     height 35
