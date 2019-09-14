@@ -169,6 +169,10 @@ snippet eqref "Quick equation reference command" wi
 Equation \ref{eq:$1} $0
 endsnippet
 
+snippet theoref "Quick theorem reference command" wi
+Theorem \ref{th:$1} $0
+endsnippet
+
 snippet figref "Quick figure reference command" wi
 figure \ref{fig:$1} $0
 endsnippet
@@ -189,6 +193,14 @@ snippet subsecref "Quick subsection reference command" wi
 subsection \ref{subsec:$1} $0
 endsnippet
 
+snippet propref "Quick property reference command" wi
+Property \ref{prop:$1} $0
+endsnippet
+
+snippet defref "Quick definition reference command" wi
+Definition \ref{def:$1} $0
+endsnippet
+
 snippet foot "Footnote" w
 \footnote{${1:<text>}} $0
 endsnippet
@@ -201,7 +213,7 @@ $2
 $0
 endsnippet
 
-snippet ml "Math mode (inline)" i
+snippet mi "Math mode (inline)" i
 $${1}$`!p smart_space(t[2])`$2
 endsnippet
 
@@ -865,6 +877,26 @@ snippet al "Reference links with label" iw
 \autoref{${1:<label>}}$0
 endsnippet
 
+snippet code "Code listings with Minted package" iw
+\begin{minted}
+$3
+\end{minted}
+$0
+endsnippet
+
+# This specifically needs the captions and minted with [newfloat] option
+# Please see the below link for references:
+# https://tex.stackexchange.com/a/254177
+snippet lcode "Code listings with label" iw
+\begin{listing}[H]
+\begin{minted}{${1:<language>}}
+$2
+\end{minted}
+`!p snip.rv=smart_space(t[3], "\caption{", loose=True)`$3`!p snip.rv=smart_space(t[3], "}", loose=True)`
+\label{lst:${4:$3}}
+\end{listing}
+endsnippet
+
 # Greek letters
 context "math()"
 snippet GAA "Uppercase Greek letter alpha" w
@@ -1001,14 +1033,19 @@ snippet GOo "Lowercase Greek letter omega" w
 \omega
 endsnippet
 
-# Custom commands and environment (for my class notes) w
+# Custom commands and environment (for my class notes)
+# Do not use this if you don't have the following packages and 
+# does not have my custom document style file:
+# * tcolorbox
+# * xcolor
+# * fontawesome
 snippet dnote "Doc note admonition block" iw
 \begin{-doc-note}
 $1
 \end{-doc-note}
 $0
 endsnippet
-    
+
 snippet dinfo "Doc info admonition block" iw
 \begin{-doc-info}
 $1
@@ -1017,16 +1054,25 @@ $0
 endsnippet
 
 snippet dtheo "Doc theorem block" iw
-\begin{-doc-theorem}
-$1
+\begin{-doc-theorem}{${1:<Theorem title>}}{${2:<marker>}}
+$3
 \end{-doc-theorem}
 $0
 endsnippet
 
 snippet ddef "Doc definition block" iw
 \begin{-doc-definition}
-$1
+`!p snip.rv=smart_space(t[1], "\label{def:", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
+$2
 \end{-doc-definition}
+$0
+endsnippet
+
+snippet dprop "Doc property block" iw
+\begin{-doc-property}
+`!p snip.rv=smart_space(t[1], "\label{prop:", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
+$2
+\end{-doc-property}
 $0
 endsnippet
 
@@ -1042,5 +1088,11 @@ snippet dcrit "Doc critical callout block" iw
 $1
 \end{-doc-critical}
 $0
+endsnippet
+
+snippet dlist "Doc listings callout block" iw
+\begin{-doc-listing}{${1:<title>}}{${2:<label name>}}{${3:<language>}}
+$4
+\end{-doc-listing}
 endsnippet
 

@@ -36,7 +36,6 @@ let g:vimtex_compiler_latexmk = {
     \   '-file-line-error',
     \ ]
 \}
-
 Plug 'airblade/vim-gitgutter'
 
 call plug#end()
@@ -54,12 +53,15 @@ set cursorline
 " set tab to enter spaces, instead
 set expandtab
 
+" The template list is simply an array composed of vector that represents the
+" prefix and the suffix of the template file name
 let template_list = [
 \    ["_minted-", ""],
 \    ["", ".synctex"],
 \]
 
 function VimtexAdditionalCleanup(template_list)
+    call vimtex#compiler#clean(1)
     let file_name = expand("%:t:r")
     let file_path = expand("%:p:h") . "/"
     for template in a:template_list
@@ -74,6 +76,8 @@ endfunction
 augroup vimtex_events
     au!
     " auto-clean
+    au User QuitPre             call VimtexAdditionalCleanup(template_list)
+    au User VimLeave             call VimtexAdditionalCleanup(template_list)
     au User VimtexEventQuit     call vimtex#compiler#clean(1)
     au User VimtexEventQuit     call VimtexAdditionalCleanup(template_list)
 
@@ -90,9 +94,9 @@ set list listchars=tab:→\ ,trail:·
 " show leading spaces
 " SOURCE: https://www.reddit.com/r/vim/comments/5fxsfy/show_leading_spaces/
 hi Conceal guibg=NONE ctermbg=NONE ctermfg=DarkGrey
-autocmd BufWinEnter * setl conceallevel=2 concealcursor=nv
+autocmd BufWinEnter * setl conceallevel=1
 autocmd BufWinEnter * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
-autocmd BufReadPre * setl conceallevel=2 concealcursor=nv
+autocmd BufReadPre * setl conceallevel=1
 autocmd BufReadPre * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
 
 " spell checker (for your local language, anyway)
