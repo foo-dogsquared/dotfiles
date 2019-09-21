@@ -225,11 +225,46 @@ $2
 $0
 endsnippet
 
-snippet equation "Equation environment for mathematical typesetting" biw
+snippet eq "Equation environment for mathematical typesetting" biw
 \begin{equation}
 \label{eq:$1}
 $2
 \end{equation}
+$0
+endsnippet
+
+snippet subeq "Subequation environment" biw
+\begin{subequations}
+\label{eq:$1}
+$2
+\end{subequations}
+$0
+endsnippet
+
+snippet align "Align equations environment" biw
+\begin{align}
+$1
+\end{align}
+$0
+endsnippet
+
+snippet alignli "Quick align equation with label" biw
+${1:<LHS>} &= ${2:<RHS>} \label{eq:$3} \\ $4 
+endsnippet
+
+snippet gathered "Gathered environment which lets you gather a bunch of equations and assign them under one equation number" bi
+\begin{gathered}
+\label{eq:$1}
+$2
+\end{gathered}
+$0
+endsnippet
+
+snippet proof "Proof" biw
+\begin{proof}
+\label{proof:$1}
+$2
+\end{proof}
 $0
 endsnippet
 
@@ -290,11 +325,37 @@ snippet agraph "Quickly plot a graph without considering integers" bi
 $0
 endsnippet
 
-snippet plot "Add a plot line" i
-\addplot[domain=$1:$2, samples=${3:`!p snip.rv=add_variable_numbers(t[1], t[2], 1, absolute=true)`}]`!p snip.rv=smart_space(t[4], ", ")`$4{${5: x}}
+snippet graph3 "3D graph from pgfplots package" bi
+\begin{figure}[${1:ht}]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+    xlabel=${2:$x$},
+    ylabel=${3:$y$},
+    grid=major,
+    axis equal=false,
+    tick style={very thick},
+    major tick style=thick,
+    domain=${4:-10}:${5:10},`!p snip.rv = smart_space(t[6], "\n\t", loose=True)`$6
+    ]
+        \addplot3[samples=${7:`!p snip.rv = add_variable_numbers(t[4], t[5], 1, absolute=True)`},$8]{${9:x}};
+    \end{axis}
+\end{tikzpicture}
+\caption{$10}
+\label{fig:${11:$10}}
+\end{figure}
 $0
 endsnippet
 
+snippet plot "Add a plot line" i
+\addplot[domain=$1:$2, samples=${3:`!p snip.rv=add_variable_numbers(t[1], t[2], 1, absolute=True)`}]`!p snip.rv=smart_space(t[4], ", ")`$4{${5: x}}
+$0
+endsnippet
+
+snippet plot3 "Add a 3D plot" i
+\addplot3[domain=$1:$2, samples=${3:`!p snip.rv=add_variable_numbers(t[1], t[2], 1, absolute=True)`}]`!p snip.rv=smart_space(t[4], ", ")`$4{${5:x}}
+$0
+endsnippet
 
 # Common mathematical functions and symbols 
 # Also take note that most expressions are prepended with 'M' to mean mathematical usage
@@ -318,7 +379,7 @@ snippet != "Not equal" iw
 \neq
 endsnippet
 
-snippet <= "Greater than or equal to" iw
+snippet >= "Greater than or equal to" iw
 \geq
 endsnippet
 
@@ -326,7 +387,7 @@ snippet !> "Not greater than" iw
 \ngtr
 endsnippet
 
-snippet >= "Less than or equal to" iw
+snippet <= "Less than or equal to" iw
 \leq
 endsnippet
 
@@ -392,16 +453,16 @@ snippet -cb "Cube superscript" iw
 endsnippet
 
 context "math()"
-snippet -- "Superscript" iwA
+snippet -- "Superscript" iA
 ^{$1}$0
 endsnippet
 
 context "math()"
-snippet __ "Subscript" iwA
+snippet __ "Subscript" iA
 _{$1}$0
 endsnippet
 
-snippet ... "Ellipsis" iw
+snippet ... "Ellipsis" iA
 \ldots
 endsnippet
 
@@ -448,6 +509,11 @@ context "math()"
 snippet "-(\d+|\w+) / (\d+|\w+)-" "Quick fraction" riwA
 `!p snip.rv = f"\\frac{{{match.group(1)}}}{{{match.group(2)}}}"`
 $0
+endsnippet
+
+context "math()"
+snippet "\*" "Quick multiplication binary operator" riA
+\cdot
 endsnippet
 
 context "math()"
@@ -869,8 +935,14 @@ snippet li "List item for the OL/UL lists" iw
 $0
 endsnippet
     
+context "not math()"
 snippet a "URL links (with description)" iw
 \href{${1:<url>}}{${2:<description>}} $0
+endsnippet
+
+context "not math()"
+snippet url "Raw URL link" iw
+\url{${1:<url>}} $0
 endsnippet
 
 snippet al "Reference links with label" iw
