@@ -31,11 +31,24 @@ set conceallevel=1
 let g:tex_conceal='abdmg'
 let g:vimtex_compiler_latexmk = {
     \ 'options': [
+    \   '-bibtex',
     \   '-shell-escape',
     \   '-verbose',
     \   '-file-line-error',
     \ ]
 \}
+
+let g:vimtex_compiler_latexmk_engines = {
+    \ '_'                : '-lualatex',
+    \ 'pdflatex'         : '-pdf',
+    \ 'dvipdfex'         : '-pdfdvi',
+    \ 'lualatex'         : '-lualatex',
+    \ 'xelatex'          : '-xelatex',
+    \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
+    \ 'context (luatex)' : '-pdf -pdflatex=context',
+    \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
+\}
+
 Plug 'airblade/vim-gitgutter'
 
 call plug#end()
@@ -52,6 +65,9 @@ set cursorline
 
 " set tab to enter spaces, instead
 set expandtab
+
+" set entering tab to 4 spaces
+set shiftwidth=4 tabstop=4
 
 " The template list is simply an array composed of vector that represents the
 " prefix and the suffix of the template file name
