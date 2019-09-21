@@ -8,10 +8,21 @@ https://github.com/foo-dogsquared/a-remote-repo-full-of-notes-of-things-i-do-not
 
 This shell script is specifically written for my system. 
 Don't expect it to work out-of-the-box so please edit this script accordingly. 
+
+Options:
+-h, --help      -   Shows the help section. 
+-p, --program   -   The path of the notes manager folder with the executable (`manager.py` inside of the folder). 
+-c, --config    -   The location of the config. 
+-t, --target    -   The target location of the notes. 
 "
 
 LECTURES=${LECTURES_DIRECTORY:-"$HOME/Documents/lectures"}
 TERM="alacritty" # binary name of your terminal emulator
+
+# The default values
+TEXTURE_NOTES_MANAGER="$HOME/texture-notes"
+TARGET="$HOME"
+CONFIG="$HOME/config.py"
 
 while [[ $# -gt 0 ]]
 do
@@ -19,6 +30,18 @@ do
         -h|--help)
             echo "$help_section"
             exit 0;;
+        -p|--program)
+            TEXTURE_NOTES_MANAGER="$2"
+            shift
+            shift;;
+        -c|--config)
+            CONFIG="$2"
+            shift
+            shift;;
+        -t|--target)
+            TARGET="$2"
+            shift
+            shift;;
         *)
             shift;;
     esac
@@ -42,7 +65,7 @@ actions=$(echo "$options" | rofi -dmenu -p "What do you want to do for the lectu
 
 if [[ $? != 0 ]]; then exit; fi
 
-lecture_manager_cmd="python $LECTURES/manager.py --target $HOME "
+lecture_manager_cmd="python $TEXTURE_NOTES_MANAGER/manager.py --target $TARGET --config $CONFIG "
 notes_list=$(eval "$lecture_manager_cmd list :all:")
 
 if [[ $actions == 'Create a new subject' ]]; then 
