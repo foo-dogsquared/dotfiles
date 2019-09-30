@@ -271,7 +271,7 @@ bindsym $mod+Shift+c [instance="vim"] focus
 
 # Creating a lecture (it needs the custom lecture manager I created at 
 # https://github.com/foo-dogsquared/a-remote-repo-full-of-notes-of-things-i-do-not-know-about/)
-bindsym $mod+Shift+s exec ~/.scripts/lecture-manager-shortcut.sh
+bindsym $mod+Shift+s exec ~/.scripts/lecture-manager-shortcut.sh --config ~/texture-notes-profile/config.py --target ~
 
 # i3 bar
 bar {

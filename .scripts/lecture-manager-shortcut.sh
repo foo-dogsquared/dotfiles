@@ -93,17 +93,16 @@ elif [[ $actions == 'Remove a lecture' ]]; then
     if [[ $? != 0 ]]; then exit; fi
 
     note_list=$(eval $lecture_manager_cmd 'list' "$subject" | sed -n "s/^\s*-\s*//p")
-    title=$(echo "$note_list" | rofi -dmenu -p "What is the title of the note to be removed?")
+    title=$(echo "$note_list" | rofi -dmenu -p "What is the title of the note to be removed?" | sed --regexp-extended "s/^\s*\([[:digit:]]+\)\s*//")
     if [[ $? != 0 ]]; then exit; fi
 
     delete=$(echo -e "Yes\nNo" | rofi -dmenu -p "Delete the files on the disk?")
     if [[ $? != 0 ]]; then exit; fi
-
+    
+    lecture_manager_cmd+="rm --note \"$subject\" \"$title\" "
     if [[ $delete == "Yes" ]]; then 
         $lecture_manager_cmd+="--delete " 
     fi
-    
-    lecture_manager_cmd+="--note \"$subject\" \"$title\""
 elif [[ $actions == 'List all subjects and its notes' ]]; then 
     lecture_manager_cmd+="list :all: "
     notes=$(eval $lecture_manager_cmd)
@@ -118,7 +117,7 @@ elif [[ $actions == 'Open a note' ]]; then
     # I have my Pygmentize package in a virtual env, so I have the line below. 
     # You can omit the line, if you have Pygmentize installed.
     source texture-notes-env/bin/activate
-    exec "$TERM" --command python "$LECTURES/manager.py" open $selected_note 
+    exec "$TERM" --command python "$TEXTURE_NOTES_MANAGER/manager.py" --target "$TARGET" --config "$CONFIG" open $selected_note
     if [[ $? != 0 ]]; then 
         notify-send "Opening note has failed."
     fi
@@ -126,7 +125,7 @@ elif [[ $actions == 'Open a note' ]]; then
     exit
 fi
 
-status=$(eval $lecture_manager_cmd)
+status=$(eval "$lecture_manager_cmd")
 
 
 if [[ $? != 0 ]]; then
