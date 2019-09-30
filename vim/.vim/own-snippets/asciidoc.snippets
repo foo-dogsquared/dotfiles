@@ -30,6 +30,10 @@ snippet hl "Highlighted text" biw
 #$1# $0
 endsnippet
 
+snippet a "Hyperlink" iw
+${1:<url>}[${2:<text>}] $0
+endsnippet
+
 snippet sp "Superscript" biw
 ^$1^ $0
 endsnippet
@@ -87,7 +91,7 @@ endsnippet
 # Multimedia blocks
 snippet figure "Image block with caption" bi
 .${2:<caption>}
-image::${1:<image path>}[${3:width=100%,height=100%}]
+image::${1:<image path>}[$2, ${3:width=100%,height=100%}]
 $0
 endsnippet
 

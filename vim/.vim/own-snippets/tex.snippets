@@ -127,19 +127,19 @@ endsnippet
 # Document structure tags
 snippet chapter "Chapter element" bi
 \chapter{$1}
-\label{ch:$1}
+\label{ch!$1}
 $0
 endsnippet
 
 snippet section "Section tag" bi
 \section{$1}
-\label{sec:$1}
+\label{sec!$1}
 $0
 endsnippet
 
 snippet subsec "Subsection tag" bi
 \subsection{$1}
-\label{subsec:$1}
+\label{subsec!$1}
 $0
 endsnippet  
 
@@ -208,7 +208,7 @@ endsnippet
 # Common environments
 snippet begin "Simple empty environment" bi
 \begin{$1}
-$2
+  $2
 \end{$1}
 $0
 endsnippet
@@ -219,69 +219,69 @@ endsnippet
 
 snippet mb "Math block" bi
 \begin{equation*}
-`!p snip.rv=smart_space(t[1], "\label{eq:", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
-$2
+`!p snip.rv=smart_space(t[1], "  \label{eq!", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
+  $2
 \end{equation*}
 $0
 endsnippet
 
 snippet eq "Equation environment for mathematical typesetting" biw
 \begin{equation}
-\label{eq:$1}
-$2
+  \label{eq!$1}
+  $2
 \end{equation}
 $0
 endsnippet
 
 snippet subeq "Subequation environment" biw
 \begin{subequations}
-\label{eq:$1}
-$2
+  \label{eq!$1}
+  $2
 \end{subequations}
 $0
 endsnippet
 
 snippet align "Align equations environment" biw
 \begin{align}
-$1
+  $1
 \end{align}
 $0
 endsnippet
 
 snippet alignli "Quick align equation with label" biw
-${1:<LHS>} &= ${2:<RHS>} \label{eq:$3} \\ $4 
+${1:<LHS>} &= ${2:<RHS>} \label{eq!$3} \\ $4 
 endsnippet
 
 snippet gathered "Gathered environment which lets you gather a bunch of equations and assign them under one equation number" bi
 \begin{gathered}
-\label{eq:$1}
-$2
+  \label{eq!$1}
+  $2
 \end{gathered}
 $0
 endsnippet
 
 snippet proof "Proof" biw
 \begin{proof}
-\label{proof:$1}
-$2
+  \label{proof!$1}
+  $2
 \end{proof}
 $0
 endsnippet
 
 snippet figure "Figure environment" biw
 \begin{figure}
-\centering
-\label{fig:$1}
-$2
-\caption{${3:$1}}
+  \centering
+  \label{fig!$1}
+  $2
+  \caption{${3:$1}}
 \end{figure}
 $0
 endsnippet
 
 snippet graph "Quickly make a graph" bi
 \begin{figure}[${1:ht}]
-\centering
-\begin{tikzpicture}
+  \centering
+  \begin{tikzpicture}
     \begin{axis}[
     xlabel=${2:$x$},
     ylabel=${3:$y$},
@@ -292,19 +292,19 @@ snippet graph "Quickly make a graph" bi
     major tick style=thick,
     domain=${4:-10}:${5:10},`!p snip.rv = smart_space(t[6], "\n\t", loose=True)`$6
     ]
-        \addplot[samples=${7:`!p snip.rv = add_variable_numbers(t[4], t[5], 1, absolute=True)`},$8]{${9:x}};
+      \addplot[samples=${7:`!p snip.rv = add_variable_numbers(t[4], t[5], 1, absolute=True)`},$8]{${9:x}};
     \end{axis}
-\end{tikzpicture}
-\caption{$10}
-\label{fig:${11:$10}}
+  \end{tikzpicture}
+  \caption{$10}
+  \label{fig!${11:$10}}
 \end{figure}
 $0
 endsnippet
 
 snippet agraph "Quickly plot a graph without considering integers" bi
 \begin{figure}[${1:ht}]
-\centering
-\begin{tikzpicture}
+  \centering
+  \begin{tikzpicture}
     \begin{axis}[
     xlabel=${2:$x$},
     ylabel=${3:$y$},
@@ -316,11 +316,11 @@ snippet agraph "Quickly plot a graph without considering integers" bi
     minor tick num=2,
     domain=${4:-10}:${5:10},`!p snip.rv=smart_space(t[6], "\n\t", loose=True)`$6
     ]
-        \addplot[samples=${7:`!p snip.rv=add_variable_numbers(t[4], t[5], absolute=True)`}, $8]{${9:x}};
+      \addplot[samples=${7:`!p snip.rv=add_variable_numbers(t[4], t[5], absolute=True)`}, $8]{${9:x}};
     \end{axis}
-\end{tikzpicture}
-\caption{$10}
-\label{fig:${11:$10}}
+  \end{tikzpicture}
+  \caption{$10}
+  \label{fig!${11:$10}}
 \end{figure}
 $0
 endsnippet
@@ -338,11 +338,11 @@ snippet graph3 "3D graph from pgfplots package" bi
     major tick style=thick,
     domain=${4:-10}:${5:10},`!p snip.rv = smart_space(t[6], "\n\t", loose=True)`$6
     ]
-        \addplot3[samples=${7:`!p snip.rv = add_variable_numbers(t[4], t[5], 1, absolute=True)`},$8]{${9:x}};
+      \addplot3[samples=${7:`!p snip.rv = add_variable_numbers(t[4], t[5], 1, absolute=True)`},$8]{${9:x}};
     \end{axis}
 \end{tikzpicture}
 \caption{$10}
-\label{fig:${11:$10}}
+\label{fig!${11:$10}}
 \end{figure}
 $0
 endsnippet
@@ -918,14 +918,14 @@ endsnippet
 
 snippet ol "Enumerated list (ordered list)" iw
 \begin{enumerate}
-$1
+  $1
 \end{enumerate}
 $0
 endsnippet
 
 snippet ul "Itemized list (unordered list)" iw
 \begin{itemize}
-$1
+  $1
 \end{itemize}
 $0
 endsnippet
@@ -951,7 +951,7 @@ endsnippet
 
 snippet code "Code listings with Minted package" iw
 \begin{minted}
-$3
+  $3
 \end{minted}
 $0
 endsnippet
@@ -961,11 +961,11 @@ endsnippet
 # https://tex.stackexchange.com/a/254177
 snippet lcode "Code listings with label" iw
 \begin{listing}[H]
-\begin{minted}{${1:<language>}}
-$2
-\end{minted}
-`!p snip.rv=smart_space(t[3], "\caption{", loose=True)`$3`!p snip.rv=smart_space(t[3], "}", loose=True)`
-\label{lst:${4:$3}}
+  \begin{minted}{${1:<language>}}
+    $2
+  \end{minted}
+  `!p snip.rv=smart_space(t[3], "\caption{", loose=True)`$3`!p snip.rv=smart_space(t[3], "}", loose=True)`
+  \label{code!${4:$3}}
 \end{listing}
 endsnippet
 
@@ -1113,58 +1113,58 @@ endsnippet
 # * fontawesome
 snippet dnote "Doc note admonition block" iw
 \begin{-doc-note}
-$1
+  $1
 \end{-doc-note}
 $0
 endsnippet
 
 snippet dinfo "Doc info admonition block" iw
 \begin{-doc-info}
-$1
+  $1
 \end{-doc-info}
 $0
 endsnippet
 
 snippet dtheo "Doc theorem block" iw
 \begin{-doc-theorem}{${1:<Theorem title>}}{${2:<marker>}}
-$3
+  $3
 \end{-doc-theorem}
 $0
 endsnippet
 
 snippet ddef "Doc definition block" iw
 \begin{-doc-definition}
-`!p snip.rv=smart_space(t[1], "\label{def:", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
-$2
+`!p snip.rv=smart_space(t[1], "  \label{def!", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
+  $2
 \end{-doc-definition}
 $0
 endsnippet
 
 snippet dprop "Doc property block" iw
 \begin{-doc-property}
-`!p snip.rv=smart_space(t[1], "\label{prop:", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
-$2
+`!p snip.rv=smart_space(t[1], "  \label{prop!", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
+  $2
 \end{-doc-property}
 $0
 endsnippet
 
 snippet dwarn "Doc warning callout block" iw
 \begin{-doc-warning}
-$1
+  $1
 \end{-doc-warning}
 $0
 endsnippet
 
 snippet dcrit "Doc critical callout block" iw
 \begin{-doc-critical}
-$1
+  $1
 \end{-doc-critical}
 $0
 endsnippet
 
 snippet dlist "Doc listings callout block" iw
 \begin{-doc-listing}{${1:<title>}}{${2:<label name>}}{${3:<language>}}
-$4
+  $4
 \end{-doc-listing}
 endsnippet
 
