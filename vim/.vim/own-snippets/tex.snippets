@@ -7,6 +7,7 @@ texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
 texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
 
 ignore = texIgnoreMathZoneIds[0]
+labelPrefix = "!"
 
 def math():
     synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
@@ -133,13 +134,13 @@ endsnippet
 
 snippet section "Section tag" bi
 \section{$1}
-\label{sec!$1}
+\label{sect!$1}
 $0
 endsnippet
 
 snippet subsec "Subsection tag" bi
 \subsection{$1}
-\label{subsec!$1}
+\label{subsect!$1}
 $0
 endsnippet  
 
@@ -165,40 +166,60 @@ snippet ref "Create a reference for a label" bi
 \ref{${1:<label to be referenced>}} $0
 endsnippet
 
-snippet eqref "Quick equation reference command" wi
-Equation \ref{eq:$1} $0
+snippet algoref "Quick algorithm reference command" wi
+Algorithm \ref{algo!$1} $0
 endsnippet
 
-snippet theoref "Quick theorem reference command" wi
-Theorem \ref{th:$1} $0
+snippet chapref "Quick chapter reference command" wi
+Chapter \ref{chap!$1} $0
+endsnippet
+
+snippet coderef "Quick code reference command" wi
+Code \ref{code!$1} $0
+endsnippet
+
+snippet defnref "Quick definition reference command" wi
+Definition \ref{defn!$1} $0
 endsnippet
 
 snippet figref "Quick figure reference command" wi
-figure \ref{fig:$1} $0
+Figure \ref{fig!$1} $0
 endsnippet
 
-snippet tabref "Quick table referenece command" wi
-table \ref{tab:$1} $0
+snippet listref "Quick list reference command" wi
+List \ref{list!$1} $0
 endsnippet
 
-snippet chref "Quick chapter reference command" wi
-chapter \ref{ch:$1} $0
+snippet mathref "Quick mathematics reference command" wi
+Equation \ref{math!$1} $0
 endsnippet
 
-snippet secref "Quick section reference command" wi
-section \ref{sec:$1} $0
+snippet partref "Quick part reference command" wi
+Part \ref{part!$1} $0
 endsnippet
 
-snippet subsecref "Quick subsection reference command" wi
-subsection \ref{subsec:$1} $0
+snippet proofref "Quick proof reference command" wi
+Proof \ref{proof!$1} $0
 endsnippet
 
 snippet propref "Quick property reference command" wi
-Property \ref{prop:$1} $0
+Property \ref{prop!$1} $0
 endsnippet
 
-snippet defref "Quick definition reference command" wi
-Definition \ref{def:$1} $0
+snippet secref "Quick section reference command" wi
+Section \ref{sect!$1} $0
+endsnippet
+
+snippet subsecref "Quick subsection reference command" wi
+Subsection \ref{subsect!$1} $0
+endsnippet
+
+snippet tabref "Quick table referenece command" wi
+Table \ref{table!$1} $0
+endsnippet
+
+snippet theoref "Quick theorem reference command" wi
+Theorem \ref{theorem!$1} $0
 endsnippet
 
 snippet foot "Footnote" w
@@ -219,7 +240,7 @@ endsnippet
 
 snippet mb "Math block" bi
 \begin{equation*}
-`!p snip.rv=smart_space(t[1], "  \label{eq!", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
+`!p snip.rv=smart_space(t[1], "  \label{math!", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
   $2
 \end{equation*}
 $0
@@ -227,7 +248,7 @@ endsnippet
 
 snippet eq "Equation environment for mathematical typesetting" biw
 \begin{equation}
-  \label{eq!$1}
+  \label{math!$1}
   $2
 \end{equation}
 $0
@@ -235,7 +256,7 @@ endsnippet
 
 snippet subeq "Subequation environment" biw
 \begin{subequations}
-  \label{eq!$1}
+  \label{math!$1}
   $2
 \end{subequations}
 $0
@@ -249,12 +270,12 @@ $0
 endsnippet
 
 snippet alignli "Quick align equation with label" biw
-${1:<LHS>} &= ${2:<RHS>} \label{eq!$3} \\ $4 
+${1:<LHS>} &= ${2:<RHS>} \label{math!$3} \\ $4 
 endsnippet
 
 snippet gathered "Gathered environment which lets you gather a bunch of equations and assign them under one equation number" bi
 \begin{gathered}
-  \label{eq!$1}
+  \label{math!$1}
   $2
 \end{gathered}
 $0
@@ -1134,7 +1155,7 @@ endsnippet
 
 snippet ddef "Doc definition block" iw
 \begin{-doc-definition}
-`!p snip.rv=smart_space(t[1], "  \label{def!", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
+`!p snip.rv=smart_space(t[1], "  \label{defn!", loose=True)`$1`!p snip.rv=smart_space(t[1], "}", loose=True)`
   $2
 \end{-doc-definition}
 $0
