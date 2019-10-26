@@ -158,8 +158,7 @@ bindsym Shift+Print exec ~/.scripts/maim-screenshot.sh --delay 3
 bindsym Control+Shift+Print exec ~/.scripts/maim-screenshot.sh --select --delay 3
 
 # Screen record (Alt + Print)
-bindsym $mod+Print exec ~/.scripts/screen-record.sh --scene barless-screen
-bindsym $mod+Shift+Print exec ~/.scripts/screen-record.sh --scene fullscreen
+bindsym $mod+Print exec ~/.scripts/ffmpeg-screen-record.sh --output ~/recordings
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.

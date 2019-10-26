@@ -1,16 +1,17 @@
-#!/bin/sh 
+#!/bin/sh
 
-# Records the screen with OBS Studio.
+# Records a part of the screen. 
+# Note this is a toggle command. 
+# There could only have one recording instance running at a time. 
 
-# This script depends on the following 
-# programs along with the indicated version:
-# OBS Studio - 23.2.1-2 
-# xdotool - version 3.20160805.1
-# echo (part of coreutils 8.31)
-# notify-send - 0.7.8
+# Minimum requirements:
+# awk - GNU Awk v5.0.1
+# date - v8.31 GNU implentation
+# ffmpeg - version n4.2.1; built with GCC; based from the Arch Linux repo 
+# slop - v7.4
+# xwininfo - v1.1.5
 
-# Having a notify-send means you also need to 
-# have a notification server (such as dunst) to be up at the time.
+# Having used `xwininfo`, it needs to have the legacy graphics stack (X11-based) on Linux
 
 function error_cleanup() {
     # rm "$pic_filepath"    
@@ -18,26 +19,21 @@ function error_cleanup() {
 }
 
 help_section="
-Simply captures a recording with OBS Studio.
+Simply captures a recording with ffmpeg. 
 
-Note it requires you to set a hotkey for recording in 
-OBS Studio in order to run this script properly.
-The default hotkey set in this script is 'Shift+R'. 
-If your hotkey is any different,
-change the OBS_RECORDING_HOTKEY variable 
-in this script accordingly.
+This is more reliable than OBS Studio (since I don't how to fully utilize it yet). 
 
-Usage: $0 [-o/--output <OUTPUT_PATH>] [-s/--select] 
-[-d/--delay <SECONDS>] [--help]
+Usage: $0 [-o/--output <OUTPUT_PATH>] [-s/--selection] 
 
 Options:
 -h, --help - show the help section
--p, --profile <string> - indicate the profile (default: 'Untitled')
--s, --scene <string> - the scene to be used (default: 'Untitled')
+-o, --output <string> - the path of the output (default: '~/Videos')
 "
 
 # setting up a exit trap in case of error
 trap 'error_cleanup $LINENO' ERR
+
+OUTPUT=${VIDEOS:-"$HOME/Videos"}
 
 while [[ $# -gt 0 ]]
 do
@@ -45,59 +41,50 @@ do
         -h|--help)
             echo "$help_section"
             exit 0;;
-        -p|--profile)
-            PROFILE="$2"
+        -o|--output)
+            OUTPUT="$2"
             shift
-            shift;;
-        -s|--scene)
-            SCENE="$2"
             shift;;
         *)
             shift;;
     esac
 done
 
-RECORDING_FILE="/tmp/currently-recording"
-OBS_RECORDING_HOTKEY="shift+r"
+# Constants
+RECORDING_FILE="/tmp/fds-ffmpeg-currently-recording";
 
-# The program simply checks for the 
 if [[ ! -f $RECORDING_FILE ]]; then 
-    obs_command="obs --startrecording --minimize-to-tray "
+    dimensions=$(slop -f "%x %y %w %h %g %i") || exit 1;
+    read -r pos_x pos_y width height grid id <<< $dimensions
 
-    if [[ -n "$PROFILE" ]]; then
-        obs_command+="--profile $PROFILE "
-    fi
+    date_format=$(date +%F-%H-%M-%S)
+    
+    recording_command="ffmpeg -y -f x11grab -s ${width}x${height} -i :0.0+${pos_x},$pos_y ${OUTPUT}/$date_format.mkv -nostdin"
 
-    if [[ -n "$SCENE" ]]; then
-        obs_command+="--scene $SCENE "
-    fi
-
-    eval $obs_command &
+    $recording_command &
+    WINDOW_ID="$!"
+    RETURN_CODE="$?"
     sleep 1;
 
-    if [[ $? != 0 ]]; then
-        notify-send "Recording starting failed" "Did not successfully started recording."
+    if [[ "$RETURN_CODE" != 0 ]]; then
+        notify-send "Recording start has failed";
         exit 1;
     fi
 
-    WINDOW_ID=$(xdotool search --name "OBS [[:digit:]]+" | head -n1)
-    notify-send "Recording started." "Found a OBS Studio window instance with the window ID $WINDOW_ID." --expire-time=1000
-    
-    touch $RECORDING_FILE
-    echo $WINDOW_ID >> $RECORDING_FILE
-else
-    current_window_id=$(xdotool getactivewindow)
+    notify-send "Recording started successfully" "Process ID is at "$WINDOW_ID"";
 
+    touch "$RECORDING_FILE";
+    echo "$WINDOW_ID" >> $RECORDING_FILE;
+else
     WINDOW_ID=$(<"$RECORDING_FILE")
     
-    xdotool windowkill $WINDOW_ID
-    
-    if [[ $? != 0 ]]; then
-        notify-send "Recording stop process failed" "There's a problem with stopping recording. Might want to manually stop the recording yourself."
+    kill $WINDOW_ID
+
+    if [[ $? != 0 ]]; then 
+        notify-send "Recording stop failed" "There's a problem while trying to kill the process. Process ID is at $WINDOW_ID";
         exit 1;
     fi
 
-    notify-send "Recording ended." "The recording should be cancelled now."
-    xdotool windowactivate $current_window_id
+    notify-send "Recording stop successful"
     rm "$RECORDING_FILE"
 fi
