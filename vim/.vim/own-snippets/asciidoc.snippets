@@ -22,11 +22,19 @@ snip.rv = "#" * header_level if legit_header_level else ""
 $0
 endsnippet
 
-snippet tt "Monospace" biw
-`$1` $0
+snippet bf "Boldface" iw
+**$1** $0
 endsnippet
 
-snippet hl "Highlighted text" biw
+snippet it "Italic" iw
+__$1__ $0
+endsnippet
+
+snippet tt "Monospace" iw
+\`$1\` $0
+endsnippet
+
+snippet hl "Highlighted text" iw
 #$1# $0
 endsnippet
 
@@ -34,11 +42,11 @@ snippet a "Hyperlink" iw
 ${1:<url>}[${2:<text>}] $0
 endsnippet
 
-snippet sp "Superscript" biw
+snippet sp "Superscript" iw
 ^$1^ $0
 endsnippet
 
-snippet sb "Subscript" biw
+snippet sb "Subscript" iw
 ~$1~ $0
 endsnippet
 
@@ -83,6 +91,22 @@ snippet "-table (\d+)-" "Make a quick table" bir
 |===
 
 $1
+
+|===
+$0
+endsnippet
+
+snippet "-table h (\d+)-" "Make a quick table with the headers already set up" bir
+[cols="`!p snip.rv = match.group(1)`", options="headers"]
+|===
+$1
+`!p
+number_of_headers = int(match.group(1))
+
+for i in range(0, number_of_headers):
+  snip.rv += f"| Header {i + 1}\n"
+`
+$2
 
 |===
 $0
