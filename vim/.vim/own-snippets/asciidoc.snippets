@@ -12,14 +12,30 @@ def smart_space(next_str, auto_str=" ", loose=False):
 endglobal
 
 # Text formatting
-snippet "h(\d)" "Quick header snippet" biw
+snippet "h(\d)" "Quick header snippet" bir
 `!p
 header_level = int(match.group(1))
 legit_header_level = True if header_level >= 1 and header_level <= 6 else False
 
-snip.rv = "#" * header_level if legit_header_level else ""
+snip.rv = "=" * header_level if legit_header_level else ""
 `
 $0
+endsnippet
+
+snippet ch "Chapter header" bi
+
+
+
+
+== $1
+
+$0
+endsnippet
+
+snippet "sh(\d)" "Section header" bir
+
+
+`!p snip.rv = "=" * int(match.group(1))`
 endsnippet
 
 snippet bf "Boldface" iw
@@ -79,7 +95,7 @@ $0
 endsnippet
 
 snippet src "Source code listings" bi
-[source,${1:<language>}]
+[source, ${1:<language>}]
 ----
 ${2:<source code>}
 ----
@@ -169,5 +185,27 @@ snippet abstract "Abstract block" bi
 [abstract]
 == ${1:Summary}
 $0
+endsnippet
+
+snippet append "Appendix block" bi
+[appendix]
+== ${1:Appendix}
+$0
+endsnippet
+
+snippet stem "Stem block" bi
+[stem]
+++++
+$1
+++++
+$0
+endsnippet
+
+snippet mstem "Stem macro" iw
+stem:[$1] $0
+endsnippet
+
+snippet foot "Footnote macro" iw
+footnote:[$1] $0
 endsnippet
 
