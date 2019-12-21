@@ -1,6 +1,7 @@
 #!/bin/sh
 
-# Simply captures an image with regional selection.
+# Simply captures an image.
+# Also comes with a delay and region selection option. 
 
 # Here are the dependencies needed to successfully 
 # run this script (as of creating this script):
@@ -74,6 +75,7 @@ fi
 
 maim_command="maim $pic_filepath "
 
+# If selection mode is enabled. 
 if [[ $SELECT -eq 1 ]]; then
     notify-send "Screenshot capture selection mode" "Select a region to capture the screenshot." --expire-time=1000
 
@@ -90,6 +92,7 @@ if [[ $SELECT -eq 1 ]]; then
     fi
 fi
 
+# Checking if there is a set delay. 
 if [[ $DELAY -gt 0 ]]; then
     maim_command+="--delay=$DELAY "
     notify-send "Delayed screenshot" "A delayed screenshot is about to be taken in $DELAY seconds." --expire-time=$(( ($DELAY * 1000) - 1000 ))

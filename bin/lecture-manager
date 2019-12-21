@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/usr/bin/env sh 
 
 help_section="
 This simply creates a quick rofi interface for my lectures manager. 
