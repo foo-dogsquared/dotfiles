@@ -1,3 +1,10 @@
+/** 
+    This is the actual styling of the 'foo-dogsquared Sidebar' theme. 
+    Though, it needs to be imported from another Rofi theme file to color it. 
+
+    See the 'fds-sidebar-dark` Rofi theme file for an example. 
+**/
+
 * {
     /* Theme settings */
     highlight: bold italic;
@@ -21,10 +28,33 @@ window {
 
 mainbox {
     background-color: @background;
+    children: [ inputbar, listview, mode-switcher ];
+    padding: 0.5em;
+}
+
+inputbar,
+listview {
+    margin: 0 0 0.5em 0;
+}
+
+inputbar {
+    orientation: vertical;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    width: 100%;
+    text-style: underline;
+}
+
+entry {
+    background-color: @background-light;
+    margin: 0 1em 0 0;
 }
 
 element {
     padding: 5;
+    background-color: @background-light;
 }
 
 element selected.normal {
@@ -32,26 +62,25 @@ element selected.normal {
     text-color: @background;
 }
 
-element normal.normal {
-    background-color: @background-light;
-}
-
-element alternate.normal {
-    background-color: @background-dark;
-}
-
 scrollbar {
     width: 10px;
     background-color: @background-light;
     handle-color: @scrollbar-handle;
-    handle-width: 10px;
+    handle-width: 15px;
     height: 100%;
-    margin: 5;
-    padding: 0;
+    border-radius: 30%;
+}
+
+listview {
+    cyclic: true;
+    spacing: 0.6em;
+}
+
+element, button {
+    border-radius: 30%;
 }
 
 button,
-prompt,
 inputbar,
 case-indicator,
 entry {
@@ -61,6 +90,10 @@ entry {
 sidebar {
     padding: 5;
     margin: 5;
+}
+
+button {
+    margin: 0.25em;
 }
 
 button.selected {
