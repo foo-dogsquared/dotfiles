@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+# Simply commits the package lists `packages.txt` and `aur-packages.txt` into the Git repo. 
+# This script is specifically used for a cron job where this is run monthly. 
+
+DOTFILES_DIRECTORY="$HOME/dotfiles"
+
+git add "$DOTFILES_DIRECTORY/packages.txt" "$DOTFILES_DIRECTORY/aur-packages.txt"
+git commit -m "Update package lists as of $(date +%F)" 
