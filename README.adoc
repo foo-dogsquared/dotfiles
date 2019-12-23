@@ -2,28 +2,45 @@
 :toc:
 
 My dotfiles for my Linux-based system setup. 
-The structure of this repo is designed to be managed with https://www.gnu.org/software/stow/[GNU Stow], a symlinks farm manager.
+The structure of this repo is designed to be managed with https://www.gnu.org/software/stow/[GNU Stow], a symlinks farm manager. 
 
-Don't blindly apply these dotfiles unless you know what you're doing. 
-Review the code first, change the setting accordingly, and apply it.
+I don't know what I'm doing most of the time in creating this setup so if you're brave (or suicidal) enough to take a look at my stuff (that may or may not be an escaped entry from the SCP Foundation), go ahead. 
+
+CAUTION: Don't blindly apply these dotfiles unless you know what you're doing. 
+Review the code first, change the setting accordingly, and apply it. 
+
+
+
+
+== Inspirations
+
+* https://github.com/addy-dclxvi/almighty-dotfiles/ 
+* https://github.com/LukeSmithxyz/voidrice 
+* https://www.reddit.com/r/unixporn/ (pretty much the little details) 
+* Specifically for https://www.reddit.com/r/unixporn/comments/8ezsq7/bspwm_terminal_tabs_in_polybar_dark_and_dull_exam/[the tabbed terminals idea] and the https://github.com/Nikzt/dotfiles[linked dotfiles repo]) (not yet implemented, still cleaning up my stuff) 
+* https://www.reddit.com/r/unixporn/comments/edmb8b/awesome_gnawesome/[Just] https://github.com/ilovecookieee/Glorious-Dotfiles[saving] https://github.com/PapyElGringo/material-awesome[these] for an **awesome** future, hehehe. 
+
+
 
 == Screenshots
 My setup was made by the FOSS gang. 
 
-.i3 setup with multiple windows
-image::docs/i3-multiple-windows.png[i3 setup with multiple windows]
+.bspwm setup with no windows
+image::docs/bspwm-empty.png[bspwm setup with no windows]
 
-.i3 setup with single window
-image::docs/i3-single-window.png[i3 setup with single window]
+.bspwm with the terminals
+image::docs/terminals.png[The terminals]
 
-.i3 setup with no window
-image::docs/i3-no-window.png[i3 setup with no window]
-
-.rofi setup
-image::docs/i3-rofi.png[rofi setup]
+.rofi and VS Code setup
+image::docs/vscode-and-rofi.png[rofi and VS Code setup]
 
 .vim and zathura (and LaTeX) setup
 image::docs/vim-and-zathura.png[vim and zathura (and LaTeX) setup]
+
+.A dropdown terminal (because why not)
+image::docs/dropdown-term.png[A dropdown terminal]
+
+
 
 
 == Specifications
@@ -31,42 +48,153 @@ Here are the main specifications of my machine currently running this (as of 201
 
 * **Operating system**: https://www.archlinux.org/[Arch Linux]
 * **Display server**: X Window System using https://www.x.org/wiki/[Xorg]
-* **Window manager**: https://i3wm.org/[i3] (specifically https://github.com/Airblader/i3[i3-gaps])
+* **Window manager**: https://github.com/baskerville/bspwm[bspwm]
 * **Terminal emulator**: https://github.com/jwilm/alacritty/[Alacritty]
 * **Shell**: http://www.zsh.org/[Zsh]
-* **Terminal emulator font**: https://github.com/be5invis/iosevka[Iosevka]
+* **Terminal emulator font**: https://github.com/be5invis/iosevka[Iosevka] (with the https://github.com/ryanoasis/nerd-fonts[Nerd Font patches])
 
 Terminal color scheme was generated with https://github.com/dylanaraps/pywal[pywal]. 
 The picture is used to generate the color pallete is https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[this one]. 
 It's also the wallpaper used in the screenshots.
 
 
-== Wallpapers
-Here are the wallpapers' filename along with their sources:
 
+
+== Wallpapers
+
+Here's a list of the wallpapers I've used throughout my ricing journey. 
+
+* https://www.reddit.com/r/wallpapers/comments/ed99q8/alien_moon_rmradev/[`alien-moon.jpg`]
+* https://www.reddit.com/r/wallpapers/comments/edn0ju/4k_desktop_wallpaper/[`forest-bright.jpg`]
 * https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[`nebula.jpg`]
+* https://www.reddit.com/r/wallpapers/comments/ebvk0q/rocket_launch_1920x1080/[`rocket-launch.jpg`]
 * https://www.reddit.com/r/wallpapers/comments/co9t14/sand/[`sand.jpg`]
 
+Credits goes to the original creators for these cool wallpapers. :)
 
-== Custom scripts
-My own scripts is in link:.scripts/[`.scripts/`] and should be linked in `$HOME/.scripts`.
-This is mostly used for using scripts from different configs such as from i3 and dunst.
+
+
+
+
+== Tour of my setup 
+
+There are a few things to know on this setup. 
+
+* `packages.txt` is mainly for archiving my native package list from the official Arch Linux repos installed in my current Arch Linux setup. 
+* `aur-packages.txt` contains the installed packages from AUR along with their versions. 
+
+Both of the above files are going to be committed at the start of every month. 
+
+My own scripts is in link:bin/[`bin/`]. 
+
+Currently, I have them linked in `$HOME/bin`. 
+Ideally, the linked path should be included as part of the `$PATH` environment variable. 
+
+This is mostly used with hotkey bindings (e.g., `sxhkd`). 
+
+Here's the list of primary scripts:
+
+* Screenshot capture. 
+Includes the option of delaying and region selection mode. 
+
+* Screen recording. 
+An option of excluding and/or following the mouse cursor is included. 
+
+* Quick command prompts. 
+The script is based from https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/prompt[Luke Smith's prompt script]. 
+
+* Switching on/off programs. 
+Useful for situations where only one instance of the program is running. 
+
+Aside from the scripts, there are also some details and files that are not committed to this setup for privacy and security reasons. 
+A few examples of which is my cron setups where it is tasked with updating and committing the package lists to the Git repo, updating the packages, cleaning the cache, and so much more. 
+
+
 
 
 == Configured programs
 Here's a list of the programs with details on the config found in this repo. 
 Each of the directory is designed to be used/managed with https://www.gnu.org/software/stow/[GNU Stow] at the indicated target path.
 
+
+=== https://github.com/baskerville/bspwm[bspwm]
+
+A minimalist window manager. 
+Only provides a window manager and nothing else. 
+
+* Config located at link:bspwm/[`bspwm/`] directory. 
+* The usual target path for a user is at `$HOME/.config/bspwm/`. 
+* Minimum version (from `bspwm --version`):
+** `0.9.7-10-g2ffd9c1`
+* Simply contains `bspwmrc` which is an executable setting up bspwm-related settings and and starting up some applications. 
+* This allows for a modular setup. 
+For using keybindings, it uses `sxhkd` (Simple X Hotkey Daemon). 
+For something similar to i3-bar, https://github.com/polybar/polybar[polybar] serves as the replacement. 
+
+
+=== https://github.com/baskerville/sxhkd[sxhkd]
+
+Stands for "Simple X Hotkey Daemon". 
+It is a hotkey daemon detecting certain X events primarily from the keyboard and mouse. 
+
+It is also very useful since it enables modular setup. 
+Can be used independent of the desktop environment (DE) or the window manager (WM). 
+
+* Config located at link:sxhkd/[`sxhkd/`] folder.
+* The usual target path is at `$HOME/.config/sxhkd`. 
+* Minimum version (from `sxhkd --version`):
+** `0.6.0-3-g7124055`
+* Contains a config file (`sxhkdrc`) for the keybindings. 
+There are some keybindings specifically used for `bspwm`. 
+
+
+=== https://github.com/polybar/polybar[polybar]
+
+A tool for creating status bars. 
+
+This is the replacement bar from my previous i3-based setup. 
+
+* Config located at link:polybar[`polybar/`]. 
+* The usual target path for a user is at `$HOME/.config/polybar`. 
+* Minimum version (from `polybar --version`): 
+** `polybar 3.4.1`
+** `Features: +alsa +curl +i3 +mpd +network(libnl) +pulseaudio +xkeyboard`
+* There is only the standalone config (might decide to make it modular) and the launch script which is copied from the https://wiki.archlinux.org/index.php/Polybar[related Arch Wiki entry]. 
+
+For documentation, check out the https://wiki.archlinux.org/index.php/Polybar[already linked Arch Wiki entry] and the https://github.com/polybar/polybar/wiki[official documentation from GitHub]. 
+
+
+=== https://github.com/davatorium/rofi[Rofi]
+
+The application switcher and launcher. 
+Also serves as a replacement for https://tools.suckless.org/dmenu/[dmenu].
+
+* Config located at link:rofi/[`rofi/`].
+* The usual target path for a user is at `$HOME/.config/rofi/`.
+* Minimum version (from `rofi -version`):
+** `Version: 1.5.4`
+* Main config is `config.rasi`.
+* Contains the config and my custom Rofi themes. 
+
+To see the documentation, check out the manual entry for `rofi`. 
+For creating or editing Rofi themes, read the manual entry of `rofi-theme`. 
+Also, view the related https://wiki.archlinux.org/index.php/Rofi[Arch Wiki entry]. 
+
+
 === https://www.zsh.org/[Zsh]
+
 A Unix shell and an alternative to the Bash.
 
 * Config found at link:zsh/[`zsh/`] directory.
 * The usual target path for a user is at `$HOME/`.
 * Minimum version (from `zsh --version`):
 ** `zsh 5.7.1 (x86_64-pc-linux-gnu)`
-* Take note that the configuration assumes that you install https://github.com/robbyrussell/oh-my-zsh/[Oh My Zsh!] after.
+* Contains `.zprofile` and `.zshrc`. 
+The primary file to look for is the `.profile` to set environment variables independent of the shell setups. 
+
 
 === https://www.x.org/wiki/[Xorg]
+
 A display server implementing X window system.
 
 * Config found at link:xorg/[`xorg/`] directory.
@@ -74,19 +202,25 @@ A display server implementing X window system.
 * Minimum version (from `Xorg -version`):
 ** `X.Org X Server 1.20.5`
 ** `X Protocol Version 11, Revision 0`
-* The configuration is found at `.Xresources` containing the colors (0 to 15, foreground, and the background).
+* The configuration is found at `.Xresources` containing the colors (0 to 15, foreground, and the background). 
 
-=== https://github.com/yshui/compton[Compton]
-A window compositor that adds off-screen buffers and additional effects and animations to the window. 
-Can be used for adding style to your setup.
 
-* Config found at link:compton/[`compton/`] directory.
-* The usual target path for a user is at `$HOME/.config/compton`.
-* Minimum version (from `compton --version`):
+=== https://github.com/yshui/picom[picom]
+
+A window compositor forked from https://github.com/chjj/compton[compton] that adds off-screen buffers and additional effects and animations to the window. 
+Can be used for adding style to your setup. 
+
+This is formerly the Compton configuration. 
+
+* Config found at link:picom/[`picom/`] directory.
+* The usual target path for a user is at `$HOME/.config/picom`.
+* Minimum version (from `picom --version`):
 ** `v7.2`
-* The config is copied from `/etc/xorg/compton.conf` and edited a few parameters.
+* The config is copied from `/etc/xorg/picom.conf` and edited a few parameters.
+
 
 === https://www.vim.org/[Vim]
+
 A modal text editor.
 
 * Config located at link:vim/[`vim/`] directory.
@@ -99,7 +233,9 @@ A modal text editor.
 * One of the largest snippet file is the snippets for LaTeX files. 
 It is based on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips LaTeX snippets].
 
+
 === https://ranger.github.io/[Ranger]
+
 A Vim-based file browser. 
 https://github.com/ranger/ranger/wiki[Here's their config documentation for it.]
 
@@ -112,7 +248,9 @@ https://github.com/ranger/ranger/wiki[Here's their config documentation for it.]
 * Contains keybinding in `rc.conf`. Additional keybindings include the `O` keybinding and their variants for opening my go-to programs such as https://code.visualstudio.com/[Visual Studio Code].
 * `rifle.conf` contains configuration for opening a list of programs. 
 
+
 === https://github.com/jwilm/alacritty/[Alacritty]
+
 Similar to https://sw.kovidgoyal.net/kitty[Kitty] , it's a GPU-based terminal emulator. 
 It's documentation for the configuration can be viewed at the config file itself being filled with comments.
 
@@ -122,34 +260,9 @@ It's documentation for the configuration can be viewed at the config file itself
 ** `alacritty 0.3.3`
 * Contains a single `alacritty.yaml` as the config file. Not much has changed except for the color scheme and the font being used.
 
-=== https://github.com/Airblader/i3[i3-gaps] 
-A fork of i3 window manager. 
-https://i3wm.org/docs[Here's the documentation page of the program.]
-
-* If it's any of importance, the configuration is prone to be moved for the https://github.com/i3/i3/[original version of i3] since https://github.com/i3/i3/issues/3724[there's consideration for merging of gaps into i3].
-* The usual target path for a user is at `$HOME/.config/i3/`.
-* Config located at link:i3/[`i3/`] directory.
-* Minimum version (from `i3 --version`):
-** `i3 version 4.17 (04.08.2019) © 2009 Michael Stapelberg and contributors`
-* Uses https://github.com/davatorium/rofi[`rofi`] as the application launcher and serves as a replacement for https://tools.suckless.org/dmenu/[`dmenu`].
-* The containing config (`config`) is simply the default config with my personal config added into it. 
-Not much to say here except I use `i3bar` (the default bar) and https://github.com/i3/i3status[`i3status`] (the default status bar config) to fill in.
-* The config for `i3status` is located in a different directory at link:i3status[`i3status/`] containing a single `config` file (for now).
-* Also, it uses scripts from the link:.scripts/[`.scripts/`] directory so be sure to put those in the appropriate location as well.
-
-=== https://github.com/davatorium/rofi[Rofi]
-The application switcher and launcher. 
-Also serves as a replacement for https://tools.suckless.org/dmenu/[dmenu].
-
-* Config located at link:rofi/[`rofi/`].
-* The usual target path for a user is at `$HOME/.config/rofi/`.
-* Minimum version (from `rofi -version`):
-** `Version: 1.5.4`
-* Main config is `config.rasi`.
-* My i3 setup uses Rofi with my custom theme (`fds-sidebar`) with `$mod+D` (see image above). Every variation of my sidebar theme should import the common file (`fds-sidebar-common.rasi`) and only declare the colors. 
-See `fds-sidebar-dark.rasi` for an example. 
 
 === https://www.gtk.org/[GTK]
+
 A library for creating programs with graphical user interface (GUI).
 
 There are often two versions when configuring GTK: version 2 and 3.
@@ -163,16 +276,22 @@ There are often two versions when configuring GTK: version 2 and 3.
 * GTK color and icon theme is https://github.com/NicoHood/arc-theme[Arc theme] 
 and uses the light dark variation (`arc-darker`).
 
+
 === https://dunst-project.org/[Dunst]
+
 It's a notification daemon used to display notifications sent by notifiers (programs that send messages/notifications).
 
 * Config location is at link:dunst/[`dunst/`].
 * The usual target path for a user is at `$HOME/.config/dunst/`.
 * Minimum version (from `dunst --version`):
 ** `Dunst - A customizable and lightweight notification-daemon 1.4.1 (2019-07-03)`
-* Simply contains a `dunstrc` configuring appearance of the notifications.
+* Simply contains a `dunstrc` configuring appearance of the notifications. 
+
+Look out for the related manual entry (i.e., `man dunst`) and the https://wiki.archlinux.org/index.php/Dunst[Arch Wiki entry]. 
+
 
 === https://www.archlinux.org/pacman/[pacman]
+
 The default package manager for Arch Linux.
 
 * Config location is at link:pacman/[`pacman/`]
@@ -180,13 +299,20 @@ The default package manager for Arch Linux.
 * Minimum version (from `pacman --version`):
 ** `Pacman v5.1.3 - libalpm v11.0.3`
 * Contains the configuration file, a `mirrorlist` file, and some https://www.archlinux.org/mirrorlist/?ip_version=6[pacman hooks].
-* For the mirrorlist, change it accordingly or https://www.archlinux.org/mirrorlist/?ip_version=6[generate another one].
+* For the mirrorlist, change it accordingly or https://www.archlinux.org/mirrorlist/?ip_version=6[generate another one]. 
+It is also monthly updated from a cron job. 
+* The setup also uses `yay` as the AUR helper tool. 
+
+
 
 
 == Additional programs used
+
 As much as possible, I use free and open source software for all of my needs. 
 
+
 === System administration
+
 TIP: I recommend to start at this list especially if you're starting with a bare minimum of a Linux installation.
 
 * https://hisham.hm/htop/[htop] - A process viewer and manager.
@@ -196,7 +322,18 @@ TIP: I recommend to start at this list especially if you're starting with a bare
 * https://www.freedesktop.org/wiki/Software/udisks/[udisks] - A manager for mounting filesystems.
 * https://github.com/coldfix/udiskie[udiskie] - An automounter for removable media.
 
+
+=== Desktop user experience 
+
+* https://github.com/tmux/tmux/[tmux] - A terminal multiplexer useful for managing multiple sessions. 
+* https://github.com/noctuid/tdrop[tdrop] - A modular dropdown creator.  
+* https://github.com/reorr/mantablockscreen[mantablockscreen] - A lock screen. 
+* https://github.com/dylanaraps/pywal[pywal] - An automation tool for generating color schemes from images and applying them to your programs. 
+* https://github.com/dylanaraps/neofetch/[neofetch] - A program for getting information for your hardware and software setup. 
+
+
 === General purpose programs
+
 * https://audacious-media-player.org/[Audacious] - An audio player with various listening options.
 * https://feh.finalrewind.org/[feh] - A minimal image viewer.
 * https://www.mozilla.org/en-US/firefox/new/[Firefox] - One of the major web browser second to Chrome.
@@ -208,7 +345,9 @@ TIP: I recommend to start at this list especially if you're starting with a bare
 * https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player.
 * https://weechat.org/[Weechat] - An IRC client on the command line.
 
+
 === Device drivers and servers
+
 * https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux 
 sound driver.
 * https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more. Also can be used as a recorder.
@@ -217,36 +356,55 @@ sound driver.
 I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that. I also have to 
 use the https://www.archlinux.org/packages/extra/x86_64/nvidia-390xx/[legacy version].
 
+
 === Music production
+
 * https://kx.studio/Applications:Cadence[Cadence] - A set of audio tools. Part of the KX Studio project.
 * https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio 
 plug-in formats such as VST2/3, SF2, and SFZ. Part of the KX Studio project.
 * https://lmms.io/[LMMS] - A digital audio workstation for beat production.
 * https://musescore.org/[Musescore] - A music composition and notation software.
 
+
 === Design
+
 * https://blender.org/[Blender] - A top-notch 3D modelling program.
 * https://www.freecadweb.org/[FreeCAD] - A general purpose 3D computer-aided design program.
 * https://inkscape.org/[Inkscape] - A vector illustration/editing program. Alternative to Adobe Illustrator.
 * https://krita.org/en/[Krita] - A painting/illustration program. 
 
+
 === Fonts
+
 * https://github.com/belluzj/fantasque-sans[Fantasque Sans Mono]
 * https://github.com/tonsky/FiraCode[Fira Code] - A programmer-oriented font that supports ligatures.
 * https://github.com/be5invis/iosevka[Iosevka]
+* https://github.com/ryanoasis/nerd-fonts[Nerd Fonts] - A suite of font tools. 
+Also offers 40+ patched fonts of the popular fonts such as Iosevka, Fira Code, and many others. 
 * https://github.com/googlefonts/noto-fonts[Noto Fonts]
 
+
 === Documents
-* https://asciidoctor.org/[Asciidoctor] - A text formatting language suitable for creating books, documentations, and writings. Highlights a heavier feature set compared to Markdown.
-* https://www.libreoffice.org/[LibreOffice] - An office productivity suite and serves as a free alternative to Microsoft Office suite.
+
+* https://asciidoctor.org/[Asciidoctor] - A text formatting language suitable for creating books, documentations, and writings. Highlights a heavier feature set compared to Markdown. 
+* https://github.com/gohugoio/hugo[Hugo] - A static site generator for creating websites. 
+Useful for a variety of document formats to be converted into a website especially with the (bare) support for https://pandoc.org/[Pandoc] converter. 
+* https://www.libreoffice.org/[LibreOffice] - An office productivity suite and serves as a free alternative to Microsoft Office suite. 
+* https://pandoc.org/[Pandoc] - A universal document converter that supports a wide variety of document formats. 
+Primarily used for converting Markdown documents into Asciidoctor text. 
 * https://www.tug.org/texlive/[TeX Live] - A cross-platform LaTeX distribution for compiling LaTeX files. 
 * http://luatex.org/[LuaTeX] - The TeX engine I primarily use for my LaTeX documents. 
 
+
 === Mathematical tools
+
 * https://www.anaconda.com/[Anaconda] - A mathematical environment distribution.
-* https://www.gnu.org/software/octave/[Octave] - A mathematical computational environment similar to Matlab.
+* https://www.gnu.org/software/octave/[Octave] - A mathematical computational environment similar to Matlab. 
+* https://www.r-project.org/[R] - Similar to Octave. 
+
 
 === Software development
+
 * https://cmake.org/[CMake] - A cross-platform build system that takes care of build configurations.
 * https://gcc.gnu.org/[GCC] - A set of compilers from GNU. I mainly use it for developing and compiling C and C++ languages.
 * https://git-scm.com/[Git] - My one and only version control system.
@@ -257,8 +415,10 @@ plug-in formats such as VST2/3, SF2, and SFZ. Part of the KX Studio project.
 https://www.ruby-lang.org/en/[Ruby], https://www.java.com/[Java], 
 https://www.rust-lang.org/[Rust], and https://golang.org/[Go].
 
+
 === Browser extensions 
+
 * https://bitwarden.com/[Bitwarden] 
 * Internet Archive Web Extension (https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak[Chrome] and https://addons.mozilla.org/en-US/firefox/addon/wayback-machine_new/[Firefox] version)
 * https://github.com/gorhill/uBlock[uBlock Origin]
-* https://github.com/brunolemos/simplified-twitter[Simplified Twitter]
+* https://www.one-tab.com/[OneTab extension] 
