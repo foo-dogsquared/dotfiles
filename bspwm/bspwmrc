@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Removing all rules at startup to prevent duplicating rules. 
+bspc rule -r "*"
+
+# Set up the desktops (workspaces) for the monitor
+bspc monitor -d I II III IV V 
+
+bspc config border_width        5
+bspc config window_gap          9
+
+bspc config split_ratio         0.52
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
+bspc config focused_border_color "#d59783"
+bspc config focus_follows_pointer true
+
+# Rules
+bspc rule -a code-oss desktop=^2
+bspc rule -a firefox desktop=^1
+
+# Startup applications
+$HOME/.config/polybar/launch.sh
+exec firefox

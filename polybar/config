@@ -1,0 +1,289 @@
+; color format is in ARGB
+[colors]
+background = #000000
+background-alt = #99000000
+foreground = ${xrdb:color7:#eee}
+foreground-alt = #aaa
+primary = #d59783
+secondary = #E8C4FF
+tertiary = #A7DAE8
+alert = #bd2c40
+
+
+
+
+; The common style between bars
+[bar-common-style]
+width = 100%
+height = 30
+wm-restack = bspwm
+fixed-center = false
+
+line-size = 3
+line-color = #f00
+
+padding = 1
+
+module-margin = 1
+
+font-0 = "Iosevka Nerd Font"
+font-1 = "Fira Code"
+font-2 = siji:pixelsize=10;1
+
+tray-position = right
+tray-padding = 2
+cursor-click = pointer
+
+
+
+[module-common-style]
+format-padding = 1
+format-background = ${colors.background-alt}
+format-prefix-foreground = ${colors.foreground-alt}
+
+
+
+
+[bar/fds-bar]
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+inherit = bar-common-style
+enable-ipc = true
+modules-left = bspwm
+modules-right = pulseaudio memory cpu temperature eth date powermenu
+
+
+
+
+[bar/fds-taskbar]
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+inherit = bar-common-style
+bottom = true
+modules-right = filesystem
+
+
+
+[module/conv]
+type = custom/text
+content = "terminal"
+click-left = "tdrop -ma -s dropdown alacritty"
+
+
+
+[module/xwindow]
+type = internal/xwindow
+label = " %title:0:50:...% "
+label-layout = %layout%
+format = <label>
+
+
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+mount-1 = /home
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %free%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+label-background = ${colors.background-alt}
+
+
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-padding = 1
+
+label-occupied = %index%
+label-occupied-padding = 1
+
+label-urgent = %index%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = %index%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 1
+
+
+
+
+[module/mpd]
+type = internal/mpd
+format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+
+
+
+[module/cpu]
+inherit = module-common-style
+type = internal/cpu
+interval = 2
+format-prefix = "CPU "
+label = %percentage-sum%%
+
+
+
+
+[module/memory]
+inherit = module-common-style
+type = internal/memory
+interval = 2
+format-prefix = "MEM "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage_used%%
+
+
+
+
+[module/wlan]
+inherit = module-common-style
+type = internal/network
+interface = wlp0s18f2u4
+interval = 3.0
+
+format-connected = <label-connected>
+format-connected-underline = #9f78e1
+format-prefix = "NET "
+label-connected = %essid%
+
+format-disconnected = <label-disconnected>
+label-disconnected = %ifname% disconnected
+
+
+
+
+[module/eth]
+inherit = module-common-style
+type = internal/network
+interface = enp4s0
+interval = 3.0
+
+format-connected-prefix = "ETH "
+format-connected-background = ${colors.background-alt}
+format-connected-padding = 1
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %ifname%
+
+format-disconnected = <label-disconnected>
+format-disconnected-background = ${colors.background-alt}
+format-disconnected-padding = 1
+label-disconnected = N/A
+label-disconnected-foreground = ${colors.foreground-alt}
+
+
+
+
+[module/date]
+inherit = module-common-style
+type = internal/date
+interval = 5
+
+date = "%F"
+time = %H:%M:%S
+
+format-prefix = "DATE "
+
+label = %date% %time%
+
+
+
+
+[module/pulseaudio]
+inherit = module-common-style
+type = internal/pulseaudio
+
+format-volume-prefix = "VOL "
+format-volume-foreground = ${colors.foreground-alt}
+format-volume-background = ${colors.background-alt}
+format-volume-padding = 1
+format-volume = <label-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${colors.foreground}
+
+format-muted-prefix = "VOL "
+format-muted-background = ${colors.background-alt}
+format-muted-padding = 1
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = 🔇 muted
+
+
+
+
+[module/temperature]
+inherit = module-common-style
+type = internal/temperature
+thermal-zone = 0
+hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon0/temp1_input
+warn-temperature = 60
+
+format = <label>
+format-prefix = "TEMP "
+format-warn = <label-warn>
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+
+
+
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.secondary}
+label-close =  cancel
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+padding-left = 2
+
+; vim:ft=dosini

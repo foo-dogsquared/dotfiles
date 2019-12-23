@@ -1,0 +1,112 @@
+# Basic binds (inspired from the previous i3 config). 
+super + Return 
+    $TERMINAL
+
+# A dropdown terminal. 
+# Requires tmux and tdrop for this to work. 
+super + shift + Return
+    tdrop -ma -w -4 -y "$PANEL_HEIGHT" -s dropterm $TERMINAL
+
+super + q
+    $TERMINAL -e ranger
+
+super + t
+    $HOME/bin/toggle-bin screenkey
+
+# Here is the scriptless version of toggling programs. 
+#   kill $(pgrep screenkey --oldest); \
+    if [[ $? != 0 ]]; then screenkey 2>/dev/null; fi
+
+# Kill the focused window. 
+super + shift + q
+    kill -9 `xdotool getwindowfocus getwindowpid`
+
+
+
+# Utility keyboard shortcuts.
+
+# Application launcher.
+super + d
+    rofi -show drun -sidebar-mode -theme fds-sidebar-dark
+
+# User action shortcuts.
+super + F10
+    $HOME/bin/prompt "Proceed to shutdown?" "sudo -A shutdown"
+
+super + F11
+    $HOME/bin/prompt "Proceed to reboot?" "sudo -A reboot"
+
+super + F12
+    $HOME/bin/prompt "Exit from X session?" "killall Xorg"
+
+# Screenshot shortcuts.
+{_, control +} {_,shift +} Print
+    $HOME/bin/screenshot {_,--select} {_,--delay 3}
+
+# Screen record shortcuts.
+{_,shift +} {_,control +} super + Print
+    $HOME/bin/record --output $\{VIDEOS_DIRECTORY:-$HOME/recordings\} {_,--disable-cursor} {_,--follow-mouse}
+
+# Miscellaneous shortcuts.
+super + shift + d 
+    $HOME/bin/rofi-user-action-menu.sh
+
+super + shift + m
+    man -k . | rofi -dmenu -p "Select the manual entry" -theme fds-sidebar-dark | awk '{print $1}' | xargs -r man 
+
+# Reloads the Simple X Hotkey Daemon config and Polybar.
+shift + super + r
+    pkill -USR1 sxhkd && notify-send "SXHKD config has successfully reloaded." 
+
+
+
+# The usual application suite shortcuts. 
+# I'm separating them according to the keyboard row (in the QWERTY layout anyway). 
+super + a ; {z, x, c, v, b, n}
+    { zathura, vim, code, inkscape, blender, lmms }
+
+super + a ; {f}
+    { firefox }
+
+super + a ; {t, r}
+    { thunderbird, thunar }
+
+
+
+# bspwm exclusive shortcuts.
+# Feel free to replace these if you're working with another WM/DE.
+# Over time, I may replace one of the usual shortcut 
+# with something more generally applied (with `xdotool` for example). 
+
+# Move desktop/node view to the specified desktop. 
+super + {_,shift + }{1-9,0}
+    bspc {desktop -f,node -d} '^{1-9,10}'
+
+super + z
+    bspc node -t '~floating'
+
+super + x 
+    bspc node -t '~fullscreen'
+
+super + c 
+    bspc node -t '~tiled'
+
+# Desktop and node movements. 
+super + Tab
+    bspc desktop next --focus
+
+super + shift + Tab
+    bspc desktop prev --focus
+
+super + grave
+    bspc desktop last --focus
+
+super + shift + grave
+    bspc node --to-desktop last
+
+super + {Up,Down,Left,Right}
+    bspc node {north,south,west,east} --focus
+
+super + shift {Up,Down,Left,Right}
+    bspc node {north,south,west,east} --swap focused --follow
+
