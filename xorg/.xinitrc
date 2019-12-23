@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env sh
+
+# Loading the xprofile since display managers also needs the said file. 
+# This prevents duplicating needed code. 
+[ -f ~/.xprofile ] && . ~/.xprofile
 
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
@@ -23,8 +27,4 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 
-/usr/bin/lxsession &
-compton &
-dunst &
-udiskie &
-exec i3
+exec bspwm

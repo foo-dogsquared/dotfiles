@@ -1,5 +1,5 @@
 *foreground:   #e5e3e3
-*background:   #221e21
+*background:   #eeeeee
 *cursor:       #e5e3e3
 
 *color0:       #0c080b
@@ -26,6 +26,6 @@
 *color7:       #d1cfcf
 *color15:      #eceaea
 
-URxvt.font: xft:Iosevka:size=12
+URxvt.font: xft:FiraCode Nerd Font:size=12
 URxvt.secondaryWheel: 1
 

@@ -1,7 +1,6 @@
-#
-# ~/.zprofile
-#
+if [[ -f $HOME/.profile ]]; then 
+    source $HOME/.profile
+fi
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
-
-export PATH="$HOME/.cargo/bin:$PATH"
+# This is a program that `sudo -a` needs for prompting the user and password. 
+export SUDO_ASKPASS="$HOME/bin/askpass"

@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# Activate the LXSessions for mounting external filesystems. 
+# This is pretty much only used for accessing external filesystems 
+# from Thunar as far as practical application is concerned. 
+/usr/bin/lxsession &
+
+# Run the compositor and enable more advanced graphical effects. 
+picom &
+
+# Activate the notification server. 
+dunst &
+
+# Boot the mount filesystem helper. 
+udiskie &
+
+# Run the hotkey daemon. 
+sxhkd &
