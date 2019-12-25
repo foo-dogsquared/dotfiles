@@ -28,13 +28,13 @@ Usage: $0 [-o/--output <OUTPUT_PATH>] [-s/--select]
 
 Options:
 --help - show the help section
--s, --select - set the screenshot capture to selection mode
--d, --delay <SECONDS> - set a delay for the capture 
-                        (in <SECONDS> seconds)
--o, --output <OUTPUT_PATH> - set the output path for the picture;
-                             when given no output, the picture will 
-                             be moved to \$PICTURES_DIRECTORY (or 
-                             at \$HOME/Pictures if it's missing)
+-s, --select                - set the screenshot capture to selection mode
+-d, --delay <SECONDS>       - set a delay for the capture (in <SECONDS> seconds)
+-c, --cursor                - superimposes the cursor in the image
+-o, --output <OUTPUT_PATH>  - set the output path for the picture;
+                            when given no output, the picture will 
+                            be moved to \$PICTURES_DIRECTORY (or 
+                            at \$HOME/Pictures if it's missing)
 "
 
 # setting up a exit trap in case of error
@@ -57,12 +57,13 @@ do
             OUTPUT="$2"
             shift
             shift;;
+        -c|--cursor)
+            CURSOR=1
+            shift;;
         *)
             shift;;
     esac
 done
-
-set -- "${POSITIONAL[@]}" # restore positional parameters
 
 if [[ -n "$OUTPUT" ]]; then
     pic_filepath=$OUTPUT
@@ -96,6 +97,11 @@ fi
 if [[ $DELAY -gt 0 ]]; then
     maim_command+="--delay=$DELAY "
     notify-send "Delayed screenshot" "A delayed screenshot is about to be taken in $DELAY seconds." --expire-time=$(( ($DELAY * 1000) - 1000 ))
+fi
+
+# Checking if the cursor option is disabled. 
+if [[ $CURSOR -ne 1 ]]; then
+    maim_command+="--hidecursor "
 fi
 
 $($maim_command)
