@@ -31,7 +31,7 @@ super + d
 
 # User action shortcuts.
 super + F10
-    $HOME/bin/prompt "Proceed to shutdown?" "sudo -A shutdown"
+    $HOME/bin/prompt "Proceed to shutdown?" "sudo -A shutdown 0"
 
 super + F11
     $HOME/bin/prompt "Proceed to reboot?" "sudo -A reboot"

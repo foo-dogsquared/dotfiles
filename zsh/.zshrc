@@ -1,19 +1,18 @@
 # This is the part that configures the interactive shell. 
 
-export function git_directory() {
-    git_branch=$(git branch --show-current 2>/dev/null)
-
-    return "$git_branch"
-}
-
 # Add pywal to the bootup of the interactive shell
 cat ~/.cache/wal/sequences
 
 # The prompt. 
-# This is based from Luke Smith's setup. 
-# https://github.com/LukeSmithxyz/voidrice/blob/master/.config/zsh/.zshrc 
+# Adding basic version control support to the zsh prompt. 
+# https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Zsh
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '(%b)'
 autoload -U colors && colors
-PS1="%F%(0?.%{$fg[red](T%}.%{$fg[green](F%})) %B%{$fg[magenta]%}%~%{$reset_color%} $%f%b "
+PS1="%F${fg[white]}%(0?.√.%?) %B%{$fg[magenta]%}%1~%{$reset_color%} \$vcs_info_msg_0_ $%f%b "
 
 # Configuring the command history.
 HISTSIZE=1000
