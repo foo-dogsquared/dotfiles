@@ -12,7 +12,7 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats '(%b)'
 autoload -U colors && colors
-PS1="%F${fg[white]}%(0?.√.%?) %B%{$fg[magenta]%}%1~%{$reset_color%} \$vcs_info_msg_0_ $%f%b "
+PS1="%F%{${fg[white]}%}%(0?.√.%?) %B%{$fg[magenta]%}%1~%{$reset_color%} \$vcs_info_msg_0_ $%f%b "
 
 # Configuring the command history.
 HISTSIZE=1000
