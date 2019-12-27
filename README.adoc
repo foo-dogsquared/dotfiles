@@ -23,6 +23,7 @@ Review the code first, change the setting accordingly, and apply it.
 
 
 == Screenshots
+
 My setup was made by the FOSS gang. 
 
 .bspwm setup with no windows
@@ -44,6 +45,7 @@ image::docs/dropdown-term.png[A dropdown terminal]
 
 
 == Specifications
+
 Here are the main specifications of my machine currently running this (as of 2019-08-09):
 
 * **Operating system**: https://www.archlinux.org/[Arch Linux]
@@ -63,15 +65,26 @@ It's also the wallpaper used in the screenshots.
 == Wallpapers
 
 Here's a list of the wallpapers I've used throughout my ricing journey. 
+I've also tried to get the creators to show appreciation for their work. 
 
-* https://www.reddit.com/r/wallpapers/comments/ed99q8/alien_moon_rmradev/[`alien-moon.jpg`]
+* https://www.reddit.com/r/wallpapers/comments/ed99q8/alien_moon_rmradev/[`alien-moon.jpg`] 
+** Creator: https://www.deviantart.com/rmradev[rmRadev]
+** Original link: https://www.deviantart.com/rmradev/art/Alien-Moon-743912901
+
 * https://www.reddit.com/r/wallpapers/comments/edn0ju/4k_desktop_wallpaper/[`forest-bright.jpg`]
+** Creator: https://dribbble.com/MikaelGustafsson[Mikael Gustafsson]
+** Original link: https://dribbble.com/shots/3713646-Small-Memory 
+
+* https://www.reddit.com/r/wallpapers/comments/efkxb5/hotline_miami_alternate_cover_iv_by_mbdsgns/[`hotline-miami-alt-cover.png`] 
+** Creator: https://dropr.com/mbdsgns[Mbdsgns]
+** Original link: https://dropr.com/mbdsgns/254740/hotline_miami_iv/+?p=1388845
+
 * https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[`nebula.jpg`]
+** Creator: https://www.reddit.com/user/datGryphon/[datGryphon]
+
 * https://www.reddit.com/r/wallpapers/comments/ebvk0q/rocket_launch_1920x1080/[`rocket-launch.jpg`]
+
 * https://www.reddit.com/r/wallpapers/comments/co9t14/sand/[`sand.jpg`]
-
-Credits goes to the original creators for these cool wallpapers. :)
-
 
 
 
@@ -113,6 +126,7 @@ A few examples of which is my cron setups where it is tasked with updating and c
 
 
 == Configured programs
+
 Here's a list of the programs with details on the config found in this repo. 
 Each of the directory is designed to be used/managed with https://www.gnu.org/software/stow/[GNU Stow] at the indicated target path.
 
@@ -191,6 +205,16 @@ A Unix shell and an alternative to the Bash.
 ** `zsh 5.7.1 (x86_64-pc-linux-gnu)`
 * Contains `.zprofile` and `.zshrc`. 
 The primary file to look for is the `.profile` to set environment variables independent of the shell setups. 
+* Previously relied on https://github.com/robbyrussell/oh-my-zsh/[oh-my-zsh]. 
+Eventually, the config became independent and can work without it. 
+
+For the documentation, check out the manual entry for `zsh` to gain an overview of the shell. 
+The main manual explains some things such as the startup/shutdown files and compatibility with other shells. 
+It also lays out the sections of the manual which you can check it out. 
+
+Since the manual has been split into multiple sections, it can be daunting to navigate. 
+The most referred sections by far are `zshmisc` where it gives details on the miscellanea of zsh such as the prompt and special variables you might want to know. 
+The other section is `zshbuiltins` where it explains built-in commands of zsh. 
 
 
 === https://www.x.org/wiki/[Xorg]
@@ -216,7 +240,10 @@ This is formerly the Compton configuration.
 * The usual target path for a user is at `$HOME/.config/picom`.
 * Minimum version (from `picom --version`):
 ** `v7.2`
-* The config is copied from `/etc/xorg/picom.conf` and edited a few parameters.
+* The config is copied from `/etc/xorg/picom.conf` and edited a few parameters. 
+
+For documentation, check out the manual entry (i.e., `man picom`) and the https://wiki.archlinux.org/index.php/Picom[related Arch Wiki entry]. 
+The default configuration (located at `/etc/xdg/picom.conf` assuming at Arch Linux) can be helpful as well as it is filled with comments. 
 
 
 === https://www.vim.org/[Vim]
@@ -301,6 +328,7 @@ The default package manager for Arch Linux.
 * Contains the configuration file, a `mirrorlist` file, and some https://www.archlinux.org/mirrorlist/?ip_version=6[pacman hooks].
 * For the mirrorlist, change it accordingly or https://www.archlinux.org/mirrorlist/?ip_version=6[generate another one]. 
 It is also monthly updated from a cron job. 
+* The dotfiles repo also contains two package lists (i.e., `packages.txt` and `aur-packages.txt`) in the root of the project folder. 
 * The setup also uses `yay` as the AUR helper tool. 
 
 
@@ -371,6 +399,7 @@ plug-in formats such as VST2/3, SF2, and SFZ. Part of the KX Studio project.
 * https://blender.org/[Blender] - A top-notch 3D modelling program.
 * https://www.freecadweb.org/[FreeCAD] - A general purpose 3D computer-aided design program.
 * https://inkscape.org/[Inkscape] - A vector illustration/editing program. Alternative to Adobe Illustrator.
+* http://www.kicad-pcb.org/[KiCad] - An electronic design automation suite. 
 * https://krita.org/en/[Krita] - A painting/illustration program. 
 
 
@@ -388,12 +417,15 @@ Also offers 40+ patched fonts of the popular fonts such as Iosevka, Fira Code, a
 
 * https://asciidoctor.org/[Asciidoctor] - A text formatting language suitable for creating books, documentations, and writings. Highlights a heavier feature set compared to Markdown. 
 * https://github.com/gohugoio/hugo[Hugo] - A static site generator for creating websites. 
+* https://jupyter.org/[Jupyter] - Similar to R Markdown. 
+This is closely associated with the https://anaconda.com/[Anaconda distribution]. 
 Useful for a variety of document formats to be converted into a website especially with the (bare) support for https://pandoc.org/[Pandoc] converter. 
 * https://www.libreoffice.org/[LibreOffice] - An office productivity suite and serves as a free alternative to Microsoft Office suite. 
+* http://luatex.org/[LuaTeX] - The TeX engine I primarily use for my LaTeX documents. 
 * https://pandoc.org/[Pandoc] - A universal document converter that supports a wide variety of document formats. 
 Primarily used for converting Markdown documents into Asciidoctor text. 
+* https://rmarkdown.rstudio.com/[R Markdown] - A text formatting language that comes with executing programs with live output in the notebook. 
 * https://www.tug.org/texlive/[TeX Live] - A cross-platform LaTeX distribution for compiling LaTeX files. 
-* http://luatex.org/[LuaTeX] - The TeX engine I primarily use for my LaTeX documents. 
 
 
 === Mathematical tools
@@ -418,7 +450,13 @@ https://www.rust-lang.org/[Rust], and https://golang.org/[Go].
 
 === Browser extensions 
 
-* https://bitwarden.com/[Bitwarden] 
-* Internet Archive Web Extension (https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak[Chrome] and https://addons.mozilla.org/en-US/firefox/addon/wayback-machine_new/[Firefox] version)
-* https://github.com/gorhill/uBlock[uBlock Origin]
-* https://www.one-tab.com/[OneTab extension] 
+* https://bitwarden.com/[Bitwarden] - An open source password manager. 
+Comes with a browser extension or a desktop version of the app. 
+* Internet Archive Web Extension (https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak[Chrome] and https://addons.mozilla.org/en-US/firefox/addon/wayback-machine_new/[Firefox] version) - A browser extension for tracking down the saved versions of a page. 
+Very useful extension for tracking old resources that has been moved or deleted. 
+* https://github.com/gorhill/uBlock[uBlock Origin] - A security tool for blocking known trackers. 
+* https://www.one-tab.com/[OneTab extension] - An extension to enable grouping of tabs into one tab. 
+Convenient for preventing a lot of tabs opened at one time. 
+* https://www.eff.org/privacybadger[Privacy Badger] - A security tool for blocking trackers. 
+Unlike the other blockers like uBlock Origin, Privacy Badger learns with more usage. 
+
