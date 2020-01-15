@@ -1,15 +1,43 @@
-snippet title "Title header" bi
-.TH ${1:TITLE} ${2:SECTION} ${3:EXTRA}
-$0
-endsnippet
-
+# Text formatting
 snippet p "Paragraph" bi
 .PP 
 $0
 endsnippet
 
+snippet bf "Boldface" iw
+.ft B
+$1
+.ft
+$0
+endsnippet
+
+snippet it "Italic" iw
+.ft I
+$1
+.ft
+$0
+endsnippet
+
+snippet bfit "Boldface italic" iw
+.ft BI
+$1
+.ft
+$0
+endsnippet
+
+# Document structures
+snippet title "Title header" bi
+.TH ${1:TITLE} ${2:SECTION} ${3:EXTRA}
+$0
+endsnippet
+
 snippet sect "Sectioned (unnumbered) headers" bi
 .SH ${1:SECTION NAME}
+$0
+endsnippet
+
+snippet ss "Subsectioned (unnumbered) headers" bi
+.SS ${1:SUBSECTION NAME}
 $0
 endsnippet
 

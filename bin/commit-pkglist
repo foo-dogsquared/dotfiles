@@ -5,5 +5,6 @@
 
 DOTFILES_DIRECTORY="$HOME/dotfiles"
 
-git add "$DOTFILES_DIRECTORY/packages.txt" "$DOTFILES_DIRECTORY/aur-packages.txt"
+cd "$DOTFILES_DIRECTORY"
+git add "packages.txt" "aur-packages.txt"
 git commit -m "Update package lists as of $(date +%F)" 
