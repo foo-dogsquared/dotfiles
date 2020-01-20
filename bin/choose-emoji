@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# Downloads the official emoji list from http://www.unicode.org/Public/emoji/latest/emoji-test.txt and create a selection to clipboard with rofi. 
+
+# Dependencies: 
+# * mktemp - GNU coreutils 8.31
+# * wget - GNU Wget 1.20.3 built on linux-gnu
+# * sed - GNU sed 4.8
+# * awk - GNU Awk 5.0.1
+# * rofi - Version: 1.5.4
+# * xclip - version 0.13
+
+awk 'match($0, /([0-9A-F ]+)\s+; fully-qualified\s+# (\S+) E[[:digit:]]+.[[:digit:]]+ (.+)$/, a){print a[2], a[3]}' ~/.local/share/emoji-test.txt | rofi -dmenu -p "Choose an emoji to copy." -theme fds-sidebar-dark | awk '{print $1}' | xclip -selection clipboard && notify-send "'$(xclip -o -selection clipboard)' has been copied to clipboard."

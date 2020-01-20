@@ -52,7 +52,10 @@ super + shift + d
     $HOME/bin/rofi-user-action-menu.sh
 
 super + shift + m
-    man -k . | rofi -dmenu -p "Select the manual entry" -theme fds-sidebar-dark | awk '{print $1}' | xargs -r man 
+    ~/bin/choose-manual --viewpdf
+
+super + shift + e
+    ~/bin/choose-emoji
 
 # Reloads the Simple X Hotkey Daemon config and Polybar.
 shift + super + r
