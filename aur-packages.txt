@@ -1,3 +1,6 @@
+doom1-wad 1.9-2
+freedoom 0.12.1-2
+gzdoom 4.3.2-1
 mantablockscreen 0.3-1
 nerd-fonts-complete 2.0.0-5
 otf-stix 2.0.2-1
@@ -6,4 +9,4 @@ screenkey 0.9-1
 tdrop-git 0.3.0.r4.gf4f0f34-1
 ttf-iosevka 2.3.3-1
 xorg-server-xdmx 1.20.6-1
-yay 9.4.3-1
+yay 9.4.4-1
