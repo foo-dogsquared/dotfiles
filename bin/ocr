@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# A script that utilizes OCR for a screenshot and copies the text to the clipboard. 
+
+# Dependencies: 
+# * tesseract 4.1.1
+# * leptonica-1.79.0
+# * The Tesseract english data
+# * Image libraries (e.g., `libgif`, `libwebp`)
+# * xclip - version 0.13
+# * the screenshot script I have at https://github.com/foo-dogsquared/dotfiles/blob/master/bin/screenshot
+
+help_section="
+Utilizes OCR to an image and copies the text to the clipboard. 
+"
+
+temp_dir=$(mktemp -d)
+temp_img="$temp_dir/image.png"
+temp_out="$temp_dir/output"
+
+screenshot --silent --select --output "$temp_img" && tesseract "$temp_img" "$temp_out" -l eng && less "$temp_out.txt" | xclip -selection clipboard && notify-send "Image content has been copied to clipboard" && rm -rf "$temp_dir"
+

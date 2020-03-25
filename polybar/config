@@ -26,7 +26,7 @@ padding = 1
 
 module-margin = 1
 
-font-0 = "Iosevka Nerd Font"
+font-0 = "Iosevka"
 font-1 = "Fira Code"
 font-2 = siji:pixelsize=10;1
 
@@ -62,6 +62,7 @@ foreground = ${colors.foreground}
 
 inherit = bar-common-style
 bottom = true
+modules-left = xwindow
 modules-right = filesystem
 
 
@@ -75,7 +76,7 @@ click-left = "tdrop -ma -s dropdown alacritty"
 
 [module/xwindow]
 type = internal/xwindow
-label = " %title:0:50:...% "
+label = " %title:0:100:...% "
 label-layout = %layout%
 format = <label>
 

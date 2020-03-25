@@ -21,4 +21,4 @@ bspc rule -a firefox desktop=^1
 
 # Startup applications
 $HOME/.config/polybar/launch.sh
-exec firefox
+exec wal -R

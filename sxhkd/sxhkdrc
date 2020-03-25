@@ -13,13 +13,10 @@ super + q
 super + t
     $HOME/bin/toggle-bin screenkey
 
-# Here is the scriptless version of toggling programs. 
-#   kill $(pgrep screenkey --oldest); \
-    if [[ $? != 0 ]]; then screenkey 2>/dev/null; fi
-
 # Kill the focused window. 
 super + shift + q
-    kill -9 `xdotool getwindowfocus getwindowpid`
+    bspc node -c
+# kill -9 `xdotool getwindowfocus getwindowpid`
 
 
 
@@ -42,6 +39,10 @@ super + F12
 # Screenshot shortcuts.
 {_, control +} {_,shift +} Print
     $HOME/bin/screenshot {_,--select} {_,--delay 3}
+
+# Screenshot with OCR capability
+super + shift + w
+    $HOME/bin/ocr
 
 # Screen record shortcuts.
 {_,shift +} {_,control +} super + Print

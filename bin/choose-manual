@@ -41,10 +41,11 @@ do
     esac
 done
 
-COMMAND_STRING="man -k . | rofi -dmenu -p | awk '{print \$1}' | xargs -r man"
+
+COMMAND_STRING="man -k . | rofi -dmenu -p 'Choose a manual' -theme fds-sidebar-dark | awk '{print \$1}' | xargs -r man"
 
 if [[ $VIEW_PDF -eq 1 ]]; then
-    COMMAND_STRING+=" -Tpdf | zathura - "
+    COMMAND_STRING="man -k . | rofi -dmenu -theme fds-sidebar-dark -p 'Choose a manual' | awk '{print \$1}' | xargs -r man -Tpdf | zathura - "
 fi
 
 eval "$COMMAND_STRING"

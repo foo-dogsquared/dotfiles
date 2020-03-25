@@ -60,6 +60,9 @@ do
         -c|--cursor)
             CURSOR=1
             shift;;
+        --silent)
+            SILENT=1
+            shift;;
         *)
             shift;;
     esac
@@ -87,10 +90,6 @@ if [[ $SELECT -eq 1 ]]; then
     fi
 
     maim_command+="--geometry=$geometry_coordinates "
-
-    if [[ -n "$OUTPUT" ]]; then
-        pic_filepath="$pic_directory/$date_format-$geometry_coordinates.png"
-    fi
 fi
 
 # Checking if there is a set delay. 
@@ -111,4 +110,6 @@ if [[ $? != 0 ]]; then
     exit 1
 fi
 
-notify-send "Screenshot taken" "It is saved at $pic_filepath."
+if [[ $SILENT -ne 1 ]]; then
+    notify-send "Screenshot taken" "It is saved at $pic_filepath."
+fi

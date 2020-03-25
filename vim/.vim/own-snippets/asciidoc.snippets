@@ -1,4 +1,6 @@
 global !p
+# Smartly automate inserting of certain characters. 
+# Mainly used for smart space insertion. 
 def smart_space(next_str, auto_str=" ", loose=False):
     next_word = ""
 
@@ -95,7 +97,7 @@ $0
 endsnippet
 
 snippet src "Source code listings" bi
-[source, ${1:<language>}]
+[source`!p snip.rv=smart_space(t[1], ", ", loose=True)`${1:<language>}]
 ----
 ${2:<source code>}
 ----
