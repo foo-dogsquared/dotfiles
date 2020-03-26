@@ -1,0 +1,80 @@
+#!/usr/bin/env sh
+
+# Create a theme with wal and copy the theme JSON in the appropriate location. 
+
+# Dependencies:
+# * GNU coreutils 8.31
+# * wal 3.3.0
+
+function extract_path_without_ext() {
+    local path=$1
+
+    local filename=$(basename -- "$path")
+
+    # Return the filename without the file extension. 
+    # For more information, you can look up the parameter expansion in 
+    # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html. 
+    # Even if the filename has no extension, it will print the whole filename. 
+    printf "${filename%.*}"
+}
+
+# Constant settings 
+LIGHT_MODE_SUFFIX='__light'
+XDG_CACHE_HOME=${XDG_CACHE_HOME:-"$HOME/.cache"}
+CACHE_DIR=${PYWAL_CACHE_DIR:-"$XDG_CACHE_HOME/wal"}
+
+help_section="Create a theme with wal and copy the theme JSON in the appropriate location. 
+
+Usage: $0 IMAGE_PATH [-o/--output OUTPUT_DIR] [--light-mode]
+
+Options:
+* -o, --output OUTPUT_DIR   -   The location where the JSON file will be copied. 
+                                The given argument should be a directory that already exists. 
+                                The default value is given from the 'OUTPUT' variable. 
+* --light-mode              -   Create a light mode theme. 
+                                Appends the resulting file name with '$LIGHT_MODE_SUFFIX'. 
+* -b, --background BG_COLOR -   Creates the theme with the following background color.
+                                This is passed to the 'wal' command. 
+"
+
+# Setting the variables for the program. 
+# Feel free to change `OUTPUT_DIR`. 
+OUTPUT_DIR="~/.local/share/wal"
+LIGHT_MODE=0
+IMAGE_PATH="$1"
+
+while [[ $# -gt 0 ]]
+do
+    case $1 in 
+        -h|--help)
+            printf "$help_section"
+            exit 0;;
+        -o|--output)
+            OUTPUT_DIR="$2"
+            shift
+            shift;;
+        --light-mode)
+            LIGHT_MODE=1
+            shift;;
+        -b|--background)
+            BG_COLOR="$2"
+            shift
+            shift;;
+        *)
+            shift;;
+    esac
+done
+
+image_basename=$(extract_path_without_ext "$IMAGE_PATH")
+wal_command_string="wal -i $IMAGE_PATH"
+output_file=$([ $LIGHT_MODE -eq 1 ] && echo "$OUTPUT_DIR/$image_basename$LIGHT_MODE_SUFFIX.json" || echo "$OUTPUT_DIR/$image_basename.json")
+
+if [[ $LIGHT_MODE -eq 1 ]]; then
+    wal_command_string+=" -l"
+fi
+
+if [[ -n "$BG_COLOR" ]]; then
+    wal_command_string+=" -b $BG_COLOR"
+fi
+
+command -p $wal_command_string && cp "$CACHE_DIR/colors.json" "$output_file"

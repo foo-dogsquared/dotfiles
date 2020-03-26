@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # A script that utilizes OCR for a screenshot and copies the text to the clipboard. 
 

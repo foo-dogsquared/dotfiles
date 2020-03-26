@@ -19,8 +19,14 @@ snippet "h(\d)" "Quick header snippet" bir
 header_level = int(match.group(1))
 legit_header_level = True if header_level >= 1 and header_level <= 6 else False
 
-snip.rv = "=" * header_level if legit_header_level else ""
-`
+if header_level == 2:
+    snip.rv = "\n" * 4
+else:
+    snip.rv = "\n" * 2
+
+snip.rv += "=" * header_level if legit_header_level else ""
+` ${1:Chapter name}
+
 $0
 endsnippet
 

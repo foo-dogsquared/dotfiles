@@ -128,7 +128,7 @@ A few examples of which is my cron setups where it is tasked with updating and c
 == Configured programs
 
 Here's a list of the programs with details on the config found in this repo. 
-Each of the directory is designed to be used/managed with https://www.gnu.org/software/stow/[GNU Stow] at the indicated target path.
+Each of the listed directory is designed to be used/managed with https://www.gnu.org/software/stow/[GNU Stow] at the indicated target path.
 
 
 === https://github.com/baskerville/bspwm[bspwm]
@@ -332,6 +332,25 @@ It is also monthly updated from a cron job.
 * The setup also uses `yay` as the AUR helper tool. 
 
 
+=== https://github.com/dylanaraps/pywal[Pywal] 
+
+Pywal is a tool for generating color schemes from an image. 
+It is mainly used to produce templates for different applications (e.g., Vim, Visual Studio, the tty). 
+
+* The config directory is at `wal`. 
+* The usual target path would be on `~/.local/share/wal`. 
+The target path is more lenient since it only contains data files. 
+You have more choices here. 
+* Minimum version (from `wal -v`):
+** `wal 3.3.0` 
+* The folder only contains a bunch of themes in JSON files. 
+All of the data files are named after the filenames of the wallpapers. 
+A few of them are listed in the <<Wallpapers>> section for the sources. 
+The JSON files does need a little bit of tweaking especially with the `wallpaper` key. 
+You could apply them with `wal --theme /path/to/file`. 
+* To easily create some more themes into JSON, I've created a small script named `create-wal-theme` located in my custom scripts location. 
+
+
 
 
 == Additional programs used
@@ -354,7 +373,7 @@ TIP: I recommend to start at this list especially if you're starting with a bare
 === Desktop user experience 
 
 * https://github.com/tmux/tmux/[tmux] - A terminal multiplexer useful for managing multiple sessions. 
-* https://github.com/noctuid/tdrop[tdrop] - A modular dropdown creator.  
+* https://github.com/noctuid/tdrop[tdrop] - A modular dropdown creator. 
 * https://github.com/reorr/mantablockscreen[mantablockscreen] - A lock screen. 
 * https://github.com/dylanaraps/pywal[pywal] - An automation tool for generating color schemes from images and applying them to your programs. 
 * https://github.com/dylanaraps/neofetch/[neofetch] - A program for getting information for your hardware and software setup. 
@@ -362,36 +381,41 @@ TIP: I recommend to start at this list especially if you're starting with a bare
 
 === General purpose programs
 
-* https://audacious-media-player.org/[Audacious] - An audio player with various listening options.
 * https://feh.finalrewind.org/[feh] - A minimal image viewer.
 * https://www.mozilla.org/en-US/firefox/new/[Firefox] - One of the major web browser second to Chrome.
 * https://github.com/naelstrof/maim[maim] - A simple screenshot utility.
-* https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos.
-* https://www.shotcut.org/[Shotcut] - A video editor built with the https://www.mltframework.org/[MLT Framework].
 * https://docs.xfce.org/xfce/thunar/start[Thunar] - A file manager. A part of the Xfce desktop environment.
 * https://www.thunderbird.net/[Thunderbird] - A email client.
-* https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player.
 * https://weechat.org/[Weechat] - An IRC client on the command line.
 
 
 === Device drivers and servers
 
-* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux 
-sound driver.
-* https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more. Also can be used as a recorder.
+* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux sound driver. 
 * https://wiki.archlinux.org/index.php/NetworkManager[GNOME NetworkManager]
-* https://www.nvidia.com/Download/index.aspx?lang=en-us[NVIDIA Driver] - Since 
-I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that. I also have to 
-use the https://www.archlinux.org/packages/extra/x86_64/nvidia-390xx/[legacy version].
+* https://www.nvidia.com/Download/index.aspx?lang=en-us[NVIDIA Driver] - Since I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that. 
+I also have to use the https://www.archlinux.org/packages/extra/x86_64/nvidia-390xx/[legacy version].
+
+
+=== Multimedia-related tools 
+
+* https://audacious-media-player.org/[Audacious] - An audio player with various listening options.
+* https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more. 
+* https://www.imagemagick.org/[ImageMagick] - A software suite for graphics. 
+Also can be used as a recorder. 
+* https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos. 
+* https://www.shotcut.org/[Shotcut] - A video editor built with the https://www.mltframework.org/[MLT Framework]. 
+* https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player. 
 
 
 === Music production
 
-* https://kx.studio/Applications:Cadence[Cadence] - A set of audio tools. Part of the KX Studio project.
-* https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio 
-plug-in formats such as VST2/3, SF2, and SFZ. Part of the KX Studio project.
-* https://lmms.io/[LMMS] - A digital audio workstation for beat production.
-* https://musescore.org/[Musescore] - A music composition and notation software.
+* https://kx.studio/Applications:Cadence[Cadence] - A set of audio tools. Part of the KX Studio project. 
+* https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio plug-in formats such as VST2/3, SF2, and SFZ. 
+Part of the KX Studio project. 
+* https://lmms.io/[LMMS] - A digital audio workstation for beat production. 
+* https://musescore.org/[Musescore] - A music composition and notation software. 
+* https://supercollider.github.io/[SuperCollider] - A platform for audio synthesis and algorithmic composition. 
 
 
 === Design
@@ -407,10 +431,26 @@ plug-in formats such as VST2/3, SF2, and SFZ. Part of the KX Studio project.
 
 * https://github.com/belluzj/fantasque-sans[Fantasque Sans Mono]
 * https://github.com/tonsky/FiraCode[Fira Code] - A programmer-oriented font that supports ligatures.
-* https://github.com/be5invis/iosevka[Iosevka]
+* https://github.com/be5invis/iosevka[Iosevka] - A monospace text that features ligatures and provides a wide variety of symbols. 
+It is currently my terminal font. 
+* http://www.gust.org.pl/projects/e-foundry/lm-math[Latin Modern Math] - A serif font specifically for mathematical and scientific work. 
+It is based from Computer Modern Math (the default typeface for LaTeX documents). 
+It is also my go-to font for mathematical fonts. 
 * https://github.com/ryanoasis/nerd-fonts[Nerd Fonts] - A suite of font tools. 
 Also offers 40+ patched fonts of the popular fonts such as Iosevka, Fira Code, and many others. 
-* https://github.com/googlefonts/noto-fonts[Noto Fonts]
+* https://github.com/googlefonts/noto-fonts[Noto Fonts] - A font family provided by Google. 
+Features a wide support for a variety of languages and styles. 
+* https://www.ibm.com/plex/[Plex] - The font family of IBM. 
+Offers a wide variety of styles from the serif, sans, and monospace. 
+footnote:[There is a plan to extend the fonts to include mathematical symbols but as of 2020-03-27, it's not yet complete.] 
+* https://github.com/adobe-fonts/source-serif-pro[Source Serif Pro] - A free and open source serif font by Frank Grießhammer for Adobe. 
+Part of the Adobe's Source Pro open source font family. 
+It is also my go-to serif font for my documents (e.g., LaTeX documents). 
+* https://github.com/adobe-fonts/source-sans-pro[Source Sans Pro] - Another one of the Adobe's Source Pro open source font family. 
+I use it when paired with Source Serif Pro. 
+The go-to sans font for my go-to serif font. 
+* https://github.com/stipub/stixfonts[STIX] - A mathematical font based from the Times New Roman font. 
+This is my second math font of choice. 
 
 
 === Documents

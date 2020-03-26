@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/foo-dogsquared/wallpapers/alien-moon.jpg",
+    "alpha": "100",
+
+    "special": {
+        "background": "#221e21",
+        "foreground": "#ede3e7",
+        "cursor": "#ede3e7"
+    },
+    "colors": {
+        "color0": "#221e21",
+        "color1": "#95A6BC",
+        "color2": "#D2B3BF",
+        "color3": "#A5AFC4",
+        "color4": "#D7A9C8",
+        "color5": "#F0B6CE",
+        "color6": "#F9CCD5",
+        "color7": "#ede3e7",
+        "color8": "#a59ea1",
+        "color9": "#95A6BC",
+        "color10": "#D2B3BF",
+        "color11": "#A5AFC4",
+        "color12": "#D7A9C8",
+        "color13": "#F0B6CE",
+        "color14": "#F9CCD5",
+        "color15": "#ede3e7"
+    }
+}
