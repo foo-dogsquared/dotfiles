@@ -54,6 +54,7 @@ Here are the main specifications of my machine currently running this (as of 201
 * **Terminal emulator**: https://github.com/jwilm/alacritty/[Alacritty]
 * **Shell**: http://www.zsh.org/[Zsh]
 * **Terminal emulator font**: https://github.com/be5invis/iosevka[Iosevka] (with the https://github.com/ryanoasis/nerd-fonts[Nerd Font patches])
+* **GTK theme**: https://github.com/horst3180/Arc-theme[Arc theme] (Arc Darker variant)
 
 Terminal color scheme was generated with https://github.com/dylanaraps/pywal[pywal]. 
 The picture is used to generate the color pallete is https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[this one]. 
@@ -286,22 +287,6 @@ It's documentation for the configuration can be viewed at the config file itself
 * Minimum version (from `alacritty --version`):
 ** `alacritty 0.3.3`
 * Contains a single `alacritty.yaml` as the config file. Not much has changed except for the color scheme and the font being used.
-
-
-=== https://www.gtk.org/[GTK]
-
-A library for creating programs with graphical user interface (GUI).
-
-There are often two versions when configuring GTK: version 2 and 3.
-
-* Version depends on the program itself since it is usually statically linked within the GUI program.
-* GTK3 config located at link:gtk3/[`gtk3/`].
-* The usual target path of GTK3 for a user is at `$HOME/.config/gtk-3.0/`.
-* Simply contains a `settings.ini` file that contains common configuration that'll be applied for most GTK3 apps (Thunar, Inkscape, etc.).
-* GTK2 config located at link:gtk2/[`gkt2/`].
-* The usual target path of GTK2 for a user is at `$HOME/` because of the `.gtkrc-2.0` file needs to at `$HOME/`.
-* GTK color and icon theme is https://github.com/NicoHood/arc-theme[Arc theme] 
-and uses the light dark variation (`arc-darker`).
 
 
 === https://dunst-project.org/[Dunst]
