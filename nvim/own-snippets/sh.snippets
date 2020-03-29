@@ -1,0 +1,26 @@
+snippet if "If statement" iw
+if [[ ${1:<condition>} ]]; then
+    ${2:<expression>}
+fi
+endsnippet
+
+snippet while_shift "A dependency-less option parser" iw
+while [[ $# -gt 0 ]]; then
+do
+    case $1 in
+        -h|--help)
+            echo "$help_section"
+            exit 0
+            ;;
+        $2
+    esac
+done
+endsnippet
+
+snippet while "While loop" iw
+while ${1:<expression>};
+do
+    ${2:<expression>}
+done
+endsnippet
+

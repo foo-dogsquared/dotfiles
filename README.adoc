@@ -53,12 +53,8 @@ Here are the main specifications of my machine currently running this (as of 201
 * **Window manager**: https://github.com/baskerville/bspwm[bspwm]
 * **Terminal emulator**: https://github.com/jwilm/alacritty/[Alacritty]
 * **Shell**: http://www.zsh.org/[Zsh]
-* **Terminal emulator font**: https://github.com/be5invis/iosevka[Iosevka] (with the https://github.com/ryanoasis/nerd-fonts[Nerd Font patches])
+* **Terminal emulator font**: https://github.com/be5invis/iosevka[Iosevka]
 * **GTK theme**: https://github.com/horst3180/Arc-theme[Arc theme] (Arc Darker variant)
-
-Terminal color scheme was generated with https://github.com/dylanaraps/pywal[pywal]. 
-The picture is used to generate the color pallete is https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[this one]. 
-It's also the wallpaper used in the screenshots.
 
 
 
@@ -68,20 +64,23 @@ It's also the wallpaper used in the screenshots.
 Here's a list of the wallpapers I've used throughout my ricing journey. 
 I've also tried to get the creators to show appreciation for their work. 
 
-* https://www.reddit.com/r/wallpapers/comments/ed99q8/alien_moon_rmradev/[`alien-moon.jpg`] 
+* https://www.deviantart.com/rmradev/art/Alien-Moon-743912901[`alien-moon.jpg`] 
 ** Creator: https://www.deviantart.com/rmradev[rmRadev]
-** Original link: https://www.deviantart.com/rmradev/art/Alien-Moon-743912901
 
-* https://www.reddit.com/r/wallpapers/comments/edn0ju/4k_desktop_wallpaper/[`forest-bright.jpg`]
-** Creator: https://dribbble.com/MikaelGustafsson[Mikael Gustafsson]
-** Original link: https://dribbble.com/shots/3713646-Small-Memory 
+* https://dribbble.com/shots/3713646-Small-Memory[`forest-bright.jpg`]
+** Creator: https://dribbble.com/MikaelGustafsson[Mikael Gustafsson] 
 
-* https://www.reddit.com/r/wallpapers/comments/efkxb5/hotline_miami_alternate_cover_iv_by_mbdsgns/[`hotline-miami-alt-cover.png`] 
+* https://dropr.com/mbdsgns/254740/hotline_miami_iv/+?p=1388845[`hotline-miami-alt-cover.png`] 
 ** Creator: https://dropr.com/mbdsgns[Mbdsgns]
-** Original link: https://dropr.com/mbdsgns/254740/hotline_miami_iv/+?p=1388845
+
+* https://www.artstation.com/artwork/wn8ng[`long-walk-home.jpg`]
+** Creator: https://www.artstation.com/beaulamb[Beau Lamb]
 
 * https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[`nebula.jpg`]
 ** Creator: https://www.reddit.com/user/datGryphon/[datGryphon]
+
+* https://www.artstation.com/artwork/XOQdR[`the-core.jpg`]
+** Creator: https://www.artstation.com/beaulamb[Beau Lamb]
 
 * https://www.reddit.com/r/wallpapers/comments/ebvk0q/rocket_launch_1920x1080/[`rocket-launch.jpg`]
 
@@ -96,28 +95,60 @@ There are a few things to know on this setup.
 
 * `packages.txt` is mainly for archiving my native package list from the official Arch Linux repos installed in my current Arch Linux setup. 
 * `aur-packages.txt` contains the installed packages from AUR along with their versions. 
+* `locations.json` is a data file that contains all of the packages listed in <<Configured programs>> along with their target path. 
+* `manager.py` is a little manager tailored for this setup. 
+* A makefile (named `makefile`) which makes use of GNU Make. 
 
-Both of the above files are going to be committed at the start of every month. 
+`packages.txt` and `aur-packages.txt` are simply a list of installed packages from the official Arch repo and AUR respectively. 
+ They are going to be committed at the start of every month (if it works that is). 
 
-My own scripts is in link:bin/[`bin/`]. 
+`manager.py` is a tiny https://www.gnu.org/software/stow/[GNU Stow]-inspired manager created for this setup. 
+(Nonetheless, I tried to make it generic for other cases.) 
+It takes a directory with a file named `locations.json` containing the packages with their target path. 
+We can then execute commands with all of the packages and its target path. 
+footnote:[Obviously, you need Python installed for this.
+For future references, the version by the time first writing the script is at v3.8.1.] 
 
+[source, shell]
+----
+# Take the setup as the filesystem structure. 
+# See the JSON file (locations.json) to see what packages to be installed and where to install them. 
+
+# Running the program without any arguments for a test run. 
+# There should be a bunch of `echo` commands being ran for all of the listed packages. 
+./manager.py
+
+# Create the directories of the target path and install them with GNU Stow. 
+# Bada-bing, bada-boom, you have installed your setup or something. 
+./manager.py --commands "mkdir -p {location}" "stow --restow {package} --target {location}"
+----
+
+Just execute the script with the `--help` flag for more information. ;p 
+
+Next, more custom scripts. 
+They're located in link:bin/[`bin/`] and ideally should be linked in `$PATH`. 
 Currently, I have them linked in `$HOME/bin`. 
-Ideally, the linked path should be included as part of the `$PATH` environment variable. 
 
-This is mostly used with hotkey bindings (e.g., `sxhkd`). 
+The scripts are mostly used with hotkey bindings (e.g., `sxhkd`). 
+Nonetheless, they could be executed in the shell (provided they are linked in `$PATH`). 
 
-Here's the list of primary scripts:
+Here's a list of the top most useful scripts:
 
-* Screenshot capture. 
+* link:./bin/screenshot[Screenshot capture]. 
 Includes the option of delaying and region selection mode. 
 
-* Screen recording. 
+* link:./bin/ocr[An image-to-text script using OCR]. 
+The content are then copied into the clipboard. 
+Built on top of the screenshot script. 
+Useful for capturing links in images or videos. 
+
+* link:./bin/record[Screen recording] using https://ffmpeg.org/[FFmpeg]. 
 An option of excluding and/or following the mouse cursor is included. 
 
-* Quick command prompts. 
+* link:./bin/prompt[Quick command prompts]. 
 The script is based from https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/prompt[Luke Smith's prompt script]. 
 
-* Switching on/off programs. 
+* link:./bin/toggle-bin[Switching on/off programs]. 
 Useful for situations where only one instance of the program is running. 
 
 Aside from the scripts, there are also some details and files that are not committed to this setup for privacy and security reasons. 
@@ -247,16 +278,18 @@ For documentation, check out the manual entry (i.e., `man picom`) and the https:
 The default configuration (located at `/etc/xdg/picom.conf` assuming at Arch Linux) can be helpful as well as it is filled with comments. 
 
 
-=== https://www.vim.org/[Vim]
+=== https://neovim.io/[Neovim]
 
-A modal text editor.
+A modern version of https://www.vim.org/[Vim], a modal text editor. 
+footnote:[Migrated after I've seen https://lukesmith.xyz/[Luke-senpai] used it in his recent videos. 
+Seriously though, I find nvim to be way better for configuration.]
 
-* Config located at link:vim/[`vim/`] directory.
-* The usual target path for a user is at `$HOME/`.
-* Minimum version (from `vim --version`): 
-** `8.1 (2018 May 18, compiled Jul 29 2019 20:38:53)`
+* Config located at link:nvim/[`nvim/`] directory.
+* The usual target path for a user is at `$HOME/.config/nvim`.
+* Minimum version (from `nvim --version`): 
+** `NVIM v0.4.3` 
 * Uses https://github.com/junegunn/vim-plug[`vim-plug`] as the plugin manager.
-* Contains my plugin list and editor configurations at `.vimrc`.
+* Contains my plugin list and editor configurations in `init.vim`.
 * There are also some https://github.com/sirver/UltiSnips[UltiSnips] snippets stored in `own-snippets` folder (since `snippets` is a reserved folder name). 
 * One of the largest snippet file is the snippets for LaTeX files. 
 It is based on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips LaTeX snippets].
@@ -328,7 +361,7 @@ The target path is more lenient since it only contains data files.
 You have more choices here. 
 * Minimum version (from `wal -v`):
 ** `wal 3.3.0` 
-* The folder only contains a bunch of themes in JSON files. 
+* The folder only contains the best of the themes in JSON files. 
 All of the data files are named after the filenames of the wallpapers. 
 A few of them are listed in the <<Wallpapers>> section for the sources. 
 The JSON files does need a little bit of tweaking especially with the `wallpaper` key. 
@@ -386,8 +419,8 @@ I also have to use the https://www.archlinux.org/packages/extra/x86_64/nvidia-39
 
 * https://audacious-media-player.org/[Audacious] - An audio player with various listening options.
 * https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more. 
-* https://www.imagemagick.org/[ImageMagick] - A software suite for graphics. 
 Also can be used as a recorder. 
+* https://www.imagemagick.org/[ImageMagick] - A software suite for graphics. 
 * https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos. 
 * https://www.shotcut.org/[Shotcut] - A video editor built with the https://www.mltframework.org/[MLT Framework]. 
 * https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player. 

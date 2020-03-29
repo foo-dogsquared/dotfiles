@@ -1,0 +1,15 @@
+{
+    "alacritty": "$HOME/.config/alacritty/",
+    "bin": "$HOME/bin/",
+    "bspwm": "$HOME/.config/bspwm/",
+    "dunst": "$HOME/.config/dunst/",
+    "nvim": "$HOME/.config/nvim/",
+    "picom": "$HOME/.config/picom",
+    "polybar": "$HOME/.config/polybar",
+    "ranger": "$HOME/.config/ranger/",
+    "rofi": "$HOME/.config/rofi/",
+    "sxhkd": "$HOME/.config/sxhkd/",
+    "wal": "$HOME/.local/share/wal",
+    "xorg": "$HOME",
+    "zsh": "$HOME"
+}
