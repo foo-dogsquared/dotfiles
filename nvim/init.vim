@@ -1,15 +1,25 @@
-" Plugin list (using vim-plug).
-" Activate it with ':PlugInstall' for the first time.
+"""""""""""
+" Plugins "
+"""""""""""
+
+" This configuration uses vim-plug (https://github.com/junegunn/vim-plug) as
+" the plugin manager. 
+" Activate it with ':PlugInstall' for the first time (and when adding new plugins). 
+" And run ':PlugUpgrade' for upgrading the plugins. 
 call plug#begin('~/.config/nvim/plugged')
 
+" A snippets engine. 
+" One of the must-haves for me. 
 Plug 'sirver/ultisnips'
-" Setting my private snippets in a consistent home directory
-let g:UltiSnipsSnippetDirectories = [$HOME . "/.config/nvim/own-snippets", "own-snippets"]
+" Setting my private snippets in a consistent home directory and a relative snippets directory for project-specific snippets. 
+let g:UltiSnipsSnippetDirectories = [$HOME . "/.config/nvim/own-snippets", ".snippets"]
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="context"
 
+" A completion engine. 
+" I chose this engine since it is linked from UltiSnips. 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -19,13 +29,18 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 
+" A built-in file explorer inside of Vim. 
 Plug 'scrooloose/nerdtree'
 
+" Contains various snippets for UltiSnips. 
 Plug 'honza/vim-snippets'
 
+" Plugin for auto-saving for each change in the buffer (file). 
 Plug '907th/vim-auto-save'
 let g:auto_save = 1
 
+" One of the most popular plugins. 
+" Allows to create more substantial status bars. 
 Plug 'vim-airline/vim-airline'
 let g:airline_powerline_fonts = 1
 
@@ -33,6 +48,9 @@ if !exists('g:airline_symbols')
    let g:airline_symbols = {}
 endif
 
+" A full LaTeX toolchain plugin for Vim. 
+" Also a must-have for me since writing LaTeX can be a PITA. 
+" Most of the snippets and workflow is inspired from Gilles Castel's posts (at https://castel.dev/). 
 Plug 'lervag/vimtex'
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
@@ -48,6 +66,7 @@ let g:vimtex_compiler_latexmk = {
     \ ]
 \}
 
+" I use LuaLaTeX for my documents so let me have it as the default, please? 
 let g:vimtex_compiler_latexmk_engines = {
     \ '_'                : '-lualatex',
     \ 'pdflatex'         : '-pdf',
@@ -59,10 +78,19 @@ let g:vimtex_compiler_latexmk_engines = {
     \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
 \}
 
+" Enable visuals for addition/deletion of lines in the gutter (side) similar to Visual Studio Code. 
 Plug 'airblade/vim-gitgutter'
 
+" Plugin for distraction-free writing. 
+Plug 'junegunn/goyo.vim'
 call plug#end()
 
+
+
+
+"""""""""""""""""""""""""
+" Editor configurations "
+"""""""""""""""""""""""""
 
 " Quick escape to default mode.
 inoremap jk <Esc>
@@ -87,6 +115,7 @@ let template_list = [
 \    ["", ".synctex"],
 \]
 
+" Additional LaTeX files cleanup. 
 function VimtexAdditionalCleanup(template_list)
     call vimtex#compiler#clean(1)
     let file_name = expand("%:t:r")
@@ -118,7 +147,11 @@ autocmd vimenter * NERDTree
 " Set list and other listing characters (:h listchars).
 set list listchars=tab:→\ ,trail:·
 
-" Show leading spaces.
+" Instant Goyo toggle
+map <leader>f :Goyo \| set linebreak<Enter>
+
+" Show leading spaces. 
+" I don't know what is happening here but I'll know it... someday. 
 " SOURCE: https://www.reddit.com/r/vim/comments/5fxsfy/show_leading_spaces/
 hi Conceal guibg=NONE ctermbg=NONE ctermfg=DarkGrey
 autocmd BufWinEnter * setl conceallevel=1
@@ -128,7 +161,7 @@ autocmd BufReadPre * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conce
 
 " Enabling spell checker (for your local language, anyway).
 setlocal spell
-set spelllang=en_gb
+set spelllang=en_gb,en_us
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 " Changing style of words.

@@ -7,16 +7,12 @@ super + Return
 super + shift + Return
     tdrop -ma -w -4 -y "$PANEL_HEIGHT" -s dropterm $TERMINAL
 
-super + q
-    $TERMINAL -e ranger
-
 super + t
     $HOME/bin/toggle-bin screenkey
 
 # Kill the focused window. 
-super + shift + q
-    bspc node -c
-# kill -9 `xdotool getwindowfocus getwindowpid`
+super + {_, shift +} + q
+    bspc node -{c,k}
 
 
 
@@ -36,9 +32,9 @@ super + F11
 super + F12
     $HOME/bin/prompt "Exit from X session?" "killall Xorg"
 
-# Screenshot shortcuts.
-{_, control +} {_,shift +} Print
-    $HOME/bin/screenshot {_,--select} {_,--delay 3}
+# Screenshot and screencast launcher. 
+Print
+    $HOME/bin/rofi-screen
 
 # Screenshot with OCR capability
 super + shift + w

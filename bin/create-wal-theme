@@ -28,18 +28,18 @@ help_section="Create a theme with wal and copy the theme JSON in the appropriate
 Usage: $0 IMAGE_PATH [-o/--output OUTPUT_DIR] [--light-mode]
 
 Options:
-* -o, --output OUTPUT_DIR   -   The location where the JSON file will be copied. 
-                                The given argument should be a directory that already exists. 
-                                The default value is given from the 'OUTPUT' variable. 
+* -o, --output <OUTPUT_DIR>   -   The location of the wal config folder. 
+                                  The default value is '$HOME/.config/wal'. 
 * --light-mode              -   Create a light mode theme. 
                                 Appends the resulting file name with '$LIGHT_MODE_SUFFIX'. 
-* -b, --background BG_COLOR -   Creates the theme with the following background color.
+* -b, --background <BG_COLOR> -   Creates the theme with the following background color.
                                 This is passed to the 'wal' command. 
+* -e, --execute <STRING> - Append the resulting wal command with the given string. 
 "
 
 # Setting the variables for the program. 
 # Feel free to change `OUTPUT_DIR`. 
-OUTPUT_DIR="~/.local/share/wal"
+OUTPUT_DIR="$HOME/.config/wal"
 LIGHT_MODE=0
 IMAGE_PATH="$1"
 
@@ -60,6 +60,10 @@ do
             BG_COLOR="$2"
             shift
             shift;;
+        -e|--execute)
+            EXECUTE="$2"
+            shift
+            shift;;
         *)
             shift;;
     esac
@@ -67,7 +71,7 @@ done
 
 image_basename=$(extract_path_without_ext "$IMAGE_PATH")
 wal_command_string="wal -i $IMAGE_PATH"
-output_file=$([ $LIGHT_MODE -eq 1 ] && echo "$OUTPUT_DIR/$image_basename$LIGHT_MODE_SUFFIX.json" || echo "$OUTPUT_DIR/$image_basename.json")
+output_file=$([ $LIGHT_MODE -eq 1 ] && echo "$OUTPUT_DIR/colorschemes/light/$image_basename" || echo "$OUTPUT_DIR/colorschemes/dark/$image_basename.json")
 
 if [[ $LIGHT_MODE -eq 1 ]]; then
     wal_command_string+=" -l"
@@ -75,6 +79,10 @@ fi
 
 if [[ -n "$BG_COLOR" ]]; then
     wal_command_string+=" -b $BG_COLOR"
+fi
+
+if [[ -n "$EXECUTE" ]]; then
+    wal_command_string+="$EXECUTE"
 fi
 
 command -p $wal_command_string && cp "$CACHE_DIR/colors.json" "$output_file"

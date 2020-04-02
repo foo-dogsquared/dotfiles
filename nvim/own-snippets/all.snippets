@@ -8,10 +8,11 @@ def relative_date(days):
     return calculated_date  
 endglobal
 
-snippet "reldate (\d+)" "Prints out the relative date in ISO format." ri
+snippet "reldate (\d+)( ".+")?" "Prints out the relative date in ISO format." ri
 `!p 
 reldate = relative_date(match.group(1))
-snip.rv = reldate.strftime("%F")
+date_format = match.group(2).strip(" \"") if match.group(2) is not None else "%F"
+snip.rv = reldate.strftime(date_format)
 `
 endsnippet
 
@@ -66,5 +67,21 @@ endsnippet
 # Miscellaneous snippets 
 snippet #! "Quick snippet for a shebang." bi
 #!${1:/usr/bin/env} ${2:sh}
+endsnippet
+
+# This is only useful for decorative comment boxes and all of the jazz. 
+snippet "boxen '(.*)'" "Create a box of stuff" ir
+`!p snip.rv = (match.group(1) * (len(t[1]) + 4)).strip()[0:(len(t[1]) + 4)]`
+`!p snip.rv = match.group(1)[0]` $1 `!p snip.rv = match.group(1)[0]`
+`!p snip.rv = (match.group(1) * (len(t[1]) + 4)).strip()[0:(len(t[1]) + 4)]`
+$0
+endsnippet
+
+# Also stolen from Gilles Castel's post at https://castel.dev/post/lecture-notes-1/. 
+snippet box "More box (that looks more like a box)."
+`!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
+│ $1 │
+`!p snip.rv = '└' + '─' * (len(t[1]) + 2) + '┘'`
+$0
 endsnippet
 

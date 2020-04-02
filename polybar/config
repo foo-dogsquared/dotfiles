@@ -1,290 +1,197 @@
-; color format is in ARGB
+; Main color format is in ARGB.
+; However, formats in RGB is fine. 
+; This is where all of the colors should be placed for those who are lazy to scroll down (like me). 
 [colors]
-background = #000000
-background-alt = #99000000
-foreground = ${xrdb:color7:#eee}
-foreground-alt = #aaa
-primary = #d59783
-secondary = #E8C4FF
-tertiary = #A7DAE8
-alert = #bd2c40
+    background = #000
+    foreground = #eee
+
+    module_prefix_bg = ${xrdb:color1:#ccc}
+    module_prefix_fg = ${xrdb:color15:#000}
+    module_bg = ${xrdb:color15:#fff}
+    module_fg = ${xrdb:color0:#000}
+
+    vol_module_bg = #ff9f1c
+    network_module_bg = #2ec4b6
+    date_module_bg = #99d122
+    memory_module_bg = #1a1b41
 
 
-
-
-; The common style between bars
+; The common style between bars.
 [bar-common-style]
-width = 100%
-height = 30
-wm-restack = bspwm
-fixed-center = false
+    width = 100%
+    height = 32
+    wm-restack = bspwm
+    fixed-center = false
 
-line-size = 3
-line-color = #f00
+    line-size = 3
+    line-color = #f00
 
-padding = 1
+    padding = 1
 
-module-margin = 1
+    module-margin = 1
+    module-padding = 1
 
-font-0 = "Iosevka"
-font-1 = "Fira Code"
-font-2 = siji:pixelsize=10;1
+    font-0 = "Iosevka"
+    font-1 = "Fira Code"
+    font-2 = "Noto Color Emoji:style=Regular:scale=10;1"
 
-tray-position = right
-tray-padding = 2
-cursor-click = pointer
+    ; This creates the illusion as if the modules are in the center. 
+    __border-size = 5
+    border-top-size = ${self.__border-size}
+    border-top-color = ${colors.background}
+    border-bottom-size = ${self.__border-size}
+    border-bottom-color = ${colors.background}
+
+    tray-position = right
+    tray-padding = 1
+    cursor-click = pointer
 
 
-
+; Common style between modules. 
 [module-common-style]
-format-padding = 1
-format-background = ${colors.background-alt}
-format-prefix-foreground = ${colors.foreground-alt}
+    label-padding = 1
+    format-foreground = ${colors.background}
+    format-background = ${colors.foreground}
+    format-prefix-padding = 1
+    format-prefix-foreground = ${colors.module_prefix_fg}
+    format-prefix-background = ${colors.module_prefix_bg}
 
 
-
-
+; The main bar. 
 [bar/fds-bar]
-background = ${colors.background}
-foreground = ${colors.foreground}
+    background = ${colors.background}
+    foreground = ${colors.foreground}
 
-inherit = bar-common-style
-enable-ipc = true
-modules-left = bspwm
-modules-right = pulseaudio memory cpu temperature eth date powermenu
+    inherit = bar-common-style
+    enable-ipc = true
 
-
-
-
-[bar/fds-taskbar]
-background = ${colors.background}
-foreground = ${colors.foreground}
-
-inherit = bar-common-style
-bottom = true
-modules-left = xwindow
-modules-right = filesystem
-
-
-
-[module/conv]
-type = custom/text
-content = "terminal"
-click-left = "tdrop -ma -s dropdown alacritty"
-
+    modules-left =  bspwm
+    modules-center = xwindow
+    modules-right = pulseaudio memory eth date menu-apps counter
 
 
 [module/xwindow]
-type = internal/xwindow
-label = " %title:0:100:...% "
-label-layout = %layout%
-format = <label>
-
-
-
-
-[module/filesystem]
-type = internal/fs
-interval = 25
-
-mount-0 = /
-mount-1 = /home
-
-label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %free%
-label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.foreground-alt}
-label-background = ${colors.background-alt}
-
+    y-offset = 10
+    type = internal/xwindow
+    format = <label>
+    label = %title:0:50:%
 
 
 [module/bspwm]
-type = internal/bspwm
+    type = internal/bspwm
+    wrapping-scroll = false
+    pin-workspaces = true
+    label-focused = %index%
+    label-focused-background = ${colors.module_prefix_bg}
+    label-focused-padding = 1
 
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
-label-focused-padding = 1
+    label-occupied = %index%
+    label-occupied-padding = 1
 
-label-occupied = %index%
-label-occupied-padding = 1
+    label-urgent = %index%!
+    label-urgent-background = ${colors.foreground}
+    label-urgent-padding = 1
 
-label-urgent = %index%!
-label-urgent-background = ${colors.alert}
-label-urgent-padding = 1
-
-label-empty = %index%
-label-empty-foreground = ${colors.foreground-alt}
-label-empty-padding = 1
-
-
-
-
-[module/mpd]
-type = internal/mpd
-format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-
-icon-prev = 
-icon-stop = 
-icon-play = 
-icon-pause = 
-icon-next = 
-
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-
-
-
-[module/cpu]
-inherit = module-common-style
-type = internal/cpu
-interval = 2
-format-prefix = "CPU "
-label = %percentage-sum%%
-
-
+    label-empty = %index%
+    label-empty-foreground = ${colors.module_prefix_fg}
+    label-empty-padding = 1
 
 
 [module/memory]
-inherit = module-common-style
-type = internal/memory
-interval = 2
-format-prefix = "MEM "
-format-prefix-foreground = ${colors.foreground-alt}
-label = %percentage_used%%
-
-
+    inherit = module-common-style
+    type = internal/memory
+    interval = 2
+    format-prefix = "MEM"
+    format-prefix-background = ${colors.memory_module_bg}
+    format-prefix-foreground = ${colors.foreground}
+    label = %percentage_used%%
 
 
 [module/wlan]
-inherit = module-common-style
-type = internal/network
-interface = wlp0s18f2u4
-interval = 3.0
+    inherit = module-common-style
+    type = internal/network
+    interface = wlp0s18f2u4
+    interval = 3.0
 
-format-connected = <label-connected>
-format-connected-underline = #9f78e1
-format-prefix = "NET "
-label-connected = %essid%
+    format-connected = <label-connected>
+    format-connected-underline = #9f78e1
+    format-prefix = "NET "
+    label-connected = %essid%
 
-format-disconnected = <label-disconnected>
-label-disconnected = %ifname% disconnected
-
-
+    format-disconnected = <label-disconnected>
+    label-disconnected = %ifname% disconnected
 
 
 [module/eth]
-inherit = module-common-style
-type = internal/network
-interface = enp4s0
-interval = 3.0
+    inherit = module-common-style
+    type = internal/network
+    interface = enp4s0
+    interval = 3.0
 
-format-connected-prefix = "ETH "
-format-connected-background = ${colors.background-alt}
-format-connected-padding = 1
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %ifname%
+    format-connected-prefix = "ETH"
+    format-connected-prefix-padding = 1
+    format-connected-prefix-foreground = ${colors.foreground}
+    format-connected-prefix-background = ${colors.network_module_bg}
+    format-connected-background = ${colors.foreground}
+    format-connected-foreground = ${colors.background}
+    label-connected = %ifname%
+    label-connected-padding = 1
 
-format-disconnected = <label-disconnected>
-format-disconnected-background = ${colors.background-alt}
-format-disconnected-padding = 1
-label-disconnected = N/A
-label-disconnected-foreground = ${colors.foreground-alt}
-
-
+    format-disconnected = <label-disconnected>
+    format-disconnected-background = ${colors.background}
+    label-disconnected-padding = 1
+    label-disconnected = N/A
+    label-disconnected-foreground = ${colors.foreground}
 
 
 [module/date]
-inherit = module-common-style
-type = internal/date
-interval = 5
+    inherit = module-common-style
+    type = internal/date
+    interval = 5
 
-date = "%F"
-time = %H:%M:%S
+    ; We've formatted the time string to alter between the time and the date instead. 
+    ; Although, I feel it's a hacky workaround, it still is functional as a date module. 
+    date = "%F"
+    date-alt = "%B %d, %Y"
+    time = %T
+    time-alt = %F
 
-format-prefix = "DATE "
-
-label = %date% %time%
-
-
+    format-prefix = "DATE"
+    format-prefix-background = ${colors.date_module_bg}
+    format-prefix-foreground = ${colors.background}
+    label = %time%
 
 
 [module/pulseaudio]
-inherit = module-common-style
-type = internal/pulseaudio
+    inherit = module-common-style
+    type = internal/pulseaudio
 
-format-volume-prefix = "VOL "
-format-volume-foreground = ${colors.foreground-alt}
-format-volume-background = ${colors.background-alt}
-format-volume-padding = 1
-format-volume = <label-volume>
-label-volume = %percentage%%
-label-volume-foreground = ${colors.foreground}
+    format-volume-prefix = "VOL"
+    format-volume-prefix-padding = 1
+    format-volume-prefix-foreground = ${colors.foreground}
+    format-volume-prefix-background = ${colors.vol_module_bg}
+    format-volume-foreground = ${colors.background}
+    format-volume-background = ${colors.foreground}
+    format-volume = <label-volume>
+    label-volume = %percentage%%
+    label-volume-padding = 1
 
-format-muted-prefix = "VOL "
-format-muted-background = ${colors.background-alt}
-format-muted-padding = 1
-format-muted-foreground = ${colors.foreground-alt}
-label-muted = 🔇 muted
+    format-muted-prefix = "VOL"
+    format-muted-prefix-padding = 1
+    format-muted-prefix-foreground = ${colors.foreground}
+    format-muted-prefix-background = ${colors.vol_module_bg}
+    format-muted-foreground = ${colors.background}
+    format-muted-background = ${colors.foreground}
+    label-muted = muted
+    label-muted-padding = 1
 
-
-
-
-[module/temperature]
-inherit = module-common-style
-type = internal/temperature
-thermal-zone = 0
-hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon0/temp1_input
-warn-temperature = 60
-
-format = <label>
-format-prefix = "TEMP "
-format-warn = <label-warn>
-
-label = %temperature-c%
-label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
-
-
-
-
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
 
 [settings]
-screenchange-reload = true
-;compositing-background = xor
-;compositing-background = screen
-;compositing-foreground = source
-;compositing-border = over
-;pseudo-transparency = false
+    screenchange-reload = true
+
 
 [global/wm]
-padding-left = 2
+    margin = 1
+    padding = 1
 
 ; vim:ft=dosini

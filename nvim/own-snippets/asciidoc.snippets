@@ -14,7 +14,7 @@ def smart_space(next_str, auto_str=" ", loose=False):
 endglobal
 
 # Text formatting
-snippet "h(\d)" "Quick header snippet" bir
+snippet "h(([1-6]))" "Quick header snippet" bir
 `!p
 header_level = int(match.group(1))
 legit_header_level = True if header_level >= 1 and header_level <= 6 else False

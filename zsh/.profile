@@ -17,7 +17,7 @@ export PATH="$BIN_DIRECTORY:/usr/local/bin:$HOME/.cargo/bin:$HOME/.gem/ruby/2.7.
 
 # Common environmental variables. 
 # Or at least that'll be used by my setup. 
-export EDITOR="vim"
+export EDITOR="nvim"
 export TERMINAL="alacritty"
 export BROWSER="firefox"
 export READ="zathura"
