@@ -1,11 +1,11 @@
 * {
-    background: #221e21;
-    background-dark: #191619;
-    background-light: #4a4649;
+    background: #171717;
+    background-dark: #000000;
+    background-light: #2e2e2e;
 
     foreground: #e0e1dd;
 
-    scrollbar-handle: #656d77;
+    scrollbar-handle: #5c5c5c;
 }
 
 @import "fds-sidebar-common"

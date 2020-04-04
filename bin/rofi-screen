@@ -1,0 +1,367 @@
+#!/usr/bin/env bash
+
+# This is a modified script of the original rofi-screenshot script by @ceuk on GitHub. 
+# This simply removes the ffcast dependency and replaced it with MORE dependencies. 
+# I did this so I can call this a 'productive' day. 
+# The original script is in https://github.com/ceuk/rofi-screenshot.  
+# (Seriously though, ffcast is cool.) 
+
+# This script basically creates an applet through Rofi for all of your screenshotting and screencasting needs. 
+
+# This script is licensed with Do What The F*ck You Want To Public License (WTFPL). 
+# Feel free to steal it, copy it, cook it, teach it, marry it, whatever it. 
+
+# Dependencies (or at least at the time of updating this script): 
+# * bash 5.0.16
+# * GNU coreutils 8.31
+# * ffmpeg 4.2.2 - Mainly for converting files and video capture. 
+# * maim 5.5.3 - Screen capture tool. 
+# * dunst 1.4.1 - A desktop notification daemon. 
+# * xclip 0.13 - X-based clipboard manager. 
+# * xdg-user-dir 0.17 - Basically lists directory according to the XDG directory standard or smth; this dependency is the least important. 
+# * util-linux 2.35
+
+# Feel free to change these. 
+readonly _script_name="$(basename $0)"
+
+readonly screenshots_directory=$(xdg-user-dir PICTURES)
+readonly videos_directory=$(xdg-user-dir VIDEOS)
+
+readonly lockfile="/tmp/rofi-screen.lock"
+
+
+
+#####################
+# UTILITY FUNCTIONS #
+#####################
+
+# Toggle running of a program. 
+# If a process that is stored on a specific file exists, it prompts the user to kill it. 
+# $1 - The command to run when there is no active processes. 
+# $2 - The prompt message when the prompt is active. 
+# $3 - The command to run when the prompt is accepted. 
+_toggle() {
+  local cmd="$1"
+  local prompt_msg="$2"
+  local prompt_cmd="$3"
+
+  if [[ ! -f "$lockfile" ]] && touch "$lockfile";
+  then
+    # Delete the lockfile when the script has exited successfully. 
+    trap "rm -f $lockfile" 0
+    trap "rm -f $lockfile" ERR
+
+   $("$cmd")
+  else
+    _prompt "$prompt_msg" "$prompt_cmd"
+  fi
+}
+
+_unlock() {
+  pid="$(cat $lockfile)"
+  kill -SIGTERM "$pid"
+  rm -f "$lockfile"
+}
+
+# Prompts the user. 
+# $1 - The prompt message. 
+# $@ - The command to be executed in case the user agrees. 
+_prompt() {
+  local prompt_msg="$1"
+  shift
+  [ "$(printf "No\\nYes" | rofi -dmenu -p "$prompt_msg")" = "Yes" ] && "$@"
+}
+
+# Converts a video to GIF with ffmpeg. 
+# $1 - The input file to be converted.
+# $2 - The output file.
+_video_to_gif() {
+  local input_file="$1"
+  local output_file="$2"
+  ffmpeg -i "$input_file" -vf palettegen -f image2 -c:v png - |
+  ffmpeg -i "$input_file" -i - -filter_complex paletteuse "$output_file"
+}
+
+# It just counts down with desktop notifications.
+# $1 - The duration of the countdown.
+_countdown() {
+  local counter="$((${1:-3}))"
+  local msg="${2:-Countdown}"
+  while [[ counter -ne 0 ]];
+  do
+    notify-send "$msg" "Recording in $counter seconds" --expire-time 1000 --urgency low
+    sleep 1
+    counter=$((counter - 1))
+  done
+}
+
+# Prints the screen size dynamically. 
+_screen_size() {
+  # We're using xrandr to know the list of available resolutions. 
+  # Conveniently, the current resolution is marked with an asterisk (*). 
+  xrandr | awk '/*/ { print $1 }'
+}
+
+# Basically the built-in `wait` command with some additional stuff going on. 
+# $@ - The command to be executed in the background. 
+_wait() {
+  $@ &
+  local pid=$!
+  echo $pid >> "$lockfile"
+  wait $pid
+}
+
+# Create a desktop notification and exit. 
+# This is mostly used for failure messages. 
+# $1 - Notification header message. 
+# $2 - Notification body message. 
+# $3 - Exit code. 
+_notify_and_exit() {
+  local notif_header="$1"
+  local notif_body="$2"
+  local exit_code="${3:-1}"
+
+  notify-send "$notif_header" "$notif_body"
+  exit $exit_code
+}
+
+
+
+####################
+# COMMAND DEFAULTS #
+####################
+
+ffmpeg() {
+  exec ffmpeg -nostdin "$@"
+}
+
+maim() {
+  exec maim --hidecursor "$@"
+}
+
+slop() {
+  exec slop --highlight --tolerance=0 --color=0.0,0.0,0.0,0.4 "$@"
+}
+
+
+
+#############
+# FUNCTIONS #
+#############
+
+# Most of the commands are only specific to my setup. 
+# Adjust the script to fit with yours, alright? 
+
+# Capture region to clipboard.
+capture_region_to_clipboard() {
+  notify-send "Screenshot" "Select a region to capture"
+  maim -s | xclip -selection clipboard -t image/png
+  notify-send "Screenshot" "Region copied to Clipboard"
+}
+
+# Capture region to file.
+# $1 - The output file.
+capture_region_to_file() {
+  file=${1:-"$screenshots_directory/$(date '+%F-%H-%M-%S').png"}
+  notify-send "Screenshot" "Select a region to capture"
+  maim -s "$file"
+  notify-send "Screenshot" "File saved to $file"
+}
+
+# Capture screen to clipboard.
+capture_screen_to_clipboard() {
+  maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+  notify-send "Screenshot" "Screen image copied to clipboard"
+}
+
+# Capture screen to file.
+# $1 - The output file. A default value is provided. 
+capture_screen_to_file() {
+  file=${1:-"$screenshots_directory/$(date '+%F-%H-%M-%S-screen').png"}
+  maim -i $(xdotool getactivewindow) "$file"
+  notify-send "Screenshot" "Screen image saved to $file"
+}
+
+
+# Unlike screenshot functions, screencast functions check for another instance of it running. 
+# If there is another instance of recording, the user will be prompted to kill it before recording a new one. 
+
+# Record a region to a video file. 
+# $1 - The path of the output. 
+record_region_to_mkv() {
+  notify-send "Screen cast" "Select a region to record"
+
+  # Storing all of the relevant data. 
+  # We're separating the declaration and the initialization since it expands to the exit status.
+  local region;
+  region=$(slop -f "%x %y %w %h %g %i") || _notify_and_exit "Screen capture failed" "Selection mode has been exited. Cancelling the recording."
+  read -r pos_x pos_y width height grid id <<< "$region"
+
+  # Setting the file name. 
+  local file=${1:-"$videos_directory/$(date '+%F-%H-%M-%S')-${pos_x}-${pos_y}.mkv"}
+
+  # Notifying the user about the ongoing recording session. 
+  _countdown
+  notify-send "Screen cast" "Selected region currently recording. To be saved at $file"
+
+  # Executing the recording process in the background and waiting for it. 
+  _wait ffmpeg -f x11grab -s "${width}x${height}" -i ":0.0+${pos_x},${pos_y}" -f pulse -ac 2 -i default "$file"
+
+  # And notifying the user about the new video file. 
+  notify-send "Screen cast" "Recording saved to $file"
+}
+
+# Record video to screen. 
+# $1 - The path to the output file. 
+#      Will default to the $videos_directory
+record_screen_to_mkv() {
+  # Setting the file name. 
+  local file=${1:-"$videos_directory/$(date '+%F-%H-%M-%S')-$(_screen_size).mkv"}
+
+  # Just notifying the user about the recording session. 
+  _countdown
+  notify-send "Screen cast" "Screen currently recording. To be saved at $file"
+
+  # Executing the recording process in the background and waiting for it. 
+  _wait ffmpeg -f x11grab -s "$(_screen_size)" -i ":0.0+0+0" "$file"
+
+  # And notifying the user about the new video file. 
+  notify-send "Screen cast" "Recording saved to $file"
+}
+
+# Record region to GIF file.
+# $1 - The output file.
+record_region_to_gif() {
+  # It is more recommended to have the live recording file that is not MP4. 
+  # In my tests, MP4 files have more chances to fail than other formats so we'll change the format to MKV. 
+  local temp_screencast="/tmp/screenshot_gif.mkv"
+
+  record_region_to_mkv $temp_screencast
+
+  notify-send "Screenshot" "Converting to gif... (this can take a while)"
+  _video_to_gif "$temp_screencast" "$file" \
+    && notify-send "Screen cast" "Recording saved to $file" \
+    || _notify_and_exit "Screen cast has failed to be converted" "Some things go like that, I guess..."
+
+  rm "$temp_screencast" 2>/dev/null
+}
+
+# Record screen to GIF file. 
+# $1 - The location of the output file. 
+record_screen_to_gif() {
+  local readonly temp_screencast="/tmp/screenshot_gif.mkv"
+
+  record_screen_to_mkv $temp_screencast
+
+  notify-send "Screenshot" "Converting to gif... (this can take a while)"
+  _video_to_gif $temp_screencast "$screenshot_directory/$dt.gif"
+  rm $temp_screencast
+  notify-send "Screenshot" "Recording saved to $screenshot_directory"
+}
+
+_get_options() {
+  echo "  Capture Region  Clip"
+  echo "  Capture Region  File"
+  echo "  Capture Screen  Clip"
+  echo "  Capture Screen  File"
+  echo "  Record Region  File (GIF)"
+  echo "  Record Screen  File (GIF)"
+  echo "  Record Region  File (MKV)"
+  echo "  Record Screen  File (MKV)"
+}
+
+# Simply checks if the given script is available. 
+# $1 - The script to be checked. 
+_check_deps() {
+  local script=$1
+  if ! hash $script 2>/dev/null; then
+    echo "Error: This script requires $script"
+    exit 1
+  fi
+}
+
+# The help section string. 
+_help="Usage: $_script_name [OPTIONS]
+
+Launches a menu for your screenshoting and screencasting needs. 
+
+Options:
+  -h, --help    Prints the help section.
+  --stop        Stop if there's an active process. 
+  --check       Exits successfully if there's an active process. 
+  --prompt      Prompts if there's an active process. 
+"
+
+main() {
+  # Check the dependencies. 
+  # I think this is a bit overkill, I'll probably refactor this later on. 
+  _check_deps xdg-user-dir
+  _check_deps xclip
+  _check_deps slop
+  _check_deps dunst
+  _check_deps maim
+  _check_deps ffmpeg
+  _check_deps rofi
+
+  # Parsing the arguments. 
+  # Since getopts does not support long options so we'll have to roll our own. 
+  while [[ $# -gt 0 ]];
+  do
+    case $1 in
+      -h|--help)
+        printf "$_help" && exit 0
+        ;;
+      --stop)
+        set -e
+        _unlock
+        exit 0
+        ;;
+      --check)
+        [[ -f "$lockfile" ]] || exit 1
+        exit 0
+        ;;
+      --prompt)
+        [[ -f "$lockfile" ]] && _prompt "Cancel the active process?" _unlock || exit 1
+        exit 0
+    esac
+  done
+
+  # Get choice from rofi
+  choice=$( (_get_options) | rofi -theme fds-sidebar-dark -dmenu -i -fuzzy -p "Choose your action" )
+
+  # If user has not picked anything, exit
+  if [[ -z "${choice// }" ]]; then
+      exit 1
+  fi
+
+  # run the selected command
+  case $choice in
+    '  Capture Region  Clip')
+      capture_region_to_clipboard
+      ;;
+    '  Capture Region  File')
+      capture_region_to_file
+      ;;
+    '  Capture Screen  Clip')
+      capture_screen_to_clipboard
+      ;;
+    '  Capture Screen  File')
+      capture_screen_to_file
+      ;;
+    '  Record Region  File (GIF)')
+      _toggle record_region_to_gif "Cancel the recording?" _unlock
+      ;;
+    '  Record Screen  File (GIF)')
+      _toggle record_screen_to_gif "Cancel the recording?" _unlock
+      ;;
+    '  Record Region  File (MKV)')
+      _toggle record_region_to_mkv "Cancel the recording?" _unlock
+      ;;
+    '  Record Screen  File (MKV)')
+      _toggle record_screen_to_mkv "Cancel the recording?" _unlock
+      ;;
+  esac
+}
+
+main $@
+

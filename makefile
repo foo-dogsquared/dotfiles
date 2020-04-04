@@ -9,3 +9,4 @@ reinstall:
 .PHONY = clean
 clean:
 	./manager.py --commands "stow --delete {package} --target {location}"
+

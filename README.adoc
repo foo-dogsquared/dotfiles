@@ -25,6 +25,7 @@ Review the code first, change the setting accordingly, and apply it.
 == Screenshots
 
 My setup was made by the FOSS gang. 
+Take note that the screenshots does not represent the daily look of the desktop since I always change the wallpaper and the colorschemes with https://github.com/dylanaraps/pywal[Pywal]. 
 
 .bspwm setup with no windows
 image::docs/bspwm-empty.png[bspwm setup with no windows]
@@ -86,6 +87,8 @@ I've also tried to get the creators to show appreciation for their work.
 
 * https://www.reddit.com/r/wallpapers/comments/co9t14/sand/[`sand.jpg`]
 
+* https://www.artstation.com/artwork/XBlZbY[`scarecrow-field.jpg`]
+** Creator: https://www.artstation.com/joejazz[Josef Bartoň]
 
 
 
@@ -356,7 +359,7 @@ Pywal is a tool for generating color schemes from an image.
 It is mainly used to produce templates for different applications (e.g., Vim, Visual Studio, the tty). 
 
 * The config directory is at `wal`. 
-* The usual target path would be on `~/.local/share/wal`. 
+* The usual target path would be on `~/.config/wal`. 
 The target path is more lenient since it only contains data files. 
 You have more choices here. 
 * Minimum version (from `wal -v`):

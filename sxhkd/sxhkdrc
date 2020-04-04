@@ -34,7 +34,7 @@ super + F12
 
 # Screenshot and screencast launcher. 
 Print
-    $HOME/bin/rofi-screen
+    $HOME/bin/rofi-screen --prompt || $HOME/bin/rofi-screen
 
 # Screenshot with OCR capability
 super + shift + w
@@ -92,17 +92,11 @@ super + c
     bspc node -t '~tiled'
 
 # Desktop and node movements. 
-super + Tab
-    bspc desktop next --focus
+super + {_, shift + } Tab
+    bspc desktop {next, prev} --focus
 
-super + shift + Tab
-    bspc desktop prev --focus
-
-super + grave
-    bspc desktop last --focus
-
-super + shift + grave
-    bspc node --to-desktop last
+super + {_, shift + } + grave
+    bspc {desktop last --focus, node --to-desktop last}
 
 super + {Up,Down,Left,Right}
     bspc node {north,south,west,east} --focus

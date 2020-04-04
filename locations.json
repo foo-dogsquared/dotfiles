@@ -9,7 +9,7 @@
     "ranger": "$HOME/.config/ranger/",
     "rofi": "$HOME/.config/rofi/",
     "sxhkd": "$HOME/.config/sxhkd/",
-    "wal": "$HOME/.local/share/wal",
+    "wal": "$HOME/.config/wal",
     "xorg": "$HOME",
     "zsh": "$HOME"
 }
