@@ -1,7 +1,7 @@
 global !p
 from datetime import datetime, timedelta
 
-def relative_date(days):
+def relative_date(days = 0):
     time_difference = timedelta(days=int(days))
     calculated_date = datetime.today() + time_difference
 
@@ -24,10 +24,16 @@ snip.rv = datetime.today().strftime("%F")
 `
 endsnippet
 
+
+# Quick formatting. 
 snippet sign "Quick signature" i
 ${1:Sincerely,}
 ${2:Gabriel Arazas}
 $0
+endsnippet
+
+snippet retrieve "Quick retrieval date in informal format" i
+(retrieved `!p snip.rv = datetime.today().strftime("%F")`)
 endsnippet
 
 snippet ie "Parenthetical material Latin 'id est' (ie)" iw
@@ -38,6 +44,8 @@ snippet eg "Parenthetical material Latin 'exempli gratia' (eg)" iw
 (e.g., $1) $0
 endsnippet
 
+
+# Em dashes (I've these dedicated snippets for some reason). 
 snippet em "Quick em dash" 
 —
 endsnippet
@@ -54,6 +62,7 @@ snippet em-eg "'exempli gratia' surrounded with em dash" iw
 — e.g., $1 — $0
 endsnippet
 
+
 # Quick word snippets 
 # Each of these quick word snippets has a prefix of `qw-`
 snippet qw-lx "LaTeX" iw
@@ -63,6 +72,7 @@ endsnippet
 snippet qw-as "Asciidoctor" iw
 Asciidoctor
 endsnippet
+
 
 # Miscellaneous snippets 
 snippet #! "Quick snippet for a shebang." bi

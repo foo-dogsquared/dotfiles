@@ -126,7 +126,7 @@
     inherit = module-common-style
     type = internal/network
     interface = enp4s0
-    interval = 3.0
+    interval = 3
 
     format-connected-prefix = "ETH"
     format-connected-prefix-padding = 1
@@ -134,13 +134,17 @@
     format-connected-prefix-background = ${colors.network_module_bg}
     format-connected-background = ${colors.foreground}
     format-connected-foreground = ${colors.background}
-    label-connected = OK
+    label-connected = "OK"
     label-connected-padding = 1
 
-    format-disconnected = <label-disconnected>
-    format-disconnected-background = ${colors.background}
+    format-disconnected-prefix = "ETH"
+    format-disconnected-prefix-padding = 1
+    format-disconnected-prefix-foreground = ${colors.background}
+    format-disconnected-prefix-background = ${colors.network_module_bg}
+    format-disconnected-background = ${colors.foreground}
+    format-disconnected-foreground = ${colors.background}
     label-disconnected-padding = 1
-    label-disconnected = N/A
+    label-disconnected = "N/A"
     label-disconnected-foreground = ${colors.foreground}
 
 
