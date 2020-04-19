@@ -92,6 +92,7 @@ I've also tried to get the creators to show appreciation for their work.
 
 
 
+
 == Tour of my setup 
 
 There are a few things to know on this setup. 
@@ -298,19 +299,16 @@ Seriously though, I find nvim to be way better for configuration.]
 It is based on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips LaTeX snippets].
 
 
-=== https://ranger.github.io/[Ranger]
+=== https://github.com/gokcehan/lf[lf]
 
-A Vim-based file browser. 
-https://github.com/ranger/ranger/wiki[Here's their config documentation for it.]
+A http://ranger.github.io/[ranger]-inspired terminal file manager. 
+https://godoc.org/github.com/gokcehan/lf[Here's the documentation for it.]
 
-* Config located at link:ranger/[`ranger/`] directory.
-* The usual target path for a user is at `$HOME/.config/ranger/`.
-* Minimum version (from `ranger --version`):
-** `ranger version: ranger 1.9.2`
-** `Python version: 3.7.4 (default, Jul 16 2019, 07:12:58) [GCC 9.1.0]`
-* All of the config files are basically default config files except with a few changes.
-* Contains keybinding in `rc.conf`. Additional keybindings include the `O` keybinding and their variants for opening my go-to programs such as https://code.visualstudio.com/[Visual Studio Code].
-* `rifle.conf` contains configuration for opening a list of programs. 
+* Config located at link:lf/[`lf/`] directory.
+* The usual target path for a user is at `$HOME/.config/lf/`.
+* Minimum version (from `lf --version`):
+** `r14`
+* All of the config files are basically default config files except with a few personal changes.
 
 
 === https://github.com/jwilm/alacritty/[Alacritty]
@@ -351,25 +349,6 @@ The default package manager for Arch Linux.
 It is also monthly updated from a cron job. 
 * The dotfiles repo also contains two package lists (i.e., `packages.txt` and `aur-packages.txt`) in the root of the project folder. 
 * The setup also uses `yay` as the AUR helper tool. 
-
-
-=== https://github.com/dylanaraps/pywal[Pywal] 
-
-Pywal is a tool for generating color schemes from an image. 
-It is mainly used to produce templates for different applications (e.g., Vim, Visual Studio, the tty). 
-
-* The config directory is at `wal`. 
-* The usual target path would be on `~/.config/wal`. 
-The target path is more lenient since it only contains data files. 
-You have more choices here. 
-* Minimum version (from `wal -v`):
-** `wal 3.3.0` 
-* The folder only contains the best of the themes in JSON files. 
-All of the data files are named after the filenames of the wallpapers. 
-A few of them are listed in the <<Wallpapers>> section for the sources. 
-The JSON files does need a little bit of tweaking especially with the `wallpaper` key. 
-You could apply them with `wal --theme /path/to/file`. 
-* To easily create some more themes into JSON, I've created a small script named `create-wal-theme` located in my custom scripts location. 
 
 
 
@@ -477,7 +456,7 @@ This is my second math font of choice.
 === Documents
 
 * https://asciidoctor.org/[Asciidoctor] - A text formatting language suitable for creating books, documentations, and writings. Highlights a heavier feature set compared to Markdown. 
-* https://github.com/gohugoio/hugo[Hugo] - A static site generator for creating websites. 
+* https://github.com/gohugoio/hugo[Hugo] - A static site generator for creating websites and personal wikis. 
 * https://jupyter.org/[Jupyter] - Similar to R Markdown. 
 This is closely associated with the https://anaconda.com/[Anaconda distribution]. 
 Useful for a variety of document formats to be converted into a website especially with the (bare) support for https://pandoc.org/[Pandoc] converter. 

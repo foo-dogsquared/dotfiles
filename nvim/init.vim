@@ -29,9 +29,6 @@ else
 endif
 let g:deoplete#enable_at_startup = 1
 
-" A built-in file explorer inside of Vim. 
-Plug 'scrooloose/nerdtree'
-
 " Contains various snippets for UltiSnips. 
 Plug 'honza/vim-snippets'
 
@@ -92,10 +89,6 @@ call plug#end()
 " Editor configurations "
 """""""""""""""""""""""""
 
-" Quick escape to default mode.
-inoremap jk <Esc>
-
-" Editor configurations:
 " Setting number lines in the gutter.
 set number relativenumber
 
@@ -107,6 +100,49 @@ set expandtab
 
 " Set entering tab to 4 spaces.
 set shiftwidth=4 tabstop=4
+
+" Set list and other listing characters (:h listchars).
+set list listchars=tab:→\ ,trail:·
+
+" Enabling spell checker (for your local language, anyway).
+setlocal spell
+set spelllang=en_us
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+" Quick escape to default mode.
+inoremap jk <Esc>
+
+" Instant Goyo toggle.
+map <leader>w :Goyo \| set linebreak<Enter>
+
+" File explorer toggle.
+" Turns out vim (and nvim) has a native file explorer with :Explore.
+map <leader>f :Lexplore<Return>:vertical resize 40<Return><C-w><C-w>
+
+" Changing style of words.
+hi clear SpellBad
+hi SpellBad ctermfg=red
+
+hi clear SpellLocal
+hi SpellLocal cterm=underline ctermfg=cyan
+
+hi clear SpellRare
+hi SpellRare ctermfg=white
+
+
+
+
+""""""""""
+" EVENTS "
+""""""""""
+
+" Show leading spaces. 
+" SOURCE: https://www.reddit.com/r/vim/comments/5fxsfy/show_leading_spaces/
+hi Conceal guibg=NONE ctermbg=NONE ctermfg=DarkGrey
+autocmd BufWinEnter * setl conceallevel=1
+autocmd BufWinEnter * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
+autocmd BufReadPre * setl conceallevel=1
+autocmd BufReadPre * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
 
 " The template list is simply an array composed of vector that represents the
 " prefix and the suffix of the template file name.
@@ -140,34 +176,3 @@ augroup vimtex_events
     " Auto-compile
     au User VimtexEventInitPost call vimtex#compiler#compile()
 augroup END
-
-" Open nerd-tree at the start of each file opening.
-autocmd vimenter * NERDTree
-
-" Set list and other listing characters (:h listchars).
-set list listchars=tab:→\ ,trail:·
-
-" Instant Goyo toggle
-map <leader>f :Goyo \| set linebreak<Enter>
-
-" Show leading spaces. 
-" I don't know what is happening here but I'll know it... someday. 
-" SOURCE: https://www.reddit.com/r/vim/comments/5fxsfy/show_leading_spaces/
-hi Conceal guibg=NONE ctermbg=NONE ctermfg=DarkGrey
-autocmd BufWinEnter * setl conceallevel=1
-autocmd BufWinEnter * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
-autocmd BufReadPre * setl conceallevel=1
-autocmd BufReadPre * syn match LeadingSpace /\(^ *\)\@<= / containedin=ALL conceal cchar=·
-
-" Enabling spell checker (for your local language, anyway).
-setlocal spell
-set spelllang=en_gb,en_us
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
-
-" Changing style of words.
-hi clear SpellBad
-hi SpellBad cterm=bold,underline ctermfg=red
-
-hi clear SpellLocal
-hi SpellLocal cterm=bold,underline ctermfg=cyan
-

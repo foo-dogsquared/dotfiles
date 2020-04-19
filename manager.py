@@ -110,7 +110,7 @@ class PackageDir:
                 if process_status.returncode == 0:
                     logging.info(f"{command}: successfully ran")
                 else:
-                    logging.error(process_status.stderr.strip())
+                    logging.error(f"{command}: {process_status.stderr.strip()}")
 
 
     @property
