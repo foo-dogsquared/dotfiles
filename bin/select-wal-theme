@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Creates an theme selection with sxiv and generates a colorscheme with pywal.
+# It also reloads additional some beyond what Pywal can reload (like dunst and rofi themes).
+
+# Dependencies needed are sxiv (v26), pywal (v3.3.0), xdg-user-dirs, and GNU Bash (>=v5.0, I guess?).
+# This script is setup-specific so be sure to modify it first.
+# The `install-wal-theme` is at https://github.com/foo-dogsquared/dotfiles/blob/master/bin/install-wal-theme.
+
+# Arguments:
+# $1 - The directory of wallpapers.
+
+# Feel free to change this variable as you see fit.
+# This is set specifically for my setup, anyways.
+wallpapers=${1:-$(xdg-user-dir PICTURES)/wallpapers}
+
+# Since sxiv is configurable af
+# and has the ability to select more than one picture,
+# it will shuffle the choices and choose only one of them (lol).
+# If you're feeling lucky, go ahead and play a game of random themes from your selections.
+sxiv -otbf "$wallpapers" | shuf | tail -n 1 | xargs wal --saturate 0.6 -i && install-wal-theme
+

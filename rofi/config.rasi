@@ -1,9 +1,9 @@
 configuration {
-    display-drun: "Activate";
+    display-drun: "Application";
     display-run: "Execute";
     display-window: "Window";
     display-ssh: "SSH";
     font: "Iosevka 14";
     show-icons: true;
-    theme: "dmenu";
+    theme: "fds-mini-sidebar";
 }

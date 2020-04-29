@@ -30,22 +30,6 @@ snip.rv += "=" * header_level if legit_header_level else ""
 $0
 endsnippet
 
-snippet ch "Chapter header" bi
-
-
-
-
-== $1
-
-$0
-endsnippet
-
-snippet "sh(\d)" "Section header" bir
-
-
-`!p snip.rv = "=" * int(match.group(1))`
-endsnippet
-
 snippet bf "Boldface" iw
 **$1** $0
 endsnippet
@@ -64,6 +48,10 @@ endsnippet
 
 snippet a "Hyperlink" iw
 ${1:<url>}[${2:<text>}] $0
+endsnippet
+
+snippet link "Link for files" iw
+link:${1:<url>}[`$1`]
 endsnippet
 
 snippet sp "Superscript" iw
@@ -209,7 +197,7 @@ $0
 endsnippet
 
 snippet bibres "Bibliographical resource in a definition block" bi
-${1:<link>}[${2:<title>}] (retrieved ${3:date}):: 
+${1:<link>}[${2:<title>}] (retrieved ${3:date})::
 ${4:<description>}
 endsnippet
 

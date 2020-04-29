@@ -2,18 +2,18 @@
 ; However, formats in RGB is fine. 
 ; This is where all of the colors should be placed for those who are lazy to scroll down (like me). 
 [colors]
-    background = #000
-    foreground = #eee
+    background = ${xrdb:color0:#000}
+    foreground = ${xrdb:color7:#eee}
+
+    ; Picked one of the popular palettes from colors.co
+    primary = ${xrdb:color1:#ef476f}
+    secondary = ${xrdb:color2:#ffd166}
+    tertiary = ${xrdb:color3:#06d6a0}
 
     module_prefix_bg = ${xrdb:color1:#ccc}
     module_prefix_fg = ${xrdb:color15:#000}
     module_bg = ${xrdb:color15:#fff}
     module_fg = ${xrdb:color0:#000}
-
-    vol_module_bg = #ff9f1c
-    network_module_bg = #2ec4b6
-    date_module_bg = #99d122
-    memory_module_bg = #1a1b41
 
 
 ; The common style between bars.
@@ -33,7 +33,11 @@
 
     font-0 = "Iosevka"
     font-1 = "Fira Code"
-    font-2 = "Noto Color Emoji:style=Regular:scale=10;1"
+
+    ; Our fallback fonts are mostly used as icon fonts.
+    ; For future references, the version of Font Awesome used here is at v5.13.0.
+    ; I also installed the font myself that I downloaded from the official website (https://fontawesome.com/).
+    font-2 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid"
 
     ; This creates the illusion as if the modules are in the center. 
     __border-size = 5
@@ -50,11 +54,12 @@
 ; Common style between modules. 
 [module-common-style]
     label-padding = 1
-    format-foreground = ${colors.background}
-    format-background = ${colors.foreground}
-    format-prefix-padding = 1
-    format-prefix-foreground = ${colors.module_prefix_fg}
-    format-prefix-background = ${colors.module_prefix_bg}
+
+
+[module-button-style]
+    format-padding = 2
+    format-background = ${colors.primary}
+    format-foreground = ${colors.foreground}
 
 
 ; The main bar. 
@@ -65,16 +70,24 @@
     inherit = bar-common-style
     enable-ipc = true
 
-    modules-left =  bspwm
-    modules-center = xwindow
-    modules-right = pulseaudio memory eth date menu-apps counter
+    modules-left = start-menu bspwm
+    modules-right = pulseaudio memory eth date
 
 
-[module/xwindow]
-    y-offset = 10
-    type = internal/xwindow
-    format = <label>
-    label = %title:0:50:%
+[module/start-menu]
+    inherit = module-button-style
+    type = custom/script
+    exec = echo ';'
+    click-left = rofi -show drun -sidebar-mode -theme fds-mini-sidebar
+    label = ""
+
+
+[module/power-menu]
+    inherit = module-button-style
+    type = custom/script
+    exec = echo ';'
+    click-left = $HOME/bin/prompt "Proceed to shutdown?" "sudo -A shutdown 0"
+    label = ""
 
 
 [module/bspwm]
@@ -101,9 +114,7 @@
     inherit = module-common-style
     type = internal/memory
     interval = 2
-    format-prefix = "MEM"
-    format-prefix-background = ${colors.memory_module_bg}
-    format-prefix-foreground = ${colors.foreground}
+    format-prefix = ""
     label = %gb_used%
 
 
@@ -115,7 +126,7 @@
 
     format-connected = <label-connected>
     format-connected-underline = #9f78e1
-    format-prefix = "NET "
+    format-prefix = "NET"
     label-connected = %essid%
 
     format-disconnected = <label-disconnected>
@@ -128,24 +139,13 @@
     interface = enp4s0
     interval = 3
 
-    format-connected-prefix = "ETH"
-    format-connected-prefix-padding = 1
-    format-connected-prefix-foreground = ${colors.foreground}
-    format-connected-prefix-background = ${colors.network_module_bg}
-    format-connected-background = ${colors.foreground}
-    format-connected-foreground = ${colors.background}
+    format-connected-prefix = ""
     label-connected = "OK"
     label-connected-padding = 1
 
-    format-disconnected-prefix = "ETH"
-    format-disconnected-prefix-padding = 1
-    format-disconnected-prefix-foreground = ${colors.background}
-    format-disconnected-prefix-background = ${colors.network_module_bg}
-    format-disconnected-background = ${colors.foreground}
-    format-disconnected-foreground = ${colors.background}
+    format-disconnected-prefix = ""
     label-disconnected-padding = 1
     label-disconnected = "N/A"
-    label-disconnected-foreground = ${colors.foreground}
 
 
 [module/date]
@@ -160,9 +160,7 @@
     time = %T
     time-alt = %F
 
-    format-prefix = "DATE"
-    format-prefix-background = ${colors.date_module_bg}
-    format-prefix-foreground = ${colors.background}
+    format-prefix = ""
     label = %time%
 
 
@@ -170,22 +168,12 @@
     inherit = module-common-style
     type = internal/pulseaudio
 
-    format-volume-prefix = "VOL"
-    format-volume-prefix-padding = 1
-    format-volume-prefix-foreground = ${colors.foreground}
-    format-volume-prefix-background = ${colors.vol_module_bg}
-    format-volume-foreground = ${colors.background}
-    format-volume-background = ${colors.foreground}
+    format-volume-prefix = ""
     format-volume = <label-volume>
     label-volume = %percentage%%
     label-volume-padding = 1
 
-    format-muted-prefix = "VOL"
-    format-muted-prefix-padding = 1
-    format-muted-prefix-foreground = ${colors.foreground}
-    format-muted-prefix-background = ${colors.vol_module_bg}
-    format-muted-foreground = ${colors.background}
-    format-muted-background = ${colors.foreground}
+    format-muted-prefix = ""
     label-muted = muted
     label-muted-padding = 1
 

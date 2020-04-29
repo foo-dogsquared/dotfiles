@@ -1,31 +1,34 @@
 = dotfiles
 :toc:
 
-My dotfiles for my Linux-based system setup. 
-The structure of this repo is designed to be managed with https://www.gnu.org/software/stow/[GNU Stow], a symlinks farm manager. 
+My dotfiles for my Linux-based system setup.
+The structure of this repo is designed to be managed with https://www.gnu.org/software/stow/[GNU Stow], a symlinks farm manager.
 
-I don't know what I'm doing most of the time in creating this setup so if you're brave (or suicidal) enough to take a look at my stuff (that may or may not be an escaped entry from the SCP Foundation), go ahead. 
+I don't know what I'm doing most of the time in creating this setup so if you're brave (or suicidal) enough to take a look at my stuff, go ahead.
+Feel free to add a couple of energy boosts (e.g., alcohol, blunts) and a friend for mini-therapy sessions for the upcoming journey.
 
-CAUTION: Don't blindly apply these dotfiles unless you know what you're doing. 
-Review the code first, change the setting accordingly, and apply it. 
+CAUTION: If I've paid a dollar for every time I've seen similar expression like the following, I would've been paid at least 10 bucks but as they always say: "Don't blindly apply these dotfiles unless you know what you're doing."
+Review the code first, change the setting accordingly, and apply it on your own.
 
 
 
 
 == Inspirations
 
-* https://github.com/addy-dclxvi/almighty-dotfiles/ 
-* https://github.com/LukeSmithxyz/voidrice 
-* https://www.reddit.com/r/unixporn/ (pretty much the little details) 
-* Specifically for https://www.reddit.com/r/unixporn/comments/8ezsq7/bspwm_terminal_tabs_in_polybar_dark_and_dull_exam/[the tabbed terminals idea] and the https://github.com/Nikzt/dotfiles[linked dotfiles repo]) (not yet implemented, still cleaning up my stuff) 
-* https://www.reddit.com/r/unixporn/comments/edmb8b/awesome_gnawesome/[Just] https://github.com/ilovecookieee/Glorious-Dotfiles[saving] https://github.com/PapyElGringo/material-awesome[these] for an **awesome** future, hehehe. 
+* https://github.com/addy-dclxvi/almighty-dotfiles/
+* https://github.com/LukeSmithxyz/voidrice
+* https://github.com/jethrokuan/dots/ for his Emacs and Org Mode writing setup.
+He also has a dedicated series on his https://blog.jethro.dev/[blog site] if you want the juicy details.
+* https://www.reddit.com/r/unixporn/ obviously.
+* Specifically for https://www.reddit.com/r/unixporn/comments/8ezsq7/bspwm_terminal_tabs_in_polybar_dark_and_dull_exam/[the tabbed terminals idea] and the https://github.com/Nikzt/dotfiles[linked dotfiles repo]) (not yet implemented, still cleaning up my stuff)
+* https://www.reddit.com/r/unixporn/comments/edmb8b/awesome_gnawesome/[Just] https://github.com/ilovecookieee/Glorious-Dotfiles[saving] https://github.com/PapyElGringo/material-awesome[these] for an **awesome** future, hehehe.
 
 
 
 == Screenshots
 
-My setup was made by the FOSS gang. 
-Take note that the screenshots does not represent the daily look of the desktop since I always change the wallpaper and the colorschemes with https://github.com/dylanaraps/pywal[Pywal]. 
+My setup was made by the FOSS gang.
+Take note that the screenshots does not represent the daily look of the desktop since I always change the wallpaper and the colorschemes with https://github.com/dylanaraps/pywal[Pywal].
 
 .bspwm setup with no windows
 image::docs/bspwm-empty.png[bspwm setup with no windows]
@@ -62,20 +65,23 @@ Here are the main specifications of my machine currently running this (as of 201
 
 == Wallpapers
 
-Here's a list of the wallpapers I've used throughout my ricing journey. 
-I've also tried to get the creators to show appreciation for their work. 
+Here's a list of some of the wallpapers I've used throughout my ricing journey.
+I've also tried to get the creators to show appreciation for their work.
 
-* https://www.deviantart.com/rmradev/art/Alien-Moon-743912901[`alien-moon.jpg`] 
+* https://www.deviantart.com/rmradev/art/Alien-Moon-743912901[`alien-moon.jpg`]
 ** Creator: https://www.deviantart.com/rmradev[rmRadev]
 
 * https://dribbble.com/shots/3713646-Small-Memory[`forest-bright.jpg`]
-** Creator: https://dribbble.com/MikaelGustafsson[Mikael Gustafsson] 
+** Creator: https://dribbble.com/MikaelGustafsson[Mikael Gustafsson]
 
-* https://dropr.com/mbdsgns/254740/hotline_miami_iv/+?p=1388845[`hotline-miami-alt-cover.png`] 
+* https://dropr.com/mbdsgns/254740/hotline_miami_iv/+?p=1388845[`hotline-miami-alt-cover.png`]
 ** Creator: https://dropr.com/mbdsgns[Mbdsgns]
 
 * https://www.artstation.com/artwork/wn8ng[`long-walk-home.jpg`]
 ** Creator: https://www.artstation.com/beaulamb[Beau Lamb]
+
+* https://www.reddit.com/r/wallpapers/comments/g6tgst/night_landscape_mountain_and_milky_way_galaxy[`mountain-with-galaxy.jpg`]
+** I was not able to track down the photographer of this one.
 
 * https://www.reddit.com/r/wallpapers/comments/cckpj0/i_made_this_simple_and_clean_drawing_over_the/[`nebula.jpg`]
 ** Creator: https://www.reddit.com/user/datGryphon/[datGryphon]
@@ -91,236 +97,137 @@ I've also tried to get the creators to show appreciation for their work.
 ** Creator: https://www.artstation.com/joejazz[Josef Bartoň]
 
 
+=== Sources
+
+My personal recommendations for looking out for more cool-looking photos.
+
+* https://images.nasa.gov/[Images from NASA].
+They also have a small collection of them in their https://unsplash.com/@nasa[Unsplash account].
+* https://imgur.com/gallery/4BKvq[Firewatch] (or any style similar to Firewatch) wallpapers are top-notch ricing material.
+* https://mantissa.artstation.com/[Midge "Mantissa" Sinnaeve]
+* https://www.artstation.com/beaulamb[Beau Lamb]
+* http://louie.co.nz/[Louis Coyle] and https://dribbble.com/louiscoyle[his illustrations].
+* https://www.deviantart.com/rmradev[rmRadev]
+* https://www.reddit.com/r/wallpapers/[/r/wallpapers]
+* https://unsplash.com/s/photos/galaxy-landscape[Any image that features a landscape with stars, lel.]
+* https://www.pexels.com/[Pexels]
+* https://www.pixabay.com/[Pixabay]
+* https://unsplash.com/[Unsplash]
 
 
-== Tour of my setup 
 
-There are a few things to know on this setup. 
+== Tour of my setup
 
-* `packages.txt` is mainly for archiving my native package list from the official Arch Linux repos installed in my current Arch Linux setup. 
-* `aur-packages.txt` contains the installed packages from AUR along with their versions. 
-* `locations.json` is a data file that contains all of the packages listed in <<Configured programs>> along with their target path. 
-* `manager.py` is a little manager tailored for this setup. 
-* A makefile (named `makefile`) which makes use of GNU Make. 
+There are a few things to know on this setup.
 
-`packages.txt` and `aur-packages.txt` are simply a list of installed packages from the official Arch repo and AUR respectively. 
- They are going to be committed at the start of every month (if it works that is). 
+* `packages.txt` is mainly for archiving my native package list from the official Arch Linux repos installed in my current Arch Linux setup.
+* `aur-packages.txt` contains the installed packages from AUR along with their versions.
+* `locations.json` is a data file that contains all of the packages listed in <<Configured programs>> along with their target path.
+* `manager.py` is a little manager tailored for this setup.
+* A makefile (named `makefile`) which makes use of GNU Make.
 
-`manager.py` is a tiny https://www.gnu.org/software/stow/[GNU Stow]-inspired manager created for this setup. 
-(Nonetheless, I tried to make it generic for other cases.) 
-It takes a directory with a file named `locations.json` containing the packages with their target path. 
-We can then execute commands with all of the packages and its target path. 
+`packages.txt` and `aur-packages.txt` are simply a list of installed packages from the official Arch repo and AUR respectively.
+ They are going to be committed at the start of every month (if it works that is).
+
+`manager.py` is a tiny https://www.gnu.org/software/stow/[GNU Stow]-inspired manager created for this setup.
+(Nonetheless, I tried to make it generic for other cases.)
+It takes a directory with a file named `locations.json` containing the packages with their target path.
+We can then execute commands with all of the packages and its target path.
+That said, using this script is optional and feel free to discard it and use GNU Stow exclusively.
 footnote:[Obviously, you need Python installed for this.
-For future references, the version by the time first writing the script is at v3.8.1.] 
+For future references, the version by the time first writing the script is at v3.8.1.
+That said, I may rewrite this in Bash instead or even just a makefile.]
+footnote:[I may also making my life harder when I can use something like https://yadm.io/[yadm] or https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/[a bare git repo] instead.]
 
 [source, shell]
 ----
-# Take the setup as the filesystem structure. 
-# See the JSON file (locations.json) to see what packages to be installed and where to install them. 
+# Take the setup as the filesystem structure.
+# See the JSON file (locations.json) to see what packages to be installed and where to install them.
 
-# Running the program without any arguments for a test run. 
-# There should be a bunch of `echo` commands being ran for all of the listed packages. 
+# Running the program without any arguments for a test run.
+# There should be a bunch of `echo` commands being ran for all of the listed packages.
 ./manager.py
 
-# Create the directories of the target path and install them with GNU Stow. 
-# Bada-bing, bada-boom, you have installed your setup or something. 
+# Create the directories of the target path and install them with GNU Stow.
+# Bada-bing, bada-boom, you have installed your setup or something.
 ./manager.py --commands "mkdir -p {location}" "stow --restow {package} --target {location}"
 ----
 
-Just execute the script with the `--help` flag for more information. ;p 
+Just execute the script with the `--help` flag for more information. ;p
 
-Next, more custom scripts. 
-They're located in link:bin/[`bin/`] and ideally should be linked in `$PATH`. 
-Currently, I have them linked in `$HOME/bin`. 
+Next, more custom scripts.
+They're located in link:bin/[`bin/`] and ideally should be linked in `$PATH`.
+Currently, I have them linked in `$HOME/bin`.
 
-The scripts are mostly used with hotkey bindings (e.g., `sxhkd`). 
-Nonetheless, they could be executed in the shell (provided they are linked in `$PATH`). 
+The scripts are mostly used with hotkey bindings (e.g., `sxhkd`).
+Nonetheless, they could be executed in the shell (provided they are linked in `$PATH`).
 
 Here's a list of the top most useful scripts:
 
-* link:./bin/screenshot[Screenshot capture]. 
-Includes the option of delaying and region selection mode. 
+* link:./bin/screenshot[Screenshot capture].
+Includes the option of delaying and region selection mode.
 
-* link:./bin/ocr[An image-to-text script using OCR]. 
-The content are then copied into the clipboard. 
-Built on top of the screenshot script. 
-Useful for capturing links in images or videos. 
+* link:./bin/ocr[An image-to-text script using OCR].
+The content are then copied into the clipboard.
+Built on top of the screenshot script.
+Useful for capturing links in images or videos.
 
-* link:./bin/record[Screen recording] using https://ffmpeg.org/[FFmpeg]. 
-An option of excluding and/or following the mouse cursor is included. 
+* link:./bin/record[Screen recording] using https://ffmpeg.org/[FFmpeg].
+An option of excluding and/or following the mouse cursor is included.
 
-* link:./bin/prompt[Quick command prompts]. 
-The script is based from https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/prompt[Luke Smith's prompt script]. 
+* link:./bin/prompt[Quick command prompts].
+The script is based from https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/prompt[Luke Smith's prompt script].
 
-* link:./bin/toggle-bin[Switching on/off programs]. 
-Useful for situations where only one instance of the program is running. 
+* link:./bin/toggle-bin[Switching on/off programs].
+Useful for situations where only one instance of the program is running.
 
-Aside from the scripts, there are also some details and files that are not committed to this setup for privacy and security reasons. 
-A few examples of which is my cron setups where it is tasked with updating and committing the package lists to the Git repo, updating the packages, cleaning the cache, and so much more. 
+* link:./bin/select-theme[A basic theme selection for easy color scheme generation] with https://github.com/muennich/sxiv[sxiv].
+Since the script is tailored to my needs, it is recommended to modify it for your own.
+
+Aside from the scripts, there are also some details and files that are not committed to this setup for privacy and security reasons.
+A few examples of which is my cron setups where it is tasked with updating and committing the package lists to the Git repo, updating the packages, cleaning the cache, and so much more.
 
 
 
 
 == Configured programs
 
-Here's a list of the programs with details on the config found in this repo. 
+Here's a list of the programs with details on the config found in this repo.
 Each of the listed directory is designed to be used/managed with https://www.gnu.org/software/stow/[GNU Stow] at the indicated target path.
 
-
-=== https://github.com/baskerville/bspwm[bspwm]
-
-A minimalist window manager. 
-Only provides a window manager and nothing else. 
-
-* Config located at link:bspwm/[`bspwm/`] directory. 
-* The usual target path for a user is at `$HOME/.config/bspwm/`. 
-* Minimum version (from `bspwm --version`):
-** `0.9.7-10-g2ffd9c1`
-* Simply contains `bspwmrc` which is an executable setting up bspwm-related settings and and starting up some applications. 
-* This allows for a modular setup. 
-For using keybindings, it uses `sxhkd` (Simple X Hotkey Daemon). 
-For something similar to i3-bar, https://github.com/polybar/polybar[polybar] serves as the replacement. 
-
-
-=== https://github.com/baskerville/sxhkd[sxhkd]
-
-Stands for "Simple X Hotkey Daemon". 
-It is a hotkey daemon detecting certain X events primarily from the keyboard and mouse. 
-
-It is also very useful since it enables modular setup. 
-Can be used independent of the desktop environment (DE) or the window manager (WM). 
-
-* Config located at link:sxhkd/[`sxhkd/`] folder.
-* The usual target path is at `$HOME/.config/sxhkd`. 
-* Minimum version (from `sxhkd --version`):
-** `0.6.0-3-g7124055`
-* Contains a config file (`sxhkdrc`) for the keybindings. 
-There are some keybindings specifically used for `bspwm`. 
-
-
-=== https://github.com/polybar/polybar[polybar]
-
-A tool for creating status bars. 
-
-This is the replacement bar from my previous i3-based setup. 
-
-* Config located at link:polybar[`polybar/`]. 
-* The usual target path for a user is at `$HOME/.config/polybar`. 
-* Minimum version (from `polybar --version`): 
-** `polybar 3.4.1`
-** `Features: +alsa +curl +i3 +mpd +network(libnl) +pulseaudio +xkeyboard`
-* There is only the standalone config (might decide to make it modular) and the launch script which is copied from the https://wiki.archlinux.org/index.php/Polybar[related Arch Wiki entry]. 
-
-For documentation, check out the https://wiki.archlinux.org/index.php/Polybar[already linked Arch Wiki entry] and the https://github.com/polybar/polybar/wiki[official documentation from GitHub]. 
-
-
-=== https://github.com/davatorium/rofi[Rofi]
-
-The application switcher and launcher. 
-Also serves as a replacement for https://tools.suckless.org/dmenu/[dmenu].
-
-* Config located at link:rofi/[`rofi/`].
-* The usual target path for a user is at `$HOME/.config/rofi/`.
-* Minimum version (from `rofi -version`):
-** `Version: 1.5.4`
-* Main config is `config.rasi`.
-* Contains the config and my custom Rofi themes. 
-
-To see the documentation, check out the manual entry for `rofi`. 
-For creating or editing Rofi themes, read the manual entry of `rofi-theme`. 
-Also, view the related https://wiki.archlinux.org/index.php/Rofi[Arch Wiki entry]. 
-
-
-=== https://www.zsh.org/[Zsh]
-
-A Unix shell and an alternative to the Bash.
-
-* Config found at link:zsh/[`zsh/`] directory.
-* The usual target path for a user is at `$HOME/`.
-* Minimum version (from `zsh --version`):
-** `zsh 5.7.1 (x86_64-pc-linux-gnu)`
-* Contains `.zprofile` and `.zshrc`. 
-The primary file to look for is the `.profile` to set environment variables independent of the shell setups. 
-* Previously relied on https://github.com/robbyrussell/oh-my-zsh/[oh-my-zsh]. 
-Eventually, the config became independent and can work without it. 
-
-For the documentation, check out the manual entry for `zsh` to gain an overview of the shell. 
-The main manual explains some things such as the startup/shutdown files and compatibility with other shells. 
-It also lays out the sections of the manual which you can check it out. 
-
-Since the manual has been split into multiple sections, it can be daunting to navigate. 
-The most referred sections by far are `zshmisc` where it gives details on the miscellanea of zsh such as the prompt and special variables you might want to know. 
-The other section is `zshbuiltins` where it explains built-in commands of zsh. 
-
-
-=== https://www.x.org/wiki/[Xorg]
-
-A display server implementing X window system.
-
-* Config found at link:xorg/[`xorg/`] directory.
-* The usual target path for a user is at `$HOME/`.
-* Minimum version (from `Xorg -version`):
-** `X.Org X Server 1.20.5`
-** `X Protocol Version 11, Revision 0`
-* The configuration is found at `.Xresources` containing the colors (0 to 15, foreground, and the background). 
-
-
-=== https://github.com/yshui/picom[picom]
-
-A window compositor forked from https://github.com/chjj/compton[compton] that adds off-screen buffers and additional effects and animations to the window. 
-Can be used for adding style to your setup. 
-
-This is formerly the Compton configuration. 
-
-* Config found at link:picom/[`picom/`] directory.
-* The usual target path for a user is at `$HOME/.config/picom`.
-* Minimum version (from `picom --version`):
-** `v7.2`
-* The config is copied from `/etc/xorg/picom.conf` and edited a few parameters. 
-
-For documentation, check out the manual entry (i.e., `man picom`) and the https://wiki.archlinux.org/index.php/Picom[related Arch Wiki entry]. 
-The default configuration (located at `/etc/xdg/picom.conf` assuming at Arch Linux) can be helpful as well as it is filled with comments. 
-
-
-=== https://neovim.io/[Neovim]
-
-A modern version of https://www.vim.org/[Vim], a modal text editor. 
-footnote:[Migrated after I've seen https://lukesmith.xyz/[Luke-senpai] used it in his recent videos. 
-Seriously though, I find nvim to be way better for configuration.]
-
-* Config located at link:nvim/[`nvim/`] directory.
-* The usual target path for a user is at `$HOME/.config/nvim`.
-* Minimum version (from `nvim --version`): 
-** `NVIM v0.4.3` 
-* Uses https://github.com/junegunn/vim-plug[`vim-plug`] as the plugin manager.
-* Contains my plugin list and editor configurations in `init.vim`.
-* There are also some https://github.com/sirver/UltiSnips[UltiSnips] snippets stored in `own-snippets` folder (since `snippets` is a reserved folder name). 
-* One of the largest snippet file is the snippets for LaTeX files. 
-It is based on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips LaTeX snippets].
-
-
-=== https://github.com/gokcehan/lf[lf]
-
-A http://ranger.github.io/[ranger]-inspired terminal file manager. 
-https://godoc.org/github.com/gokcehan/lf[Here's the documentation for it.]
-
-* Config located at link:lf/[`lf/`] directory.
-* The usual target path for a user is at `$HOME/.config/lf/`.
-* Minimum version (from `lf --version`):
-** `r14`
-* All of the config files are basically default config files except with a few personal changes.
+Each configuration tries to make each to be consistent visually.
+For a color scheme, my main preference is https://www.nordtheme.com/[Nord].
 
 
 === https://github.com/jwilm/alacritty/[Alacritty]
 
-Similar to https://sw.kovidgoyal.net/kitty[Kitty] , it's a GPU-based terminal emulator. 
+Similar to https://sw.kovidgoyal.net/kitty[Kitty] , it's a GPU-based terminal emulator.
 It's documentation for the configuration can be viewed at the config file itself being filled with comments.
 
 * Config located at link:alacritty/[`alacritty/`] directory.
 * The usual target path for a user is at `$HOME/.config/alacritty/`.
 * Minimum version (from `alacritty --version`):
 ** `alacritty 0.3.3`
-* Contains a single `alacritty.yaml` as the config file. Not much has changed except for the color scheme and the font being used.
+* Contains a single `alacritty.yaml` as the config file.
+Not much has changed except for the color scheme and the font being used.
+
+
+=== https://github.com/baskerville/bspwm[bspwm]
+
+A minimalist window manager.
+Only provides a window manager and nothing else.
+
+* Config located at link:bspwm/[`bspwm/`] directory.
+* The usual target path for a user is at `$HOME/.config/bspwm/`.
+* Minimum version (from `bspwm --version`):
+** `0.9.7-10-g2ffd9c1`
+* Simply contains `bspwmrc` which is an executable setting up bspwm-related settings and and starting up some applications.
+However, the "true" version is stored as a https://github.com/dylanaraps/pywal/wiki/User-Template-Files[template file] for pywal (located at link:wal/templates/bspwmrc[`wal/templates/bspwmrc`]).
+* This allows for a modular setup.
+For using keybindings, it uses `sxhkd` (Simple X Hotkey Daemon).
+For something similar to i3-bar, https://github.com/polybar/polybar[polybar] serves as the replacement.
+
+To control the window manager, you should use `bspc`.
 
 
 === https://dunst-project.org/[Dunst]
@@ -331,9 +238,61 @@ It's a notification daemon used to display notifications sent by notifiers (prog
 * The usual target path for a user is at `$HOME/.config/dunst/`.
 * Minimum version (from `dunst --version`):
 ** `Dunst - A customizable and lightweight notification-daemon 1.4.1 (2019-07-03)`
-* Simply contains a `dunstrc` configuring appearance of the notifications. 
+* Simply contains a `dunstrc` configuring appearance of the notifications.
+Though, the "true" version of the config is located at link:wal/templates/dunstrc[`wal/templates/dunstrc`].
 
-Look out for the related manual entry (i.e., `man dunst`) and the https://wiki.archlinux.org/index.php/Dunst[Arch Wiki entry]. 
+Look out for the related manual entry (i.e., `man dunst`) and the https://wiki.archlinux.org/index.php/Dunst[Arch Wiki entry].
+
+
+=== https://www.gnu.org/software/emacs/[GNU Emacs]
+
+Another text editor, of course.
+I finally bit the bullet with this one with the native support for https://orgmode.org/[Org Mode] as the biggest reason.
+(Is this going to be start of something sinister?)
+
+* This package is really a https://github.com/hlissner/doom-emacs[Doom Emacs]-based configuration more than the vanilla config so you need to install it first before touching the config with your grubby hands.
+Just run the following command `git clone https://github.com/hlissner/doom-emacs ~/.emacs.d && ~/.emacs.d/bin/doom install` and it should take care of the rest.
+* Config located at link:emacs/[`emacs/`].
+* The ideal target path for a user is at `$HOME/.config/doom`.
+* Minium version (from `emacs --version`):
+** `GNU Emacs 26.3`
+** For Doom Emacs, it's not particularly important since it's in rolling release but for future references, it is from the `develop` branch at commit https://github.com/hlissner/doom-emacs/commit/efa599f076c3a140c6b4006c352fdba3361abebd[`efa599f076c3a140c6b4006c352fdba3361abebd`] accessed at 2020-04-24.
+* The Doom configs are just the default config so there's not much to go through here.
+I may also add snippet files in there.
+* Regarding theming Doom Emacs, I've found mainly two ways.
+** First is simply using https://gitlab.com/jjzmajic/ewal[ewal] but the resulting colors are not pretty IMO and I haven't found a way to customize it aside from forking and modifying the package itself.
+** Second is simply generating the Doom Emacs theme file myself;
+I have a https://gitlab.com/foo-dogsquared/doom-theme-generator[small script] that is generates one from the Pywal color scheme.
+** Or simply don't and use https://gitlab.com/protesilaos/modus-themes[modus-themes] instead for that light customization options.
+
+
+=== https://github.com/gokcehan/lf[lf]
+
+A http://ranger.github.io/[ranger]-inspired terminal file manager.
+https://godoc.org/github.com/gokcehan/lf[Here's the documentation for it.]
+
+* Config located at link:lf/[`lf/`] directory.
+* The usual target path for a user is at `$HOME/.config/lf/`.
+* Minimum version (from `lf --version`):
+** `r14`
+* All of the config files are basically default config files except with a few personal changes.
+
+
+=== https://neovim.io/[Neovim]
+
+A modern version of https://www.vim.org/[Vim], a modal text editor.
+footnote:[Migrated after I've seen https://lukesmith.xyz/[Luke-senpai] used it in his recent videos.
+Seriously though, I find nvim to be way better for configuration.]
+
+* Config located at link:nvim/[`nvim/`] directory.
+* The usual target path for a user is at `$HOME/.config/nvim`.
+* Minimum version (from `nvim --version`):
+** `NVIM v0.4.3`
+* Uses https://github.com/junegunn/vim-plug[`vim-plug`] as the plugin manager.
+* Contains my plugin list and editor configurations in `init.vim`.
+* There are also some https://github.com/sirver/UltiSnips[UltiSnips] snippets stored in `own-snippets` folder (since `snippets` is a reserved folder name).
+* One of the largest snippet file is the snippets for LaTeX files.
+It is based on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips LaTeX snippets].
 
 
 === https://www.archlinux.org/pacman/[pacman]
@@ -345,17 +304,142 @@ The default package manager for Arch Linux.
 * Minimum version (from `pacman --version`):
 ** `Pacman v5.1.3 - libalpm v11.0.3`
 * Contains the configuration file, a `mirrorlist` file, and some https://www.archlinux.org/mirrorlist/?ip_version=6[pacman hooks].
-* For the mirrorlist, change it accordingly or https://www.archlinux.org/mirrorlist/?ip_version=6[generate another one]. 
-It is also monthly updated from a cron job. 
-* The dotfiles repo also contains two package lists (i.e., `packages.txt` and `aur-packages.txt`) in the root of the project folder. 
-* The setup also uses `yay` as the AUR helper tool. 
+* For the mirrorlist, change it accordingly or https://www.archlinux.org/mirrorlist/?ip_version=6[generate another one].
+It is also monthly updated from a cron job.
+* Since this requires root privilege, this is not included in the installation script.
+Simply copy it (i.e., `sudo cp pacman/ /etc/pacman.d/`) and you're done.
+* The dotfiles repo also contains two package lists (i.e., `packages.txt` and `aur-packages.txt`) in the root of the project folder.
+* The setup also uses `yay` as the AUR helper tool.
+
+
+=== https://github.com/yshui/picom[picom]
+
+A window compositor forked from https://github.com/chjj/compton[compton] that adds off-screen buffers and additional effects and animations to the window.
+Can be used for adding style to your setup.
+
+This is formerly the Compton configuration.
+
+* Config found at link:picom/[`picom/`] directory.
+* The usual target path for a user is at `$HOME/.config/picom`.
+* Minimum version (from `picom --version`):
+** `v7.2`
+* The config is copied from `/etc/xorg/picom.conf` and edited a few parameters.
+
+For documentation, check out the manual entry (i.e., `man picom`) and the https://wiki.archlinux.org/index.php/Picom[related Arch Wiki entry].
+The default configuration (located at `/etc/xdg/picom.conf` assuming at Arch Linux) can be helpful as well as it is filled with comments.
+
+
+=== https://github.com/polybar/polybar[polybar]
+
+A tool for creating status bars.
+
+This is the replacement bar from my previous i3-based setup.
+
+* Config located at link:polybar[`polybar/`].
+* The usual target path for a user is at `$HOME/.config/polybar`.
+* Minimum version (from `polybar --version`):
+** `polybar 3.4.1`
+** `Features: +alsa +curl +i3 +mpd +network(libnl) +pulseaudio +xkeyboard`
+* There is only the standalone config (might decide to make it modular) and the launch script which is copied from the https://wiki.archlinux.org/index.php/Polybar[related Arch Wiki entry].
+The theme is dynamically used with the Xresources file (by using `xrdb`).
+
+For documentation, check out the https://wiki.archlinux.org/index.php/Polybar[already linked Arch Wiki entry] and the https://github.com/polybar/polybar/wiki[official documentation from GitHub].
+
+
+=== https://github.com/dylanaraps/pywal[Pywal]
+
+A theme generator written in Python.
+It is mostly used for ricing to get them consistent colors throughout your setup.
+
+* Config located at link:wal[`wal/`].
+* The usual target path for a user is at `$HOME/.config/wal`.
+It is ideal that you've already have your own color schemes saved in there as well.
+* Minimum version (from `wal --version`):
+** `wal 3.3.0`
+* Due to the nature of my setup where I want those consistent colors, most of the configurations are tucked away as https://github.com/dylanaraps/pywal/wiki/User-Template-Files[template files] but it should be easy to identify which is which.
+Certain applications such as for `dunst` and `bspwm` are in here and should be considered as the real version of the config.
+
+For additional information, check out the https://github.com/dylanaraps/pywal/wiki/[documentation] from the GitHub page.
+
+
+=== https://github.com/davatorium/rofi[Rofi]
+
+The application switcher and launcher.
+Also serves as a replacement for https://tools.suckless.org/dmenu/[dmenu].
+
+* Config located at link:rofi/[`rofi/`].
+* The usual target path for a user is at `$HOME/.config/rofi/`.
+* Minimum version (from `rofi -version`):
+** `Version: 1.5.4`
+* Main config is `config.rasi`.
+* Contains the config and my custom Rofi themes.
+
+To see the documentation, check out the manual entry for `rofi`.
+For creating or editing Rofi themes, read the manual entry of `rofi-theme`.
+Also, view the related https://wiki.archlinux.org/index.php/Rofi[Arch Wiki entry].
+
+
+=== https://github.com/baskerville/sxhkd[sxhkd]
+
+Stands for "Simple X Hotkey Daemon".
+It is a hotkey daemon detecting certain X events primarily from the keyboard and mouse.
+
+It is also very useful since it enables modular setup.
+Can be used independent of the desktop environment (DE) or the window manager (WM).
+
+* Config located at link:sxhkd/[`sxhkd/`] folder.
+* The usual target path is at `$HOME/.config/sxhkd`.
+* Minimum version (from `sxhkd --version`):
+** `0.6.0-3-g7124055`
+* Contains a config file (`sxhkdrc`) for the keybindings.
+There are some keybindings specifically used for `bspwm`.
+
+
+=== https://www.x.org/wiki/[Xorg]
+
+A display server implementing X window system.
+
+* Config found at link:xorg/[`xorg/`] directory.
+* The usual target path for a user is at `$HOME/`.
+* Minimum version (from `Xorg -version`):
+** `X.Org X Server 1.20.5`
+** `X Protocol Version 11, Revision 0`
+* The configuration is found at `.Xresources` containing the colors (0 to 15, foreground, and the background).
+
+
+=== https://www.zsh.org/[Zsh]
+
+A Unix shell and an alternative to the Bash.
+Mostly chosen due to its wide options for customization compared to GNU Bash.
+
+* Config found at link:zsh/[`zsh/`] directory.
+* The usual target path for a user is at `$HOME/`.
+* Minimum version (from `zsh --version`):
+** `zsh 5.7.1 (x86_64-pc-linux-gnu)`
+* Contains `.zprofile` and `.zshrc`.
+The primary file to look for is the `.profile` to set environment variables independent of the shell setups.
+* Previously relied on https://github.com/robbyrussell/oh-my-zsh/[oh-my-zsh].
+Eventually, the config became independent and can work without it.
+
+For the documentation, check out the manual entry for `zsh` to gain an overview of the shell.
+The documentation itself is massive and comprehensive.
+The main manual explains some things such as the startup/shutdown files and compatibility with other shells.
+It also lays out the sections of the manual which you can check it out.
+
+Since the manual has been split into multiple sections, it can be daunting to navigate.
+The most referred sections by far are `zshmisc` where it gives details on the miscellanea of zsh such as the prompt and special variables you might want to know.
+The other section is `zshbuiltins` where it explains built-in commands of zsh.
+
+For coding with Zsh, look into the http://zsh.sourceforge.net/Doc/Release/index.html[Zsh Manual].
 
 
 
 
 == Additional programs used
 
-As much as possible, I use free and open source software for all of my needs. 
+As much as possible, I use free and open source software (FOSS) for all of my needs.
+Not all of the items listed are FOSS, though.
+footnote:[You can also view the package lists at the project root for a detailed list.]
 
 
 === System administration
@@ -370,52 +454,79 @@ TIP: I recommend to start at this list especially if you're starting with a bare
 * https://github.com/coldfix/udiskie[udiskie] - An automounter for removable media.
 
 
-=== Desktop user experience 
+=== Command line tools
 
-* https://github.com/tmux/tmux/[tmux] - A terminal multiplexer useful for managing multiple sessions. 
-* https://github.com/noctuid/tdrop[tdrop] - A modular dropdown creator. 
-* https://github.com/reorr/mantablockscreen[mantablockscreen] - A lock screen. 
-* https://github.com/dylanaraps/pywal[pywal] - An automation tool for generating color schemes from images and applying them to your programs. 
-* https://github.com/dylanaraps/neofetch/[neofetch] - A program for getting information for your hardware and software setup. 
+I still use https://www.gnu.org/software/coreutils/[GNU coreutils] and common Unix tools (e.g., https://curl.haxx.se/[cURL]) but it could be good to find some alternatives.
+If you want to look for some alternatives or just feeling adventurous yourself, I recommend starting with https://github.com/agarrharr/awesome-cli-apps[this awesome list] and https://github.com/alebcay/awesome-shell[this one, too].
 
-
-=== General purpose programs
-
+* https://github.com/sharkdp/bat[bat] - Basically `cat(1)` with wings.
+* https://github.com/jarun/Buku[Buku] - A developer-oriented (i.e., easy to integrate with your own programs) browser-independent bookmark manager for the command line.
+* https://github.com/ogham/exa[exa] - A user-friendly replacement for `ls(1)`.
+* https://github.com/sharkdp/fd[fd] - A user-friendly alternative to `find(1)` from https://www.gnu.org/software/findutils/[GNU `findutils`].
 * https://feh.finalrewind.org/[feh] - A minimal image viewer.
-* https://www.mozilla.org/en-US/firefox/new/[Firefox] - One of the major web browser second to Chrome.
+* https://github.com/junegunn/fzf[fzf] - A fuzzy command line finder.
+* https://github.com/sharkdp/hexyl[hexyl] - A hex viewer on the command line.
+* https://github.com/gokcehan/lf[lf] - A terminal file manager mainly inspired by http://ranger.github.io/[Ranger].
 * https://github.com/naelstrof/maim[maim] - A simple screenshot utility.
-* https://docs.xfce.org/xfce/thunar/start[Thunar] - A file manager. A part of the Xfce desktop environment.
-* https://www.thunderbird.net/[Thunderbird] - A email client.
+* https://github.com/dylanaraps/neofetch/[neofetch] - A program for getting information for your hardware and software setup.
+footnote:[You can also take a look at https://github.com/dylanaraps/pfetch[pfetch] (created by the same author) which can be an excellent reference for getting system information between Unix-based systems.
+Seriously though, it's insane;
+the guy's a wizard.]
+* https://neovim.io/[Neovim] - A modern fork of https://www.vim.org/[Vim].
+* https://github.com/BurntSushi/ripgrep[ripgrep] - A fast alternative to https://www.gnu.org/software/grep/[GNU `grep`].
 * https://weechat.org/[Weechat] - An IRC client on the command line.
+* https://github.com/ytdl-org/youtube-dl[youtube-dl] - A utility for downloading YouTube videos (and also others).
+
+
+=== Desktop user experience
+
+* https://github.com/tmux/tmux/[tmux] - A terminal multiplexer useful for managing multiple sessions.
+* https://github.com/noctuid/tdrop[tdrop] - A modular dropdown creator.
+* https://github.com/dylanaraps/pywal[pywal] - An automation tool for generating color schemes from images and applying them to your programs.
+
+
+=== Graphical programs
+
+* https://discordapp.com/[Discord] - A communication app targeted for gaymers and hackers.
+* https://www.mozilla.org/en-US/firefox/new/[Firefox] - One of the major web browser second to Chrome.
+* https://docs.xfce.org/xfce/thunar/start[Thunar] - A file manager and a part of the https://xfce.org/[XFCE] package.
+footnote:[I'm mainly using https://github.com/gokcehan/lf[lf], don't fret.]
+* https://www.thunderbird.net/[Thunderbird] - A email client.
+footnote:[I'm sorry I'm not using a based command line tool like https://github.com/neomutt/neomutt[Neomutt] yet.
+Please don't crucify me, I'm on my way to be cool, I swear.]
+* https://www.qbittorrent.org/[Qbittorrent]
 
 
 === Device drivers and servers
 
-* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux sound driver. 
+* https://wiki.archlinux.org/index.php/Advanced_Linux_Sound_Architecture[ALSA] - A Linux sound driver.
 * https://wiki.archlinux.org/index.php/NetworkManager[GNOME NetworkManager]
-* https://www.nvidia.com/Download/index.aspx?lang=en-us[NVIDIA Driver] - Since I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that. 
-I also have to use the https://www.archlinux.org/packages/extra/x86_64/nvidia-390xx/[legacy version].
+* https://www.nvidia.com/Download/index.aspx?lang=en-us[NVIDIA Driver] - Since I have an NVIDIA-based GPU (NVIDIA GeForce GT 630), I have to use that.
 
 
-=== Multimedia-related tools 
+=== Multimedia-related tools
 
 * https://audacious-media-player.org/[Audacious] - An audio player with various listening options.
-* https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more. 
-Also can be used as a recorder. 
-* https://www.imagemagick.org/[ImageMagick] - A software suite for graphics. 
-* https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos. 
-* https://www.shotcut.org/[Shotcut] - A video editor built with the https://www.mltframework.org/[MLT Framework]. 
-* https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player. 
+footnote:[Don't worry, I'm trying to be cool by considering https://rybczak.net/ncmpcpp/[`ncmpcpp`].] 
+* https://ffmpeg.org/[ffmpeg] - A multimedia codec including for MP4, FLV, and more.
+Also can be used as a recorder.
+* https://www.imagemagick.org/[ImageMagick] - A software suite for graphics.
+* https://obsproject.com/[OBS Studio] - A facility for streaming and recording videos.
+* https://www.shotcut.org/[Shotcut] - A video editor built with the https://www.mltframework.org/[MLT Framework].
+* https://github.com/muennich/sxiv[sxiv] - Self-explaining-ly named "Simple X Image Viewer".
+* https://www.videolan.org/vlc/[VLC Media Player] - A multimedia player.
 
 
 === Music production
 
-* https://kx.studio/Applications:Cadence[Cadence] - A set of audio tools. Part of the KX Studio project. 
-* https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio plug-in formats such as VST2/3, SF2, and SFZ. 
-Part of the KX Studio project. 
-* https://lmms.io/[LMMS] - A digital audio workstation for beat production. 
-* https://musescore.org/[Musescore] - A music composition and notation software. 
-* https://supercollider.github.io/[SuperCollider] - A platform for audio synthesis and algorithmic composition. 
+You can find my crappy soundtracks primarily in my https://www.youtube.com/channel/UCuMiU9bzATu5oTp-vhOlL2Q[YouTube channel] (may consider a SoundCloud account or similar).
+
+* https://kx.studio/Applications:Cadence[Cadence] - A set of audio tools.
+* https://kx.studio/Applications:Carla[Carla] - An audio plug-in host supporting various audio plug-in formats such as VST2/3, SF2, and SFZ.
+Part of the KX Studio project.
+* https://lmms.io/[LMMS] - A digital audio workstation for beat production.
+* https://musescore.org/[Musescore] - A music composition and notation software.
+* https://supercollider.github.io/[SuperCollider] - A platform for audio synthesis and algorithmic composition.
 
 
 === Design
@@ -423,80 +534,85 @@ Part of the KX Studio project.
 * https://blender.org/[Blender] - A top-notch 3D modelling program.
 * https://www.freecadweb.org/[FreeCAD] - A general purpose 3D computer-aided design program.
 * https://inkscape.org/[Inkscape] - A vector illustration/editing program. Alternative to Adobe Illustrator.
-* http://www.kicad-pcb.org/[KiCad] - An electronic design automation suite. 
-* https://krita.org/en/[Krita] - A painting/illustration program. 
+* http://www.kicad-pcb.org/[KiCad] - An electronic design automation suite.
+* https://krita.org/en/[Krita] - A painting/illustration program.
 
 
 === Fonts
 
 * https://github.com/belluzj/fantasque-sans[Fantasque Sans Mono]
 * https://github.com/tonsky/FiraCode[Fira Code] - A programmer-oriented font that supports ligatures.
-* https://github.com/be5invis/iosevka[Iosevka] - A monospace text that features ligatures and provides a wide variety of symbols. 
-It is currently my terminal font. 
-* http://www.gust.org.pl/projects/e-foundry/lm-math[Latin Modern Math] - A serif font specifically for mathematical and scientific work. 
-It is based from Computer Modern Math (the default typeface for LaTeX documents). 
-It is also my go-to font for mathematical fonts. 
-* https://github.com/ryanoasis/nerd-fonts[Nerd Fonts] - A suite of font tools. 
-Also offers 40+ patched fonts of the popular fonts such as Iosevka, Fira Code, and many others. 
-* https://github.com/googlefonts/noto-fonts[Noto Fonts] - A font family provided by Google. 
-Features a wide support for a variety of languages and styles. 
-* https://www.ibm.com/plex/[Plex] - The font family of IBM. 
-Offers a wide variety of styles from the serif, sans, and monospace. 
-footnote:[There is a plan to extend the fonts to include mathematical symbols but as of 2020-03-27, it's not yet complete.] 
-* https://github.com/adobe-fonts/source-serif-pro[Source Serif Pro] - A free and open source serif font by Frank Grießhammer for Adobe. 
-Part of the Adobe's Source Pro open source font family. 
-It is also my go-to serif font for my documents (e.g., LaTeX documents). 
-* https://github.com/adobe-fonts/source-sans-pro[Source Sans Pro] - Another one of the Adobe's Source Pro open source font family. 
-I use it when paired with Source Serif Pro. 
-The go-to sans font for my go-to serif font. 
-* https://github.com/stipub/stixfonts[STIX] - A mathematical font based from the Times New Roman font. 
-This is my second math font of choice. 
+* https://fontawesome.com/[Font Awesome] - A set of icons for your user interface and stuff.
+* https://github.com/be5invis/iosevka[Iosevka] - A monospace text that features ligatures and provides a wide variety of symbols.
+It is currently my terminal font.
+* http://www.gust.org.pl/projects/e-foundry/lm-math[Latin Modern Math] - A serif font specifically for mathematical and scientific work.
+It is based from Computer Modern Math (the default typeface for LaTeX documents).
+It is also my go-to font for mathematical fonts.
+* https://github.com/ryanoasis/nerd-fonts[Nerd Fonts] - A suite of font tools.
+Also offers 40+ patched fonts of the popular fonts such as Iosevka, Fira Code, and many others.
+* https://github.com/googlefonts/noto-fonts[Noto Fonts] - A font family provided by Google.
+Features a wide support for a variety of languages and styles.
+* https://www.ibm.com/plex/[Plex] - The font family of IBM.
+Offers a wide variety of styles from the serif, sans, and monospace.
+footnote:[There is a plan to extend the fonts to include mathematical symbols but as of 2020-03-27, it's not yet complete.]
+* https://github.com/adobe-fonts/source-serif-pro[Source Serif Pro] - A free and open source serif font by Frank Grießhammer for Adobe.
+Part of the Adobe's Source Pro open source font family.
+It is also my go-to serif font for my documents (e.g., LaTeX documents).
+* https://github.com/adobe-fonts/source-sans-pro[Source Sans Pro] - Another one of the Adobe's Source Pro open source font family.
+I use it when paired with Source Serif Pro.
+The go-to sans font for my go-to serif font.
+* https://github.com/stipub/stixfonts[STIX] - A mathematical font based from the Times New Roman font.
+This is my second math font of choice.
 
 
 === Documents
 
-* https://asciidoctor.org/[Asciidoctor] - A text formatting language suitable for creating books, documentations, and writings. Highlights a heavier feature set compared to Markdown. 
-* https://github.com/gohugoio/hugo[Hugo] - A static site generator for creating websites and personal wikis. 
-* https://jupyter.org/[Jupyter] - Similar to R Markdown. 
-This is closely associated with the https://anaconda.com/[Anaconda distribution]. 
-Useful for a variety of document formats to be converted into a website especially with the (bare) support for https://pandoc.org/[Pandoc] converter. 
-* https://www.libreoffice.org/[LibreOffice] - An office productivity suite and serves as a free alternative to Microsoft Office suite. 
-* http://luatex.org/[LuaTeX] - The TeX engine I primarily use for my LaTeX documents. 
-* https://pandoc.org/[Pandoc] - A universal document converter that supports a wide variety of document formats. 
-Primarily used for converting Markdown documents into Asciidoctor text. 
-* https://rmarkdown.rstudio.com/[R Markdown] - A text formatting language that comes with executing programs with live output in the notebook. 
-* https://www.tug.org/texlive/[TeX Live] - A cross-platform LaTeX distribution for compiling LaTeX files. 
+* https://asciidoctor.org/[Asciidoctor] - A text formatting language suitable for creating books, documentations, and writings.
+Highlights a heavier feature set compared to Markdown.
+* https://github.com/gohugoio/hugo[Hugo] - A static site generator for creating websites and personal wikis.
+* https://jupyter.org/[Jupyter] - Similar to R Markdown except with a stronger emphasis for https://en.wikipedia.org/wiki/Literate_programming[literate programming].
+This is closely associated with the https://anaconda.com/[Anaconda distribution].
+Useful for a variety of document formats to be converted into a website especially with the (bare) support for https://pandoc.org/[Pandoc] converter.
+* https://www.libreoffice.org/[LibreOffice] - An office productivity suite and serves as a free alternative to Microsoft Office suite.
+* http://luatex.org/[LuaTeX] - The TeX engine I primarily use for my LaTeX documents.
+* https://orgmode.org/[Org-mode] - A lightweight text formatting language that offers a variety of export options, literate programming, and reproducible of stuff similar to Jupyter Notebooks.
+* https://pandoc.org/[Pandoc] - A universal document converter that supports a wide variety of document formats.
+Primarily used for converting Markdown documents into Asciidoctor text.
+* https://rmarkdown.rstudio.com/[R Markdown] - A text formatting language that comes with executing programs with live output in the notebook.
+* https://www.tug.org/texlive/[TeX Live] - A cross-platform LaTeX distribution for compiling LaTeX files.
 
 
 === Mathematical tools
 
 * https://www.anaconda.com/[Anaconda] - A mathematical environment distribution.
-* https://www.gnu.org/software/octave/[Octave] - A mathematical computational environment similar to Matlab. 
-* https://www.r-project.org/[R] - Similar to Octave. 
+* https://www.gnu.org/software/octave/[Octave] - A mathematical computational environment similar to Matlab.
+* https://www.r-project.org/[R] - Similar to Octave.
 
 
 === Software development
 
-* https://cmake.org/[CMake] - A cross-platform build system that takes care of build configurations.
-* https://gcc.gnu.org/[GCC] - A set of compilers from GNU. I mainly use it for developing and compiling C and C++ languages.
+* https://docker.com/[Docker] - An application for virtualizing your environments with containers.
+* https://bitbucket.org/eradman/entr[entr] - A utility for running commands for certain filesystem events.
+Useful for not fiddling with `inotify`.
+* https://gcc.gnu.org/[GCC] - A set of compilers from GNU; I mainly use it for developing and compiling C and C++ languages.
 * https://git-scm.com/[Git] - My one and only version control system.
 * https://godotengine.org/[Godot Engine] - A game engine with its own interface.
+* https://llvm.org/[LLVM] - A set of compilers similar to GCC; mainly used it for testing other C/C++ stuff.
 * https://www.gnu.org/software/make/[Make] - A build automation system.
+* https://www.vagrantup.com/[Vagrant] - A virtual machine manager with a focus for developer environments.
 * https://code.visualstudio.com/[Visual Studio Code] - A text editor that comes with lightweight IDE features.
-* The programming language runtime for https://www.python.org/[Python], 
-https://www.ruby-lang.org/en/[Ruby], https://www.java.com/[Java], 
-https://www.rust-lang.org/[Rust], and https://golang.org/[Go].
+* Whatever runtimes/toolchains for programming languages I have (e.g., Oracle Java, Rust, Go, LLVM).
 
 
-=== Browser extensions 
+=== Browser extensions
 
-* https://bitwarden.com/[Bitwarden] - An open source password manager. 
-Comes with a browser extension or a desktop version of the app. 
-* Internet Archive Web Extension (https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak[Chrome] and https://addons.mozilla.org/en-US/firefox/addon/wayback-machine_new/[Firefox] version) - A browser extension for tracking down the saved versions of a page. 
-Very useful extension for tracking old resources that has been moved or deleted. 
-* https://github.com/gorhill/uBlock[uBlock Origin] - A security tool for blocking known trackers. 
-* https://www.one-tab.com/[OneTab extension] - An extension to enable grouping of tabs into one tab. 
-Convenient for preventing a lot of tabs opened at one time. 
-* https://www.eff.org/privacybadger[Privacy Badger] - A security tool for blocking trackers. 
-Unlike the other blockers like uBlock Origin, Privacy Badger learns with more usage. 
+* https://bitwarden.com/[Bitwarden] - An open source password manager.
+Comes with a browser extension or a desktop version of the app.
+* Internet Archive Web Extension (https://chrome.google.com/webstore/detail/wayback-machine/fpnmgdkabkmnadcjpehmlllkndpkmiak[Chrome] and https://addons.mozilla.org/en-US/firefox/addon/wayback-machine_new/[Firefox] version) - A browser extension for tracking down the saved versions of a page.
+Very useful extension for tracking old resources that has been moved or deleted.
+* https://github.com/gorhill/uBlock[uBlock Origin] - A security tool for blocking known trackers.
+* https://www.one-tab.com/[OneTab extension] - An extension to enable grouping of tabs into one tab.
+Convenient for preventing a lot of tabs opened at one time.
+* https://www.eff.org/privacybadger[Privacy Badger] - A security tool for blocking trackers.
+Unlike the other blockers like uBlock Origin, Privacy Badger learns with more usage.
 

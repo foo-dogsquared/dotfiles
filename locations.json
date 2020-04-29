@@ -3,11 +3,13 @@
     "bin": "$HOME/bin/",
     "bspwm": "$HOME/.config/bspwm/",
     "dunst": "$HOME/.config/dunst/",
+    "emacs": "$HOME/.config/doom",
     "lf": "$HOME/.config/lf",
     "nvim": "$HOME/.config/nvim/",
     "picom": "$HOME/.config/picom",
     "polybar": "$HOME/.config/polybar",
     "rofi": "$HOME/.config/rofi/",
+    "sxiv": "$HOME/.config/sxiv",
     "sxhkd": "$HOME/.config/sxhkd/",
     "xorg": "$HOME",
     "zsh": "$HOME"

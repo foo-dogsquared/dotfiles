@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 
-# A simple setup script for the packages. 
-# There should be a file named `locations.json` in this setup where it contains a top-level hash map with the packages and their target path. 
-# Feel free to modify it accordingly. 
+# A simple setup script for the packages.
+# There should be a file named `locations.json` in this setup where it contains a top-level associative array with the packages as the key and their target path as the value.
+# Feel free to modify it accordingly.
 
-# This script is tailored to my specific needs. 
-# It also strives to only rely on the standard library so further no installation needed. 
-# Feel free to modify this script as well. 
+# This script is tailored to my specific needs.
+# It also strives to only rely on the standard library so further no installation needed.
+# Feel free to modify this script as well.
 
-# For future references, the Python version when creating for this script is v3.8.2. 
-# If there's any reason why stuff is not working, it might be because it is different on the older versions or just my bad code lol. 
+# For future references, the Python version when creating for this script is v3.8.2.
+# If there's any reason why stuff is not working, it might be because it is different on the older versions or just my bad code lol.
 
-# Anyway, I feel like this script should be only up to half the size. 
-# Hell, I think this should be simpler but no... I pushed for a more complex setup or something. 
-# What am I doing? 
-# Is this what ricing is all about? 
-# Why are you reading this? 
+# Anyway, I feel like this script should be only up to half the size.
+# Hell, I think this should be simpler but no... I pushed for a more complex setup or something.
+# What am I doing?
+# Is this what ricing is all about?
+# Why are you reading this?
 
 import argparse
 import json
@@ -53,10 +53,10 @@ class PackageDir:
 
 
     def add_package(self, package, target):
-        """ 
-        Add the package to the list. 
+        """
+        Add the package to the list.
 
-        :param: package - the name of the package 
+        :param: package - the name of the package
         :param: target - the target path of the package
         """
         package_path = self.path / package
@@ -65,9 +65,9 @@ class PackageDir:
 
 
     def remove_package(self, package):
-        """ 
-        Remove the package in the list. 
-        Although this function is quite simple, this is only meant as an official API. 
+        """
+        Remove the package in the list.
+        Although this function is quite simple, this is only meant as an official API.
 
         :param: package - the package to be removed
         """
@@ -93,13 +93,13 @@ class PackageDir:
         """
         Execute a set of commands with the packages.
 
-        :param: commands - A list of strings that'll be used as a template. 
-                           The template string uses the `string.format` syntax. 
+        :param: commands - A list of strings that'll be used as a template.
+                           The template string uses the `string.format` syntax.
                            (https://docs.python.org/3/library/string.html?highlight=template#format-string-syntax)
-                           It should contain a binding to the keywords `package` and `location` (e.g., `stow --restow {package} --target {location}`). 
+                           It should contain a binding to the keywords `package` and `location` (e.g., `stow --restow {package} --target {location}`).
         """
         for package, location in self.packages.items():
-            # Making sure the location is expanded. 
+            # Making sure the location is expanded.
             location = os.path.expanduser(location)
             target_cwd = os.path.realpath(self.path)
 
@@ -110,7 +110,7 @@ class PackageDir:
                 if process_status.returncode == 0:
                     logging.info(f"{command}: successfully ran")
                 else:
-                    logging.error(f"{command}: {process_status.stderr.strip()}")
+                    logging.error(f"{command}: returned with following error\n{process_status.stderr.strip()}")
 
 
     @property
@@ -120,22 +120,22 @@ class PackageDir:
 
 
 def setup_logging():
-    """ 
-    Setup the logger instance. 
+    """
+    Setup the logger instance.
     """
     logging.basicConfig(format="[%(levelname)s] %(module)s: %(message)s", level=logging.INFO, stream=sys.stdout)
 
 
 def setup_args():
-    """ 
-    Setup the argument parser. 
-    
-    :returns: An ArgumentParser object. 
     """
-    description = """A quick installation script for this setup. Take note this is tailored to my specific needs."""
+    Setup the argument parser.
+
+    :returns: An ArgumentParser object.
+    """
+    description = """A quick installation script for this setup. Take note this is tailored to my specific needs but I tried to make this script generic."""
     argparser = argparse.ArgumentParser(description=description)
 
-    argparser.add_argument("-c", "--commands", metavar = "command", help = "Executing the specified commands. All of the commands are treated as they were entered in the shell.", nargs = "*", default = ["echo {package}"])
+    argparser.add_argument("-c", "--commands", metavar = "command", help = "Executing the specified commands. All of the commands are treated as they were entered in the shell.", nargs = "*", default = ["echo {package} is set at {location}"])
     argparser.add_argument("-d", "--directory", metavar = "path", help = "Set the directory of the package data file.", type = Path, nargs = "?", default = Path(os.getcwd()))
     argparser.add_argument("--exclude", metavar = "package", help = "Exclude the given packages.", type = str, nargs = "+", default = [])
     argparser.add_argument("--include", metavar = ("package", "location"), help = "Include with the following packages.", type = str, nargs = 2, action = "append", default = [])
@@ -145,28 +145,28 @@ def setup_args():
 
 
 def parse_args(parser, argv):
-    """ 
-    Parse the arguments. 
+    """
+    Parse the arguments.
 
-    This is also the main function to pay attention to. 
+    This is also the main function to pay attention to.
 
-    :param: parser - An instance of the argument parser. 
-    :param: argv - A list of arguments to be parsed. 
+    :param: parser - An instance of the argument parser.
+    :param: argv - A list of arguments to be parsed.
     """
     args = parser.parse_args(argv)
 
     try:
         package_dir = PackageDir(args.directory)
 
-        # Include the following packages. 
+        # Include the following packages.
         for package, target in args.include:
             try:
                 package_dir.add_package(package, target)
             except Exception as e:
                 logging.error(e)
 
-        # Exclude the following packages. 
-        # We don't need the value here so we'll let it pass. 
+        # Exclude the following packages.
+        # We don't need the value here so we'll let it pass.
         for package in args.exclude:
             package_dir.remove_package(package)
 
@@ -181,8 +181,7 @@ def parse_args(parser, argv):
             package_dir.packages.clear()
             package_dir.packages = items
 
-
-        # Execute the commands with the packages. 
+        # Execute the commands with the packages.
         package_dir.execute_packages(args.commands)
     except Exception as e:
         logging.error(e)

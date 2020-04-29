@@ -1,5 +1,5 @@
 """""""""""
-" Plugins "
+" PLUGINS "
 """""""""""
 
 " This configuration uses vim-plug (https://github.com/junegunn/vim-plug) as
@@ -7,6 +7,9 @@
 " Activate it with ':PlugInstall' for the first time (and when adding new plugins). 
 " And run ':PlugUpgrade' for upgrading the plugins. 
 call plug#begin('~/.config/nvim/plugged')
+
+" Nord Vim color scheme.
+Plug 'arcticicestudio/nord-vim'
 
 " A snippets engine. 
 " One of the must-haves for me. 
@@ -86,11 +89,12 @@ call plug#end()
 
 
 """""""""""""""""""""""""
-" Editor configurations "
+" EDITOR CONFIGURATIONS "
 """""""""""""""""""""""""
 
 " Setting number lines in the gutter.
 set number relativenumber
+highlight CursorLineNr ctermfg=cyan
 
 " Setting line highlighting based on the position of the cursor.
 set cursorline
@@ -113,21 +117,27 @@ inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 inoremap jk <Esc>
 
 " Instant Goyo toggle.
-map <leader>w :Goyo \| set linebreak<Enter>
+map <leader>w :Goyo<Enter>
+
+" Trim all trailing whitespaces.
+map <leader>s :%s/\s\+$/<Enter>
 
 " File explorer toggle.
 " Turns out vim (and nvim) has a native file explorer with :Explore.
 map <leader>f :Lexplore<Return>:vertical resize 40<Return><C-w><C-w>
 
 " Changing style of words.
-hi clear SpellBad
-hi SpellBad ctermfg=red
+highlight clear SpellBad
+highlight SpellBad ctermfg=red
 
-hi clear SpellLocal
-hi SpellLocal cterm=underline ctermfg=cyan
+highlight clear SpellLocal
+highlight SpellLocal cterm=underline ctermfg=cyan
 
-hi clear SpellRare
-hi SpellRare ctermfg=white
+highlight clear SpellCap
+highlight SpellCap cterm=underline ctermfg=magenta
+
+highlight clear SpellRare
+highlight SpellRare ctermfg=white
 
 
 

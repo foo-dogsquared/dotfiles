@@ -12,7 +12,8 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:*' formats '[%s] (%b)'
 autoload -U colors && colors
-PS1="%F%{${fg[white]}%}%(0?.√.%?) %B%{$fg[magenta]%}%1~%{$reset_color%} \$vcs_info_msg_0_ $%f%b "
+PROMPT="%F%{${fg[white]}%}%(0?.√.%?) %B%{$fg[magenta]%}%1~%{$reset_color%} \$vcs_info_msg_0_ $%f%b "
+RPROMPT="[%D %*]"
 
 # Configuring the command history.
 HISTSIZE=1000
@@ -57,15 +58,15 @@ key[ShiftTab]="${terminfo[kcbt]}"
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
-	autoload -Uz add-zle-hook-widget
-	function zle_application_mode_start {
-		echoti smkx
-	}
-	function zle_application_mode_stop {
-		echoti rmkx
-	}
-	add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-	add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+    autoload -Uz add-zle-hook-widget
+    function zle_application_mode_start {
+        echoti smkx
+    }
+    function zle_application_mode_stop {
+        echoti rmkx
+    }
+    add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+    add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
 
 # History searching.

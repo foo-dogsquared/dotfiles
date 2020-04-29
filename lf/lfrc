@@ -2,6 +2,9 @@
 # Based on the given example configuration at https://github.com/gokcehan/lf/blob/master/etc/lfrc.example.
 # https://godoc.org/github.com/gokcehan/lf for documentation. 
 
+
+
+
 ####################
 # BEHAVIOR TOGGLES #
 ####################
@@ -128,6 +131,15 @@ map x $$f
 map X !$f
 
 # dedicated keys for file opener actions
-map o open $f
-map O open --ask $f
+map oo open $f
+map oO open --ask $f
+
+# dedicated keys for usual application suite
+# feel free to replace this accordingly to your needs
+map oz !nvim $f
+map ox !code $f
+map oc !inkscape $f
+map ov !gimp $f
+map ob !blender $f
+map of !firefox $f
 

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# This is simply an additional reloading script in addition to Pywal's own.
+# This code is specific machine-to-machine so you better make sure to update it to suit your need.
+
+readonly cache=${XDG_CACHE_HOME:-"$HOME/.cache"}
+readonly config=${XDG_CONFIG_HOME:-"$HOME/.config"}
+
+readonly pywal_cache=$cache/wal
+
+# Copying the Pywal color scheme JSON into the theme list.
+# This file suffix removal is based on the linked code:
+# https://stackoverflow.com/a/32584935
+readonly pywal_json=$pywal_cache/colors.json
+readonly theme=$(jq -r ".wallpaper" "$pywal_json" | xargs basename | rev | cut -f 2- -d '.' | rev)
+readonly theme_dir="$config/wal/colorschemes/dark"
+mkdir -p "$theme_dir"
+cp "$pywal_json" "$theme_dir/$theme.json"
+
+# Copying the dynamically crerated rofi themes.
+cp "$pywal_cache/fds-mini-sidebar.rasi" "$XDG_CONFIG_HOME/rofi"
+cp "$pywal_cache/dmenu.rasi" "$XDG_CONFIG_HOME/rofi"
+
+# Copying bspwm config and reloading it.
+cp "$pywal_cache/bspwmrc" "$XDG_CONFIG_HOME/bspwm" && bspc wm -r
+
+# Reloading polybar.
+# pkill -USR1 polybar
+
+# Copying dunst config and reloading it.
+# The reload mechanism feels very hacky and the maintainers warn about it.
+# See more at the Arch Wiki entry (https://wiki.archlinux.org/index.php/Dunst) and the linked issue (https://github.com/dunst-project/dunst/issues/63).
+cp "$pywal_cache/dunstrc" "$XDG_CONFIG_HOME/dunst" && pkill dunst && dunst &
+
+# Creating a Doom Emacs theme.
+# Unlike the previous templates, this is stored on another directory.
+# Unfortunately, this requires installing some crap I made.
+# You can find the Doom Emacs generator here: https://gitlab.com/foo-dogsquared/doom-theme-generator/-/blob/master/doom-theme-generator.py .
+(
+    cd ~/projects/doom-theme-generator
+    ./doom-theme-generator.py --name fds
+    mv doom-fds-theme.el "$XDG_CONFIG_HOME/doom/themes/"
+)
+
+notify-send "The theme has been installed."
+

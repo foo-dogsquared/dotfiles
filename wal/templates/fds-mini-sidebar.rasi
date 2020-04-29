@@ -5,19 +5,19 @@
     See the 'fds-sidebar-dark` Rofi theme file for an example. 
 **/
 
-* {
+* {{
     /* Theme settings */
     highlight: bold italic;
     scrollbar: true;
 
-    
     /* Style */
-    text-color: #dfcedc;
-    background-color: #0A080C;
+    text-color: {foreground};
+    background-color: {background};
+    font: "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid 14";
     font: "Iosevka 14";
-}
+}}
 
-window {
+window {{
     background-color: transparent;
 
     height: 65%;
@@ -25,81 +25,81 @@ window {
     position: southwest;
     location: southwest;
     text-color: #e0f5f5;
-}
+}}
 
-mainbox {
-    background-color: #0A080C;
+mainbox {{
+    background-color: {background};
     border: 2;
-    border-color: #dfcedc;
+    border-color: {color1};
     children: [ inputbar, listview, mode-switcher ];
     padding: 0.5em;
-}
+}}
 
 inputbar,
-listview {
-    background: #0A080C;
+listview {{
+    background: {background};
     margin: 0 0 0.5em 0;
-}
+}}
 
-inputbar {
+inputbar {{
     orientation: vertical;
     children: [ prompt, entry ];
-}
+}}
 
-prompt {
+prompt {{
     width: 100%;
     text-style: underline;
-}
+}}
 
-entry {
-    background-color: #705994;
+entry {{
+    background-color: {color1};
     margin: 0 1em 0 0;
-}
+}}
 
-element {
+element {{
     padding: 5;
-    background-color: #705994;
-}
+    background-color: {color1};
+}}
 
-element selected.normal {
-    background-color: #dfcedc;
-    text-color: #0A080C;
-}
+element selected.normal {{
+    background-color: {foreground};
+    text-color: {background};
+}}
 
-scrollbar {
+scrollbar {{
     width: 10px;
-    background-color: #705994;
-    handle-color: #dfcedc;
+    background-color: {color1};
+    handle-color: {foreground};
     handle-width: 15px;
     height: 100%;
     border-radius: 30%;
-}
+}}
 
-listview {
+listview {{
     cyclic: true;
     spacing: 0.6em;
-}
+}}
 
-element, button {
+element, button {{
     border-radius: 30%;
-}
+}}
 
 button,
 inputbar,
 case-indicator,
-entry {
+entry {{
     padding: 5;
-}
+}}
 
-sidebar {
+sidebar {{
     padding: 5;
     margin: 5;
-}
+}}
 
-button {
+button {{
     margin: 0.25em;
-}
+}}
 
-button.selected {
-    background-color: #705994;
-}
+button.selected {{
+    background-color: {color1};
+}}

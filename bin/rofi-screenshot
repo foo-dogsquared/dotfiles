@@ -1,0 +1,267 @@
+#!/usr/bin/env bash
+
+# This is a fork of rofi-screenshot (original at https://github.com/ceuk/rofi-screenshot/), basically a menu for all of your screenshoting  and screencasting needs using rofi as the frontend.
+# This script is meant to be modified for your specific need so feel free to do that.
+
+
+#############
+# CONSTANTS #
+#############
+
+readonly _script_name="rofi-screenshot"
+readonly _record_process_name='(/\S+)*ffmpeg\s.*\sx11grab\s.*'
+readonly _process_id="$$"
+
+readonly screenshot_directory="$(xdg-user-dir PICTURES)/screenshots"
+readonly screenshot_msg_header="Screenshot"
+
+readonly video_directory="$(xdg-user-dir VIDEOS)/recordings"
+readonly video_msg_header="Screencast"
+
+readonly date_filename_format="+%F-%H-%M-%S"
+
+# Exit the script on USR1 signal.
+trap 'exit 1' 10
+
+
+#####################
+# UTILITY FUNCTIONS #
+#####################
+
+# Setting the default command for ffmpeg.
+ffmpeg() {
+  command ffmpeg -hide_banner -loglevel error -nostdin "$@"
+}
+
+# Convert a video to GIF.
+# $1 - The input file.
+# $2 - The output file.
+video_to_gif() {
+  local input="$1"
+  local output="$2"
+  ffmpeg -i "$input" -vf palettegen -f image2 -c:v png - |
+  ffmpeg -i "$input" -i - -filter_complex paletteuse "$output"
+}
+
+# Create a countdown with desktop notifications.
+# $1 - The duration of the countdown.
+# $2 - The header of the notification.
+_countdown() {
+  local counter="$((${1:-3}))"
+  local msg="${2:-Countdown}"
+  while [[ counter -ne 0 ]];
+  do
+    notify-send "$msg" "Recording in $counter seconds" --expire-time 1000 --urgency low
+    sleep 1
+    counter=$((counter - 1))
+  done
+}
+
+# Prompts the user.
+# $1 - The prompt message.
+# $@ - The command to be executed in case the user agrees.
+_prompt() {
+  local prompt_msg="$1"
+  shift
+  [ "$(printf "No\\nYes" | rofi -dmenu -p "$prompt_msg")" = "Yes" ] && "$@"
+}
+
+# Check for the recording process.
+_check() {
+  pgrep --full --exact --newest "$_record_process_name" 1>/dev/null
+}
+
+# Kill the recording process.
+_kill() {
+  pkill --full --exact --newest "$_record_process_name"
+}
+
+
+######################
+# SCREENSHOT OPTIONS #
+######################
+
+capture_region_to_clipboard() {
+  notify-send "$screenshot_msg_header" "Select a region to capture"
+  ffcast -q $(slop -n -f '-g %g ') png /tmp/screenshot_clip.png
+  xclip -selection clipboard -t image/png /tmp/screenshot_clip.png && \
+  notify-send "$screenshot_msg_header" "Region copied to clipboard"
+  rm /tmp/screenshot_clip.png
+}
+
+capture_region_to_file() {
+  notify-send "$screenshot_msg_header" "Select a region to capture"
+  dt=$(date "$date_filename_format")
+
+  local image_file="$screenshot_directory/$dt.png"
+  local geometry=$(slop -n -f '-g %g ' || kill -USR1 "$_process_id")
+  ffcast -q "$geometry" png "$image_file"
+  notify-send "$screenshot_msg_header" "Region saved as $image_file"
+}
+
+capture_screen_to_clipboard() {
+  ffcast -q png /tmp/screenshot_clip.png
+  xclip -selection clipboard -t image/png /tmp/screenshot_clip.png
+  rm /tmp/screenshot_clip.png
+  notify-send "$screenshot_msg_header" "Screenshot copied to clipboard"
+}
+
+capture_screen_to_file() {
+  dt=$(date "$date_filename_format")
+
+  local image_file="$screenshot_directory/$dt.png"
+  ffcast -q png "$image_file"
+  notify-send "Screenshot" "Screenshot saved as $image_file"
+}
+
+
+######################
+# SCREENCAST OPTIONS #
+######################
+
+record_region_to_gif() {
+  notify-send "$video_msg_header" "Select a region to record"
+  dt=$(date "$date_filename_format")
+
+  local geometry=$(slop -n -f '-g %g ' && _countdown || kill -USR1 "$_process_id")
+  ffcast -q  rec /tmp/screenshot_gif.mkv
+  notify-send "$video_msg_header" "Converting to gif... (this can take a while)"
+
+  local recording_file="$video_directory/$dt.gif"
+  video_to_gif /tmp/screenshot_gif.mp4 $recording_file
+  rm /tmp/screenshot_gif.mp4
+  notify-send "$video_msg_header" "Recording saved as $recording_file"
+}
+
+record_screen_to_gif() {
+  _countdown
+  dt=$(date "$date_filename_format")
+  ffcast -q rec /tmp/screenshot_gif.mp4
+  notify-send "$video_msg_header" "Converting to GIF... (this can take a while)"
+
+  local recording_file="$video_directory/$dt.gif"
+  video_to_gif /tmp/screenshot_gif.mp4 "$screenshot_directory/$dt.gif"
+  rm /tmp/screenshot_gif.mp4
+  notify-send "$video_msg_header" "Recording saved to $screenshot_directory"
+}
+
+record_region_to_mkv() {
+  notify-send "$video_msg_header" "Select a region to record"
+  dt=$(date "$date_filename_format")
+
+  local geometry=$(slop -n -f '-g %g ' && _countdown || kill -USR1 "$_process_id")
+  local video_file="$video_directory/$dt.mkv"
+  ffcast -q "$geometry" rec "$video_file"
+  notify-send "$video_msg_header" "Recording saved as $video_file"
+}
+
+record_screen_to_mkv() {
+  countdown
+  dt=$(date "$date_filename_format")
+
+  local video_file="$video_directory/$dt.mkv"
+  ffcast -q rec "$video_file"
+  notify-send "$video_msg_header" "Recording saved as $video_file"
+}
+
+get_options() {
+  echo "Capture Region   Clip"
+  echo "Capture Region   File"
+  echo "Capture Screen   Clip"
+  echo "Capture Screen   File"
+  echo "Record Region   File (GIF)"
+  echo "Record Screen   File (GIF)"
+  echo "Record Region   File (MKV)"
+  echo "Record Screen   File (MKV)"
+}
+
+check_deps() {
+  if ! hash $1 2>/dev/null; then
+    echo "Error: This script requires $1"
+    exit 1
+  fi
+}
+
+_help="Usage: $_script_name [OPTIONS]
+
+Launches a Rofi menu for your screenshoting and screencasting needs.
+
+Options:
+  -h, --help    Prints the help section.
+  --stop        Stop if there's an active process.
+  --check       Exits successfully if there's an active process.
+                The 'algorithm' for checking is very naive as it
+                checks for a specific name so be sure to check the
+                source code for yourself and update it accordingly.
+  --prompt      Prompts if there's an active process.
+"
+
+main() {
+  # check dependencies
+  check_deps slop
+  check_deps ffcast
+  check_deps ffmpeg
+  check_deps xclip
+  check_deps rofi
+
+  # Parsing the arguments.
+  # Since getopts does not support long options so we'll have to roll our own.
+  while [[ $# -gt 0 ]];
+  do
+    case $1 in
+      -h|--help)
+        printf "$_help" && exit 0
+        ;;
+      --stop)
+        _kill
+        exit $!
+        ;;
+      --check)
+        _check
+        exit $!
+        ;;
+      --prompt)
+        _check && _prompt "There's an active recording process; want to KILL it? :)" "_kill"
+        exit $!
+    esac
+  done
+
+  # Get choice from Rofi.
+  choice=$( (get_options) | rofi -dmenu -i -fuzzy -p "Screenshot" )
+
+  # If user has not picked anything, exit.
+  if [[ -z "${choice// }" ]]; then
+      exit 1
+  fi
+
+  # Run the selected command.
+  case $choice in
+    'Capture Region   Clip')
+      capture_region_to_clipboard
+      ;;
+    'Capture Region   File')
+      capture_region_to_file
+      ;;
+    'Capture Screen   Clip')
+      capture_screen_to_clipboard
+      ;;
+    'Capture Screen   File')
+      capture_screen_to_file
+      ;;
+    'Record Region   File (GIF)')
+      record_region_to_gif
+      ;;
+    'Record Screen   File (GIF)')
+      record_screen_to_gif
+      ;;
+    'Record Region   File (MKV)')
+      record_region_to_mkv
+      ;;
+    'Record Screen   File (MKV)')
+      record_screen_to_mkv
+      ;;
+  esac
+}
+
+main $1
+
