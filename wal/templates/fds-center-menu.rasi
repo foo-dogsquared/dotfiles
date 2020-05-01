@@ -20,25 +20,24 @@
     color14: {color14};
     color15: {color15};
 
-    /* General theme settings */
+    /* Theme settings */
     highlight: bold italic;
     scrollbar: true;
 
-    /* Font settings */
+    /* Style */
     text-color: @foreground;
     background-color: @background;
     font: "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid 14";
     font: "Iosevka 14";
-
 }}
 
 window {{
     background-color: transparent;
 
     height: 65%;
-    width: 35%;
-    position: southwest;
-    location: southwest;
+    width: 45%;
+    position: center;
+    location: center;
     text-color: @foreground;
 }}
 
@@ -47,33 +46,26 @@ mainbox {{
     border: 2;
     border-color: @color6;
     children: [ inputbar, listview, mode-switcher ];
-    padding: 0.5em;
 }}
 
 inputbar,
 listview {{
     background: @background;
-    margin: 0 0 0.5em 0;
 }}
 
 inputbar {{
     orientation: vertical;
     children: [ prompt, entry ];
+    background-color: @color0;
 }}
 
+entry,
 prompt {{
-    text-style: underline;
-    width: 100%;
+    background-color: @color0;
 }}
 
-entry {{
-    background-color: @color0;
-    margin: 0 1em 0 0;
-}}
-
-element {{
-    background-color: @color0;
-    padding: 5;
+listview {{
+    cyclic: true;
 }}
 
 element selected.normal {{
@@ -83,37 +75,16 @@ element selected.normal {{
 
 scrollbar {{
     background-color: @color0;
-    border-radius: 30%;
     handle-color: @color6;
-    handle-width: 15px;
+    handle-width: 10px;
     height: 100%;
-    text-color: @background;
-    width: 10px;
-}}
-
-listview {{
-    cyclic: true;
-    spacing: 0.6em;
-}}
-
-element, button {{
-    border-radius: 30%;
 }}
 
 button,
 case-indicator,
-entry,
-inputbar {{
+inputbar,
+element {{
     padding: 5;
-}}
-
-sidebar {{
-    padding: 5;
-    margin: 5;
-}}
-
-button {{
-    margin: 0.25em;
 }}
 
 button.selected {{

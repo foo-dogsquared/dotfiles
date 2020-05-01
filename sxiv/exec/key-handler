@@ -26,6 +26,9 @@ do
         "Y")
             readlink --canonicalize "$file" | xclip -selection clipboard && notify-send "Absolute path of '$file' copied to clipboard" ;;
 
+        "i")
+            feh --bg-fill "$file" ;;
+
         # Activate Pywal to the selected image. 
         "w")
             rofi -dmenu -p "Add some arguments for executing pywal? ('wal -i \$file') " | xargs wal -i "$file" ;;

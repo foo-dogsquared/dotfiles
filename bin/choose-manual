@@ -15,39 +15,8 @@
 # * girara - v0.3.3
 # * pdf-mupdf - v0.3.5
 
-help_section="Provides an interface for viewing all available manual pages. 
+set -o pipefail
 
-Usage:
-  $0 [-h, --help] [--viewpdf] [--viewer <PROGRAM>]
-
-Options:
-  -h, --help            - View the help section.
-  --viewpdf             - View the manual as a PDF. 
-"
-
-VIEW_PDF=0;
-
-while [[ $# -gt 0 ]]
-do
-    case $1 in 
-        -h|--help)
-            echo "$help_section"
-            exit 0;;
-        --viewpdf)
-            VIEW_PDF=1
-            shift;;
-        *)
-            shift;;
-    esac
-done
+man -k . | rofi -dmenu -p 'Choose a manual' -theme fds-mini-sidebar | awk '{print $1}' | xargs --no-run-if-empty $TERMINAL --command man
 
 
-COMMAND_STRING="man -k . | rofi -dmenu -p 'Choose a manual' -theme fds-sidebar-dark | awk '{print \$1}' | xargs -r man"
-
-if [[ $VIEW_PDF -eq 1 ]]; then
-    COMMAND_STRING="man -k . | rofi -dmenu -theme fds-sidebar-dark -p 'Choose a manual' | awk '{print \$1}' | xargs -r man -Tpdf | zathura - "
-fi
-
-eval "$COMMAND_STRING"
-
-exit $?

@@ -1,24 +1,24 @@
-* {{
+* {
     /* The color configuration */
     /* Useful for quick editing in case for compiled templates */
-    background: {background};
-    foreground: {foreground};
-    color0: {color0};
-    color1: {color1};
-    color2: {color2};
-    color3: {color3};
-    color4: {color4};
-    color5: {color5};
-    color6: {color6};
-    color7: {color7};
-    color8: {color8};
-    color9: {color9};
-    color10: {color10};
-    color11: {color11};
-    color12: {color12};
-    color13: {color13};
-    color14: {color14};
-    color15: {color15};
+    background: #2E3440;
+    foreground: #D8DEE9;
+    color0: #3B4252;
+    color1: #BF616A;
+    color2: #A3BE8C;
+    color3: #EBCB8B;
+    color4: #81A1C1;
+    color5: #B48EAD;
+    color6: #88C0D0;
+    color7: #E5E9F0;
+    color8: #727B8A;
+    color9: #BF616A;
+    color10: #A3BE8C;
+    color11: #EBCB8B;
+    color12: #81A1C1;
+    color13: #B48EAD;
+    color14: #8FBCBB;
+    color15: #ECEFF4;
 
     /* General theme settings */
     highlight: bold italic;
@@ -30,9 +30,9 @@
     font: "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid 14";
     font: "Iosevka 14";
 
-}}
+}
 
-window {{
+window {
     background-color: transparent;
 
     height: 65%;
@@ -40,48 +40,48 @@ window {{
     position: southwest;
     location: southwest;
     text-color: @foreground;
-}}
+}
 
-mainbox {{
+mainbox {
     background-color: @background;
     border: 2;
     border-color: @color6;
     children: [ inputbar, listview, mode-switcher ];
     padding: 0.5em;
-}}
+}
 
 inputbar,
-listview {{
+listview {
     background: @background;
     margin: 0 0 0.5em 0;
-}}
+}
 
-inputbar {{
+inputbar {
     orientation: vertical;
     children: [ prompt, entry ];
-}}
+}
 
-prompt {{
+prompt {
     text-style: underline;
     width: 100%;
-}}
+}
 
-entry {{
+entry {
     background-color: @color0;
     margin: 0 1em 0 0;
-}}
+}
 
-element {{
+element {
     background-color: @color0;
     padding: 5;
-}}
+}
 
-element selected.normal {{
+element selected.normal {
     background-color: @color6;
     text-color: @background;
-}}
+}
 
-scrollbar {{
+scrollbar {
     background-color: @color0;
     border-radius: 30%;
     handle-color: @color6;
@@ -89,34 +89,34 @@ scrollbar {{
     height: 100%;
     text-color: @background;
     width: 10px;
-}}
+}
 
-listview {{
+listview {
     cyclic: true;
     spacing: 0.6em;
-}}
+}
 
-element, button {{
+element, button {
     border-radius: 30%;
-}}
+}
 
 button,
 case-indicator,
 entry,
-inputbar {{
+inputbar {
     padding: 5;
-}}
+}
 
-sidebar {{
+sidebar {
     padding: 5;
     margin: 5;
-}}
+}
 
-button {{
+button {
     margin: 0.25em;
-}}
+}
 
-button.selected {{
+button.selected {
     background-color: @color6;
     text-color: @background;
-}}
+}

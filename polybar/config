@@ -1,19 +1,12 @@
 ; Main color format is in ARGB.
-; However, formats in RGB is fine. 
-; This is where all of the colors should be placed for those who are lazy to scroll down (like me). 
+; However, formats in RGB is fine.
+; This is where all of the colors should be placed for those who are lazy to scroll down (like me).
 [colors]
-    background = ${xrdb:color0:#000}
-    foreground = ${xrdb:color7:#eee}
-
-    ; Picked one of the popular palettes from colors.co
-    primary = ${xrdb:color1:#ef476f}
-    secondary = ${xrdb:color2:#ffd166}
-    tertiary = ${xrdb:color3:#06d6a0}
-
-    module_prefix_bg = ${xrdb:color1:#ccc}
-    module_prefix_fg = ${xrdb:color15:#000}
-    module_bg = ${xrdb:color15:#fff}
-    module_fg = ${xrdb:color0:#000}
+    background = ${xrdb:background:#3B4252}
+    background-light = ${xrdb:color8:#4D4D4D}
+    foreground = ${xrdb:foreground:#D6D6D6}
+    foreground-light = ${xrdb:color15:#eee}
+    accent = ${xrdb:color6:#88C0D0}
 
 
 ; The common style between bars.
@@ -39,7 +32,7 @@
     ; I also installed the font myself that I downloaded from the official website (https://fontawesome.com/).
     font-2 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid"
 
-    ; This creates the illusion as if the modules are in the center. 
+    ; This creates the illusion as if the modules are in the center.
     __border-size = 5
     border-top-size = ${self.__border-size}
     border-top-color = ${colors.background}
@@ -51,18 +44,19 @@
     cursor-click = pointer
 
 
-; Common style between modules. 
+; Common style between modules.
 [module-common-style]
     label-padding = 1
 
 
+; Usually used for 
 [module-button-style]
     format-padding = 2
-    format-background = ${colors.primary}
-    format-foreground = ${colors.foreground}
+    format-background = ${colors.accent}
+    format-foreground = ${colors.background}
 
 
-; The main bar. 
+; The main bar.
 [bar/fds-bar]
     background = ${colors.background}
     foreground = ${colors.foreground}
@@ -95,7 +89,8 @@
     wrapping-scroll = false
     pin-workspaces = true
     label-focused = %index%
-    label-focused-background = ${colors.module_prefix_bg}
+    label-focused-background = ${colors.accent}
+    label-focused-foreground = ${colors.background}
     label-focused-padding = 1
 
     label-occupied = %index%
@@ -106,7 +101,7 @@
     label-urgent-padding = 1
 
     label-empty = %index%
-    label-empty-foreground = ${colors.module_prefix_fg}
+    label-empty-foreground = ${colors.foreground-light}
     label-empty-padding = 1
 
 
@@ -153,8 +148,8 @@
     type = internal/date
     interval = 5
 
-    ; We've formatted the time string to alter between the time and the date instead. 
-    ; Although, I feel it's a hacky workaround, it still is functional as a date module. 
+    ; We've formatted the time string to alter between the time and the date instead.
+    ; Although, I feel it's a hacky workaround, it still is functional as a date module.
     date = "%F"
     date-alt = "%B %d, %Y"
     time = %T

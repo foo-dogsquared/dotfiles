@@ -287,7 +287,7 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "{background}"
-    foreground = "{color1}"
+    foreground = "{color15}"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
@@ -306,7 +306,7 @@
 [urgency_critical]
     background = "{background}"
     foreground = "{color2}"
-    frame_color = "{color4}"
+    frame_color = "{color2}"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
     #icon = /path/to/icon

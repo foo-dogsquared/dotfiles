@@ -20,6 +20,9 @@ sxhkd &
 # Launch the status bar.
 $HOME/.config/polybar/launch.sh &
 
-# Run wal with the recent theme.
+# Reload the color scheme.
 wal -R &
+
+# Displaying the wallpaper in case the Pywal theme does not have a wallpaper.
+$HOME/.fehbg &
 

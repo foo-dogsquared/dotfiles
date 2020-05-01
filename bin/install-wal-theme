@@ -19,18 +19,19 @@ cp "$pywal_json" "$theme_dir/$theme.json"
 
 # Copying the dynamically crerated rofi themes.
 cp "$pywal_cache/fds-mini-sidebar.rasi" "$XDG_CONFIG_HOME/rofi"
+cp "$pywal_cache/fds-center-menu.rasi" "$XDG_CONFIG_HOME/rofi"
 cp "$pywal_cache/dmenu.rasi" "$XDG_CONFIG_HOME/rofi"
 
 # Copying bspwm config and reloading it.
 cp "$pywal_cache/bspwmrc" "$XDG_CONFIG_HOME/bspwm" && bspc wm -r
 
 # Reloading polybar.
-# pkill -USR1 polybar
+pkill -USR1 polybar
 
 # Copying dunst config and reloading it.
 # The reload mechanism feels very hacky and the maintainers warn about it.
 # See more at the Arch Wiki entry (https://wiki.archlinux.org/index.php/Dunst) and the linked issue (https://github.com/dunst-project/dunst/issues/63).
-cp "$pywal_cache/dunstrc" "$XDG_CONFIG_HOME/dunst" && pkill dunst && dunst &
+# cp "$pywal_cache/dunstrc" "$XDG_CONFIG_HOME/dunst" && pkill dunst && nohup dunst &
 
 # Creating a Doom Emacs theme.
 # Unlike the previous templates, this is stored on another directory.

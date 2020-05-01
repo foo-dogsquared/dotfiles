@@ -1,6 +1,6 @@
 {
     "alacritty": "$HOME/.config/alacritty/",
-    "bin": "$HOME/bin/",
+    "bin": "$HOME/.local/bin/",
     "bspwm": "$HOME/.config/bspwm/",
     "dunst": "$HOME/.config/dunst/",
     "emacs": "$HOME/.config/doom",
@@ -11,6 +11,7 @@
     "rofi": "$HOME/.config/rofi/",
     "sxiv": "$HOME/.config/sxiv",
     "sxhkd": "$HOME/.config/sxhkd/",
+    "wal": "$HOME/.config/wal",
     "xorg": "$HOME",
     "zsh": "$HOME"
 }

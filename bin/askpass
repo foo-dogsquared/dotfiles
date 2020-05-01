@@ -3,4 +3,4 @@
 # This is the askpass program that `sudo -a` uses. 
 # This script should be set with the `SUDO_ASKPASS` environment variable. 
 
-rofi -dmenu -p "Password: " -password
+rofi -theme dmenu -dmenu -p "Password: " -password

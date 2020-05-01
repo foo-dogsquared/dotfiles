@@ -29,8 +29,8 @@ super + F12
     user-prompt "Exit from X session?" "killall Xorg"
 
 # Screenshot and screencast launcher.
-Print
-    rofi-screenshot --prompt || rofi-screenshot
+{_, shift + } Print
+    rofi-screenshot-menu {_, --stop}
 
 # Screenshot with OCR capability
 super + shift + w

@@ -1,22 +1,19 @@
 #!/usr/bin/env sh
 
-# A script that utilizes OCR for a screenshot and copies the text to the clipboard. 
+# A script that utilizes OCR for a screenshot and copies the text to the clipboard.
 
-# Dependencies: 
+# Dependencies:
 # * tesseract 4.1.1
 # * leptonica-1.79.0
-# * The Tesseract english data
+# * The Tesseract English data
 # * Image libraries (e.g., `libgif`, `libwebp`)
 # * xclip - version 0.13
-# * the screenshot script I have at https://github.com/foo-dogsquared/dotfiles/blob/master/bin/screenshot
+# * maim - version 5.6.3
 
-help_section="
-Utilizes OCR to an image and copies the text to the clipboard. 
-"
+# It's a small script anyways so why not.
+# I feel like this is one of the appropriate solutions especially that there is potential for erreneous feedback.
+set -o pipefail
 
-temp_dir=$(mktemp -d)
-temp_img="$temp_dir/image.png"
-temp_out="$temp_dir/output"
-
-screenshot --silent --select --output "$temp_img" && tesseract "$temp_img" "$temp_out" -l eng && less "$temp_out.txt" | xclip -selection clipboard && notify-send "Image content has been copied to clipboard" && rm -rf "$temp_dir"
+notify-send "Select a region for the OCR"
+maim -s | tesseract - stdout | xclip -in -selection clipboard && notify-send "Image content has been copied on the clipboard."
 

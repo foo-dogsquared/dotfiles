@@ -8,12 +8,14 @@
 " And run ':PlugUpgrade' for upgrading the plugins. 
 call plug#begin('~/.config/nvim/plugged')
 
-" Nord Vim color scheme.
+" Nord color scheme
 Plug 'arcticicestudio/nord-vim'
+Plug 'gruvbox-community/gruvbox'
 
 " A snippets engine. 
 " One of the must-haves for me. 
 Plug 'sirver/ultisnips'
+
 " Setting my private snippets in a consistent home directory and a relative snippets directory for project-specific snippets. 
 let g:UltiSnipsSnippetDirectories = [$HOME . "/.config/nvim/own-snippets", ".snippets"]
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -92,6 +94,9 @@ call plug#end()
 " EDITOR CONFIGURATIONS "
 """""""""""""""""""""""""
 
+" Setting the colorscheme
+colorscheme nord
+
 " Setting number lines in the gutter.
 set number relativenumber
 highlight CursorLineNr ctermfg=cyan
@@ -128,16 +133,13 @@ map <leader>f :Lexplore<Return>:vertical resize 40<Return><C-w><C-w>
 
 " Changing style of words.
 highlight clear SpellBad
-highlight SpellBad ctermfg=red
 
 highlight clear SpellLocal
-highlight SpellLocal cterm=underline ctermfg=cyan
+highlight SpellLocal ctermfg=cyan
 
 highlight clear SpellCap
-highlight SpellCap cterm=underline ctermfg=magenta
 
 highlight clear SpellRare
-highlight SpellRare ctermfg=white
 
 
 
