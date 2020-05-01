@@ -154,7 +154,7 @@ footnote:[This is a part of the package list but I think it's appropriate to cre
 
 Here's a list of the top most useful scripts (at least for me):
 
-* link:./bin/rofi-screenshot[A Rofi menu for all of my screenshoting and screencasting needs].
+* link:./bin/rofi-screenshot-menu[A Rofi menu for all of my screenshoting and screencasting needs].
 The script is also a fork of https://github.com/ceuk/rofi-screenshot[`ceuk's` rofi-screenshot].
 Big thanks to them for the idea!
 
@@ -162,15 +162,15 @@ Big thanks to them for the idea!
 Capture a region, process it through an OCR engine, and the content are then copied into the clipboard.
 Useful for capturing links in images or videos usually found in lecture videos.
 
-* link:./bin/prompt[Quick command prompts].
+* link:./bin/user-prompt[Quick command prompts].
 The script is based from https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/prompt[Luke Smith's prompt script].
 
-* link:./bin/toggle-bin[Switching on/off programs].
+* link:./bin/toggle-process[Switching on/off programs].
 Useful for situations where only one instance of the program is desirable.
 
 * link:./bin/select-theme[A basic theme selection for easy color scheme generation] with https://github.com/muennich/sxiv[sxiv].
 
-* link:./bin/choose-emoji[A universal emoji list] for easy copy-pasting and clear communication with those who speak Emojian.
+* link:./bin/choose-emoji-menu[A universal emoji list] for easy copy-pasting and clear communication with those who speak Emojian.
 
 Aside from the scripts, there are also some details and files that are not committed to this setup for privacy and security reasons.
 A few examples of which is my cron setups where it is tasked with updating and committing the package lists to the Git repo, updating the packages, cleaning the cache, and so much more.

@@ -8,7 +8,7 @@ super + shift + Return
     tdrop -ma -w -4 -y "$PANEL_HEIGHT" -s dropterm $TERMINAL
 
 super + t
-    toggle-bin screenkey
+    toggle-process screenkey
 
 
 
@@ -42,10 +42,10 @@ super + shift + w
 
 # Miscellaneous shortcuts.
 super + shift + m
-    choose-manual --viewpdf
+    choose-manual-menu
 
 super + shift + e
-    choose-emoji
+    choose-emoji-menu
 
 super + shift + t
     select-wal-theme
