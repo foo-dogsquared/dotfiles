@@ -80,8 +80,9 @@ scrolling:
 
 # Font configuration (changes require restart)
 font:
-  # Normal (roman) font face
   normal: 
+    family: monospace
+    family: Source Code Pro
     family: Fira Code
     family: Iosevka
   #normal:

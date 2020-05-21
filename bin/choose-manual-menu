@@ -17,6 +17,6 @@
 
 set -o pipefail
 
-man -k . | rofi -dmenu -p 'Choose a manual' -theme fds-mini-sidebar | awk '{print $1}' | xargs --no-run-if-empty $TERMINAL --command man
+man -k . | rofi -dmenu -p 'Choose a manual' -theme fds-mini-sidebar -width 60 | awk '{print $1}' | xargs --no-run-if-empty $TERMINAL --command man
 
 

@@ -24,13 +24,13 @@
     module-margin = 1
     module-padding = 1
 
-    font-0 = "Iosevka"
-    font-1 = "Fira Code"
+    font-0 = "Iosevka;2"
+    font-1 = "Fira Code;2"
 
     ; Our fallback fonts are mostly used as icon fonts.
     ; For future references, the version of Font Awesome used here is at v5.13.0.
     ; I also installed the font myself that I downloaded from the official website (https://fontawesome.com/).
-    font-2 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid"
+    font-2 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid;2"
 
     ; This creates the illusion as if the modules are in the center.
     __border-size = 5
@@ -49,13 +49,6 @@
     label-padding = 1
 
 
-; Usually used for 
-[module-button-style]
-    format-padding = 2
-    format-background = ${colors.accent}
-    format-foreground = ${colors.background}
-
-
 ; The main bar.
 [bar/fds-bar]
     background = ${colors.background}
@@ -64,24 +57,36 @@
     inherit = bar-common-style
     enable-ipc = true
 
-    modules-left = start-menu bspwm
-    modules-right = pulseaudio memory eth date
+    modules-left = bspwm
+    modules-center = date
+    modules-right = pulseaudio eth memory home-fs root-fs
 
 
-[module/start-menu]
-    inherit = module-button-style
-    type = custom/script
-    exec = echo ';'
-    click-left = rofi -show drun -sidebar-mode -theme fds-mini-sidebar
-    label = ""
+[module/home-fs]
+    type = internal/fs
+    mount-0 = /home
+    format-margin = 0
+    format-padding = 0
+    label-margin = 0
+    label-padding = 0
+
+    format-mounted-prefix = ""
+    format-mounted-prefix-margin-right = 1
+    format-unmounted-prefix = ""
+    format-unmounted-prefix-margin-right = 1
+    label-mounted = %free%
+    label-unmounted = N/A
 
 
-[module/power-menu]
-    inherit = module-button-style
-    type = custom/script
-    exec = echo ';'
-    click-left = $HOME/bin/prompt "Proceed to shutdown?" "sudo -A shutdown 0"
-    label = ""
+[module/root-fs]
+    type = internal/fs
+    mount-0 = /
+    format-mounted-prefix = ""
+    format-mounted-prefix-margin-right = 1
+    format-unmounted-prefix = ""
+    format-unmounted-prefix-margin-right = 1
+    label-mounted = %free%
+    label-unmounted = N/A
 
 
 [module/bspwm]
@@ -129,7 +134,6 @@
 
 
 [module/eth]
-    inherit = module-common-style
     type = internal/network
     interface = enp4s0
     interval = 3
@@ -150,13 +154,13 @@
 
     ; We've formatted the time string to alter between the time and the date instead.
     ; Although, I feel it's a hacky workaround, it still is functional as a date module.
-    date = "%F"
+    date = "%A, %F"
     date-alt = "%B %d, %Y"
     time = %T
     time-alt = %F
 
     format-prefix = ""
-    label = %time%
+    label = %date% %time%
 
 
 [module/pulseaudio]

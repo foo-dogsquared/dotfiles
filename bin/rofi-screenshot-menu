@@ -214,14 +214,14 @@ record_screen_to_mkv() {
 ######################
 
 get_options() {
-  echo "Capture Region   Clip"
-  echo "Capture Region   File"
-  echo "Capture Screen   Clip"
-  echo "Capture Screen   File"
-  echo "Record Region   File (GIF)"
-  echo "Record Screen   File (GIF)"
-  echo "Record Region   File (MKV)"
-  echo "Record Screen   File (MKV)"
+  echo "Capture Region --> Clip"
+  echo "Capture Region --> File"
+  echo "Capture Screen --> Clip"
+  echo "Capture Screen --> File"
+  echo "Record Region --> File (GIF)"
+  echo "Record Screen --> File (GIF)"
+  echo "Record Region --> File (MKV)"
+  echo "Record Screen --> File (MKV)"
 }
 
 # Checks if the shell has the following binary in $PATH through the `hash` builtin.
@@ -287,37 +287,37 @@ main() {
 
   # Run the selected command.
   case $choice in
-    'Capture Region   Clip')
+    'Capture Region --> Clip')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       capture_region_to_clipboard $delay
       ;;
-    'Capture Screen   Clip')
+    'Capture Screen --> Clip')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       capture_screen_to_clipboard $delay
       ;;
-    'Capture Region   File')
+    'Capture Region --> File')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       capture_region_to_file $delay
       ;;
-    'Capture Screen   File')
+    'Capture Screen --> File')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       _countdown $delay
       capture_screen_to_file
       ;;
-    'Record Region   File (GIF)')
+    'Record Region --> File (GIF)')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       record_region_to_gif $delay
       ;;
-    'Record Screen   File (GIF)')
+    'Record Screen --> File (GIF)')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       _countdown $delay
       record_screen_to_gif
       ;;
-    'Record Region   File (MKV)')
+    'Record Region --> File (MKV)')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       record_region_to_mkv $delay
       ;;
-    'Record Screen   File (MKV)')
+    'Record Screen --> File (MKV)')
       delay=$(rofi -dmenu -p "How many seconds for delay?")
       _countdown $delay
       record_screen_to_mkv

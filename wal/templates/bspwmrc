@@ -15,6 +15,9 @@ bspc config gapless_monocle     true
 bspc config focused_border_color "{color6}"
 bspc config focus_follows_pointer true
 
+# Set the default cursor to pointer
+xsetroot -cursor_name left_ptr
+
 # Rules
 bspc rule -a code-oss desktop=^2
 bspc rule -a firefox desktop=^1

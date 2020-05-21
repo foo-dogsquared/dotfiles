@@ -26,23 +26,20 @@ from pathlib import Path
 import subprocess
 import sys
 
-PACKAGE_DATA_FILE="locations.json"
+DEFAULT_PACKAGE_DATA_FILE="locations.json"
 
 
 class PackageDir:
     """ A package directory should have a file named `locations.json` where it contains a top-level object of the stow packages with their usual target path. """
 
-    def __init__(self, package_path = None):
+    def __init__(self, package_path = os.getcwd(), package_data_path = DEFAULT_PACKAGE_DATA_FILE):
         """
         Creates an instance of PackageDir
 
         :param: package_path - The directory where it should contain a file named `locations.json`.
         """
-        if package_path is None:
-            package_path = os.getcwd()
-
-        package_path = Path(package_path)
-        self.path = package_path
+        self.path = Path(package_path)
+        self.data_path = Path(package_data_path)
 
         # Loads the packages
         self.packages = {}
@@ -116,7 +113,7 @@ class PackageDir:
     @property
     def json_location(self):
         """ Simply appends the path with the required JSON file. """
-        return self.path / PACKAGE_DATA_FILE
+        return self.path / self.data_path
 
 
 def setup_logging():

@@ -1,305 +1,317 @@
-0ad a23.1-8
-0ad-data a23.1-1
-adobe-source-sans-pro-fonts 3.006-1
-adobe-source-serif-pro-fonts 3.001-1
-alacritty 0.4.2-2
-alex 3.2.5-8
-alsa-plugins 1.2.2-1
-alsa-utils 1.2.2-1
-amd-ucode 20200421.78c0348-1
-anki 2.1.15-1
-apache 2.4.43-1
-arandr 0.1.10-4
-arc-gtk-theme 20190917-1
-arc-icon-theme 20161122-2
-arch-audit 0.1.15-1
-archiso 43-1
-archlinux-contrib 20190911-1
-ardour 5.12-14
-asciidoctor 2.0.10-2
-audacious 4.0.3-1
-audacity 1:2.3.3-2
-autoconf 2.69-7
-automake 1.16.2-1
-base 2-2
-bash 5.0.016-1
-bat 0.13.0-1
-binutils 2.34-2
-bison 3.5.4-1
-blender 17:2.82.a-3
-breeze-gtk 5.18.4.1-1
-breeze-icons 5.69.0-1
-bspwm 0.9.9-1
-bzip2 1.0.8-3
-cabal-install 3.2.0.0-3
-cadence 0.9.1-2
-carla 2.1-1
-chromium 81.0.4044.129-1
-clang 10.0.0-2
-code 1.44.2-1
-coreutils 8.32-1
-cowsay 3.04-1
-cronie 1.5.5-1
-cryptsetup 2.3.2-1
-device-mapper 2.02.187-1
-dhall 1.31.1-17
-dhall-json 1.6.3-21
-dhcpcd 9.0.2-1
-diffutils 3.7-3
-dmenu 4.9-1
-docker 1:19.03.8-2
-docker-compose 1.25.5-1
-dunst 1.4.1-1
-e2fsprogs 1.45.6-1
-editorconfig-core-c 0.12.3-1
-efibootmgr 17-1
-emacs 26.3-1
-entr 4.4-1
-erlang 22.2.7-1
-espeak 1:1.48.04-2
-exa 0.9.0-1
-fakeroot 1.24-2
-fd 8.0.0-1
-feh 3.4-1
-file 5.38-3
-filesystem 2019.10-2
-findutils 4.7.0-2
-firefox 75.0-2
-firefox-developer-edition 76.0b8-1
-flex 2.6.4-3
-freeglut 3.2.1-1
-fzf 0.21.1-1
-gawk 5.1.0-1
-gcc 9.3.0-1
-gcc-libs 9.3.0-1
-gdb 9.1-2
-gettext 0.20.2-1
-ghc 8.10.1-2
-gimp 2.10.18-6
-gimp-help-en 2.10.0-1
-git 2.26.2-1
-glava 1.6.3-1
-glibc 2.31-2
-gnu-netcat 0.7.1-7
-go 2:1.14.2-1
-gource 0.51-3
-graphviz 2.44.0-1
-grep 3.4-1
-groff 1.22.4-3
-gucharmap 13.0.0-1
-gvfs 1.44.1-1
-gzip 1.10-3
-happy 1.19.12-7
-hexyl 0.7.0-1
-htop 2.2.0-3
-hugo 0.69.2-1
-i3-gaps 4.18.1-1
-i3blocks 1.5-3
-i3status 2.13-2
-inetutils 1.9.4-8
-inkscape 0.92.5-1
-iproute2 5.6.0-1
-iputils 20190709-2
-jack2 1.9.14-1
-jdk-openjdk 13.0.2.u8-1
-jfsutils 1.1.15-7
-jq 1.6-2
-jre-openjdk 13.0.2.u8-1
-keybase 5.4.2-1
-kicad 5.1.5-2
-kicad-library 5.1.5-1
-krita 4.2.9-2
-less 551-3
-libtool 2.4.6+42+gb88cebd5-11
-licenses 20200427-1
-linux 5.6.8.arch1-1
-linux-firmware 20200421.78c0348-1
-lldb 10.0.0-2
-llvm 10.0.0-1
-lmms 1.2.1-3
-logrotate 3.16.0-1
-lolcat 100.0.0-2
-lvm2 2.02.187-1
-lxappearance 0.6.3-2
-lxsession 1:0.5.5-1
-m4 1.4.18-3
-maim 5.6.3-1
-make 4.3-3
-man-db 2.9.1-2
-man-pages 5.06-2
-mdadm 4.1-2
-mediawiki 1.34.1-1
-moreutils 0.63-1
-mpg123 1.25.13-1
-mpv 1:0.32.0-4
-musescore 3.4.2-1
-musl 1.2.0-1
-nano 4.9.2-1
-ncmpcpp 0.8.2-11
-neofetch 7.0.0-1
-neovim 0.4.3-3
-netctl 1.22-1
-networkmanager 1.22.11dev+36+g6abf71f05-1
-nnn 3.1-1
-nodejs 14.1.0-1
-nodejs-material-design-icons 3.0.1-2
-noto-fonts 20190926-4
-noto-fonts-emoji 20191016-6
-npm 6.14.4-1
-ntfs-3g 2017.3.23-4
-obs-studio 25.0.8-1
-octave 5.2.0-2
-otf-latin-modern 2.004-3
-otf-latinmodern-math 1.959-3
-p7zip 16.02-5
-pacman 5.2.1-4
-pacman-contrib 1.3.0-1
-pamixer 1.4-3
-pandoc 2.9.2.1-25
-patch 2.7.6-8
-pavucontrol 1:4.0-1
-pciutils 3.6.4-1
-perl 5.30.2-1
-php 7.4.5-1
-picom 7.5-3
-pkgconf 1.6.3-4
-processing 3.5.4-1
-procps-ng 3.3.16-1
-psmisc 23.3-2
-pstoedit 3.75-1
-pulseaudio 13.0-3
-pulseaudio-alsa 2-5
-pulseaudio-jack 13.0-3
-pulsemixer 1.5.0-2
-pv 1.6.6-2
-python-pip 20.0.2-1
-python-pynvim 0.4.1-1
-python-pywal 3.3.0-2
-python2-scour 0.37-4
-qbittorrent 4.2.5-1
-qrencode 4.0.2-1
-qt5-script 5.14.2-1
-r 4.0.0-1
-racket 7.5-2
-reiserfsprogs 3.6.27-3
-rofi 1.5.4-1
-ruby 2.7.1-2
-ruby-rouge 3.14.0-2
-s-nail 14.9.19-1
-scrot 1.2-1
-sed 4.8-1
-shadow 4.8.1-1
-shotcut 20.04.12-1
-sonic-pi 3.2.2-1
-soundfont-fluid 3.1-2
-sox 14.4.2-5
-stack 2.3.0.1-8
-stow 2.3.1-2
-strace 5.6-1
-sudo 1.8.31.p1-1
-sxhkd 0.6.1-1
-sxiv 26-1
-sysfsutils 2.1.0-11
-systemd 245.5-2
-systemd-sysvcompat 245.5-2
-tabbed 0.6-3
-tar 1.32-3
-telegram-desktop 2.1.0-1
-tesseract 4.1.1-1
-tesseract-data-eng 1:4.0.0-1
-texinfo 6.7-3
-texlive-bibtexextra 2019.52577-1
-texlive-core 2019.52579-1
-texlive-fontsextra 2019.52580-1
-texlive-formatsextra 2019.51280-1
-texlive-latexextra 2019.52575-1
-texlive-pictures 2019.52499-1
-texlive-science 2019.52582-1
-thunar 1.8.14-1
-thunar-volman 0.9.5-2
-thunderbird 68.7.0-1
-timidity++ 2.15.0-2
-tmux 3.1_a-1
-tor 0.4.2.7-1
-tree 1.8.0-2
-ttf-bitstream-vera 1.10-12
-ttf-dejavu 2.37-2
-ttf-fira-code 3.1-1
-ttf-font-awesome 5.13.0-1
-ttf-ibm-plex 4.0.2-2
-ttf-jetbrains-mono 1.0.5-1
-ttf-joypixels 5.5.0-3
-ttf-nerd-fonts-symbols 2.1.0+36+gd0bf73a1-2
-udiskie 2.1.1-1
-upx 3.96-2
-usbutils 012-2
-util-linux 2.35.1-2
-vagrant 2.2.7-5
-vi 1:070224-4
-vim 8.2.0510-2
-vlc 3.0.10-1
-weechat 2.8-2
-wget 1.20.3-2
-which 2.21-5
-xarchiver 0.5.4.14-1
-xautomation 1.09-3
-xclip 0.13-2
-xdg-user-dirs 0.17-2
-xdotool 3.20160805.1-2
-xf86-video-nouveau 1.0.16-1
-xf86-video-vesa 2.4.0-2
-xfsprogs 5.6.0-1
-xorg-bdftopcf 1.1-1
-xorg-docs 1.7.1-2
-xorg-font-util 1.3.2-1
-xorg-fonts-100dpi 1.0.3-4
-xorg-fonts-75dpi 1.0.3-4
-xorg-fonts-encodings 1.0.5-1
-xorg-iceauth 1.0.8-1
-xorg-luit 1.1.1-3
-xorg-mkfontscale 1.2.1-2
-xorg-server 1.20.8-1
-xorg-server-common 1.20.8-1
-xorg-server-devel 1.20.8-1
-xorg-server-xephyr 1.20.8-1
-xorg-server-xnest 1.20.8-1
-xorg-server-xvfb 1.20.8-1
-xorg-server-xwayland 1.20.8-1
-xorg-sessreg 1.1.2-1
-xorg-setxkbmap 1.3.2-1
-xorg-smproxy 1.0.6-2
-xorg-x11perf 1.6.1-1
-xorg-xauth 1.1-1
-xorg-xbacklight 1.2.3-1
-xorg-xcmsdb 1.0.5-2
-xorg-xcursorgen 1.0.7-1
-xorg-xdpyinfo 1.3.2-3
-xorg-xdriinfo 1.0.6-1
-xorg-xev 1.2.3-1
-xorg-xgamma 1.0.6-2
-xorg-xhost 1.0.8-1
-xorg-xinit 1.4.1-1
-xorg-xinput 1.6.3-1
-xorg-xkbcomp 1.4.3-1
-xorg-xkbevd 1.1.4-2
-xorg-xkbutils 1.0.4-3
-xorg-xkill 1.0.5-1
-xorg-xlsatoms 1.1.3-1
-xorg-xlsclients 1.1.4-1
-xorg-xmodmap 1.0.10-1
-xorg-xpr 1.0.5-1
-xorg-xprop 1.2.4-1
-xorg-xrandr 1.5.1-1
-xorg-xrdb 1.2.0-1
-xorg-xrefresh 1.0.6-1
-xorg-xset 1.2.4-1
-xorg-xsetroot 1.1.2-1
-xorg-xvinfo 1.1.4-1
-xorg-xwd 1.0.7-1
-xorg-xwininfo 1.1.5-1
-xorg-xwud 1.0.5-1
-youtube-dl 2020.03.24-1
-zathura 0.4.5-1
-zathura-pdf-mupdf 0.3.5-3
-zsh 5.8-1
-zsh-completions 0.31.0-1
+0ad
+0ad-data
+adobe-source-sans-pro-fonts
+adobe-source-serif-pro-fonts
+alacritty
+alex
+alsa-plugins
+alsa-utils
+amd-ucode
+android-tools
+anki
+apache
+arandr
+arc-gtk-theme
+arc-icon-theme
+arch-audit
+archiso
+archlinux-contrib
+ardour
+asciidoctor
+audacious
+audacity
+autoconf
+automake
+base
+bash
+bat
+binutils
+bison
+blender
+breeze-gtk
+breeze-icons
+bspwm
+bzip2
+cabal-install
+cadence
+carla
+chromium
+clang
+code
+coreutils
+cowsay
+cronie
+cryptsetup
+device-mapper
+dhall
+dhall-json
+dhcpcd
+diffutils
+dmenu
+docker
+docker-compose
+dunst
+e2fsprogs
+editorconfig-core-c
+efibootmgr
+emacs
+entr
+erlang
+espeak
+exa
+fakeroot
+fd
+feh
+festival
+file
+filesystem
+findutils
+firefox
+firefox-developer-edition
+flex
+fontforge
+foremost
+freeglut
+fzf
+gawk
+gcc
+gcc-libs
+gdb
+gettext
+ghc
+gimp
+gimp-help-en
+git
+glava
+glibc
+gnu-netcat
+go
+gource
+graphviz
+grep
+groff
+gucharmap
+gvfs
+gzip
+happy
+hexyl
+htop
+hugo
+inetutils
+inkscape
+iproute2
+iputils
+iwd
+jack2
+jdk-openjdk
+jfsutils
+jq
+jre-openjdk
+kcharselect
+keybase
+kicad
+kicad-library
+krita
+less
+libtool
+licenses
+linux
+linux-firmware
+lldb
+llvm
+lmms
+logrotate
+lolcat
+lvm2
+lxappearance
+lxsession
+m4
+maim
+make
+man-db
+man-pages
+mdadm
+mediawiki
+moreutils
+mpg123
+mpv
+musescore
+musl
+nano
+ncmpcpp
+neofetch
+neomutt
+neovim
+netctl
+networkmanager
+newsboat
+nnn
+nodejs
+nodejs-material-design-icons
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+npm
+ntfs-3g
+obs-studio
+octave
+orca
+otf-latin-modern
+otf-latinmodern-math
+p7zip
+pacman
+pacman-contrib
+pamixer
+pandoc
+patch
+pavucontrol
+pciutils
+perl
+php
+picom
+pkgconf
+powertop
+procps-ng
+psmisc
+pstoedit
+pulseaudio
+pulseaudio-alsa
+pulseaudio-jack
+pulsemixer
+pv
+python-pip
+python-pynvim
+python-pywal
+qbittorrent
+qemu
+qrencode
+qt5-script
+r
+racket
+reiserfsprogs
+repo
+rofi
+ruby
+ruby-rouge
+s-nail
+scrot
+sed
+shadow
+shotcut
+sonic-pi
+soundfont-fluid
+sox
+stack
+stow
+strace
+sudo
+sxhkd
+sxiv
+syncthing
+sysfsutils
+systemd
+systemd-sysvcompat
+tar
+telegram-desktop
+tesseract
+tesseract-data-eng
+texinfo
+texlive-bibtexextra
+texlive-core
+texlive-fontsextra
+texlive-formatsextra
+texlive-latexextra
+texlive-pictures
+texlive-science
+thunar
+thunar-volman
+thunderbird
+timidity++
+tmux
+tor
+tree
+ttf-bitstream-vera
+ttf-dejavu
+ttf-fira-code
+ttf-font-awesome
+ttf-ibm-plex
+ttf-jetbrains-mono
+ttf-joypixels
+ttf-nerd-fonts-symbols
+udiskie
+unison
+upx
+usbutils
+util-linux
+vagrant
+vi
+vim
+vlc
+weechat
+wesnoth
+wget
+which
+wkhtmltopdf
+xarchiver
+xautomation
+xclip
+xdg-user-dirs
+xdotool
+xf86-video-nouveau
+xf86-video-vesa
+xfsprogs
+xorg-bdftopcf
+xorg-docs
+xorg-font-util
+xorg-fonts-100dpi
+xorg-fonts-75dpi
+xorg-fonts-encodings
+xorg-iceauth
+xorg-luit
+xorg-mkfontscale
+xorg-server
+xorg-server-common
+xorg-server-devel
+xorg-server-xephyr
+xorg-server-xnest
+xorg-server-xvfb
+xorg-server-xwayland
+xorg-sessreg
+xorg-setxkbmap
+xorg-smproxy
+xorg-x11perf
+xorg-xauth
+xorg-xbacklight
+xorg-xcmsdb
+xorg-xcursorgen
+xorg-xdpyinfo
+xorg-xdriinfo
+xorg-xev
+xorg-xgamma
+xorg-xhost
+xorg-xinit
+xorg-xinput
+xorg-xkbcomp
+xorg-xkbevd
+xorg-xkbutils
+xorg-xkill
+xorg-xlsatoms
+xorg-xlsclients
+xorg-xmodmap
+xorg-xpr
+xorg-xprop
+xorg-xrandr
+xorg-xrdb
+xorg-xrefresh
+xorg-xset
+xorg-xsetroot
+xorg-xvinfo
+xorg-xwd
+xorg-xwininfo
+xorg-xwud
+youtube-dl
+zathura
+zathura-pdf-mupdf
+zbar
+zsh
+zsh-completions

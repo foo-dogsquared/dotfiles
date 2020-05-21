@@ -10,10 +10,6 @@ super + shift + Return
 super + t
     toggle-process screenkey
 
-
-
-# Utility keyboard shortcuts.
-
 # Application launcher.
 super + d
     rofi -show drun -sidebar-mode -theme fds-mini-sidebar
@@ -29,16 +25,15 @@ super + F12
     user-prompt "Exit from X session?" "killall Xorg"
 
 # Screenshot and screencast launcher.
-{_, shift + } Print
-    rofi-screenshot-menu {_, --stop}
+super + {_, shift + } Print
+    rofi-screenshot-menu {_, --stop && notify-send "All recording has stopped" || notify-send "There's no active recording process"}
 
-# Screenshot with OCR capability
-super + shift + w
-    ocr
-
-# Screen record shortcuts.
-{_,shift +} {_,control +} super + Print
-    record --output $\{VIDEOS_DIRECTORY:-$HOME/recordings\} {_,--disable-cursor} {_,--follow-mouse}
+# A bunch of miscellaneous scripts.
+super + x ; {a, s, d}
+    set -o pipefail && \
+    {ocr | xclip -in -selection clipboard && notify-send "Image content has been copied on the clipboard.", \
+    parse-barcodes | xclip -selection clipboard && notify-send "Bar code content has been copied.", \
+    colorpicker | xclip -selection clipboard && notify-send "Color copied to clipboard."}
 
 # Miscellaneous shortcuts.
 super + shift + m
@@ -58,7 +53,7 @@ shift + super + r
 # The usual application suite shortcuts.
 # I'm separating them according to the keyboard row (in the QWERTY layout anyway).
 super + a ; {z, x, c, v, b, n, m}
-    { nvim, code, inkscape, gimp, blender, kdenlive, lmms }
+    { $TERMINAL -e nvim, code, inkscape, gimp, blender, kdenlive, lmms }
 
 super + a ; {f, a, d}
     { firefox, $TERMINAL -e lf, krita }
@@ -73,29 +68,36 @@ super + a ; {t, r}
 # Over time, I may replace one of the usual shortcut
 # with something more generally applied (with `xdotool` for example).
 
-# Kill the focused window.
+# Close/Kill the focused window.
+# Difference between closing a window and killing a window is how the process is killed.
+# Closing a window only terminates the process for that window while killing a window terminates all of the related process of that window.
+# For example, try opening two Firefox instance and test how it differs.
 super + {_, shift +} + q
-    bspc node -{c,k}
+    bspc node --{close,kill}
 
 # Move desktop/node view to the specified desktop.
 super + {_,shift + }{1-9,0}
-    bspc {desktop -f,node -d} '^{1-9,10}'
-
-super + z
-    bspc node -t '~floating'
-
-super + x
-    bspc node -t '~fullscreen'
-
-super + c
-    bspc node -t '~tiled'
+    bspc {desktop --focus,node --to-desktop} '^{1-9,10}'
 
 # Desktop and node movements.
 super + {_, shift + } Tab
     bspc desktop {next, prev} --focus
 
-super + {_, shift + } + grave
-    bspc {desktop last --focus, node --to-desktop last}
+# less is <, greater is >
+super + {less, greater}
+    bspc node --to-desktop {prev,next}
+
+# Window state 'mode'
+super + z ; {z,x,c,v}
+    bspc node --state {floating,fullscreen,tiled,pseudo_tiled}
+
+# Window resize 'mode'
+super + r : {h,j,k,l}
+    bspc node --resize {left -10 0,bottom 0 10,top 0 -10,right 10 0}
+
+# grave is `
+super + grave
+    bspc desktop --focus last.occupied
 
 super + {Up,Down,Left,Right}
     bspc node {north,south,west,east} --focus

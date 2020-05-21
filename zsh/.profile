@@ -18,7 +18,8 @@ export BIN_DIRECTORY=$HOME/bin
 export VIDEO_DIRECTORY=$HOME/recordings
 
 # If you come from bash you might have to change your $PATH.
-export PATH="$BIN_DIRECTORY:/usr/local/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.gem/ruby/2.7.0/bin:$PATH"
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$BIN_DIRECTORY:/usr/local/bin:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.gem/ruby/2.7.0/bin:$DENO_INSTALL/bin:$PATH"
 # export MANPATH="$MANPATH:$HOME/.local/share/man"
 
 # Common environmental variables. 

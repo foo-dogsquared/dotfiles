@@ -15,5 +15,5 @@
 set -o pipefail
 
 notify-send "Select a region for the OCR"
-maim -s | tesseract - stdout | xclip -in -selection clipboard && notify-send "Image content has been copied on the clipboard."
+maim -s | tesseract - stdout
 

@@ -12,7 +12,7 @@
 
 emoji_file="$HOME/.local/share/emoji-test.txt"
 selection=$(awk 'match($0, /([0-9A-F ]+)\s+; fully-qualified\s+# (\S+) E[[:digit:]]+.[[:digit:]]+ (.+)$/, a){print a[2], a[3]}' "$emoji_file" \
-    | rofi -dmenu -p "Choose an emoji to copy." \
+    | rofi -dmenu -i -fuzzy -p "Choose an emoji to copy." \
     | awk '{print $1}') 
 
 if [ -n "$selection" ]; then
