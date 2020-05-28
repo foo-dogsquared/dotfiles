@@ -29,4 +29,3 @@ export TERMINAL="alacritty"
 export BROWSER="firefox"
 export READ="zathura"
 export FILE="lf"
-

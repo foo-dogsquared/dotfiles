@@ -51,9 +51,6 @@
 ;;;;;;;;;;;;
 ; PACKAGES ;
 ;;;;;;;;;;;;
-
-(package! ewal)
-
 (package! org-brain)
 (package! modus-operandi-theme)
 (package! modus-vivendi-theme)
