@@ -11,7 +11,8 @@
     "rofi": "$HOME/.config/rofi/",
     "sxiv": "$HOME/.config/sxiv",
     "sxhkd": "$HOME/.config/sxhkd/",
+    "systemd": "$HOME/.config/systemd",
     "wal": "$HOME/.config/wal",
     "xorg": "$HOME",
-    "zsh": "$HOME"
+    "zsh": "$HOME/.config/zsh"
 }

@@ -1,0 +1,9 @@
+[Unit]
+Description=Commit the package list into the dotfiles
+
+[Timer]
+OnCalendar=monthly
+Persistent=true
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Commit the package list into the dotfiles
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/commit-pkglist
+
+[Install]
+WantedBy=default.target

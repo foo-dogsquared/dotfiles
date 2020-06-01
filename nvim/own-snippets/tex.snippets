@@ -45,7 +45,7 @@ def add_variable_numbers(*inputs, **kwargs):
                 total += i
         except ValueError:
             continue
-    
+
     return total
 
 endglobal
@@ -142,7 +142,7 @@ snippet subsec "Subsection tag" bi
 \subsection{$1}
 \label{subsect!$1}
 $0
-endsnippet  
+endsnippet
 
 # Common commands
 snippet pack "Use package command" bis
@@ -270,7 +270,7 @@ $0
 endsnippet
 
 snippet alignli "Quick align equation with label" biw
-${1:<LHS>} &= ${2:<RHS>} \label{math!$3} \\ $4 
+${1:<LHS>} &= ${2:<RHS>} \label{math!$3} \\ $4
 endsnippet
 
 snippet gathered "Gathered environment which lets you gather a bunch of equations and assign them under one equation number" bi
@@ -378,7 +378,7 @@ snippet plot3 "Add a 3D plot" i
 $0
 endsnippet
 
-# Common mathematical functions and symbols 
+# Common mathematical functions and symbols
 # Also take note that most expressions are prepended with 'M' to mean mathematical usage
 snippet === "Equivalent to" iw
 \equiv
@@ -955,7 +955,7 @@ snippet li "List item for the OL/UL lists" iw
 \item{$1}
 $0
 endsnippet
-    
+
 context "not math()"
 snippet a "URL links (with description)" iw
 \href{${1:<url>}}{${2:<description>}} $0
@@ -1127,7 +1127,7 @@ snippet GOo "Lowercase Greek letter omega" w
 endsnippet
 
 # Custom commands and environment (for my class notes)
-# Do not use this if you don't have the following packages and 
+# Do not use this if you don't have the following packages and
 # does not have my custom document style file:
 # * tcolorbox
 # * xcolor

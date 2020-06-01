@@ -245,8 +245,7 @@ Just run the following command `git clone https://github.com/hlissner/doom-emacs
 * Minium version (from `emacs --version`):
 ** `GNU Emacs 26.3`
 ** For Doom Emacs, it's not particularly important since it's in rolling release but for future references, it is from the `develop` branch at commit https://github.com/hlissner/doom-emacs/commit/efa599f076c3a140c6b4006c352fdba3361abebd[`efa599f076c3a140c6b4006c352fdba3361abebd`] accessed at 2020-04-24.
-* The Doom configs are just the default config so there's not much to go through here.
-I may also add snippet files in there.
+* The Doom configs are just the default config and some snippets (in `snippets/`) so there's not much to go through here.
 * Regarding theming Doom Emacs, I've found mainly two ways.
 ** First is simply using https://gitlab.com/jjzmajic/ewal[ewal] but the resulting colors are not pretty IMO and I haven't found a way to customize it aside from forking and modifying the package itself.
 ** Second is simply generating the Doom Emacs theme file myself;
@@ -398,6 +397,17 @@ I also recommend https://www.youtube.com/watch?v=GYW9i_u5PYs[Luke Smith's video]
 That's where I also heard of it.
 
 
+=== https://systemd.io/[systemd]
+
+A set of building blocks for system management of a Linux-based system.
+
+* Config located at link:systemd/[`sxiv/`] directory.
+* The usual target path is at `$HOME/.config/systemd`.
+* Minimum version (from `systemctl --version`):
+** `systemd 245 (245.5-2-arch)`
+* Contains simple services and timers (as replacement for cron) such as backups and package list updates.
+
+
 === https://www.x.org/wiki/[Xorg]
 
 A display server implementing X window system.
@@ -417,7 +427,8 @@ A Unix shell and an alternative to the Bash.
 Mostly chosen due to its wide options for customization compared to GNU Bash.
 
 * Config found at link:zsh/[`zsh/`] directory.
-* The usual target path for a user is at `$HOME/`.
+* The usual target path for a user is at `$HOME/.config/zsh`.
+You do have to set `ZDOTDIR=$XDG_CONFIG_HOME/zsh` at `/etc/zsh/zshenv` (requires root privilege) though.
 * Minimum version (from `zsh --version`):
 ** `zsh 5.7.1 (x86_64-pc-linux-gnu)`
 * Contains `.zprofile` and `.zshrc`.
@@ -466,6 +477,7 @@ If you want to look for some alternatives or just feeling adventurous yourself, 
 
 * https://github.com/sharkdp/bat[bat] - Basically `cat(1)` with wings.
 * https://github.com/jarun/Buku[Buku] - A developer-oriented (i.e., easy to integrate with your own programs) browser-independent bookmark manager for the command line.
+* https://github.com/cookiecutter/cookiecutter[Cookiecutter] - A project template generator for your... projects. :)
 * https://github.com/ogham/exa[exa] - A user-friendly replacement for `ls(1)`.
 * https://github.com/sharkdp/fd[fd] - A user-friendly alternative to `find(1)` from https://www.gnu.org/software/findutils/[GNU `findutils`].
 * https://feh.finalrewind.org/[feh] - A minimal image viewer.

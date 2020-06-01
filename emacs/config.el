@@ -20,7 +20,6 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "Iosevka" :size 16)
-      doom-variable-pitch-font (font-spec :family "Source Serif Pro")
       doom-serif-font (font-spec :family "Source Serif Pro"))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -30,13 +29,12 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/writings/orgnotes")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
-
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -55,11 +53,20 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
+;; Search the project path with Projectile.
+(setq projectile-project-search-path '("~/projects/software/" "~/writings/"))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; CUSTOM PACKAGES CONFIGURATIONS ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Set the TeX engine to LuaTeX.
+(after! tex
+  (TeX-engine-set "luatex")
+  (add-to-list 'safe-local-variable-values
+               '(TeX-command-extra-options . "-shell-escape"))
+)
 
 ;;(use-package! ewal
 ;;    :init (setq ewal-json-file "~/.cache/wal/colors.json"

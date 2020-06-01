@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup with Unison
+
+[Timer]
+OnCalendar=*-*-* 0/4:00:00
+Persistent=true
+
+[Install]
+WantedBy=default.target

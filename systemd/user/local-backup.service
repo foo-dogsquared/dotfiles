@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup with Unison
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/unison main -fat -ignorearchives -batch -root "/run/media/%u/Seagate Backup Plus Drive" -links true
+
+[Install]
+WantedBy=graphical.target
