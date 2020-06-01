@@ -114,6 +114,7 @@ kicad-library
 krita
 less
 libtool
+libvirt
 licenses
 linux
 linux-firmware
@@ -163,6 +164,7 @@ pacman
 pacman-contrib
 pamixer
 pandoc
+pass
 patch
 pavucontrol
 pciutils
@@ -194,9 +196,11 @@ rofi
 ruby
 ruby-rouge
 s-nail
+screenkey
 scrot
 sed
 shadow
+shellcheck
 shotcut
 sonic-pi
 soundfont-fluid
