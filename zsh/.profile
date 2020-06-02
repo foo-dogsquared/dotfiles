@@ -29,3 +29,6 @@ export TERMINAL="alacritty"
 export BROWSER="firefox"
 export READ="zathura"
 export FILE="lf"
+
+# This is a program that `sudo -a` needs for prompting the user and password. 
+export SUDO_ASKPASS="$HOME/.local/bin/askpass"

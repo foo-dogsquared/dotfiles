@@ -65,8 +65,11 @@
 (after! tex
   (TeX-engine-set "luatex")
   (add-to-list 'safe-local-variable-values
-               '(TeX-command-extra-options . "-shell-escape"))
-)
+               '(TeX-command-extra-options . "-shell-escape")))
+
+; Disable indentation in org-mode (it's very spacey in my opinion).
+(add-hook! org-mode
+  (setq org-indent-mode nil))
 
 ;;(use-package! ewal
 ;;    :init (setq ewal-json-file "~/.cache/wal/colors.json"

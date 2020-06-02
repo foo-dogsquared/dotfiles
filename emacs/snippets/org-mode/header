@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: Org-Mode header
+# key: header                                       
+# --
+`(make-string (read-number "WHAT IS THE NUMBER?: ") ?*)`

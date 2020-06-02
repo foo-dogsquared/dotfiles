@@ -15,5 +15,5 @@
 set -o pipefail
 
 notify-send "Select a region for the OCR"
-maim -s | tesseract - stdout
+maim --select --hidecursor | tesseract - stdout
 

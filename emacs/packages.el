@@ -51,7 +51,5 @@
 ;;;;;;;;;;;;
 ; PACKAGES ;
 ;;;;;;;;;;;;
-(package! org-brain)
 (package! modus-operandi-theme)
 (package! modus-vivendi-theme)
-;;(package! org-roam)

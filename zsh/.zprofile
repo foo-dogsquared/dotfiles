@@ -1,6 +1,4 @@
-if [[ -f $HOME/.profile ]]; then 
-    source $HOME/.profile
+if [[ -f $ZDOTDIR/.profile ]]; then 
+    source $ZDOTDIR/.profile
 fi
 
-# This is a program that `sudo -a` needs for prompting the user and password. 
-export SUDO_ASKPASS="$HOME/bin/askpass"

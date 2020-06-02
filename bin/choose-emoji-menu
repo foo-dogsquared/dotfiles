@@ -16,6 +16,6 @@ selection=$(awk 'match($0, /([0-9A-F ]+)\s+; fully-qualified\s+# (\S+) E[[:digit
     | awk '{print $1}') 
 
 if [ -n "$selection" ]; then
-    printf "$selection" | xclip -selection clipboard && notify-send "'$(xclip -o -selection clipboard)' has been copied to clipboard."
+    printf "%s" "$selection" | xclip -selection clipboard && notify-send "'$(xclip -o -selection clipboard)' has been copied to clipboard."
 fi
 
