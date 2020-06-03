@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Org-Mode local property block
+# key: lpropblock
+# --
+:PROPERTIES:
+$1
+:END:
