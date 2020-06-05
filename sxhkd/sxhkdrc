@@ -45,6 +45,10 @@ super + shift + e
 super + shift + t
     select-wal-theme
 
+super + shift + f
+    rofi-recoll --rofi-options " -fullscreen" | xargs xdg-open
+
+
 shift + super + r
     pkill -USR1 sxhkd && notify-send "SXHKD config has successfully reloaded."
 

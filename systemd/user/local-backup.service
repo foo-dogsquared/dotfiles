@@ -1,5 +1,6 @@
 [Unit]
-Description=Backup with Unison
+Description=Unison backup sync
+Documentation=https://www.cis.upenn.edu/~bcpierce/unison/docs.html
 
 [Service]
 Type=oneshot

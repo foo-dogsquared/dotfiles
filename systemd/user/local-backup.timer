@@ -1,5 +1,6 @@
 [Unit]
-Description=Backup with Unison
+Description=Periodic Unison backup sync
+Documentation=https://www.cis.upenn.edu/~bcpierce/unison/docs.html
 
 [Timer]
 OnCalendar=*-*-* 0/4:00:00

@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
 # name: Org-Mode footnotes
-# key: fn
+# key: foot
 # --
 [fn:: $1]

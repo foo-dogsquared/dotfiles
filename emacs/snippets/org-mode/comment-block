@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Org-Mode comment block
+# key: cblock
+# --
+#+BEGIN_COMMENT
+$0
+#+END_COMMENT

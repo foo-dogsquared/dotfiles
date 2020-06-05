@@ -1,0 +1,11 @@
+[Unit]
+Description=Recoll search index update
+Documentation=man:recollindex.1 https://www.lesbonscomptes.com/recoll/pages/documentation.html
+
+[Timer]
+OnCalendar=*-*-* 0/4:00:00
+Persistent=true
+
+[Install]
+WantedBy=default.target
+

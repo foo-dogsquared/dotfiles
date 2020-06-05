@@ -2,4 +2,4 @@
 # name: Org-Mode link
 # key: link
 # --
-[[${1:URL}][${2:Description}]
+[[${1:URL}][${2:Description}] $0
