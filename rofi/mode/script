@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+if [ -z "${ROFI_OUTSIDE}" ]
+then
+    echo "run this script in rofi".
+    exit
+fi
+
+if [ "$ROFI_RETV" = 1 ]
+then
+    ROFI_RETV=11
+fi
+
+echo -en "\x00no-custom\x1ftrue\n"
+echo -en "aap\0icon\x1ffolder\x1finfo\x1ftest\n"
+echo -en "baa\x00info\x1fMONMON\n"
+echo -en "aap\x00info\x1fWHAT\n"
+
+if [ -n "${ROFI_INFO}" ]
+then
+    echo "my info: ${ROFI_INFO} "
+fi
+
+notify-send "$ROFI_RETV"

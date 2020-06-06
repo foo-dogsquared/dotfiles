@@ -29,7 +29,6 @@
     background-color: @background;
     font: "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid 14";
     font: "Iosevka 14";
-
 }
 
 window {
@@ -46,12 +45,13 @@ mainbox {
     background-color: @background;
     border: 2;
     border-color: @color6;
-    children: [ inputbar, listview, mode-switcher ];
+    children: [ inputbar, message, listview, mode-switcher ];
     padding: 0.5em;
 }
 
 inputbar,
-listview {
+listview,
+message {
     background: @background;
     margin: 0 0 0.5em 0;
 }
@@ -97,7 +97,6 @@ listview {
 }
 
 element, button {
-    border-radius: 30%;
 }
 
 button,
