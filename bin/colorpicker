@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Selects the region, echoes the hex string (in RGBA format) of the average color of the region.
 

@@ -88,6 +88,9 @@ Plug 'airblade/vim-gitgutter'
 
 " Plugin for distraction-free writing.
 Plug 'junegunn/goyo.vim'
+
+" A Nix plugin.
+Plug 'LnL7/vim-nix'
 call plug#end()
 
 

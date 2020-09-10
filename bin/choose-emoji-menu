@@ -1,8 +1,10 @@
 #!/usr/bin/env sh
 
-# Simply create a universal emoji selection list. 
+# Simply create a universal emoji selection list.
+# The emoji list should be the following file:
+# https://unicode.org/Public/emoji/13.0/emoji-test.txt
 
-# Dependencies: 
+# Dependencies:
 # * mktemp - GNU coreutils 8.31
 # * wget - GNU Wget 1.20.3 built on linux-gnu
 # * sed - GNU sed 4.8
@@ -10,12 +12,15 @@
 # * rofi - Version: 1.5.4
 # * xclip - version 0.13
 
-emoji_file="$HOME/.local/share/emoji-test.txt"
+emoji_file="$HOME/.local/share/emoji-list.txt"
+if [[ ! -f $emoji_file ]]; then
+    wget --output-document "$emoji_file" https://unicode.org/Public/emoji/13.0/emoji-test.txt
+fi
+
 selection=$(awk 'match($0, /([0-9A-F ]+)\s+; fully-qualified\s+# (\S+) E[[:digit:]]+.[[:digit:]]+ (.+)$/, a){print a[2], a[3]}' "$emoji_file" \
     | rofi -dmenu -i -fuzzy -p "Choose an emoji to copy." \
-    | awk '{print $1}') 
+    | awk '{print $1}')
 
 if [ -n "$selection" ]; then
     printf "%s" "$selection" | xclip -selection clipboard && notify-send "'$(xclip -o -selection clipboard)' has been copied to clipboard."
 fi
-

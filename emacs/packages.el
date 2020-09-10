@@ -51,5 +51,9 @@
 ;;;;;;;;;;;;
 ; PACKAGES ;
 ;;;;;;;;;;;;
-(package! modus-operandi-theme)
-(package! modus-vivendi-theme)
+(package! flycheck-vale)
+(package! ya-org-capture
+          :recipe (:host github
+                   :repo "ag91/ya-org-capture")
+          :pin "0333ee28c92a40a351e64695a0cfcd715c69838b")
+(package! yankpad)

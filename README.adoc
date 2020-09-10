@@ -40,9 +40,9 @@ image::docs/dropdown-term.png[A dropdown terminal]
 
 == Specifications
 
-Here are the main specifications of my machine currently running this (as of 2020-05-01):
+Here are the main specifications of my machine currently running this (as of 2020-09-11):
 
-* **Operating system**: https://www.archlinux.org/[Arch Linux]
+* **Operating system**: https://nixos.org/[NixOS]-based distros (e.g., NixOS, GuixSD)
 * **Display server**: X Window System using https://www.x.org/wiki/[Xorg]
 * **Window manager**: https://github.com/baskerville/bspwm[bspwm]
 * **Terminal emulator**: https://github.com/jwilm/alacritty/[Alacritty]
@@ -61,13 +61,11 @@ Here's what the setup should look like (aside from the Stow packages which will 
 ----
 dotfiles
 ├── docs/
-├── aur-packages.txt
 ├── LICENSE
 ├── locations.json
 ├── makefile
-├── manager.py
-├── packages.txt
-└── README.adoc
+├── README.adoc
+└── vtsm
 ----
 
 The big picture for my dotfiles setup have big goals and those are (according to priority):
@@ -77,27 +75,15 @@ The big picture for my dotfiles setup have big goals and those are (according to
 * Looking cool (but not too cool or else my potato will weep).
 
 
-=== The package lists
-
-Starting from the most important of the set, `packages.txt` and `aur-packages.txt` are simply a list of installed packages from the official Arch repo and AUR respectively.
-I prefer the lists to be separated just for ease of maintenance.
-They are going to be committed at the start of every month (if it works that is).
-
-Since the name of the packages varies between distro to distro, this is only valid for Arch Linux.
-
-
 === How I maintain my dotfiles
 
-`manager.py` (named Very Tiny Stow Manager or VTSM for short) is a tiny https://www.gnu.org/software/stow/[GNU Stow]-like manager created for this setup.
+The dotfiles are mostly intended to be used with GNU Stow.
+If you're not familiar with it, you can read http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html[this sweet short article] to get you started.
+
+However, with Python 3 (specifically 3.8) installed, you have another option.
+Behold, the link:./vtsm["Very Tiny Stow Manager"] (VTSM for short)!
 VTSM takes inspiration from GNU Stow (obviously) and https://github.com/holman/dotfiles[how Zach Holman's dotfiles are set].
 When managing your dotfiles, VTSM is going to be your friend/workmate.
-(Nonetheless, I tried to make it generic for other cases.)
-footnote:[You need Python installed for this.
-For future references, the version by the time first writing the script is at v3.8.1.
-That said, I may rewrite this in Bash instead or even just a makefile.]
-footnote:[I may have made my life harder when I can use something like https://yadm.io/[yadm] or https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/[a bare git repo] instead.]
-
-NOTE: Using this script is optional and feel free to discard this and exclusively use GNU Stow or something else.
 
 Using VTSM should be simple and it is nothing special, really.
 All it needs is a directory containing a file named `locations.json` with the name of the packages and their target path.
@@ -136,13 +122,11 @@ For the command string, it is a https://docs.python.org/3/library/string.html#st
 
 # Running the program without any arguments for a test run.
 # There should be a bunch of `echo` commands being ran for all of the listed packages.
-./manager.py
+./vtsm
 
 # Create the directories of the target path and install them with GNU Stow.
 # Bada-bing, bada-boom, you have installed your setup or something.
-./manager.py --commands "mkdir -p {location} && stow {package} --target {location}"
-
-# (You could also use the makefile for this.)
+./vtsm --commands "mkdir -p {location} && stow {package} --target {location}"
 ----
 
 
@@ -168,12 +152,7 @@ The script is based from https://github.com/LukeSmithxyz/voidrice/blob/master/.l
 * link:./bin/toggle-process[Switching on/off programs].
 Useful for situations where only one instance of the program is desirable.
 
-* link:./bin/select-theme[A basic theme selection for easy color scheme generation] with https://github.com/muennich/sxiv[sxiv].
-
 * link:./bin/choose-emoji-menu[A universal emoji list] for easy copy-pasting and clear communication with those who speak Emojian.
-
-Aside from the scripts, there are also some details and files that are not committed to this setup for privacy and security reasons.
-A few examples of which is my cron setups where it is tasked with updating and committing the package lists to the Git repo, updating the packages, cleaning the cache, and so much more.
 
 
 
@@ -282,23 +261,6 @@ Seriously though, I find nvim to be way better for configuration.]
 It is based on https://github.com/gillescastel/latex-snippets/[_Gilles Castel_'s UltiSnips LaTeX snippets].
 
 
-=== https://www.archlinux.org/pacman/[pacman]
-
-The default package manager for Arch Linux.
-
-* Config location is at link:pacman/[`pacman/`]
-* The usual target path is at `/etc/pacman.d`.
-* Minimum version (from `pacman --version`):
-** `Pacman v5.1.3 - libalpm v11.0.3`
-* Contains the configuration file, a `mirrorlist` file, and some https://www.archlinux.org/mirrorlist/?ip_version=6[pacman hooks].
-* For the mirrorlist, change it accordingly or https://www.archlinux.org/mirrorlist/?ip_version=6[generate another one].
-It is also monthly updated from a cron job.
-* Since this requires root privilege, this is not included in the installation script.
-Simply copy it (i.e., `sudo cp pacman/ /etc/pacman.d/`) and you're done.
-* The dotfiles repo also contains two package lists (i.e., `packages.txt` and `aur-packages.txt`) in the root of the project folder.
-* The setup also uses `yay` as the AUR helper tool.
-
-
 === https://github.com/yshui/picom[picom]
 
 A window compositor forked from https://github.com/chjj/compton[compton] that adds off-screen buffers and additional effects and animations to the window.
@@ -331,22 +293,6 @@ This is the replacement bar from my previous i3-based setup.
 The theme is dynamically used with the Xresources file (by using `xrdb`).
 
 For documentation, check out the https://wiki.archlinux.org/index.php/Polybar[already linked Arch Wiki entry] and the https://github.com/polybar/polybar/wiki[official documentation from GitHub].
-
-
-=== https://github.com/dylanaraps/pywal[Pywal]
-
-A theme generator written in Python.
-It is mostly used for ricing to get them consistent colors throughout your setup.
-
-* Config located at link:wal[`wal/`].
-* The usual target path for a user is at `$HOME/.config/wal`.
-It is ideal that you've already have your own color schemes saved in there as well.
-* Minimum version (from `wal --version`):
-** `wal 3.3.0`
-* Due to the nature of my setup where I want those consistent colors, most of the configurations are tucked away as https://github.com/dylanaraps/pywal/wiki/User-Template-Files[template files] but it should be easy to identify which is which.
-Certain applications such as for `dunst` and `bspwm` are in here and should be considered as the real version of the config.
-
-For additional information, check out the https://github.com/dylanaraps/pywal/wiki/[documentation] from the GitHub page.
 
 
 === https://github.com/davatorium/rofi[Rofi]
@@ -395,30 +341,6 @@ A simple developer-oriented X image viewer with a lot of options for customizati
 sxiv has a manual (i.e., `man sxiv`) so that's convenient.
 I also recommend https://www.youtube.com/watch?v=GYW9i_u5PYs[Luke Smith's video] introducing it.
 That's where I also heard of it.
-
-
-=== https://systemd.io/[systemd]
-
-A set of building blocks for system management of a Linux-based system.
-
-* Config located at link:systemd/[`sxiv/`] directory.
-* The usual target path is at `$HOME/.config/systemd`.
-* Minimum version (from `systemctl --version`):
-** `systemd 245 (245.5-2-arch)`
-* Contains simple services and timers (as replacement for cron) such as backups and package list updates.
-
-
-=== https://www.x.org/wiki/[Xorg]
-
-A display server implementing X window system.
-
-* Config found at link:xorg/[`xorg/`] directory.
-* The usual target path for a user is at `$HOME/`.
-* Minimum version (from `Xorg -version`):
-** `X.Org X Server 1.20.5`
-** `X Protocol Version 11, Revision 0`
-* The configuration is found at `.Xresources` containing the colors (0 to 15, foreground, and the background).
-It may be bound to be an automatically generated file from https://github.com/dylanaraps/pywal[Pywal] soon.
 
 
 === https://www.zsh.org/[Zsh]

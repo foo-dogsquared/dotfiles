@@ -67,12 +67,35 @@
   (add-to-list 'safe-local-variable-values
                '(TeX-command-extra-options . "-shell-escape")))
 
-;;(use-package! ewal
-;;    :init (setq ewal-json-file "~/.cache/wal/colors.json"
-;;                ewal-use-built-in-always-p nil
-;;                ewal-use-built-in-on-failure-p nil
-;;                ewal-built-in-palette "sexy-material")
-;;
-;;    ;; This loading of theme is required in order for ewal to work.
-;;    ;; See jjzmajic/ewal Issue #11 (https://gitlab.com/jjzmajic/ewal/-/issues/11).
-;;    :init (load-theme 'doom-fds t))
+
+(after! org
+  (setq
+    ; Set the journal.
+    org-journal-dir "~/writings/journal"
+    org-journal-file-format "%F"
+
+    ; Set a custom time-stamp pattern.
+    ; Even though, it's not recommended, most of the time, 
+    time-stamp-start "DATE_MODIFIED:[ 	]+\\\\?[\"<]+"
+
+    ; Configure org-roam.
+    org-roam-directory "~/writings/wiki"
+    org-roam-capture-templates '(
+      ("d" "default" plain (function org-roam--capture-get-point)
+       "#+AUTHOR: \"%(user-full-name)\"
+#+EMAIL: \"%(user-mail-address)\"
+#+DATE: \"%<%Y-%m-%d %T%:z>\"
+#+DATE_MODIFIED: \"%<%Y-%m-%d %T%:z>\"
+#+LANGUAGE: en
+#+OPTIONS: toc:t
+#+PROPERTY: header-args  :exports both
+
+%?"
+       :file-name "%<%Y-%m-%d-%H-%M-%S>"
+       :head "#+TITLE: ${title}\n"
+       :unnarrowed t))))
+
+; Modify the time-stamp with each save.
+(setq time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S%:z"
+      +file-templates-dir (expand-file-name "templates/" doom-private-dir))
+(add-hook 'before-save-hook 'time-stamp)

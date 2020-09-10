@@ -12,7 +12,7 @@ super + t
 
 # Application launcher.
 super + d
-    rofi -show drun -sidebar-mode -theme fds-mini-sidebar
+    rofi -show drun -sidebar-mode -theme themes/fds-mini-sidebar
 
 # User action shortcuts.
 super + F10
@@ -22,7 +22,7 @@ super + F11
     user-prompt "Proceed to reboot?" "sudo -A reboot"
 
 super + F12
-    user-prompt "Exit from X session?" "killall Xorg"
+    user-prompt "Exit from X session?" "pkill bspwm"
 
 # Screenshot and screencast launcher.
 super + {_, shift + } Print
@@ -42,12 +42,8 @@ super + shift + m
 super + shift + e
     choose-emoji-menu
 
-super + shift + t
-    select-wal-theme
-
-super + shift + f
-    rofi-recoll --rofi-options " -fullscreen" | xargs xdg-open
-
+super + shift + c
+    $HOME/.config/emacs/bin/org-capture
 
 shift + super + r
     pkill -USR1 sxhkd && notify-send "SXHKD config has successfully reloaded."

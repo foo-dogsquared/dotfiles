@@ -38,7 +38,7 @@ ffmpeg() {
 
 # Set the default command for rofi.
 rofi() {
-  command rofi -theme fds-center-menu "$@" || kill -USR1 "$_process_id"
+  command rofi -theme themes/fds-center-menu "$@" || kill -USR1 "$_process_id"
 }
 
 # Set the default command for slop.

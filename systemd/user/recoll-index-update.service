@@ -1,9 +1,0 @@
-[Unit]
-Description=Recoll search index update
-Documentation=man:recollindex.1 https://www.lesbonscomptes.com/recoll/pages/documentation.html
-
-[Service]
-ExecStart=/usr/bin/recollindex
-
-[Install]
-WantedBy=default.target
