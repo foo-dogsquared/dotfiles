@@ -67,15 +67,23 @@
   (add-to-list 'safe-local-variable-values
                '(TeX-command-extra-options . "-shell-escape")))
 
-
 (after! org
   (setq
     ; Set the journal.
     org-journal-dir "~/writings/journal"
     org-journal-file-format "%F"
 
+    org-capture-templates `(
+      ("i" "inbox" entry (file ,(concat org-directory "/inbox.org"))
+        ,(concat "* TODO %?\n"
+          "entered on %<%F %T %:z>"))
+
+      ("c" "org-protocol-capture" entry (file ,(concat org-directory "/inbox.org"))
+        "* TODO [[%:link][%:description]]\n%x"
+        :immediate-finish t))
+
     ; Set a custom time-stamp pattern.
-    ; Even though, it's not recommended, most of the time, 
+    ; Even though, it's not recommended, most of the time, it is mainly for personal documents so it is safe.
     time-stamp-start "DATE_MODIFIED:[ 	]+\\\\?[\"<]+"
 
     ; Configure org-roam.
@@ -84,8 +92,8 @@
       ("d" "default" plain (function org-roam--capture-get-point)
        "#+AUTHOR: \"%(user-full-name)\"
 #+EMAIL: \"%(user-mail-address)\"
-#+DATE: \"%<%Y-%m-%d %T%:z>\"
-#+DATE_MODIFIED: \"%<%Y-%m-%d %T%:z>\"
+#+DATE: \"%<%Y-%m-%d %T %:z>\"
+#+DATE_MODIFIED: \"%<%Y-%m-%d %T %:z>\"
 #+LANGUAGE: en
 #+OPTIONS: toc:t
 #+PROPERTY: header-args  :exports both
@@ -95,7 +103,22 @@
        :head "#+TITLE: ${title}\n"
        :unnarrowed t))))
 
-; Modify the time-stamp with each save.
-(setq time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S%:z"
-      +file-templates-dir (expand-file-name "templates/" doom-private-dir))
+(setq
+  ; Modify the time-stamp with each save.
+  time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S %:z"
+
+  ; Set file templates folder at $DOOMDIR/templates.
+  +file-templates-dir (expand-file-name "templates/" doom-private-dir))
+
+; Automate updating timestamps.
 (add-hook 'before-save-hook 'time-stamp)
+
+; Activate minimap for all program-based modes (e.g., web-mode, python-mode) and text-based modes (e.g., org-mode, markdown-mode).
+(after! minimap
+  (setq minimap-major-modes '(prog-mode text-mode org-mode)))
+
+; Org-roam-bibtex is somehow a horrible name.
+; I guess that's why they insist on calling it ORB.
+(use-package! org-roam-bibtex
+  :after-call org-mode
+  :hook (org-roam-mode . org-roam-bibtex-mode))

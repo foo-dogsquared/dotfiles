@@ -51,9 +51,16 @@
 ;;;;;;;;;;;;
 ; PACKAGES ;
 ;;;;;;;;;;;;
-(package! flycheck-vale)
-(package! ya-org-capture
-          :recipe (:host github
-                   :repo "ag91/ya-org-capture")
-          :pin "0333ee28c92a40a351e64695a0cfcd715c69838b")
-(package! yankpad)
+;;(package! flycheck-vale)
+(package! org-roam-bibtex
+  :recipe (:host github
+           :repo "org-roam/org-roam-bibtex"))
+
+; Since org-roam-bibtex is a connector to all of the specified packages and in alpha stage, it can be problematic so we'll disable it for now.
+(unpin! org-roam company-org-roam)
+
+; A minimap in case you have Stockholm Syndrome for your bloated IDEs. :)
+(package! minimap
+  :recipe (:host github
+           :repo "dengste/minimap")
+  :pin "8bc9a65825925a7c58b83ad389f07a93f22d60f3")

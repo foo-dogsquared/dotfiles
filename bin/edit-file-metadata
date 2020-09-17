@@ -1,8 +1,57 @@
 #!/usr/bin/env perl
 
+# A quick script on moving a document with the embedded metadata.
+# It uses exiftool for embedding so be sure to have it installed.
+# Only needs an argument of a filename to be converted.
+
+# TODO: Create --title (-t) option that automatically skips the title prompt.
+# TODO: Create --author (-a) option that automatically skips the author prompt.
+# TODO: Create --date (-d) option that automatically skips the date prompt.
+
+use File::Basename;
+use File::Copy;
 use Modern::Perl;
 
-sub kebab_case {
-    my ($sentence) = @_;
-    $sentence = 
+# Create a simple prompt returning with the given answer.
+sub prompt {
+  my ($msg) = @_;
+  say $msg;
+  print ">> ";
+  return <STDIN>;
 }
+
+# This implementation of kebab-case conversion is opinionated.
+# It converts into lowercase and removes all non-alphanumeric characters.
+sub kebab_case {
+  my ($string) = @_;
+
+  # Convert into lowercase.
+  $string = lc($string);
+
+  # Substitute all spaces and extra dashes as one dash.
+  $string =~ s/\s+|-+/-/g;
+
+  # Remove all invalid characters.
+  $string =~ s/[^a-z0-9-]//g;
+
+  # Remove all leading and trailing dashes.
+  $string =~ s/^-+|-+$//g;
+
+  return $string;
+}
+
+my $file = $ARGV[0];
+
+# Prompt for all the required information.
+my $title = prompt "Title of the document?";
+my $author = prompt "Author?";
+my $publication_date = prompt "Publication date?";
+
+# Overwrite the file metadata.
+system "exiftool -title=\"${title}\" -author=\"${author}\" -date=\"${publication_date}\" \"$file\"";
+
+# Once the file metadata has been written, it is time to move the file into its kebab-case equivalent.
+my ($filename, $dirs, $suffix) = fileparse($file, '\.[^.]+$');
+my $file_slug = $dirs . kebab_case($title) . $suffix;
+move($file, $file_slug);
+

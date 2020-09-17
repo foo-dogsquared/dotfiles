@@ -5,14 +5,13 @@
     "dunst": "$HOME/.config/dunst/",
     "emacs": "$HOME/.config/doom",
     "lf": "$HOME/.config/lf",
+    "newsboat": "$HOME/.config/newsboat",
     "nvim": "$HOME/.config/nvim/",
     "picom": "$HOME/.config/picom",
     "polybar": "$HOME/.config/polybar",
     "rofi": "$HOME/.config/rofi/",
+    "slop": "$HOME/.config/slop/",
     "sxiv": "$HOME/.config/sxiv",
     "sxhkd": "$HOME/.config/sxhkd/",
-    "systemd": "$HOME/.config/systemd",
-    "wal": "$HOME/.config/wal",
-    "xorg": "$HOME",
     "zsh": "$HOME/.config/zsh"
 }

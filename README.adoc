@@ -82,13 +82,11 @@ If you're not familiar with it, you can read http://brandon.invergo.net/news/201
 
 However, with Python 3 (specifically 3.8) installed, you have another option.
 Behold, the link:./vtsm["Very Tiny Stow Manager"] (VTSM for short)!
+The best way to describe VTSM is basically GNU Stow with a generic shell runner.
 VTSM takes inspiration from GNU Stow (obviously) and https://github.com/holman/dotfiles[how Zach Holman's dotfiles are set].
 When managing your dotfiles, VTSM is going to be your friend/workmate.
 
-Using VTSM should be simple and it is nothing special, really.
-All it needs is a directory containing a file named `locations.json` with the name of the packages and their target path.
-VTSM will simply run commands with those packages.
-In short, it's just a shell runner set by a data file.
+All VTSM needs is a directory containing a package list stored in `locations.json` with the name of the packages and their target path.
 
 .An example of what `locations.json` could be
 [source, json]
@@ -113,7 +111,7 @@ In short, it's just a shell runner set by a data file.
 ----
 
 With the tiny manager and the package list, we can then execute commands with all of the packages and its target path with one go.
-For the command string, it is a https://docs.python.org/3/library/string.html#string.Template[Python template] with `package` and `location` as the available objects.
+Here are some examples of running commands with VTSM.
 
 [source, shell]
 ----
@@ -127,7 +125,12 @@ For the command string, it is a https://docs.python.org/3/library/string.html#st
 # Create the directories of the target path and install them with GNU Stow.
 # Bada-bing, bada-boom, you have installed your setup or something.
 ./vtsm --commands "mkdir -p {location} && stow {package} --target {location}"
+
+# Run commands only to Rofi and Emacs config files.
+./vtsm --only "rofi" "emacs" --commands "stow --restow {package} --target {location}"
 ----
+
+For the command string, it is a https://docs.python.org/3/library/string.html#string.Template[Python template] with `package` and `location` as the available objects.
 
 
 === Custom scripts

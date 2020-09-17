@@ -182,6 +182,6 @@
 
        ;; This is where custom modules in the Doom directory should be put for orgaanizational purposes.
        :tools
-       neuron              ; Neurons are a must for the brain.
+       ;;neuron              ; Neurons are a must for the brain.
 )
 
