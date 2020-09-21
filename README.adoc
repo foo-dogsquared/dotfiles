@@ -86,7 +86,8 @@ The best way to describe VTSM is basically GNU Stow with a generic shell runner.
 VTSM takes inspiration from GNU Stow (obviously) and https://github.com/holman/dotfiles[how Zach Holman's dotfiles are set].
 When managing your dotfiles, VTSM is going to be your friend/workmate.
 
-All VTSM needs is a directory containing a package list stored in `locations.json` with the name of the packages and their target path.
+All VTSM needs is a directory containing a package list stored in a JSON file with the name of the packages and their target path.
+By default, it searches for a file named `locations.json`.
 
 .An example of what `locations.json` could be
 [source, json]
@@ -313,6 +314,17 @@ Also serves as a replacement for https://tools.suckless.org/dmenu/[dmenu].
 To see the documentation, check out the manual entry for `rofi`.
 For creating or editing Rofi themes, read the manual entry of `rofi-theme`.
 Also, view the related https://wiki.archlinux.org/index.php/Rofi[Arch Wiki entry].
+
+
+=== https://github.com/naelstrof/slop[slop]
+
+A select operator for X-based systems with all the fanciful bell and whistles.
+
+* Config located at link:slop[`slop`].
+* The usual target path is at `$HOME/.config/slop`.
+* Minimum version (from `slop --version`):
+** v7.5
+* It only contains customized selection shaders and whatnot that may be used for my custom scripts.
 
 
 === https://github.com/baskerville/sxhkd[sxhkd]
