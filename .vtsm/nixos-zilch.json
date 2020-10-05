@@ -1,0 +1,7 @@
+{
+    "bin": "$HOME/local/bin",
+    "emacs": "$HOME/.config/doom",
+    "nvim": "$HOME/.config/nvim",
+    "newsboat": "$HOME/.config/newsboat",
+    "slop": "$HOME/.config/slop"
+}

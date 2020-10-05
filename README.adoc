@@ -60,9 +60,9 @@ Here's what the setup should look like (aside from the Stow packages which will 
 [source]
 ----
 dotfiles
+├── .vtsm/
 ├── docs/
 ├── LICENSE
-├── locations.json
 ├── makefile
 ├── README.adoc
 └── vtsm
@@ -87,9 +87,9 @@ VTSM takes inspiration from GNU Stow (obviously) and https://github.com/holman/d
 When managing your dotfiles, VTSM is going to be your friend/workmate.
 
 All VTSM needs is a directory containing a package list stored in a JSON file with the name of the packages and their target path.
-By default, it searches for a file named `locations.json`.
+By default, it searches for a file named `locations.json` but you can specify what JSON file to use with the `-m`/`--manifest` option.
 
-.An example of what `locations.json` could be
+.An example of what a manifest could contain
 [source, json]
 ----
 {
@@ -117,7 +117,7 @@ Here are some examples of running commands with VTSM.
 [source, shell]
 ----
 # Take the setup as the filesystem structure.
-# See the JSON file (locations.json) to see what packages to be installed and where to install them.
+# See the JSON files at .vtsm to see what packages to be installed and where to install them.
 
 # Running the program without any arguments for a test run.
 # There should be a bunch of `echo` commands being ran for all of the listed packages.
@@ -125,10 +125,10 @@ Here are some examples of running commands with VTSM.
 
 # Create the directories of the target path and install them with GNU Stow.
 # Bada-bing, bada-boom, you have installed your setup or something.
-./vtsm --commands "mkdir -p {location} && stow {package} --target {location}"
+./vtsm --manifest .vtsm/arch.json --commands "mkdir -p {location} && stow {package} --target {location}"
 
 # Run commands only to Rofi and Emacs config files.
-./vtsm --only "rofi" "emacs" --commands "stow --restow {package} --target {location}"
+./vtsm --manifest .vtsm/arch.json --only "rofi" "emacs" --commands "stow --restow {package} --target {location}"
 ----
 
 For the command string, it is a https://docs.python.org/3/library/string.html#string.Template[Python template] with `package` and `location` as the available objects.

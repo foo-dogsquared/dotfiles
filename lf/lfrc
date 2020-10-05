@@ -28,6 +28,9 @@ set shellopts '-eu'
 # commands accordingly.
 set ifs "\n"
 
+# create the borders around the panels
+set drawbox true
+
 # toggle hidden files
 set hidden
 

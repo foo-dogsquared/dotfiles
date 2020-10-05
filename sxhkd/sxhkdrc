@@ -36,14 +36,17 @@ super + x ; {a, s, d}
     colorpicker | xclip -selection clipboard && notify-send "Color copied to clipboard."}
 
 # Miscellaneous shortcuts.
-super + shift + m
-    choose-manual-menu
+super + shift + c
+    $HOME/.config/emacs/bin/org-capture
 
 super + shift + e
     choose-emoji-menu
 
-super + shift + c
-    $HOME/.config/emacs/bin/org-capture
+super + shift + m
+    choose-manual-menu
+
+super + shift + n
+    $TERMINAL -e newsboat
 
 shift + super + r
     pkill -USR1 sxhkd && notify-send "SXHKD config has successfully reloaded."

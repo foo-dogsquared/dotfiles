@@ -113,6 +113,8 @@
 ; Automate updating timestamps.
 (add-hook 'before-save-hook 'time-stamp)
 
+(add-to-list 'org-modules 'org-checklist)
+
 ; Activate minimap for all program-based modes (e.g., web-mode, python-mode) and text-based modes (e.g., org-mode, markdown-mode).
 (after! minimap
   (setq minimap-major-modes '(prog-mode text-mode org-mode)))
@@ -122,3 +124,8 @@
 (use-package! org-roam-bibtex
   :after-call org-mode
   :hook (org-roam-mode . org-roam-bibtex-mode))
+
+; Use a responsive guide.
+(use-package! highlight-indent-guides
+  :init
+  (setq highlight-indent-guides-responsive 'top))
