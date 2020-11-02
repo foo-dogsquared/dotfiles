@@ -6,7 +6,7 @@
 
 # Dependencies:
 # * mktemp - GNU coreutils 8.31
-# * wget - GNU Wget 1.20.3 built on linux-gnu
+# * wget - GNU Wget 1.20.3
 # * sed - GNU sed 4.8
 # * awk - GNU Awk 5.0.1
 # * rofi - Version: 1.5.4
@@ -19,7 +19,7 @@ if [[ ! -f $emoji_file ]]; then
 fi
 
 selection=$(awk 'match($0, /([0-9A-F ]+)\s+; fully-qualified\s+# (\S+) E[[:digit:]]+.[[:digit:]]+ (.+)$/, a){print a[2], a[3]}' "$emoji_file" \
-    | rofi -dmenu -i -fuzzy -p "Choose an emoji to copy." \
+    | rofi -dmenu -i -matching fuzzy -p "Choose an emoji to copy." \
     | awk '{print $1}')
 
 if [ -n "$selection" ]; then

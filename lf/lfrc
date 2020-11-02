@@ -57,17 +57,10 @@ cmd open ${{
         image/svg+xml) inkscape $fx;;
         image/*) sxiv $fx;;
         text/*) $EDITOR $fx;;
-        video/*) mpv $fx;;
+        video/*|audio/*) mpv $fx;;
         *) for f in $fx; do setsid $OPENER $f > /dev/null 2> /dev/null & done;;
     esac
 }}
-
-# define a custom 'rename' command without prompt for overwrite
-cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
-
-# move current file or selected files to trash folder
-# (also see 'man mv' for backup/overwrite options)
-cmd trash %set -f; mv $fx ~/.trash
 
 # define a custom 'delete' command
 cmd delete ${{
@@ -120,7 +113,6 @@ cmd zip ${{
 # file operations
 map D delete
 map <delete> delete
-map r push :rename<space>
 
 # use enter for shell commands
 map <enter> shell
@@ -133,16 +125,14 @@ map g/ cd /
 map x $$f
 map X !$f
 
-# dedicated keys for file opener actions
-map oo open $f
-map oO open --ask $f
-
 # dedicated keys for usual application suite
 # feel free to replace this accordingly to your needs
-map oz !nvim $f
-map ox !code $f
-map oc !inkscape $f
-map ov !gimp $f
-map ob !blender $f
-map of !firefox $f
+map ob !blender "$f"
+map oc !inkscape "$f"
+map oe !emacs "$f"
+map of !$BROWSER "$f"
+map ol !lazygit "$f"
+map om !mpv "$f"
+map ov !krita "$f"
+map oz !nvim "$f"
 

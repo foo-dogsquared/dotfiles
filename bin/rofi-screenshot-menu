@@ -26,6 +26,9 @@ readonly date_filename_format="+%F-%H-%M-%S"
 # This is useful for exiting out of the whole script even in subshells.
 trap 'notify-send "rofi-screenshot-menu has exited" && exit 1' 10
 
+mkdir -p $screenshot_directory
+mkdir -p $video_directory
+
 
 #####################
 # UTILITY FUNCTIONS #

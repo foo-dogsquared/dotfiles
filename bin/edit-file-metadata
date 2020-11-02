@@ -40,7 +40,7 @@ sub kebab_case {
   return $string;
 }
 
-my $file = $ARGV[0];
+my $file = $ARGV[0] ? $ARGV[0] : exit 1;
 
 # Prompt for all the required information.
 my $title = prompt "Title of the document?";

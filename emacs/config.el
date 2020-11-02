@@ -67,21 +67,27 @@
   (add-to-list 'safe-local-variable-values
                '(TeX-command-extra-options . "-shell-escape")))
 
+(setq
+  ; Set the journal.
+  org-journal-dir "~/writings/journal"
+  org-journal-file-format "%F"
+
+  ; Set the capture
+  org-capture-templates `(
+    ("i" "inbox" entry (file ,(concat org-directory "/inbox.org"))
+      ,(concat "* TODO %?\n"
+        "entered on %<%F %T %:z>"))
+
+    ("p" "project" entry (file ,(concat org-directory "/projects.org"))
+      ,(concat "* PROJ %?\n"
+        "- [ ] %?"))
+
+    ("c" "org-protocol-capture" entry (file ,(concat org-directory "/inbox.org"))
+      "* TODO [[%:link][%:description]]\n%x"
+      :immediate-finish t)))
+
 (after! org
   (setq
-    ; Set the journal.
-    org-journal-dir "~/writings/journal"
-    org-journal-file-format "%F"
-
-    org-capture-templates `(
-      ("i" "inbox" entry (file ,(concat org-directory "/inbox.org"))
-        ,(concat "* TODO %?\n"
-          "entered on %<%F %T %:z>"))
-
-      ("c" "org-protocol-capture" entry (file ,(concat org-directory "/inbox.org"))
-        "* TODO [[%:link][%:description]]\n%x"
-        :immediate-finish t))
-
     ; Set a custom time-stamp pattern.
     ; Even though, it's not recommended, most of the time, it is mainly for personal documents so it is safe.
     time-stamp-start "DATE_MODIFIED:[ 	]+\\\\?[\"<]+"
@@ -124,8 +130,3 @@
 (use-package! org-roam-bibtex
   :after-call org-mode
   :hook (org-roam-mode . org-roam-bibtex-mode))
-
-; Use a responsive guide.
-(use-package! highlight-indent-guides
-  :init
-  (setq highlight-indent-guides-responsive 'top))

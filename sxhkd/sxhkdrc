@@ -5,8 +5,13 @@ super + Return
 # A dropdown terminal.
 # Requires tmux and tdrop for this to work.
 super + shift + Return
-    tdrop -ma -w -4 -y "$PANEL_HEIGHT" -s dropterm $TERMINAL
+    tdrop -ma -w -4 -y "$PANEL_HEIGHT" $TERMINAL
 
+# A handy-dandy calculator as a quick dropdown terminal.
+    tdrop -ma -w -4 -y "$PANEL_HEIGHT" $TERMINAL -e julia
+
+# Quick toggling for screenkey.
+# Useful for setting up a demo.
 super + t
     toggle-process screenkey
 

@@ -12,6 +12,9 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'arcticicestudio/nord-vim'
 Plug 'gruvbox-community/gruvbox'
 
+" EditorConfig plugin
+Plug 'editorconfig/editorconfig-vim'
+
 " Colorize common color strings
 Plug 'lilydjwg/colorizer'
 
@@ -26,6 +29,9 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="context"
 
+" Contains various snippets for UltiSnips.
+Plug 'honza/vim-snippets'
+
 " A completion engine.
 " I chose this engine since it is linked from UltiSnips.
 if has('nvim')
@@ -35,14 +41,8 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+
 let g:deoplete#enable_at_startup = 1
-
-" Contains various snippets for UltiSnips.
-Plug 'honza/vim-snippets'
-
-" Plugin for auto-saving for each change in the buffer (file).
-Plug '907th/vim-auto-save'
-let g:auto_save = 1
 
 " One of the most popular plugins.
 " Allows to create more substantial status bars.
@@ -52,6 +52,10 @@ let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
    let g:airline_symbols = {}
 endif
+
+" fzf
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " A full LaTeX toolchain plugin for Vim.
 " Also a must-have for me since writing LaTeX can be a PITA.
@@ -99,6 +103,7 @@ call plug#end()
 """""""""""""""""""""""""
 " EDITOR CONFIGURATIONS "
 """""""""""""""""""""""""
+let mapleader=" "
 
 " Setting the colorscheme
 colorscheme nord
@@ -133,15 +138,17 @@ map <leader>w :Goyo<Enter>
 " Trim all trailing whitespaces.
 map <leader>s :%s/\s\+$/<Enter>
 
+" Reload $MYVIMRC.
+map <leader>hr :source $MYVIMRC<Enter>
+
 " File explorer toggle.
 " Turns out vim (and nvim) has a native file explorer with :Explore.
-map <leader>f :Lexplore<Return>:vertical resize 40<Return><C-w><C-w>
+map <leader>ff :Lexplore<Return>:vertical resize 40<Return><C-w><C-w>
 
 " Changing style of words.
 highlight clear SpellBad
 
 highlight clear SpellLocal
-highlight SpellLocal ctermfg=cyan
 
 highlight clear SpellCap
 
