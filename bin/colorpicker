@@ -14,5 +14,5 @@ notify-send "Select a region for color picking."
 
 # The color picker code.
 # Take note it uses a slop shader named `crosshair` from the shader examples of the official repo at https://github.com/naelstrof/slop.
-maim --select --shader crosshair --tolerance 0 --hidecursor | magick convert - -resize 1x1\! -format '#%[hex:p{0,0}]' info:-
+maim --select --shader crosshair --tolerance 0 --hidecursor | magick convert - -resize 1x1\! -format '%[hex:p{0,0}]' info:-
 

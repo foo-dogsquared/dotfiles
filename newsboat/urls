@@ -1,11 +1,12 @@
 # All of the unread articles
 # Take note it will result in a very slow loading
-"query:Unread Articles:unread = \"yes\""
+# "query:Unread Articles:unread = \"yes\""
 
 # Blogs
 https://alex-hhh.github.io/feeds/all.rss.xml blog.personal
 https://blog.jwf.io/feed/ blog.personal
 https://blog.yoshuawuyts.com/rss.xml blog.personal
+https://chrispenner.ca/atom.xml blog.personal
 https://christine.website/blog.atom blog.personal
 https://drewdevault.com/blog/index.xml blog.personal
 http://distill.pub/rss.xml blog.personal
@@ -22,21 +23,18 @@ https://venam.nixers.net/blog/feed.xml blog.personal
 https://willschenk.com/feed.xml blog.personal
 https://www.malloc47.com/rss.xml blog.personal
 
+https://www.davidrevoy.com/feed/rss blog.personal art
+
 # Software blogs
-https://kde.org/announcements/index.xml blog.software linux
-https://guix.gnu.org/feeds/blog.atom blog.software linux
+https://kde.org/announcements/index.xml blog.software dev.linux
+https://guix.gnu.org/feeds/blog.atom blog.software dev.linux
 https://web.dev/feed.xml blog.software dev.web
 
 # Articles (they're different from blogs)
-https://annoying.technology/index.xml
+https://annoying.technology/index.xml miscellany
 
 # Combine all blogs under the blog filter
 "query:Blog:tags # \"blog\""
-
-# Subreddits
-https://www.reddit.com/r/math/.rss
-https://www.reddit.com/r/programming/.rss
-https://www.reddit.com/r/Scholar/.rss
 
 # News
 https://www.reddit.com/r/linux/.rss news
@@ -52,6 +50,7 @@ https://selfhosted.show/rss
 https://feeds.twit.tv/sn.xml
 
 # YouTube subscriptions
+"query:YouTube:tags # \"YouTube Subscriptions\""
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-3J5xNrAbTLbU1gN8mMpOA  "~Nitro Rad"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-90KuSWRVLImW4xHWFYMnQ  "~Shady Cicada"  youtube music
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-cY3DcYladGdFQWIKL90SQ  "~Jon Ringer"  youtube coding
@@ -67,7 +66,6 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC6mIxFTvXkWQVEHPsEdflzQ  "~
 https://www.youtube.com/feeds/videos.xml?channel_id=UC6nSFpj9HTCZ5t-N3Rm3-HA  "~Vsauce"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC7590VTWe6m0kq3gJcgLINg  "~The Taylor Series"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw  "~ThePrimeagen"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UC8butISFwT-Wl7EV0hUK0BQ  "~freeCodeCamp.org"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC8uT9cgJorJPWu7ITLGo9Ww  "~The 8-Bit Guy"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA  "~Computerphile"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC9Z1XWw1kmnvOOFsj6Bzy2g  "~Blackthornprod"  youtube coding gamedev
@@ -152,18 +150,15 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UClq42foiSgl7sSpLupnugGA  "~
 https://www.youtube.com/feeds/videos.xml?channel_id=UCm22FAXZMw1BaWeFszZxUKw  "~Kitboga"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCmkP178NasnhR3TWQyyP4Gw  "~How To Mechatronics"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCmtyQOKKmrMVaKuRXz02jbQ  "~Sebastian Lague"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UCnxrdFPXJMeHru_b4Q_vTPQ  "~Simply Explained"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UCoHhuummRZaIVX7bD4t2czg  "~Professor Leonard"  youtube
+https://www.youtube.com/feeds/videos.xml?channel_id=UCoHhuummRZaIVX7bD4t2czg  "~Professor Leonard"  youtube math
 https://www.youtube.com/feeds/videos.xml?channel_id=UCodbH5mUeF-m_BsNueRDjcw  "~Overly Sarcastic Productions"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UCosnWgi3eorc1klEQ8pIgJQ  "~Afrotechmods"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A  "~Numberphile"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UCq0EGvLTyy-LLT1oUSO_0FQ  "~Eddie Woo"  youtube
+https://www.youtube.com/feeds/videos.xml?channel_id=UCosnWgi3eorc1klEQ8pIgJQ  "~Afrotechmods"  youtube electronics
+https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A  "~Numberphile"  youtube math
+https://www.youtube.com/feeds/videos.xml?channel_id=UCq0EGvLTyy-LLT1oUSO_0FQ  "~Eddie Woo"  youtube math
 https://www.youtube.com/feeds/videos.xml?channel_id=UCqJ-Xo29CKyLTjn6z2XwYAw  "~Game Maker's Toolkit"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCr-5TdGkKszdbboXXsFZJTQ  "~Gamefromscratch"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UCrTNhL_yO3tPTdQ5XgmmWjA  "~RedLetterMedia"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCrv269YwJzuZL3dH5PCgxUw  "~CodeParade"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCtAIs1VCQrymlAnw3mGonhw  "~Flammable Maths"  youtube math
-https://www.youtube.com/feeds/videos.xml?channel_id=UCtZO3K2p8mqFwiKWb9k7fXA  "~TechAltar"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCtxCXg-UvSnTKPOzLH4wJaQ  "~Coding Tech"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCu6mSoMNzHQiBIOCkHUa2Aw  "~Cody'sLab"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCvjgXvBlbQiydffZU7m1_aw  "~The Coding Train"  youtube coding math

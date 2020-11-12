@@ -5,11 +5,11 @@ def relative_date(days = 0):
     time_difference = timedelta(days=int(days))
     calculated_date = datetime.today() + time_difference
 
-    return calculated_date  
+    return calculated_date
 endglobal
 
 snippet "reldate (\d+)( ".+")?" "Prints out the relative date in ISO format." ri
-`!p 
+`!p
 reldate = relative_date(match.group(1))
 date_format = match.group(2).strip(" \"") if match.group(2) is not None else "%F"
 snip.rv = reldate.strftime(date_format)
@@ -25,7 +25,7 @@ snip.rv = datetime.today().strftime("%F")
 endsnippet
 
 
-# Quick formatting. 
+# Quick formatting.
 snippet sign "Quick signature" i
 ${1:Sincerely,}
 ${2:Gabriel Arazas}
@@ -37,7 +37,7 @@ snippet retrieve "Quick retrieval date in informal format" i
 endsnippet
 
 snippet ie "Parenthetical material Latin 'id est' (ie)" iw
-(i.e., $1) $0 
+(i.e., $1) $0
 endsnippet
 
 snippet eg "Parenthetical material Latin 'exempli gratia' (eg)" iw
@@ -45,8 +45,18 @@ snippet eg "Parenthetical material Latin 'exempli gratia' (eg)" iw
 endsnippet
 
 
-# Em dashes (I've these dedicated snippets for some reason). 
-snippet em "Quick em dash" 
+# En dashes
+snippet -- "En dash"
+–
+endsnippet
+
+
+# Em dashes (I've these dedicated snippets for some reason).
+snippet --- "Em dash"
+—
+endsnippet
+
+snippet em "Quick em dash"
 —
 endsnippet
 
@@ -63,7 +73,7 @@ snippet em-eg "'exempli gratia' surrounded with em dash" iw
 endsnippet
 
 
-# Quick word snippets 
+# Quick word snippets
 # Each of these quick word snippets has a prefix of `qw-`
 snippet qw-lx "LaTeX" iw
 LaTeX
@@ -74,12 +84,12 @@ Asciidoctor
 endsnippet
 
 
-# Miscellaneous snippets 
+# Miscellaneous snippets
 snippet #! "Quick snippet for a shebang." bi
 #!${1:/usr/bin/env} ${2:sh}
 endsnippet
 
-# This is only useful for decorative comment boxes and all of the jazz. 
+# This is only useful for decorative comment boxes and all of the jazz.
 snippet "boxen '(.*)'" "Create a box of stuff" ir
 `!p snip.rv = (match.group(1) * (len(t[1]) + 4)).strip()[0:(len(t[1]) + 4)]`
 `!p snip.rv = match.group(1)[0]` $1 `!p snip.rv = match.group(1)[0]`
@@ -87,7 +97,7 @@ snippet "boxen '(.*)'" "Create a box of stuff" ir
 $0
 endsnippet
 
-# Also stolen from Gilles Castel's post at https://castel.dev/post/lecture-notes-1/. 
+# Also stolen from Gilles Castel's post at https://castel.dev/post/lecture-notes-1/.
 snippet box "More box (that looks more like a box)."
 `!p snip.rv = '┌' + '─' * (len(t[1]) + 2) + '┐'`
 │ $1 │

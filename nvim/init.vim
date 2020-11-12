@@ -11,6 +11,7 @@ call plug#begin('~/.config/nvim/plugged')
 " Nord color scheme
 Plug 'arcticicestudio/nord-vim'
 Plug 'gruvbox-community/gruvbox'
+Plug 'chriskempson/base16-vim'
 
 " EditorConfig plugin
 Plug 'editorconfig/editorconfig-vim'
@@ -56,6 +57,9 @@ endif
 " fzf
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+
+" Emmet is an HTML plugin for easy HTML writing
+Plug 'mattn/emmet-vim'
 
 " A full LaTeX toolchain plugin for Vim.
 " Also a must-have for me since writing LaTeX can be a PITA.
@@ -103,14 +107,16 @@ call plug#end()
 """""""""""""""""""""""""
 " EDITOR CONFIGURATIONS "
 """""""""""""""""""""""""
+set encoding=utf-8
+
 let mapleader=" "
 
-" Setting the colorscheme
 colorscheme nord
 
 " Setting number lines in the gutter.
 set number relativenumber
 highlight CursorLineNr ctermfg=cyan
+highlight Visual term=reverse cterm=reverse
 
 " Setting line highlighting based on the position of the cursor.
 set cursorline

@@ -1,6 +1,5 @@
 # -*- mode: snippet -*-
 # name: Shorthand for e.g.
 # key: eg
-# condition: t
 # --
 (e.g., $1) $0
