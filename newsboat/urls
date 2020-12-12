@@ -12,12 +12,14 @@ https://drewdevault.com/blog/index.xml blog.personal
 http://distill.pub/rss.xml blog.personal
 https://euandre.org/feed.blog.en.atom blog.personal
 https://fasterthanli.me/index.xml blog.personal
+https://www.gwern.net/index.rss blog.personal
 https://jcs.org/rss blog.personal
 https://lukesmith.xyz/rss.xml blog.personal
 https://ma.ttias.be/cronweekly/index.xml blog.personal
 https://magnusson.io/index.xml blog.personal
 https://matienzo.org/posts/index.xml blog.personal
 https://protesilaos.com/codelog.xml blog.personal
+https://simblob.blogspot.com/feeds/posts/default blog.personal gamedev
 http://tonsky.me/blog/atom.xml blog.personal
 https://venam.nixers.net/blog/feed.xml blog.personal
 https://willschenk.com/feed.xml blog.personal
@@ -49,6 +51,9 @@ https://linuxunplugged.com/rss
 https://selfhosted.show/rss
 https://feeds.twit.tv/sn.xml
 
+# Peertube subscriptions
+https://video.ploud.fr/feeds/videos.xml?videoChannelId=22019 "Tim Krief" peertube gamedev
+
 # YouTube subscriptions
 "query:YouTube:tags # \"YouTube Subscriptions\""
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-3J5xNrAbTLbU1gN8mMpOA  "~Nitro Rad"  youtube
@@ -66,16 +71,15 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC6mIxFTvXkWQVEHPsEdflzQ  "~
 https://www.youtube.com/feeds/videos.xml?channel_id=UC6nSFpj9HTCZ5t-N3Rm3-HA  "~Vsauce"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC7590VTWe6m0kq3gJcgLINg  "~The Taylor Series"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw  "~ThePrimeagen"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UC8uT9cgJorJPWu7ITLGo9Ww  "~The 8-Bit Guy"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA  "~Computerphile"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UC9Z1XWw1kmnvOOFsj6Bzy2g  "~Blackthornprod"  youtube coding gamedev
-https://www.youtube.com/feeds/videos.xml?channel_id=UC9z7EZAbkphEMg0SP7rw44A  "~carykh"  youtube
+https://www.youtube.com/feeds/videos.xml?channel_id=UC8uT9cgJorJPWu7ITLGo9Ww  "~The 8-Bit Guy"  youtube computer
+https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA  "~Computerphile"  youtube computer
+https://www.youtube.com/feeds/videos.xml?channel_id=UC9Z1XWw1kmnvOOFsj6Bzy2g  "~Blackthornprod"  youtube gamedev
+https://www.youtube.com/feeds/videos.xml?channel_id=UC9z7EZAbkphEMg0SP7rw44A  "~carykh"  youtube programming
 https://www.youtube.com/feeds/videos.xml?channel_id=UCBB7sYb14uBtk8UqSQYc9-w  "~Steve Ramsey - Woodworking for Mere Mortals"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCBa659QWEk1AI4Tg--mrJ2A  "~Tom Scott"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCBlqfZZYQWKyr6qLAB7LINw  "~ICTP Postgraduate Diploma Programme"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCC26K7LTSrJK0BPAUyyvtQg  "~Brandon James Greer"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCD6VugMZKRhSyzWEWA9W2fg  "~SsethTzeentach"  youtube
-https://www.youtube.com/feeds/videos.xml?channel_id=UCDrekHmOnkptxq3gUU0IyfA  "~Devon Crawford"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCEBb1b_L6zDS3xTUrIALZOw  "~MIT OpenCourseWare"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCEOXxzW2vU0P-0THehuIIeg  "~Captain Disillusion"  youtube
 https://www.youtube.com/feeds/videos.xml?channel_id=UCEQXp_fcqwPcqrzNtWJ1w9w  "~Logos By Nick"  youtube graphics

@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: Org-Mode header
-# key: header                                                                    
+# key: header
 # --
 `(let* ((headerlevel (cl-gcd (read-number "What is the header level?: ")))
        (str ""))

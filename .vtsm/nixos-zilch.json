@@ -2,6 +2,7 @@
     "bin": "$HOME/.local/bin",
     "emacs": "$HOME/.config/doom",
     "nvim": "$HOME/.config/nvim",
+    "nyxt": "$HOME/.config/nyxt",
     "newsboat": "$HOME/.config/newsboat",
     "rofi": "$HOME/.config/rofi",
     "slop": "$HOME/.config/slop"

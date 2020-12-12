@@ -8,6 +8,7 @@ super + shift + Return
     tdrop -ma -w -4 -y "$PANEL_HEIGHT" $TERMINAL
 
 # A handy-dandy calculator as a quick dropdown terminal.
+super + shift + c
     tdrop -ma -w -4 -y "$PANEL_HEIGHT" $TERMINAL -e julia
 
 # Quick toggling for screenkey.
@@ -56,6 +57,8 @@ super + shift + n
 shift + super + r
     pkill -USR1 sxhkd && notify-send "SXHKD config has successfully reloaded."
 
+shift + super + b
+    ls $HOME/library/books/*.pdf | xargs -n1 basename | rofi -dmenu | sed "s/^/library\/books\//" | xargs zathura
 
 
 # The usual application suite shortcuts.
@@ -102,6 +105,11 @@ super + z ; {z,x,c,v}
 # Window resize 'mode'
 super + r : {h,j,k,l}
     bspc node --resize {left -10 0,bottom 0 10,top 0 -10,right 10 0}
+
+# Window rotation while keeping the layout
+# Stole this from https://www.reddit.com/r/bspwm/comments/jwq6di/give_me_some_good_ideas_for_features_i_could_try/gctmst8?utm_source=share&utm_medium=web2x&context=3
+super + {r,R}
+    bspc node @/ --circute {forward,backward}
 
 # grave is `
 super + grave

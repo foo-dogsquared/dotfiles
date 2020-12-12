@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: Org-Mode appendix block
-# key: appendix
+# key: app
 # --
 #!/usr/bin/env python
 
@@ -26,11 +26,11 @@ def parse_args(args):
     return args
 
 
-${0:// INSERT ALL OF THE CODES RIGHT HERE}
+${0:# INSERT ALL OF THE CODES RIGHT HERE}
 
 
 if __name__ == "__main__":
     logging.basicConfig(format="[%(levelname)s] %(module)s: %(message)s", level=logging.INFO, stream=sys.stdout)
 
     args = parse_args(sys.argv[1:])
-    // Make your main logic here
+    # Make your main logic here

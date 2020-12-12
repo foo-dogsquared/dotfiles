@@ -30,6 +30,14 @@ do
 done
 endsnippet
 
+snippet select "Select loop stuff" iw
+select ${1:<VARIABLE_NAME>} in ${2:foo bar baz}
+do
+    ${3:# Your stuff here}
+done
+$0
+endsnippet
+
 snippet getopts "An argument parser with getopts" iw
 while getopts ${1:<OPTSTRING>} ${2:arg}
 do
