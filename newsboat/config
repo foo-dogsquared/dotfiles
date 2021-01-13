@@ -25,3 +25,4 @@ bind-key d pagedown
 bind-key r reload-all
 bind-key R reload
 
+reload-threads 50

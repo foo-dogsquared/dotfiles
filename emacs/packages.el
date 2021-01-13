@@ -56,8 +56,11 @@
   :recipe (:host github
            :repo "org-roam/org-roam-bibtex"))
 
-; Since org-roam-bibtex is a connector to all of the specified packages and in alpha stage, it can be problematic so we'll disable it for now.
-(unpin! org-roam company-org-roam)
+;; Inline errors? Hoorah!
+(package! flycheck-inline)
+
+;; Since org-roam-bibtex is a connector to all of the specified packages and in alpha stage, it can be problematic so we'll disable it for now.
+;(unpin! org-roam company-org-roam)
 
 ; A minimap in case you have Stockholm Syndrome for your bloated IDEs. :)
 (package! minimap

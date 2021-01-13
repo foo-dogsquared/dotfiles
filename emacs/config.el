@@ -29,7 +29,8 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/writings/orgnotes")
+(setq org-directory "~/writings/orgnotes"
+      org-roam-directory "~/writings/wiki")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -93,7 +94,6 @@
     time-stamp-start "DATE_MODIFIED:[ 	]+\\\\?[\"<]+"
 
     ; Configure org-roam.
-    org-roam-directory "~/writings/wiki"
     org-roam-capture-templates '(
       ("d" "default" plain (function org-roam--capture-get-point)
        "#+AUTHOR: \"%(user-full-name)\"
@@ -120,10 +120,6 @@
 (add-hook 'before-save-hook 'time-stamp)
 
 (add-to-list 'org-modules 'org-checklist)
-
-; Activate minimap for all program-based modes (e.g., web-mode, python-mode) and text-based modes (e.g., org-mode, markdown-mode).
-(after! minimap
-  (setq minimap-major-modes '(prog-mode text-mode org-mode)))
 
 ; Org-roam-bibtex is somehow a horrible name.
 ; I guess that's why they insist on calling it ORB.

@@ -121,3 +121,10 @@ super + {Up,Down,Left,Right}
 super + shift {Up,Down,Left,Right}
     bspc node {north,south,west,east} --swap focused --follow
 
+# The Vim keybindings.
+super + {k,j,h,l}
+    bspc node {north,south,west,east} --focus
+
+super + shift {k,j,h,l}
+    bspc node {north,south,west,east} --swap focused --follow
+
