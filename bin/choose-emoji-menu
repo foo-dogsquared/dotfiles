@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Simply create a universal emoji selection list.
 # The emoji list should be the following file:
@@ -12,7 +12,7 @@
 # * rofi - Version: 1.5.4
 # * xclip - version 0.13
 
-emoji_file="${XDG_DATA_HOME:-HOME/.local/share}/emoji-list.txt"
+emoji_file="${XDG_DATA_HOME:-$HOME/.local/share}/emoji-list.txt"
 if [[ ! -f $emoji_file ]]; then
     notify-send "Downloading the emoji data file."
     wget --output-document "$emoji_file" https://unicode.org/Public/emoji/13.0/emoji-test.txt
