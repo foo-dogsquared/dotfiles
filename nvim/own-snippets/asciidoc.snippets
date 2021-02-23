@@ -203,6 +203,13 @@ ${4:<description>}
 endsnippet
 
 
+snippet sidebar "Sidebar block" bi
+${1:.<optional title>}
+****
+$2
+****
+endsnippet
+
 snippet stem "Stem block" bi
 [stem]
 ++++
@@ -217,5 +224,11 @@ endsnippet
 
 snippet foot "Footnote macro" iw
 footnote:[$1] $0
+endsnippet
+
+snippet qn "Question and answer" iw
+[qanda]
+${1:QUESTION}::
+${2:ANSWER}
 endsnippet
 
