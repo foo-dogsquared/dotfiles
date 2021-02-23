@@ -1,0 +1,60 @@
+#!/usr/bin/env osh
+
+# Convert a Newpipe database (assuming it was exported within the app) into OPML.
+
+# Dependencies:
+# * osh (oil shell) v0.8.5
+# * sqlite3 v3.34.0
+# * unzip
+# * ripgrep v12.1.1
+# * jq
+
+# Use the current Oil features in strict mode.
+# This also enables usage of the syntax.
+shopt -s strict:all oil:all
+
+var FILENAME = $1
+
+# Testing if the given file is a zip file.
+file $FILENAME | rg "Zip archive data" --quiet || exit 1
+
+var channel_id_eggex = / 'https://www.youtube.com/channel/' (word) /
+var NEWPIPE_DB = "newpipe.db"
+var TEMP_FOLDER_NAME = "newpipe"
+
+# Print the beginning of the template.
+cat <<OPML
+<opml version="2.0">
+  <head>
+    <title>Newpipe subscriptions</title>
+    <dateCreated>$(date "+%F %T %z")</dateCreated>
+    <ownerName>$(whoami)</ownerName>
+    <docs>http://dev.opml.org/spec2.html</docs>
+  </head>
+  <body>
+OPML
+
+# Print the channels in the OPML body.
+# This only occurs if the given file does have a Newpipe database.
+if unzip -l $FILENAME | rg --quiet $NEWPIPE_DB {
+    mkdir $TEMP_FOLDER_NAME && unzip -q -u $FILENAME -d $TEMP_FOLDER_NAME
+    trap "rm --recursive $TEMP_FOLDER_NAME" EXIT
+    while read channel {
+        echo $channel | json read :channel
+        setvar name = channel['name']
+        setvar url = channel['url']
+
+        # The channel ID should only match YouTube channel URLs.
+        setvar channel_id = $(echo $url | sed --quiet --regexp-extended "s|$channel_id_eggex|\\1|p")
+
+        if test -z $channel_id { continue }
+
+        echo "    <outline type=\"rss\" xmlUrl=\"https://www.youtube.com/feeds/videos.xml?channel_id=$channel_id\" htmlUrl=\"$url\" title=\"$name\"/>"
+    } <<< $(sqlite3 "$TEMP_FOLDER_NAME/$NEWPIPE_DB" "SELECT name, url FROM subscriptions" --csv --header | dasel select --parser csv --multiple --selector '.[*]' --compact --write json)
+}
+
+# Print the remaining parts of the document.
+cat <<OPML
+  </body>
+</opml>
+OPML

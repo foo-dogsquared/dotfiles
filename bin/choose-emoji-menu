@@ -13,9 +13,12 @@
 # * xclip - version 0.13
 
 emoji_file="${XDG_DATA_HOME:-$HOME/.local/share}/emoji-list.txt"
-if [[ ! -f $emoji_file ]]; then
+
+# Checks if the emoji file is non-existent or past its modification date of at least 30 days ago (2592000 seconds).
+if [[ ! -f $emoji_file ]] || test $(expr $(date "+%s") - $(date --reference="$emoji_file" "+%s")) -gt 2592000; then
     notify-send "Downloading the emoji data file."
-    wget --output-document "$emoji_file" https://unicode.org/Public/emoji/13.0/emoji-test.txt
+    wget --output-document "$emoji_file" https://unicode.org/Public/emoji/latest/emoji-test.txt
+    touch $emoji_file
 fi
 
 selection=$(awk 'match($0, /([0-9A-F ]+)\s+; fully-qualified\s+# (\S+) E[[:digit:]]+.[[:digit:]]+ (.+)$/, a){print a[2], a[3]}' "$emoji_file" \
