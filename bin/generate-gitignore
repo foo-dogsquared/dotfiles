@@ -18,7 +18,7 @@ CACHE_FILE="${XDG_CACHE_DIR:-$HOME/.cache}/gitignore-io.langs.json"
 # Check if the language list is downloaded for the last hour (3600 seconds).
 if [ ! -e $CACHE_FILE ] || test $(expr $(date "+%s") - $(date -r $CACHE_FILE "+%s")) -gt 3600
 then
-    curl --silent --location --output $CACHE_FILE "https://gitignore.io/api/list?format=json"
+    ping "gitignore.io" --count 4 && curl --silent --location --output $CACHE_FILE "https://gitignore.io/api/list?format=json"
 fi
 
 KEYS=$(jq 'keys | .[] | @text' --raw-output $CACHE_FILE | fzf --multi | while read lang; do echo " .[\"$lang\"].contents"; done | paste -s -d ',')
