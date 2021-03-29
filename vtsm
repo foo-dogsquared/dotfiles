@@ -120,7 +120,7 @@ def setup_logging():
     """
     Setup the logger instance.
     """
-    logging.basicConfig(format="[%(levelname)s] %(module)s: %(message)s", level=logging.INFO, stream=sys.stdout)
+    logging.basicConfig(format="[%(levelname)s] %(message)s", level=logging.INFO, stream=sys.stdout)
 
 
 def setup_args():

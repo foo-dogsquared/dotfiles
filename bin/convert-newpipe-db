@@ -1,6 +1,6 @@
-#!/usr/bin/env osh
+#!/usr/bin/env oil
 
-# Convert a Newpipe database (assuming it was exported within the app) into OPML.
+# Convert a Newpipe database (assuming it was exported within the app) into OPML v2.
 
 # Dependencies:
 # * osh (oil shell) v0.8.5
@@ -8,19 +8,25 @@
 # * unzip
 # * ripgrep v12.1.1
 # * jq
+# * file
 
 # Use the current Oil features in strict mode.
 # This also enables usage of the syntax.
-shopt -s strict:all oil:all
+shopt -s strict:all
 
 var FILENAME = $1
 
 # Testing if the given file is a zip file.
 file $FILENAME | rg "Zip archive data" --quiet || exit 1
 
-var channel_id_eggex = / 'https://www.youtube.com/channel/' (word) /
 var NEWPIPE_DB = "newpipe.db"
 var TEMP_FOLDER_NAME = "newpipe"
+var channel_id_eggex = / 'https://www.youtube.com/channel/' (word) /
+var NEWPIPE_DB_QUERY = "SELECT name, url, service_id, group_concat(tag, ',') AS tags FROM (SELECT subscriptions.name, subscriptions.url, subscriptions.service_id, '/' || feed_group.name AS tag
+FROM subscriptions
+LEFT JOIN feed_group_subscription_join AS subs_join
+LEFT JOIN feed_group
+ON subs_join.subscription_id = subscriptions.uid AND feed_group.uid = subs_join.group_id) GROUP BY name"
 
 # Print the beginning of the template.
 cat <<OPML
@@ -34,23 +40,63 @@ cat <<OPML
   <body>
 OPML
 
+# Simply prints an `<outline>` element formatted approriately for the resulting output.
+# Don't mind how it is printed right now. :)
+proc print-outline(title, xml_url, html_url, tags = "") {
+    printf '    <outline type="rss" xmlUrl="%s" htmlUrl="%s" title="%s"' $xml_url $html_url $title
+
+    if test -n $tags {
+      printf ' category="%s"' $tags
+    }
+
+    printf '/>\n'
+}
+
 # Print the channels in the OPML body.
 # This only occurs if the given file does have a Newpipe database.
 if unzip -l $FILENAME | rg --quiet $NEWPIPE_DB {
     mkdir $TEMP_FOLDER_NAME && unzip -q -u $FILENAME -d $TEMP_FOLDER_NAME
     trap "rm --recursive $TEMP_FOLDER_NAME" EXIT
-    while read channel {
+    sqlite3 "${TEMP_FOLDER_NAME}/${NEWPIPE_DB}" "${NEWPIPE_DB_QUERY}" --csv --header \
+    | dasel select --parser csv --multiple --selector '.[*]' --compact --write json \
+    | while read channel {
         echo $channel | json read :channel
         setvar name = channel['name']
         setvar url = channel['url']
+        setvar service_id = channel['service_id']
+        setvar tags = channel['tags']
 
-        # The channel ID should only match YouTube channel URLs.
-        setvar channel_id = $(echo $url | sed --quiet --regexp-extended "s|$channel_id_eggex|\\1|p")
+        # The `service_id` column indicates where the channel came from the selection of platforms PeerTube offers.
+        # Since the way to handle each platform differs to get the required data, we're throwing them in a case switch.
+        case $service_id {
+            # YouTube
+            '0') {
+                setvar channel_id = $(echo $url | sed --quiet --regexp-extended "s|$channel_id_eggex|\\1|p")
+                setvar xml_url = "https://www.youtube.com/feeds/videos.xml?channel_id=${channel_id}"
+            }
+            ;;
 
-        if test -z $channel_id { continue }
+            # Peertube instances
+            '3') {
+                # This naive solution just goes through the domain with the assumption that the database is exported properly from the app and not tampered with.
+                # It can go into an infinite loop so take caution for now.
+                setvar domain = $(echo $url | cut --delimiter='/' --fields='-3')
+                setvar _domain_part_index = 4
+                until (Bool($(curl --silent "$domain/api/v1/config/about" | dasel --parser json --selector ".instance.name"))) {
+                    setvar domain = $(echo $url | cut --delimiter='/' --fields="-$_domain_part_index")
+                    setvar _domain_part_index = Int($_domain_part_index) + 1
+                }
 
-        echo "    <outline type=\"rss\" xmlUrl=\"https://www.youtube.com/feeds/videos.xml?channel_id=$channel_id\" htmlUrl=\"$url\" title=\"$name\"/>"
-    } <<< $(sqlite3 "$TEMP_FOLDER_NAME/$NEWPIPE_DB" "SELECT name, url FROM subscriptions" --csv --header | dasel select --parser csv --multiple --selector '.[*]' --compact --write json)
+                setvar channel_url = $(echo $url | cut --delimiter='/'  --fields='4-')
+                setvar feed_type = $(echo $channel_url | rg "video-channels" --quiet && echo "videoChannelId" || echo "accountId")
+                setvar channel_id = $(curl "${domain}/api/v1/${channel_url}" --silent | dasel --parser json --selector '.id')
+                setvar xml_url = "$domain/feeds/videos.atom?$feed_type=$channel_id"
+            }
+            ;;
+        }
+
+        print-outline $name $xml_url $url $tags
+    }
 }
 
 # Print the remaining parts of the document.

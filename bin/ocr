@@ -15,5 +15,5 @@
 set -o pipefail
 
 notify-send "Select a region for the OCR"
-maim --select --hidecursor | magick mogrify -modulate 100,0 -resize 400% png:- | tesseract - stdout
+maim --select --hidecursor | magick mogrify -modulate 100,0 -resize 400% png:- | tesseract - stdout | xclip -selection clipboard
 

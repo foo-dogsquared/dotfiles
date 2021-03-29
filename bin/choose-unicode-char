@@ -1,7 +1,10 @@
-#!/usr/bin/env osh
+#!/usr/bin/env oil
 
 # Create an interface for select Unicode characters with rofi and copy it into the clipboard.
 # The characters are extracted from the Unicode Character Database (https://www.unicode.org/ucd/).
+# It requires a tag name or an XPath similarly used for Python's `xml.etree.ElementTree.Element.findall`.
+# See the following link for more information.
+# (https://docs.python.org/3/library/xml.etree.elementtree.html#xml.etree.ElementTree.Element.findall)
 
 # Dependencies:
 # * Oil shell
@@ -11,8 +14,9 @@
 # * awk
 
 # Set to use Oil features and strictness.
-shopt --set strict:all oil:all
+shopt --set strict:all
 
+var QUERY = ARGV[0]
 var UCD_VERSION = "13.0.0"
 var UCD_XML_URL = "https://www.unicode.org/Public/$UCD_VERSION/ucdxml/ucd.nounihan.grouped.zip"
 var CACHE = ${XDG_CACHE_DIR:-$HOME/.cache/unicode-character-database}
@@ -26,7 +30,7 @@ if test ! -f $CACHE/ucd.zip {
 # Compared to the other variations, it is only ~6MB compared to ~55MB for the flat variation.
 # Also, it requires more conditional handling than a simple shell script at this point.
 # I could've made this script entirely in Python but I want to see what Oil shell is capable of.
-python <<CODE | rofi -dmenu -p "Choose mathematical character" | awk '{ print $1 }' | xclip -selection clipboard
+python <<CODE | rofi -dmenu -p "Choose character" | awk '{ print $1 }' | xclip -selection clipboard
 import xml.etree.ElementTree as ET
 
 root = ET.fromstring('''$(unzip -p $CACHE/ucd.zip ucd.nounihan.grouped.xml)''')
@@ -41,7 +45,7 @@ def print_char(element):
     for child in list(element):
       print_char(child)
 
-math_nodes = root.findall('./{http://www.unicode.org/ns/2003/ucd/1.0}repertoire//*[@Math="Y"]')
-for point in math_nodes:
+valid_nodes = root.findall('${QUERY}')
+for point in valid_nodes:
   print_char(point)
 CODE
