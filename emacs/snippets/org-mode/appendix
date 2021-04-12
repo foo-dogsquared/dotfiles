@@ -2,6 +2,6 @@
 # name: Org-Mode appendix block
 # key: appendix
 # --
-:PROPERTIES:
-:APPENDIX: t
-:END:
+:properties:
+:appendix: t
+:end:

@@ -68,61 +68,71 @@
   (add-to-list 'safe-local-variable-values
                '(TeX-command-extra-options . "-shell-escape")))
 
-(setq
-  ; Set the journal.
-  org-journal-dir "~/writings/journal"
-  org-journal-file-format "%F"
-
-  ; Set the capture
-  org-capture-templates `(
-    ("i" "inbox" entry (file ,(concat org-directory "/inbox.org"))
-      ,(concat "* TODO %?\n"
-        "entered on %<%F %T %:z>"))
-
-    ("p" "project" entry (file ,(concat org-directory "/projects.org"))
-      ,(concat "* PROJ %?\n"
-        "- [ ] %?"))
-
-    ("c" "org-protocol-capture" entry (file ,(concat org-directory "/inbox.org"))
-      "* TODO [[%:link][%:description]]\n%x"
-      :immediate-finish t)))
-
 (after! org
   (setq
-    ; Set a custom time-stamp pattern.
-    ; Even though, it's not recommended, most of the time, it is mainly for personal documents so it is safe.
-    time-stamp-start "DATE_MODIFIED:[ 	]+\\\\?[\"<]+"
+   time-stamp-start "date_modified:[ 	]+\\\\?[\"<]+"
+   ; Set the capture
+   org-capture-templates `(
+     ("i" "inbox" entry
+      (file ,(concat org-directory "/inbox.org"))
+       ,(concat "* TODO %?\n"
+         "entered on %<%F %T %:z>"))
+
+     ("p" "project" entry
+      (file ,(concat org-directory "/projects.org"))
+       ,(concat "* PROJ %?\n"
+         "- [ ] %?"))
+
+     ("c" "org-protocol-capture" entry
+      (file ,(concat org-directory "/inbox.org"))
+       "* TODO [[%:link][%:description]]\n%x"
+       :immediate-finish t))
 
     ; Configure org-roam.
     org-roam-capture-templates '(
-      ("d" "default" plain (function org-roam--capture-get-point)
-       "#+AUTHOR: \"%(user-full-name)\"
-#+EMAIL: \"%(user-mail-address)\"
-#+DATE: \"%<%Y-%m-%d %T %:z>\"
-#+DATE_MODIFIED: \"%<%Y-%m-%d %T %:z>\"
-#+LANGUAGE: en
-#+OPTIONS: toc:t
-#+PROPERTY: header-args  :exports both
+      ("n" "notes" plain
+       #'org-roam-capture--get-point
+       "#+author: \"%(user-full-name)\"
+#+email: \"%(user-mail-address)\"
+#+date: \"%<%Y-%m-%d %T %:z>\"
+#+date_modified: \"%<%Y-%m-%d %T %:z>\"
+#+language: en
+#+options: toc:t
+#+property: header-args  :exports both
 
 %?"
-       :file-name "%<%Y-%m-%d-%H-%M-%S>"
-       :head "#+TITLE: ${title}\n"
-       :unnarrowed t))))
+    :file-name "%<%Y-%m-%d-%H-%M-%S>"
+    :head "#+title: ${title}\n"
+    :unnarrowed t)
+
+    ("d" "dailies" entry
+     #'org-roam-capture--get-point
+     "* %?"
+     :file-name "daily/%<%Y-%m-%d>"
+     :head "#+title %<%Y-%m-%d>"
+     :olp ("Study notes" "Random")))
+
+  ; Get the tags from vanilla and Roam-specific properties.
+  org-roam-tag-sources '(prop vanilla))
+  (add-to-list 'org-modules 'org-checklist))
 
 (setq
   ; Modify the time-stamp with each save.
   time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S %:z"
 
   ; Set file templates folder at $DOOMDIR/templates.
-  +file-templates-dir (expand-file-name "templates/" doom-private-dir))
+  +file-templates-dir (expand-file-name "templates/" doom-private-dir)
 
-; Automate updating timestamps.
+  ; Set the journal.
+  org-journal-dir "~/writings/journal"
+  org-journal-file-format "%F"
+  )
+
+; A workaround for electric-indent plugin.
+; See https://github.com/hlissner/doom-emacs/issues/3172 for more details.
+(add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
+
+; Automate updating timestamps on save.
 (add-hook 'before-save-hook 'time-stamp)
 
-(add-to-list 'org-modules 'org-checklist)
-
-; Org-roam-bibtex is somehow a horrible name.
-; I guess that's why they insist on calling it ORB.
-(use-package! org-roam-bibtex
-  :after-call org-mode
-  :hook (org-roam-mode . org-roam-bibtex-mode))
+;;; config.el ends here

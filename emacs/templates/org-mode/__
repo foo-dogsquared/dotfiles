@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: Org template
 # --
-#+TITLE: ${1:`
+#+title: ${1:`
 (string-join
  (mapcar #'capitalize
          ;; Replace -,_... with space
@@ -16,13 +16,13 @@
           "[^[:word:]0-9]+"
           )) " " )
 `}
-#+AUTHOR: "`user-full-name`"
-#+EMAIL: "`user-mail-address`"
-#+DATE: "`(format-time-string "%Y-%m-%d %T %:z")`"
-#+DATE_MODIFIED: "`(format-time-string "%Y-%m-%d %T %:z")`"
-#+LANGUAGE: en
-#+OPTIONS: toc:t
-#+PROPERTY: header-args  :exports both
+#+author: "`user-full-name`"
+#+email: "`user-mail-address`"
+#+date: "`(format-time-string "%Y-%m-%d %T %:z")`"
+#+date_modified: "`(format-time-string "%Y-%m-%d %T %:z")`"
+#+language: en
+#+options: toc:t
+#+property: header-args  :exports both
 
 
 $0

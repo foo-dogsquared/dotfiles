@@ -2,6 +2,6 @@
 # name: Org-Mode source block
 # key: csrc
 # --
-#+BEGIN_SRC ${1:<LANG>} :results output  :exports both  :session *${2:<SESSION NAME>}*
+#+begin_src ${1:<LANG>} :results output  :exports both  :session *${2:<SESSION NAME>}*
 $3
-#+END_SRC
+#+end_src

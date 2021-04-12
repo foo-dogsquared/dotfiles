@@ -2,8 +2,8 @@
 # name: Org-Mode video block (on HTML, anyways)
 # key: video
 # --
-#+ATTR_HTML: :controls controls
-#+BEGIN_video
-#+HTML: <source src="${1:<VIDEO URL>}">
+#+attr_html: :controls controls
+#+begin_video
+#+html: <source src="${1:<VIDEO URL>}">
 Your browser does not support the video tag.
-#+END_video
+#+end_video

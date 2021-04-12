@@ -2,6 +2,6 @@
 # name: Org-Mode source block
 # key: quote
 # --
-#+BEGIN_QUOTE
+#+begin_quote
 $1
-#+END_QUOTE
+#+end_quote

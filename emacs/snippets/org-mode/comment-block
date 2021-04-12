@@ -2,6 +2,6 @@
 # name: Org-Mode comment block
 # key: comment
 # --
-#+BEGIN_COMMENT
+#+begin_comment
 $0
-#+END_COMMENT
+#+end_comment

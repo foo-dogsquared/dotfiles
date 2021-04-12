@@ -2,6 +2,6 @@
 # name: Org-Mode local property block
 # key: props
 # --
-:PROPERTIES:
+:properties:
 $1
-:END:
+:end:
