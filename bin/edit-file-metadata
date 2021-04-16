@@ -4,6 +4,13 @@
 # It can only detect certain files and write the metadata with a certain program.
 # For the argument, it needs the path of the files to be moved.
 
+# Dependencies:
+# * Oil shell v0.8.8
+# * vorbis-tools v1.4.2
+# * exiftool v12.16
+# * file 5.38
+# * coreutils 8.32
+
 shopt --set strict:all
 
 var help_section = "A script for embedding metadata and renaming them files.
@@ -36,7 +43,7 @@ while test $# -gt 0 {
   case $1 {
     -h|--help)
       echo $help_section
-      shift
+      exit 0
       ;;
     -a|--author)
       set author = $2
@@ -94,6 +101,7 @@ proc file_parse(path, :out) {
     set file['dir'] = $(dirname $path)
     set file['name'] = $(basename $path | sed --regexp-extended "s|(.+)${extension_regex}|\\1|")
     set file['ext'] = $(basename $path | sed --regexp-extended "s|.+(${extension_regex})|\\1|")
+    set file['mime_type'] = $(file --mime-type --brief $path)
 
     setref out = file
 }
@@ -115,7 +123,8 @@ if (not skip) {
 # We'll use exiftool as a catch-all since it supports the most out of... 15 file types I considered.
 case $(file --mime-type --brief $path) {
   "audio/ogg")
-    vorbiscomment --write $path --tag "TITLE=${title}" --tag "ARTIST=${author}" --tag "DATE=${pub_date}"
+    vorbiscomment --write $path --tag "TITLE=${title}" --tag "ARTIST=${author}" --tag "DATE=${pub_date}" ||
+    opustags $path --in-place --delete-all --add "TITLE=${title}" --add "ARTIST=${author}" --add "DATE=${pub_date}"
     ;;
   *)
     exiftool -title="${title}" -author="${author}" -date="${pub_date}" ${path}
@@ -134,5 +143,5 @@ if (json_data) {
 }
 
 if (move) {
-    mv $path "${file_info['dir']}/$(kebab-case $title).${file_info['ext']}"
+    mv $path "${file_info['dir']}/$(kebab-case $title)${file_info['ext']}"
 }

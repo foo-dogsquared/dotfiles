@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+
+# TODO:
+# Given a OPML file, convert the OPML into a `urls` file compatible for newsboat.
+# It could also accept an OPML through stdin.
+
+import itertools
+from pathlib import Path
+import sys
+import xml.etree.ElementTree as ET
+
+filename = sys.argv[1]
+opml = ET.parse(filename)
+for outline in opml.findall("body/outline"):
+    categories = [category.strip("/") for category in outline.get("category", "").split(",") if category]
+    print('{xmlUrl} "~{text}" {category}'.format(xmlUrl = outline.get("xmlUrl"),
+                                                 text = outline.get("text"),
+                                                 category = " ".join([ f'"{tag}"' for tag in categories ]) if len(categories) else " "))
