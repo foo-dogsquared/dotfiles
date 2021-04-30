@@ -17,11 +17,11 @@ shopt -s strict:all
 var FILENAME = $1
 
 # Testing if the given file is a zip file.
-file $FILENAME | rg "Zip archive data" --quiet || exit 1
+file --mime $FILENAME | rg "application/zip" --quiet || exit 1
+var channel_id_eggex = / 'https://www.youtube.com/channel/' (word) /
 
 var NEWPIPE_DB = "newpipe.db"
 var TEMP_FOLDER_NAME = "newpipe"
-var channel_id_eggex = / 'https://www.youtube.com/channel/' (word) /
 var NEWPIPE_DB_QUERY = "SELECT name, url, service_id, group_concat(tag, ',') AS tags FROM (SELECT subscriptions.name, subscriptions.url, subscriptions.service_id, '/' || feed_group.name AS tag
 FROM subscriptions
 LEFT JOIN feed_group_subscription_join AS subs_join
@@ -43,7 +43,7 @@ OPML
 # Simply prints an `<outline>` element formatted approriately for the resulting output.
 # Don't mind how it is printed right now. :)
 proc print-outline(title, xml_url, html_url, tags = "") {
-    printf '    <outline type="rss" xmlUrl="%s" htmlUrl="%s" title="%s"' $xml_url $html_url $title
+    printf '    <outline type="rss" xmlUrl="%s" htmlUrl="%s" title="%s" text="%s"' $xml_url $html_url $title $title
 
     if test -n $tags {
       printf ' category="%s"' $tags
@@ -56,6 +56,7 @@ proc print-outline(title, xml_url, html_url, tags = "") {
 # This only occurs if the given file does have a Newpipe database.
 if unzip -l $FILENAME | rg --quiet $NEWPIPE_DB {
     mkdir $TEMP_FOLDER_NAME && unzip -q -u $FILENAME -d $TEMP_FOLDER_NAME
+    file --mime "${TEMP_FOLDER_NAME}/${NEWPIPE_DB}" | rg --quiet "application/x-sqlite3" || exit 1
     trap "rm --recursive $TEMP_FOLDER_NAME" EXIT
     sqlite3 "${TEMP_FOLDER_NAME}/${NEWPIPE_DB}" "${NEWPIPE_DB_QUERY}" --csv --header \
     | dasel select --parser csv --multiple --selector '.[*]' --compact --write json \
