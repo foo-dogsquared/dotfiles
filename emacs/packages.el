@@ -67,3 +67,9 @@
   :recipe (:host github
            :repo "dengste/minimap")
   :pin "8bc9a65825925a7c58b83ad389f07a93f22d60f3")
+
+; Anki
+(package! anki-editor
+  :recipe (:host github
+           :repo "louietan/anki-editor")
+  :pin "546774a453ef4617b1bcb0d1626e415c67cc88df")

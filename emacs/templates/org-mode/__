@@ -16,13 +16,9 @@
           "[^[:word:]0-9]+"
           )) " " )
 `}
-#+author: "`user-full-name`"
-#+email: "`user-mail-address`"
 #+date: "`(format-time-string "%Y-%m-%d %T %:z")`"
 #+date_modified: "`(format-time-string "%Y-%m-%d %T %:z")`"
 #+language: en
-#+options: toc:t
-#+property: header-args  :exports both
 
 
 $0

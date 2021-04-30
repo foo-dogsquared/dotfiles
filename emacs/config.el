@@ -90,27 +90,33 @@
 
     ; Configure org-roam.
     org-roam-capture-templates '(
-      ("n" "notes" plain
+      ("p" "permanent" plain
        #'org-roam-capture--get-point
-       "#+author: \"%(user-full-name)\"
-#+email: \"%(user-mail-address)\"
-#+date: \"%<%Y-%m-%d %T %:z>\"
+       "#+date: \"%<%Y-%m-%d %T %:z>\"
 #+date_modified: \"%<%Y-%m-%d %T %:z>\"
 #+language: en
-#+options: toc:t
-#+property: header-args  :exports both
 
 %?"
-    :file-name "%<%Y-%m-%d-%H-%M-%S>"
-    :head "#+title: ${title}\n"
-    :unnarrowed t)
+       :file-name "%<%Y-%m-%d-%H-%M-%S>"
+       :head "#+title: ${title}\n"
+       :unnarrowed t)
 
-    ("d" "dailies" entry
-     #'org-roam-capture--get-point
-     "* %?"
-     :file-name "daily/%<%Y-%m-%d>"
-     :head "#+title %<%Y-%m-%d>"
-     :olp ("Study notes" "Random")))
+      ("l" "literature" plain
+       #'org-roam-capture--get-point
+       "#+date: \"%<%Y-%m-%d %T %:z>\"
+#+date_modified: \"%<%Y-%m-%d %T %:z>\"
+#+language: en
+
+%?"
+       :file-name "literature/%<%Y-%m-%d-%H-%M-%S>"
+       :head "#+title: ${title}\n")
+
+      ("d" "dailies" entry
+       #'org-roam-capture--get-point
+       "* %?"
+       :file-name "daily/%<%Y-%m-%d>"
+       :head "#+title %<%Y-%m-%d>"
+       :olp ("Study notes" "Random")))
 
   ; Get the tags from vanilla and Roam-specific properties.
   org-roam-tag-sources '(prop vanilla))
@@ -126,13 +132,30 @@
   ; Set the journal.
   org-journal-dir "~/writings/journal"
   org-journal-file-format "%F"
+
+  enable-local-variables "query"
   )
 
 ; A workaround for electric-indent plugin.
 ; See https://github.com/hlissner/doom-emacs/issues/3172 for more details.
-(add-hook 'org-mode-hook (lambda () (electric-indent-local-mode -1)))
+(add-hook 'org-mode (lambda ()
+                      (electric-indent-local-mode -1)))
 
 ; Automate updating timestamps on save.
-(add-hook 'before-save-hook 'time-stamp)
+(add-hook! 'before-save-hook 'time-stamp)
+
+; Set up Anki editor
+(use-package! anki-editor
+  :hook (org-mode . anki-editor-mode)
+  :config
+  (setq anki-editor-create-decks 't)
+  (map! :localleader
+        :map org-mode-map
+        (:prefix ("C" . "Anki cards")
+         "p" #'anki-editor-push-notes
+         "P" #'anki-editor-retry-failure-notes
+         "i" #'anki-editor-insert-note
+         "d" #'anki-editor-cloze-region
+         "e" #'anki-editor-export-subtree-to-html)))
 
 ;;; config.el ends here
