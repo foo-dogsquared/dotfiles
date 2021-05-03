@@ -1,7 +1,7 @@
 # Config copied from Luke Smith's because I'm unoriginal.
 auto-reload yes
 browser "nohup brave --new-tab %u &>/dev/null &"
-macro m set browser "mpv %u"; open-in-browser ; set browser "brave %u"
+macro m set browser "mpv %u"; one ; set browser brave
 
 bind-key ; cmdline
 bind-key SPACE next-unread
@@ -26,3 +26,5 @@ bind-key r reload-all
 bind-key R reload
 
 reload-threads 50
+
+datetime-format "%F"

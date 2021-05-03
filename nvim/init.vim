@@ -23,6 +23,9 @@ Plug 'lilydjwg/colorizer'
 " One of the must-haves for me.
 Plug 'sirver/ultisnips'
 
+" Text editor integration for the browser
+Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
+
 " Setting my private snippets in a consistent home directory and a relative snippets directory for project-specific snippets.
 let g:UltiSnipsSnippetDirectories = [$HOME . "/.config/nvim/own-snippets", ".snippets"]
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -54,7 +57,7 @@ if !exists('g:airline_symbols')
    let g:airline_symbols = {}
 endif
 
-" fzf
+" Fuzzy finder for finding files freely and fastly.
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
