@@ -14,7 +14,12 @@
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-(doom! :input
+(doom!
+       ;; All custom modules will be put here.
+       :tools
+       (wiki +anki)
+
+       :input
        ;;chinese
        japanese
 
@@ -146,8 +151,7 @@
             +journal
             +noter
             +pandoc
-            +present
-            +roam)         ; organize your plain life in plain text
+            +present)         ; organize your plain life in plain text
        raku                ; write code no one else can comprehend
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
@@ -183,6 +187,4 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens)
-)
-
+       (default +bindings +smartparens))

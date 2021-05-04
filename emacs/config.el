@@ -15,7 +15,8 @@
 (setq doom-theme 'doom-nord)
 
 (setq org-directory "~/writings/orgnotes"
-      org-roam-directory "~/writings/wiki")
+      org-roam-directory "~/writings/wiki"
+      org-roam-dailies-directory (concat org-roam-directory "/daily"))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -121,6 +122,7 @@
 (setq
  ;; Modify the time-stamp with each save.
  time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S %:z"
+ org-id-link-to-org-use-id t
 
  ;; Set file templates folder at $DOOMDIR/templates.
  +file-templates-dir (expand-file-name "templates/" doom-private-dir)
@@ -145,18 +147,8 @@
 ;; Automate updating timestamps on save.
 (add-hook! 'before-save-hook 'time-stamp)
 
-;; Set up Anki editor
-(use-package! anki-editor
-  :hook (org-mode . anki-editor-mode)
-  :config
-  (setq anki-editor-create-decks 't)
-  (map! :localleader
-        :map org-mode-map
-        (:prefix ("C" . "Anki cards")
-         "p" #'anki-editor-push-notes
-         "r" #'anki-editor-retry-failure-notes
-         "i" #'anki-editor-insert-note
-         "I" #'anki-editor-cloze-region
-         "e" #'anki-editor-export-subtree-to-html)))
+;; Add a capture hook.
+(add-hook! 'org-capture-prepare-finalize-hook 'org-id-get-create)
+(add-hook! 'org-roam-capture-new-node-hook 'org-id-get-create)
 
 ;;; config.el ends here

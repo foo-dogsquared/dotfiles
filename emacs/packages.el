@@ -51,25 +51,5 @@
 ;;;;;;;;;;;;
 ; PACKAGES ;
 ;;;;;;;;;;;;
-;;(package! flycheck-vale)
-(package! org-roam-bibtex
-  :recipe (:host github
-           :repo "org-roam/org-roam-bibtex"))
-
 ;; Inline errors? Hoorah!
 (package! flycheck-inline)
-
-;; Since org-roam-bibtex is a connector to all of the specified packages and in alpha stage, it can be problematic so we'll disable it for now.
-;(unpin! org-roam company-org-roam)
-
-; A minimap in case you have Stockholm Syndrome for your bloated IDEs. :)
-(package! minimap
-  :recipe (:host github
-           :repo "dengste/minimap")
-  :pin "8bc9a65825925a7c58b83ad389f07a93f22d60f3")
-
-; Anki
-(package! anki-editor
-  :recipe (:host github
-           :repo "louietan/anki-editor")
-  :pin "546774a453ef4617b1bcb0d1626e415c67cc88df")
