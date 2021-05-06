@@ -16,7 +16,7 @@
 
 (setq org-directory "~/writings/orgnotes"
       org-roam-directory "~/writings/wiki"
-      org-roam-dailies-directory (concat org-roam-directory "/daily"))
+      org-roam-dailies-directory (f-join org-roam-directory "daily"))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -55,54 +55,51 @@
                                         ; Set the capture
    org-capture-templates `(
                            ("i" "inbox" entry
-                            (file ,(concat org-directory "/inbox.org"))
+                            (file ,(f-join org-directory "inbox.org"))
                             ,(concat "* TODO %?\n"
                                      "entered on %<%F %T %:z>"))
 
                            ("p" "project" entry
-                            (file ,(concat org-directory "/projects.org"))
+                            (file ,(f-join org-directory "projects.org"))
                             ,(concat "* PROJ %?\n"
                                      "- [ ] %?"))
 
                            ("c" "org-protocol-capture" entry
-                            (file ,(concat org-directory "/inbox.org"))
+                            (file ,(f-join org-directory "inbox.org"))
                             "* TODO [[%:link][%:description]]\n%x"
                             :immediate-finish t))
 
                                         ; Configure org-roam.
-   org-roam-capture-templates '(
-                                ("p" "permanent" plain
-                                 #'org-roam-capture--get-point "%?"
-                                 :file-name "%<%Y-%m-%d-%H-%M-%S>"
-                                 :head "#+title: ${title}
+   org-roam-capture-templates `(
+                                ("p" "permanent" plain "%?"
+                                 :if-new
+                                 (file+head "%<%Y-%m-%d-%H-%M-%S>.org"
+                                            "#+title: ${title}
 #+date: \"%<%Y-%m-%d %T %:z>\"
 #+date_modified: \"%<%Y-%m-%d %T %:z>\"
-#+language: en"
+#+language: en")
                                  :unnarrowed t)
 
-                                ("c" "cards" plain
-                                 #'org-roam-capture--get-point "%?"
-                                 :head "#+title: Anki: ${title}
+                                ("c" "cards" plain "%?"
+                                 :if-new
+                                 (file+head ,(f-join "cards" "${slug}.org") "#+title: Anki: ${title}
 #+date: \"%<%Y-%m-%d %T %:z>\"
 #+date_modified: \"%<%Y-%m-%d %T %:z>\"
 #+language: en
-#+property: anki_deck ${title}"
-                                 :file-name "cards/${slug}"
+#+property: anki_deck ${title}")
                                  :unnarrowed t)
 
-                                ("l" "literature" plain
-                                 #'org-roam-capture--get-point "%?"
-                                 :head "#+title: ${title}
+                                ("l" "literature" plain "%?"
+                                 :if-new
+                                 (file+head ,(f-join "literature" "%<%Y-%m-%d-%H-%M-%S>")"#+title: ${title}
 #+date: \"%<%Y-%m-%d %T %:z>\"
 #+date_modified: \"%<%Y-%m-%d %T %:z>\"
-#+language: en"
-                                 :file-name "literature/%<%Y-%m-%d-%H-%M-%S>"
-                                 :unnarrowed t)
+#+language: en")
+                                 :unnarrowed t))
 
-                                ("d" "dailies" entry
-                                 #'org-roam-capture--get-point "%?"
-                                 :file-name "daily/%<%Y-%m-%d>"
-                                 :head "#+title %<%Y-%m-%d>"))
+   org-roam-dailies-capture-templates `(("d" "default" entry "* %?"
+                                         :if-new
+                                         (file+head ,(expand-file-name "%<%Y-%m-%d>.org" org-roam-dailies-directory) "#+title: %<%Y-%m-%d>\n")))
 
    ;; Get the tags from vanilla and Roam-specific properties.
    org-roam-tag-sources '(prop vanilla))

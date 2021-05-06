@@ -14,12 +14,7 @@
 ;;      Alternatively, press 'gd' (or 'C-c g d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-(doom!
-       ;; All custom modules will be put here.
-       :tools
-       (wiki +anki)
-
-       :input
+(doom! :input
        ;;chinese
        japanese
 
@@ -187,4 +182,8 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       (default +bindings +smartparens)
+
+       :tools
+       (wiki +anki
+             +dendron))
