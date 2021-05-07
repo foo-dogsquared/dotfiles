@@ -1,20 +1,25 @@
-;;; tools/wiki/config.el -*- lexical-binding: t; -*-
+;;; tools/wiki/config.el --- The configuration for foo-dogsquared's wiki as a module.
+;;; -*- lexical-binding: t; -*-
 
+;;; Commentary:
 ;; My custom configuration for setting up my personal wiki.
 ;; Also a good opportunity for training my Elisp-fu.
 (require 'f)
 
-(defvar +anki-cards-directory nil
-  "The location of the Anki cards")
+;;; Code:
+(defvar +wiki-directory "~/wiki")
 
-(defvar +structured-notes-directory nil
-  "The path of the structured notes used for the Dendron-like features.
-The structured notes are considered separate to the org-roam notes.
-Though, both notes are integrated in the mindset that org-roam is an extension of
-the structured notes needed to create atmoic notes.")
+(defvar +anki-cards-directory-name "cards")
+(defvar +structured-notes-directory-name "structured")
 
-(defun +anki-editor-reset-note ()
-  "Reset the Anki note in point by deleting the note ID and the deck."
+(defvar +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))
+(defvar +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name))
+
+(defun +anki-editor-push-all-notes-to-anki ()
+  (interactive)
+  (anki-editor-push-notes nil nil (directory-files-recursively +anki-cards-directory "\\.*org" nil)))
+
+(defun +anki-editor-reset-note () "Reset the Anki note in point by deleting the note ID and the deck."
   (interactive)
   (org-entry-delete (point) anki-editor-prop-note-id)
   (org-entry-delete (point) anki-editor-prop-deck))
@@ -31,7 +36,9 @@ the structured notes needed to create atmoic notes.")
    org-roam-setup
    org-roam-capture
    org-roam-node-find)
-  :preface (defvar org-roam-directory nil)
+  :preface
+  (defvar org-roam-directory nil)
+  (defvar +wiki-directory nil)
   :init
   (map! :leader
         :after org
@@ -53,29 +60,36 @@ the structured notes needed to create atmoic notes.")
   :config
   (setq org-roam-completion-everywhere t
         org-roam-directory (file-name-as-directory
-                             (file-truename
-                               (expand-file-name (or org-roam-directory "roam")
-                                                 org-directory)))
-        org-roam-dailies-directory (f-join org-roam-directory "daily"))
+                            (file-truename
+                             (expand-file-name +wiki-directory
+                                               org-directory)))
+        org-roam-dailies-directory (f-join +wiki-directory "daily"))
   (org-roam-setup))
 
 (use-package! anki-editor
   :hook (org-mode . anki-editor-mode)
-  :config
-  (setq anki-editor-create-decks 't
-        +anki-cards-directory (f-join org-roam-directory "cards"))
+  :preface
+  (defvar +wiki-directory nil)
+  :init
   (map! :localleader
         :map org-mode-map
         (:prefix ("C" . "Anki cards")
          "p" #'anki-editor-push-notes
+         "P" #'+anki-editor-push-all-notes-to-anki
          "r" #'anki-editor-retry-failure-notes
          "i" #'anki-editor-insert-note
          "I" #'anki-editor-cloze-region
          "e" #'anki-editor-export-subtree-to-html
          "d" #'+anki-editor-reset-note
-         "D" #'+anki-editor-reset-all-notes)))
+         "D" #'+anki-editor-reset-all-notes))
+  :config
+  (setq anki-editor-create-decks 't
+        +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name)))
 
 (use-package! dendroam
   :after org-roam
+  :preface (defvar +wiki-directory nil)
   :config
-  (setq +structured-notes-directory (f-join org-roam-directory "structured")))
+  (setq +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name)))
+
+;;; config.el ends here

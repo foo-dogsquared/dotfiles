@@ -2,10 +2,6 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
 (setq user-full-name "Gabriel Arazas"
       user-mail-address "foo.dogsquared@gmail.com")
 
@@ -18,32 +14,40 @@
       org-roam-directory "~/writings/wiki"
       org-roam-dailies-directory (f-join org-roam-directory "daily"))
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
-
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
-;; they are implemented.
-
-;; Search the project path with Projectile.
 (setq projectile-project-search-path '("~/projects/software/" "~/writings/"))
 
-                                        ; Set the TeX engine to LuaTeX.
+(setq
+ time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S %:z"
+ org-id-link-to-org-use-id t
+
+ +file-templates-dir (expand-file-name "templates" doom-private-dir)
+ +wiki-directory "~/writings/wiki"
+
+ org-journal-dir "~/writings/journal"
+ org-journal-file-format "%F"
+
+ enable-local-variables "query")
+
+(defvar my/wiki-asset-directory-name "assets")
+
+(defun align-non-space (BEG END)
+  "Align non-space columns in region BEG END."
+  (interactive "r")
+  (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
+
+(defun my/create-assets-folder ()
+  "A quick convenient function to create an assets folder in the wiki folder."
+  (interactive)
+  (if (and (not (string= (f-base (buffer-file-name))
+                         my/wiki-asset-directory-name))
+           (f-descendant-of-p (buffer-file-name)
+                              (expand-file-name +wiki-directory)))
+      (f-mkdir my/wiki-asset-directory-name
+               (f-join my/wiki-asset-directory-name (file-name-sans-extension (buffer-file-name))))
+    (message "Not in the wiki directory.")))
+
 (after! tex
   (TeX-engine-set "luatex")
   (add-to-list 'safe-local-variable-values
@@ -107,34 +111,13 @@
 
 ;; Custom keybindings
 (map!
+ (:when (featurep! :tools wiki)
+  :leader
+  :prefix "nr"
+  :desc "Create the asset folder" "m" #'my/create-assets-folder)
+
  (:when (featurep! :editor format)
-  :n "g=" #'+format/buffer)
-
- (:when (featurep! :lang org +roam)
-  (:map org-roam-mode-map
-   :leader
-   :prefix "nr"
-   :desc "Find a random Org-roam note" "R" #'org-roam-random-note)))
-
-(setq
- ;; Modify the time-stamp with each save.
- time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S %:z"
- org-id-link-to-org-use-id t
-
- ;; Set file templates folder at $DOOMDIR/templates.
- +file-templates-dir (expand-file-name "templates/" doom-private-dir)
-
- ;; Set the journal.
- org-journal-dir "~/writings/journal"
- org-journal-file-format "%F"
-
- enable-local-variables "query"
- )
-
-(defun align-non-space (BEG END)
-  "Align non-space columns in region BEG END."
-  (interactive "r")
-  (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
+  :n "g=" #'+format/buffer))
 
 ;; A workaround for electric-indent plugin.
 ;; See https://github.com/hlissner/doom-emacs/issues/3172 for more details.
