@@ -48,6 +48,9 @@ endif
 
 let g:deoplete#enable_at_startup = 1
 
+" A linting engine and an LSP client.
+Plug 'dense-analysis/ale'
+
 " One of the most popular plugins.
 " Allows to create more substantial status bars.
 Plug 'vim-airline/vim-airline'

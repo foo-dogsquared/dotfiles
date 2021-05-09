@@ -1,6 +1,6 @@
 #+title: tools/wiki
 #+date: "2021-05-05 00:27:26 +08:00"
-#+date_modified: "2021-05-05 01:52:39 +08:00"
+#+date_modified: "2021-05-08 12:28:46 +08:00"
 #+language: en
 
 
@@ -8,14 +8,16 @@
 * Description
 
 This module set up my personal wiki configuration with Emacs primarily with org-roam.
+Just like Emacs itself, tried my best to make it fully configurable.
 The setup uses org-roam v2.
 
 
 ** Module flags
 
 - ~+anki~ enables Anki cards editing with [[https://github.com/louietan/anki-editor/][anki-editor]].
-- ~+markdown~ adds Markdown support in org-roam.
+- ~+biblio~ enables reference management with [[https://github.com/jkitchin/org-ref][org-ref]].
 - ~+dendron~ adds [[https://dendron.so/][Dendron]]-inspired features with [[https://github.com/vicrdguez/dendroam][dendroam]].
+- ~+markdown~ adds Markdown support in org-roam.
 
 
 
@@ -25,6 +27,7 @@ The setup uses org-roam v2.
 - [[https://github.com/louietan/anki-editor/][anki-editor]]
 - [[https://github.com/vicrdguez/dendroam][dendroam]]
 - [[https://github.com/nobiot/md-roam][md-roam]]
+- [[https://github.com/jkitchin/org-ref][org-ref]]
 
 
 

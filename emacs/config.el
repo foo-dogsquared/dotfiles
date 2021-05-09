@@ -32,11 +32,6 @@
 
 (defvar my/wiki-asset-directory-name "assets")
 
-(defun align-non-space (BEG END)
-  "Align non-space columns in region BEG END."
-  (interactive "r")
-  (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
-
 (defun my/create-assets-folder ()
   "A quick convenient function to create an assets folder in the wiki folder."
   (interactive)
@@ -95,11 +90,15 @@
 
                                 ("l" "literature" plain "%?"
                                  :if-new
-                                 (file+head ,(f-join "literature" "%<%Y-%m-%d-%H-%M-%S>")"#+title: ${title}
+                                 (file+head ,(f-join "literature" "%<%Y-%m-%d-%H-%M-%S>.org") "#+title: ${title}
 #+date: \"%<%Y-%m-%d %T %:z>\"
 #+date_modified: \"%<%Y-%m-%d %T %:z>\"
 #+language: en")
-                                 :unnarrowed t))
+                                 :unnarrowed t)
+
+                                ("d" "dailies" entry "* %?"
+                                 :if-new
+                                 (file+head ,(expand-file-name "%<%Y-%m-%d>.org" org-roam-dailies-directory) "#+title: %<%Y-%m-%d>\n")))
 
    org-roam-dailies-capture-templates `(("d" "default" entry "* %?"
                                          :if-new

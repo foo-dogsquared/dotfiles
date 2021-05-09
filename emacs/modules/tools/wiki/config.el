@@ -9,26 +9,6 @@
 ;;; Code:
 (defvar +wiki-directory "~/wiki")
 
-(defvar +anki-cards-directory-name "cards")
-(defvar +structured-notes-directory-name "structured")
-
-(defvar +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))
-(defvar +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name))
-
-(defun +anki-editor-push-all-notes-to-anki ()
-  (interactive)
-  (anki-editor-push-notes nil nil (directory-files-recursively +anki-cards-directory "\\.*org" nil)))
-
-(defun +anki-editor-reset-note () "Reset the Anki note in point by deleting the note ID and the deck."
-  (interactive)
-  (org-entry-delete (point) anki-editor-prop-note-id)
-  (org-entry-delete (point) anki-editor-prop-deck))
-
-(defun +anki-editor-reset-all-notes ()
-  "Reset the Anki notes in the current buffer by deleting the note ID and the deck."
-  (interactive)
-  (anki-editor-map-note-entries #'+anki-editor-reset-note))
-
 (use-package! org-roam
   :hook (org-load . org-roam-mode)
   :commands
@@ -66,30 +46,48 @@
         org-roam-dailies-directory (f-join +wiki-directory "daily"))
   (org-roam-setup))
 
-(use-package! anki-editor
-  :hook (org-mode . anki-editor-mode)
-  :preface
-  (defvar +wiki-directory nil)
-  :init
-  (map! :localleader
-        :map org-mode-map
-        (:prefix ("C" . "Anki cards")
-         "p" #'anki-editor-push-notes
-         "P" #'+anki-editor-push-all-notes-to-anki
-         "r" #'anki-editor-retry-failure-notes
-         "i" #'anki-editor-insert-note
-         "I" #'anki-editor-cloze-region
-         "e" #'anki-editor-export-subtree-to-html
-         "d" #'+anki-editor-reset-note
-         "D" #'+anki-editor-reset-all-notes))
-  :config
-  (setq anki-editor-create-decks 't
-        +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name)))
+(when (featurep! +anki)
+  (defvar +anki-cards-directory-name "cards")
+  (defvar +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))
+  (defun +anki-editor-push-all-notes-to-anki ()
+    (interactive)
+    (anki-editor-push-notes nil nil (directory-files-recursively +anki-cards-directory "\\.*org" nil)))
+  (defun +anki-editor-reset-note ()
+    "Reset the Anki note in point by deleting the note ID and the deck."
+    (interactive)
+    (org-entry-delete (point) anki-editor-prop-note-id)
+    (org-entry-delete (point) anki-editor-prop-deck))
+  (defun +anki-editor-reset-all-notes ()
+    "Reset the Anki notes in the current buffer by deleting the note ID and the deck."
+    (interactive)
+    (anki-editor-map-note-entries #'+anki-editor-reset-note))
+  (use-package! anki-editor
+    :hook (org-mode . anki-editor-mode)
+    :preface
+    (defvar +wiki-directory nil)
+    :init
+    (map! :localleader
+          :map org-mode-map
+          (:prefix ("C" . "Anki cards")
+           "p" #'anki-editor-push-notes
+           "P" #'+anki-editor-push-all-notes-to-anki
+           "r" #'anki-editor-retry-failure-notes
+           "i" #'anki-editor-insert-note
+           "I" #'anki-editor-cloze-region
+           "e" #'anki-editor-export-subtree-to-html
+           "d" #'+anki-editor-reset-note
+           "D" #'+anki-editor-reset-all-notes))
+    :config
+    (setq anki-editor-create-decks 't
+          +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))))
 
-(use-package! dendroam
-  :after org-roam
-  :preface (defvar +wiki-directory nil)
-  :config
-  (setq +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name)))
+(when (featurep! +dendron)
+  (defvar +structured-notes-directory-name "structured")
+  (defvar +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name))
+  (use-package! dendroam
+    :after org-roam
+    :preface (defvar +wiki-directory nil)
+    :config
+    (setq +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name))))
 
 ;;; config.el ends here

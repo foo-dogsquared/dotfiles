@@ -5,6 +5,10 @@
 (package! org-roam
   :recipe (:host github :repo "org-roam/org-roam" :branch "v2"))
 
+(when (featurep! +biblio)
+  (package! org-ref
+    :recipe (:host github :repo "jkitchin/org-ref")))
+
 (when (featurep! +anki)
   (package! anki-editor
     :recipe (:host github
