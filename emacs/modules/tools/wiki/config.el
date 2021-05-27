@@ -9,6 +9,14 @@
 ;;; Code:
 (defvar +wiki-directory "~/wiki")
 
+(defun +org-roam-split-to-random-node ()
+  "Open a split window sensibly for a random note."
+  ; TODO: Create a window, open a random note, and that's it.
+  (interactive)
+  (split-window-sensibly)
+  (other-window 1)
+  (org-roam-node-random))
+
 (use-package! org-roam
   :hook (org-load . org-roam-mode)
   :commands
@@ -24,7 +32,8 @@
         :after org
         :map org-roam-dailies-map
         (:prefix ("n r" . "org-roam")
-                 :desc "Go to a random node" "R" #'org-roam-node-random
+                 :desc "Go to a random node" "r" #'org-roam-node-random
+                 :desc "Go to a random node and split" "R" #'+org-roam-split-to-random-node
                  :desc "Find node" "f" #'org-roam-node-find
                  :desc "Org Roam capture" "c" #'org-roam-capture
                  :desc "Org Roam setup" "s" #'org-roam-setup
@@ -46,6 +55,22 @@
         org-roam-dailies-directory (f-join +wiki-directory "daily"))
   (org-roam-setup))
 
+(when (featurep! +biblio)
+  (defvar +wiki-references-filename "references.bib")
+  (defvar +wiki-bibliography-note-filename "references.org")
+  (defvar +wiki-bibliography (f-join +wiki-directory +wiki-references-filename))
+  (defvar +wiki-bibliography-note (f-join +wiki-directory +wiki-bibliography-note-filename))
+
+  (use-package! org-ref
+    :after org-roam
+    :config
+    (setq +wiki-bibliography (f-join +wiki-directory +wiki-references-filename)
+          org-ref-default-bibliography +wiki-bibliography
+          org-ref-bibliography-notes +wiki-bibliography-note))
+
+  (use-package! org-roam-bibtex
+    :after org-roam))
+
 (when (featurep! +anki)
   (defvar +anki-cards-directory-name "cards")
   (defvar +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))
@@ -61,6 +86,7 @@
     "Reset the Anki notes in the current buffer by deleting the note ID and the deck."
     (interactive)
     (anki-editor-map-note-entries #'+anki-editor-reset-note))
+
   (use-package! anki-editor
     :hook (org-mode . anki-editor-mode)
     :preface
@@ -84,6 +110,7 @@
 (when (featurep! +dendron)
   (defvar +structured-notes-directory-name "structured")
   (defvar +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name))
+
   (use-package! dendroam
     :after org-roam
     :preface (defvar +wiki-directory nil)

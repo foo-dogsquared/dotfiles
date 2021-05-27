@@ -186,4 +186,5 @@
 
        :tools
        (wiki +anki
-             +dendron))
+             +dendron
+             +biblio))

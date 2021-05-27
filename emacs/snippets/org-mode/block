@@ -2,6 +2,6 @@
 # name: Org-Mode dynamic blocks
 # key: block
 # --
-\#+begin: ${1:<PARAMETERS>}
+#+begin: ${1:<PARAMETERS>}
 $2
-\#+end:
+#+end:
