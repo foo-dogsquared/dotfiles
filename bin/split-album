@@ -1,12 +1,5 @@
-#!/usr/bin/env oil
-
-# The following are the dependencies for this script.
-#
-# * Oil shell v0.8.8
-# * coreutils v8.32
-# * file 5-32
-# * ffmpeg v4.3.1
-# * ripgrep v12.1.1
+#! /usr/bin/env nix-shell
+#! nix-shell -i oil -p coreutils moreutils ffmpeg gnused ripgrep
 
 shopt --set strict:all
 
@@ -23,6 +16,7 @@ Options:
     -d, --date [date]               Set the publication date of the album.
     -a, --author [author]           Set the author of the album.
     --json                          Print the JSON data for use with other applications.
+    --skip                          Skip the extraction part, useful for printing data with '--json' or testing the timestamp file.
     --strict                        Set to be strict, exiting when an invalid timestamp is encountered.
 
 Environment variables:
@@ -100,6 +94,7 @@ var pub_date = ''
 
 var prints_json = false
 var strict_mode = false
+var skip = false
 
 while test $len(ARGV) -gt 0 {
   case $[ARGV[0]] {
@@ -135,6 +130,10 @@ while test $len(ARGV) -gt 0 {
         setvar strict_mode = true
         shift
         ;;
+    --skip)
+        setvar skip = true
+        shift
+        ;;
     --json)
         setvar prints_json = true
         shift
@@ -151,9 +150,9 @@ proc warnf(msg, @args) {
     >&2 printf "${msg}\\n" @args
 }
 
-proc errorf(msg, exit_code = 1, @args) {
+proc errorf(msg, @args) {
     >&2 printf "${msg}\\n" @args
-    exit ${exit_code}
+    exit 1
 }
 
 proc prompt(msg, :out, prefix = ">> ") {
@@ -190,20 +189,20 @@ case $(file --mime-type --brief $timestamp_file) {
         setvar output_data['chapters'] = chapters
         ;;
 
-    # Also cleans up the timestamp file with comments and empty lines.
+    # Also cleans up the timestamp file with comments (i.e., lines starting with '#') and empty lines allowing for more commenting options.
     # I just want to improve the timestamp format (a little bit).
     "text/plain")
         sed --regexp-extended --expression '/^\s*$/d' --expression '/^#/d' $timestamp_file | while read --line {
             var chapter = {}
             setvar chapter['title'] = $(write -- $_line | cut -d' ' -f2-)
             setvar chapter['timestamp'] = $(write -- $_line | cut -d' ' -f1)
-        
+
             write -- ${chapter['timestamp']} | rg --quiet $timestamp_regex || {
                 warnf "'%s' %s is not a valid timestamp" ${chapter['timestamp']} ${chapter['title']}
                 setvar has_error = true
                 continue
             }
-        
+
             _ output_data['chapters'].append(chapter)
         }
         ;;
@@ -212,25 +211,32 @@ case $(file --mime-type --brief $timestamp_file) {
 if (strict_mode and has_error) { exit 1 }
 
 const title_slug = $(kebab-case $album)
-setvar output_data['directory'] = title_slug
+setvar output_data['directory'] = $(realpath --canonicalize-missing $title_slug)
 mkdir -p $title_slug
 
+# Rather than sequentially segmenting the audio, we'll extract the starting and ending timestamps of each segment then feed it to a job queue that can execute jobs in parallel.
+# Take note we don't have the ending timestamp of each segment so we need a way to look back into items.
 const chapter_len = len(output_data['chapters'])
+var job_queue = %()
 
 for index in @(seq $[chapter_len]) {
-    setvar chapter = output_data['chapters'][Int(index) - 1]
+    var index = Int(index)
+    var chapter = output_data['chapters'][index - 1]
     var start = chapter['timestamp']
-    var end = output_data['chapters'][Int(index)]['timestamp'] if Int(index) != chapter_len else null
+    var end = output_data['chapters'][index]['timestamp'] if index != chapter_len else null
     var filename = $(printf "%.2d-%s.%s" $index $(kebab-case ${chapter['title']}) $EXTENSION)
-    setvar output_data['chapters'][Int(index) - 1]['file'] = filename
+    setvar output_data['chapters'][index - 1]['file'] = filename
 
-    warnf "[%d/%d] %s" ${index} ${chapter_len} ${chapter['title']}
-    if (Int(index) != chapter_len) {
-        ffmpeg -loglevel quiet -nostdin -i $audio_file -ss $start -to $end "${title_slug}/${filename}"
-    } else {
-        ffmpeg -loglevel quiet -nostdin -i $audio_file -ss $start "${title_slug}/${filename}"
+    if (start > end and end is not null) {
+        warnf '%s (start) is ahead compared to %s (end)' $start $end
+        setvar has_error = true
     }
+
+    push :job_queue "ffmpeg -loglevel quiet -nostdin -i '${audio_file}' -ss ${start} $['-to ' + end if index != chapter_len else ''] ${title_slug}/${filename}"
 }
 
+if (has_error) { exit 1 }
+
+if (not skip) { parallel -- @job_queue }
 if (prints_json) { json write :output_data }
 

@@ -71,55 +71,8 @@
                            ("c" "org-protocol-capture" entry
                             (file ,(f-join org-directory "inbox.org"))
                             "* TODO [[%:link][%:description]]\n%x"
-                            :immediate-finish t))
+                            :immediate-finish t))))
 
-   org-roam-capture-templates `(
-                                ("p" "permanent" plain "%?"
-                                 :if-new
-                                 (file+head "%<%Y-%m-%d-%H-%M-%S>.org"
-                                            "#+title: ${title}
-#+date: \"%<%Y-%m-%d %T %:z>\"
-#+date_modified: \"%<%Y-%m-%d %T %:z>\"
-#+language: en")
-                                 :unnarrowed t)
-
-                                ("c" "cards" plain "%?"
-                                 :if-new
-                                 (file+head ,(f-join +anki-cards-directory-name "%<%Y>.org") "#+title: Anki: ${title}
-#+date: \"%<%Y-%m-%d %T %:z>\"
-#+date_modified: \"%<%Y-%m-%d %T %:z>\"
-#+language: en
-#+property: anki_deck ${title}")
-                                 :unnarrowed t)
-
-                                ("C" "challenges" plain "%?"
-                                 :if-new
-                                 (file+head ,(f-join +wiki-directory my/wiki-exercises-directory "${slug}.org") "#+title: ${title}
-#+date: \"%<%Y-%m-%d %T %:z>\"
-#+date_modified: \"%<%Y-%m-%d %T %:z>\"
-#+language: en")
-                                 :unnarrowed t)
-
-                                ("l" "literature" plain "%?"
-                                 :if-new
-                                 (file+head ,(f-join "literature" "%<%Y-%m-%d-%H-%M-%S>.org") "#+title: ${title}
-#+date: \"%<%Y-%m-%d %T %:z>\"
-#+date_modified: \"%<%Y-%m-%d %T %:z>\"
-#+language: en")
-                                 :unnarrowed t)
-
-                                ("d" "dailies" entry "* %?"
-                                 :if-new
-                                 (file+head ,(expand-file-name "%<%Y-%m-%d>.org" org-roam-dailies-directory) "#+title: %<%Y-%m-%d>\n"))
-
-                                ("s" "structured" plain "%?"
-                                 :if-new
-                                 (file+head ,(f-join +structured-notes-directory-name "${slug}.org") "#+title: ${title}")
-                                 :unnarrowed t))
-
-   org-roam-dailies-capture-templates `(("d" "default" entry "* %?"
-                                         :if-new
-                                         (file+head ,(expand-file-name "%<%Y-%m-%d>.org" org-roam-dailies-directory) "#+title: %<%Y-%m-%d>\n")))))
 
 ;; Custom keybindings
 (map!
@@ -137,9 +90,6 @@
 
 ;; Automate updating timestamps on save.
 (add-hook! 'before-save-hook 'time-stamp)
-
-;; Add a capture hook.
-(add-hook! 'org-roam-capture-new-node-hook 'org-id-get-create)
 
 ;; Load a custom configuration for muh wiki.
 (load-file (f-join +wiki-directory "config.el"))
