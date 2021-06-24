@@ -39,38 +39,38 @@ var skip = false
 var json_data = false
 var move = false
 
-while test $# -gt 0 {
-  case $1 {
+while test $len(ARGV) -gt 0 {
+  case $[ARGV[0]] {
     -h|--help)
       echo $help_section
       exit 0
       ;;
     -a|--author)
-      set author = $2
+      setvar author = ARGV[1]
       shift 2
       ;;
     -t|--title)
-      set title = $2
+      setvar title = ARGV[1]
       shift 2
       ;;
     -d|--date)
-      set pub_date = $2
+      setvar pub_date = ARGV[1]
       shift 2
       ;;
     --skip)
-      set skip = true
+      setvar skip = true
       shift
       ;;
     --json)
-      set json_data = true
+      setvar json_data = true
       shift
       ;;
     --move)
-      set move = true
+      setvar move = true
       shift
       ;;
     *)
-      set path = $1
+      setvar path = ARGV[0]
       shift
       ;;
   }
@@ -78,13 +78,13 @@ while test $# -gt 0 {
 
 proc kebab-case(word) {
     # Convert into lower case.
-    set word = $(echo $word | tr '[:upper:]' '[:lower:]')
+    setvar word = $(echo $word | tr '[:upper:]' '[:lower:]')
 
     # What happens to this line:
     # * Convert all whitespace and dashes into a single dash.
     # * Remove all invalid characters (all that are not alphanumeric characters and dashes).
     # * Remove leading and trailing dashes.
-    set word = $(echo $word | sed --regexp-extended --expression 's/\s+|-+/-/g' --expression 's/[^.a-z0-9-]//g' --expression 's/^-+|-+\$//g')
+    setvar word = $(echo $word | sed --regexp-extended --expression 's/\s+|-+/-/g' --expression 's/[^.a-z0-9-]//g' --expression 's/^-+|-+\$//g')
 
     echo $word
 }
@@ -98,10 +98,10 @@ proc prompt(string, :out, prefix = ">> ") {
 proc file_parse(path, :out) {
     var extension_regex = / '.' ![ '.' ]+ %end /
     var file = {}
-    set file['dir'] = $(dirname $path)
-    set file['name'] = $(basename $path | sed --regexp-extended "s|(.+)${extension_regex}|\\1|")
-    set file['ext'] = $(basename $path | sed --regexp-extended "s|.+(${extension_regex})|\\1|")
-    set file['mime_type'] = $(file --mime-type --brief $path)
+    setvar file['dir'] = $(dirname $path)
+    setvar file['name'] = $(basename $path | sed --regexp-extended "s|(.+)${extension_regex}|\\1|")
+    setvar file['ext'] = $(basename $path | sed --regexp-extended "s|.+(${extension_regex})|\\1|")
+    setvar file['mime_type'] = $(file --mime-type --brief $path)
 
     setref out = file
 }
@@ -135,10 +135,10 @@ file_parse $path :file_info
 
 if (json_data) {
     var metadata = {}
-    set metadata['file'] = file_info
-    set metadata['title'] = $title
-    set metadata['author'] = $author
-    set metadata['date'] = $pub_date
+    setvar metadata['file'] = file_info
+    setvar metadata['title'] = $title
+    setvar metadata['author'] = $author
+    setvar metadata['date'] = $pub_date
     json write :metadata
 }
 

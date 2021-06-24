@@ -1,24 +1,17 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell --pure -i bash -p curl jq fzf coreutils findutils iputils
 
 # A quick command line interface for creating a gitignore with the API from https://gitignore.io.
 # This script comes with a simple caching to avoid creating too much requests.
-
-# Dependencies:
-# * bash
-# * curl
-# * fzf
-# * jq
-# * paste
-# * xargs
 
 set -eo pipefail
 
 CACHE_FILE="${XDG_CACHE_DIR:-$HOME/.cache}/gitignore-io.langs.json"
 
 # Check if the language list is downloaded for the last hour (3600 seconds).
-if [ ! -e $CACHE_FILE ] || test $(expr $(date "+%s") - $(date -r $CACHE_FILE "+%s")) -gt 3600
+if [[ ! -e $CACHE_FILE ]] || test $(expr $(date "+%s") - $(date -r $CACHE_FILE "+%s")) -gt 3600
 then
-    ping "gitignore.io" --count 4 && curl --silent --location --output $CACHE_FILE "https://gitignore.io/api/list?format=json"
+    ping -q -c 4 "gitignore.io" && curl --silent --location "https://gitignore.io/api/list?format=json" --output $CACHE_FILE
 fi
 
 KEYS=$(jq 'keys | .[] | @text' --raw-output $CACHE_FILE | fzf --multi | while read lang; do echo " .[\"$lang\"].contents"; done | paste -s -d ',')

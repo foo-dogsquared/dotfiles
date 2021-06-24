@@ -10,8 +10,8 @@ split-album [options...] [\$ALBUM_FILE \$TIMESTAMP_FILE]
 Options:
     -h, --help                      Show the help section.
     --tutorial                      Show a helpful tutorial-esque description of the program.
-    -af, --audio-file [file]        Set the audio file to be split.
-    -tf, --timestamp-file [file]    Set the timestamp file to be used for splitting.
+    --audio-file [file]             Set the audio file to be split.
+    --timestamp-file [file]         Set the timestamp file to be used for splitting.
     -t, --title [title]             Set the title of the album.
     -d, --date [date]               Set the publication date of the album.
     -a, --author [author]           Set the author of the album.

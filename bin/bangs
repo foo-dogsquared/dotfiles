@@ -1,0 +1,93 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i oil -p coreutils ripgrep handlr gnused xxd
+
+# A ripoff from Duckduckgo bangs.
+
+# Examples:
+# ```
+# bangs hello there !g !aw
+# ```
+# will open a search result page on Google and Arch Wiki
+
+# These are the default bangs available.
+# Bangs are alphanumeric keys that shouldn't have whitespace characters.
+const config_dir = "${XDG_CONFIG_HOME:-"$HOME/.config"}/bangs"
+const config_file = "${config_dir}/config.json"
+const default_config = {
+    'aw': {
+        'name': 'Arch Wiki',
+        'url': 'https://wiki.archlinux.org/index.php?title=Special%3ASearch&search={{{s}}}'
+    },
+    'gh': {
+        'name': 'GitHub',
+        'url': 'https://github.com/search?utf8=%E2%9C%93&q={{{s}}}'
+    },
+    'g': {
+        'name': 'Google',
+        'url': 'https://www.google.com/search?q={{{s}}}'
+    },
+    'so': {
+        'name': 'Stack Overflow',
+        'url': 'http://stackoverflow.com/search?q={{{s}}}'
+    },
+    'w': {
+        'name': 'Wikipedia',
+        'url': 'https://en.wikipedia.org/wiki/Special:Search?search={{{s}}}'
+    }
+}
+
+const bangs_prefix = "${BANGS_PREFIX:-~}"
+const bangs_placeholder = "${BANGS_PLACEHOLDER:-{{{s}}}}"
+const bangs_format = / %start $bangs_prefix word+ %end /
+const valid_bangs = %()
+const search_query = %()
+if test -f $config_file {
+  json read :bangs < $config_file
+} else {
+  var bangs = default_config
+}
+
+# Stolen from https://gist.github.com/cdown/1163649 and https://gist.github.com/cdown/1163649#gistcomment-1256298
+proc urlencode(msg) {
+  for (i in 0:len(msg)) {
+    var char = msg[i - 1]
+
+    case $char {
+        [a-zA-Z0-9.~_-])
+          printf '%s' $char
+          ;;
+        *)
+          printf '%s' $char | xxd -plain -cols 1 | while read :hex { printf '%%%s' $hex }
+          ;;
+    }
+  }
+}
+
+proc warnf(format, @msg) {
+  >&2 printf "$format\\n" @msg
+}
+
+for i in @ARGV {
+  write -- $i | rg --quiet $bangs_format || {
+    push :search_query $i
+    continue
+  }
+
+  var bang = $(write -- $i | sed --regexp-extended --expression "s/^${bangs_prefix}//")
+  if (bang in bangs) {
+    push :valid_bangs $bang
+    warnf "%s will be used to search." $bang
+  } else {
+    warnf "%s is not found in the database." $bang
+  }
+}
+
+var query = $(printf "%s " @search_query)
+warnf "Search query is '%s'" $query
+
+for bang in @valid_bangs {
+  var metadata = bangs[bang]
+  var url = $(write -- ${metadata['url']} | sed --expression "s/${bangs_placeholder}/$(urlencode $query)/")
+
+  handlr open $url
+}
