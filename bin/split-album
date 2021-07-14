@@ -232,7 +232,7 @@ for index in @(seq $[chapter_len]) {
         setvar has_error = true
     }
 
-    push :job_queue "ffmpeg -loglevel quiet -nostdin -i '${audio_file}' -ss ${start} $['-to ' + end if index != chapter_len else ''] ${title_slug}/${filename}"
+    push :job_queue ">&2 printf '[%d/%d] %s\\n' $[index] $[chapter_len] \"$[output_data['chapters'][index - 1]['title']]\" && ffmpeg -loglevel quiet -nostdin -i '${audio_file}' -ss ${start} $['-to ' + end if index != chapter_len else ''] ${title_slug}/${filename}"
 }
 
 if (has_error) { exit 1 }

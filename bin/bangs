@@ -5,12 +5,37 @@
 
 # Examples:
 # ```
-# bangs hello there !g !aw
+# bangs hello there ~g ~aw
 # ```
 # will open a search result page on Google and Arch Wiki
 
+proc usage() {
+    cat <<HELP
+bangs - a ripoff from Duckduckgo bangs, except
+        you can open multiple pages in one go.
+
+Usage:
+    bangs [SEARCH_QUERY...] [BANGS...]
+
+A bang is absolutely necessary to indicate what search pages
+to open.
+
+While there is a default config, you should create your own list
+by setting a config file at '\${XDG_CONFIG_HOME}/bangs/config.json'.
+The config is simply a JSON file with the bang as the key and an
+object with 'url' and 'name'.
+
+Examples:
+- Google and Duckduckgo search
+    bangs hello world ~g ~ddg
+
+- Change the bangs prefix
+    BANGS_PREFIX="--" bangs how to program in python --g --yt
+HELP
+}
+
 # These are the default bangs available.
-# Bangs are alphanumeric keys that shouldn't have whitespace characters.
+# Bangs are any keys that shouldn't have whitespace characters.
 const config_dir = "${XDG_CONFIG_HOME:-"$HOME/.config"}/bangs"
 const config_file = "${config_dir}/config.json"
 const default_config = {
@@ -38,7 +63,7 @@ const default_config = {
 
 const bangs_prefix = "${BANGS_PREFIX:-~}"
 const bangs_placeholder = "${BANGS_PLACEHOLDER:-{{{s}}}}"
-const bangs_format = / %start $bangs_prefix word+ %end /
+const bangs_format = / %start $bangs_prefix !space+ %end /
 const valid_bangs = %()
 const search_query = %()
 if test -f $config_file {
@@ -65,6 +90,11 @@ proc urlencode(msg) {
 
 proc warnf(format, @msg) {
   >&2 printf "$format\\n" @msg
+}
+
+if (len(ARGV) == 0) {
+  usage
+  exit 0
 }
 
 for i in @ARGV {

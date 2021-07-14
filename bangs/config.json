@@ -18363,6 +18363,10 @@
     "name": "GitHub",
     "url": "https://github.com/search?utf8=%E2%9C%93&q={{{s}}}"
   },
+  "gha": {
+    "name": "GitHub Actions",
+    "url": "https://github.com/marketplace?type=actions&query={{{s}}}"
+  },
   "ghacks": {
     "name": "Ghacks",
     "url": "https://www.ghacks.net/?s={{{s}}}"
@@ -29837,7 +29841,7 @@
   },
   "melpa": {
     "name": "MELPA",
-    "url": "http://melpa.milkbox.net/#/?q={{{s}}}"
+    "url": "http://melpa.org/#/?q={{{s}}}"
   },
   "melvyl": {
     "name": "Melvyl Catalog (University of California Libraries)",
@@ -41974,6 +41978,10 @@
   "shutterstock": {
     "name": "Shutterstock",
     "url": "http://www.shutterstock.com/cat.mhtml?searchterm={{{s}}}"
+  },
+  "swh": {
+    "name": "Software Heritage",
+    "url": "https://archive.softwareheritage.org/browse/search/?q={{{s}}}&with_visit=true&with_content=true"
   },
   "shz": {
     "name": "Shazam",
