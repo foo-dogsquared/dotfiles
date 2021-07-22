@@ -225,6 +225,11 @@ map('i', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 map('s', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 map('i', '<cr>', 'compe#confirm("<cr>")', { expr = true })
 map('i', '<c-space>', 'compe#complete()', { expr = true })
+map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
+map('n', '<leader>fg', '<cmd>Telescope grep_string<cr>', { noremap = true })
+map('n', '<leader>fG', '<cmd>Telescope live_grep<cr>', { noremap = true })
+map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
+map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
 
 -- LSP config
 local nvim_lsp = require('lspconfig')
