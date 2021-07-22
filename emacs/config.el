@@ -19,7 +19,6 @@
       projectile-project-search-path '("~/projects/software/" "~/writings/"))
 
 (setq
- time-stamp-format "%Y-%02m-%02d %02H:%02M:%02S %:z"
  org-id-link-to-org-use-id t
 
  +file-templates-dir (expand-file-name "templates" doom-private-dir)
@@ -56,7 +55,6 @@
 
 (after! org
   (setq
-   time-stamp-start "date_modified:[ 	]+\\\\?[\"<]+"
    org-capture-templates `(
                            ("i" "inbox" entry
                             (file ,(f-join org-directory "inbox.org"))
@@ -92,6 +90,8 @@
 (add-hook! 'before-save-hook 'time-stamp)
 
 ;; Load a custom configuration for muh wiki.
+(add-hook! 'counsel-projectile-mode-hook (lambda ()
+                                                    (message (file-name-directory (buffer-file-name)))))
 (load-file (f-join +wiki-directory "config.el"))
 
 ;;; config.el ends here

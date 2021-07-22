@@ -108,13 +108,7 @@
           +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))))
 
 (when (featurep! +dendron)
-  (defvar +structured-notes-directory-name "structured")
-  (defvar +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name))
-
   (use-package! dendroam
-    :after org-roam
-    :preface (defvar +wiki-directory nil)
-    :config
-    (setq +structured-notes-directory (f-join +wiki-directory +structured-notes-directory-name))))
+    :after org-roam))
 
 ;;; config.el ends here

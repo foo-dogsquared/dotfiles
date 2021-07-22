@@ -3,13 +3,13 @@
 
 ;; The main package for creating a wiki.
 (package! org-roam
-  :recipe (:host github :repo "org-roam/org-roam" :branch "v2"))
+  :recipe (:host github :repo "org-roam/org-roam"))
 
 (when (featurep! +biblio)
   (package! org-ref
     :recipe (:host github :repo "jkitchin/org-ref"))
   (package! org-roam-bibtex
-    :recipe (:host github :repo "org-roam/org-roam-bibtex" :branch "org-roam-v2")))
+    :recipe (:host github :repo "org-roam/org-roam-bibtex")))
 
 (when (featurep! +anki)
   (package! anki-editor
