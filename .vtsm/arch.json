@@ -1,5 +1,6 @@
 {
     "alacritty": "$HOME/.config/alacritty/",
+    "bangs": "$HOME/.config/bangs/",
     "bin": "$HOME/.local/bin/",
     "bspwm": "$HOME/.config/bspwm/",
     "dunst": "$HOME/.config/dunst/",

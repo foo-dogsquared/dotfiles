@@ -4,6 +4,8 @@
 shopt --set strict:all
 
 const show_help = "A small script for splitting files into tracks, perfect for full album releases and audiobooks.
+Based from Luke Smith's booksplit script
+(https://raw.githubusercontent.com/LukeSmithxyz/voidrice/091d7e54c5c1ed77201ce1254aa2623a2801c9f2/.local/bin/booksplit).
 
 split-album [options...] [\$ALBUM_FILE \$TIMESTAMP_FILE]
 
@@ -183,6 +185,7 @@ setvar output_data['extension'] = $EXTENSION
 const timestamp_regex = / %start digit{2,} ':' digit{2} ':' digit{2} <'.' digit+>? %end /
 var has_error = false
 
+# Deserialize the given input into the chapters data.
 case $(file --mime-type --brief $timestamp_file) {
     "application/json")
         json read :chapters < $timestamp_file
@@ -190,7 +193,7 @@ case $(file --mime-type --brief $timestamp_file) {
         ;;
 
     # Also cleans up the timestamp file with comments (i.e., lines starting with '#') and empty lines allowing for more commenting options.
-    # I just want to improve the timestamp format (a little bit).
+    # I just want to improve the timestamp format a little bit.
     "text/plain")
         sed --regexp-extended --expression '/^\s*$/d' --expression '/^#/d' $timestamp_file | while read --line {
             var chapter = {}
@@ -227,6 +230,7 @@ for index in @(seq $[chapter_len]) {
     var filename = $(printf "%.2d-%s.%s" $index $(kebab-case ${chapter['title']}) $EXTENSION)
     setvar output_data['chapters'][index - 1]['file'] = filename
 
+    # Check for incorrect timestamp order.
     if (start > end and end is not null) {
         warnf '%s (start) is ahead compared to %s (end)' $start $end
         setvar has_error = true

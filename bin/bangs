@@ -66,6 +66,9 @@ const bangs_placeholder = "${BANGS_PLACEHOLDER:-{{{s}}}}"
 const bangs_format = / %start $bangs_prefix !space+ %end /
 const valid_bangs = %()
 const search_query = %()
+
+# Config file detection.
+# Otherwise, we'll just use the default config.
 if test -f $config_file {
   json read :bangs < $config_file
 } else {
@@ -75,7 +78,7 @@ if test -f $config_file {
 # Stolen from https://gist.github.com/cdown/1163649 and https://gist.github.com/cdown/1163649#gistcomment-1256298
 proc urlencode(msg) {
   for (i in 0:len(msg)) {
-    var char = msg[i - 1]
+    var char = msg[i]
 
     case $char {
         [a-zA-Z0-9.~_-])
@@ -112,12 +115,15 @@ for i in @ARGV {
   }
 }
 
-var query = $(printf "%s " @search_query)
+var query = join(search_query, " ")
+var encoded_query = $(urlencode $query)
+
 warnf "Search query is '%s'" $query
+warnf "Encoded form is '%s'" $encoded_query
 
 for bang in @valid_bangs {
   var metadata = bangs[bang]
-  var url = $(write -- ${metadata['url']} | sed --expression "s/${bangs_placeholder}/$(urlencode $query)/")
+  var url = $(write -- ${metadata['url']} | sed --expression "s/${bangs_placeholder}/${encoded_query}/")
 
   handlr open $url
 }

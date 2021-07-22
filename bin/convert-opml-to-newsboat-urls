@@ -5,12 +5,16 @@
 # It could also accept an OPML through stdin.
 
 import itertools
+import fileinput
 from pathlib import Path
 import sys
 import xml.etree.ElementTree as ET
 
-filename = sys.argv[1]
-opml = ET.parse(filename)
+if len(sys.argv) > 1:
+    opml = ET.parse(sys.argv[1])
+else:
+    opml = ET.fromstring(fileinput.input())
+
 for outline in opml.findall("body/outline"):
     categories = [category.strip("/") for category in outline.get("category", "").split(",") if category]
     print('{xmlUrl} "~{text}" {category}'.format(xmlUrl = outline.get("xmlUrl"),
