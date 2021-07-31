@@ -82,6 +82,7 @@
 
        :tools
        ;;ansible
+       biblio
        (debugger +lsp)          ; FIXME stepping through code, to help you add bugs
        direnv
        ;;docker
@@ -186,4 +187,5 @@
 
        :tools
        (wiki +anki
-             +biblio))
+             +biblio
+             +graph))

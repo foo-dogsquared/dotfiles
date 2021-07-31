@@ -15,8 +15,9 @@ The setup uses org-roam v2.
 ** Module flags
 
 - ~+anki~ enables Anki cards editing with [[https://github.com/louietan/anki-editor/][anki-editor]].
-- ~+biblio~ enables reference management with [[https://github.com/jkitchin/org-ref][org-ref]].
+- ~+biblio~ enables reference management with [[https://github.com/jkitchin/org-ref][org-ref]] and [[https://github.com/org-roam/org-roam-bibtex][org-roam-bibtex]].
 - ~+dendron~ adds [[https://dendron.so/][Dendron]]-inspired features with [[https://github.com/vicrdguez/dendroam][dendroam]].
+- ~+graph~ adds a graphical user interface for your notes.
 - ~+markdown~ adds Markdown support in org-roam.
 
 
@@ -27,6 +28,8 @@ The setup uses org-roam v2.
 - [[https://github.com/vicrdguez/dendroam][dendroam]]
 - [[https://github.com/nobiot/md-roam][md-roam]]
 - [[https://github.com/jkitchin/org-ref][org-ref]]
+- [[https://github.com/org-roam/org-roam-bibtex][org-roam-bibtex]]
+- [[https://github.com/org-roam/org-roam-ui][org-roam-ui]]
 
 
 
@@ -37,3 +40,4 @@ This module has a handful of requirements to work properly.
 
 - SQLite v3 binary is installed in order for org-roam to work.
 - The ~+anki~ feature requires Anki and the setup described from the [[https://github.com/louietan/anki-editor][project README]].
+- ~+graph~ feature needs [[https://github.com/briandowns/simple-httpd][simple-httpd]] for the server to work.

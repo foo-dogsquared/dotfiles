@@ -6,7 +6,7 @@
 ;; Also a good opportunity for training my Elisp-fu.
 (require 'f)
 
-;;; Code:
+;; Code
 (defvar +wiki-directory "~/wiki")
 
 (defun +org-roam-split-to-random-node ()
@@ -41,10 +41,11 @@
                  :desc "Open backlinks buffer" "b" #'org-roam-buffer-toggle
 
                  (:prefix ("d" . "dailies")
-                          :desc "Daily note for today" "t" #'org-roam-dailies-find-today
-                          :desc "Daily note for a specific date" "d" #'org-roam-dailies-find-date
-                          :desc "Daily note for yesterday" "y" #'org-roam-dailies-find-yesterday
-                          :desc "Previous daily note" "Y" #'org-roam-dailies-find-previous-note)))
+                          :desc "Daily note for today" "t" #'org-roam-dailies-goto-today
+                          :desc "Daily note for a specific date" "d" #'org-roam-dailies-goto-date
+                          :desc "Daily note for yesterday" "y" #'org-roam-dailies-goto-yesterday
+                          :desc "Next daily note" "n" #'org-roam-dailies-goto-next-note
+                          :desc "Previous daily note" "N" #'org-roam-dailies-goto-previous-note)))
 
   :config
   (setq org-roam-completion-everywhere t
@@ -58,18 +59,24 @@
 (when (featurep! +biblio)
   (defvar +wiki-references-filename "references.bib")
   (defvar +wiki-bibliography-note-filename "references.org")
-  (defvar +wiki-bibliography (f-join +wiki-directory +wiki-references-filename))
+  (defvar +wiki-bibliography-file (f-join +wiki-directory +wiki-references-filename))
   (defvar +wiki-bibliography-note (f-join +wiki-directory +wiki-bibliography-note-filename))
 
-  (use-package! org-ref
-    :after org-roam
-    :config
-    (setq +wiki-bibliography (f-join +wiki-directory +wiki-references-filename)
-          org-ref-default-bibliography +wiki-bibliography
-          org-ref-bibliography-notes +wiki-bibliography-note))
+  (defun +wiki/biblio-setup ()
+    "Setup the variables for the wiki config."
+    (setq +wiki-bibliography-file (f-join +wiki-directory +wiki-references-filename)
+          +wiki-bibliography-note (f-join +wiki-directory +wiki-bibliography-note-filename)
+          org-ref-default-bibliography +wiki-bibliography-file
+          org-ref-bibliography-notes +wiki-bibliography-note
+          bibtex-completion-bibliography +wiki-bibliography-file
+          bibtex-completion-notes-path +wiki-directory))
 
   (use-package! org-roam-bibtex
-    :after org-roam))
+    :after org-roam
+    :preface
+    :config
+    (require 'org-ref)
+    (+wiki/biblio-setup)))
 
 (when (featurep! +anki)
   (defvar +anki-cards-directory-name "cards")
@@ -110,5 +117,13 @@
 (when (featurep! +dendron)
   (use-package! dendroam
     :after org-roam))
+
+(when (featurep! +graph)
+  (use-package! websocket
+    :after org-roam)
+
+  (use-package! org-roam-ui
+    :after org-roam
+    :hook (org-roam . org-roam-ui-mode)))
 
 ;;; config.el ends here
