@@ -9,6 +9,8 @@
 # ```
 # will open a search result page on Google and Arch Wiki
 
+# TODO:
+# - Make the config compatible to bangs database from Duckduckgo.
 proc usage() {
     cat <<HELP
 bangs - a ripoff from Duckduckgo bangs, except
@@ -102,13 +104,13 @@ if (len(ARGV) == 0) {
 
 for i in @ARGV {
   write -- $i | rg --quiet $bangs_format || {
-    push :search_query $i
+    append :search_query $i
     continue
   }
 
   var bang = $(write -- $i | sed --regexp-extended --expression "s/^${bangs_prefix}//")
   if (bang in bangs) {
-    push :valid_bangs $bang
+    append :valid_bangs $bang
     warnf "%s will be used to search." $bang
   } else {
     warnf "%s is not found in the database." $bang

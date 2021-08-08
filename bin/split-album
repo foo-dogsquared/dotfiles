@@ -164,7 +164,7 @@ proc prompt(msg, :out, prefix = ">> ") {
 }
 
 proc kebab-case(word) {
-    write -- $word | sed --regexp-extended --expression 's/./\L&/g' --expression 's/\s+/-/g' --expression 's/[^.a-z0-9-]//g' --expression 's/^-+|-+$//g' --expression 's/-+/-/g'
+    write -- $word | sed --regexp-extended --expression 's/./\L&/g' --expression 's/\s+/-/g' --expression 's/[^a-z0-9-]//g' --expression 's/^-+|-+$//g' --expression 's/-+/-/g'
 }
 
 test -f $audio_file || errorf '%s is not a regular file' $audio_file
@@ -236,7 +236,7 @@ for index in @(seq $[chapter_len]) {
         setvar has_error = true
     }
 
-    push :job_queue ">&2 printf '[%d/%d] %s\\n' $[index] $[chapter_len] \"$[output_data['chapters'][index - 1]['title']]\" && ffmpeg -loglevel quiet -nostdin -i '${audio_file}' -ss ${start} $['-to ' + end if index != chapter_len else ''] ${title_slug}/${filename}"
+    append :job_queue ">&2 printf '[%d/%d] %s\\n' $[index] $[chapter_len] \"$[output_data['chapters'][index - 1]['title']]\"; ffmpeg -loglevel quiet -nostdin -i '${audio_file}' -ss ${start} $['-to ' + end if index != chapter_len else ''] ${title_slug}/${filename}"
 }
 
 if (has_error) { exit 1 }

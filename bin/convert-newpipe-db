@@ -1,9 +1,10 @@
-#!/usr/bin/env oil
+#!/usr/bin/env nix-shell
+#! nix-shell -i oil -p coreutils sqlite unzip ripgrep jq file
 
 # Convert a Newpipe database (assuming it was exported within the app) into OPML v2.
 
 # Dependencies:
-# * osh (oil shell) v0.8.5
+# * osh (oil shell) v0.8.12
 # * sqlite3 v3.34.0
 # * unzip
 # * ripgrep v12.1.1
@@ -26,7 +27,7 @@ var NEWPIPE_DB_QUERY = "SELECT name, url, service_id, group_concat(tag, ',') AS 
 FROM subscriptions
 LEFT JOIN feed_group_subscription_join AS subs_join
 LEFT JOIN feed_group
-ON subs_join.subscription_id = subscriptions.uid AND feed_group.uid = subs_join.group_id) GROUP BY name"
+ON subs_join.subscription_id = subscriptions.uid AND feed_group.uid = subs_join.group_id) GROUP BY name ORDER BY name COLLATE NOCASE;"
 
 # Print the beginning of the template.
 cat <<OPML
