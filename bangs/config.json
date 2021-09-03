@@ -18363,6 +18363,10 @@
     "name": "GitHub",
     "url": "https://github.com/search?utf8=%E2%9C%93&q={{{s}}}"
   },
+  "gh.nix": {
+    "name": "NixOS Packages",
+    "url": "https://github.com/NixOS/nixpkgs/search?q={{{s}}}"
+  },
   "gha": {
     "name": "GitHub Actions",
     "url": "https://github.com/marketplace?type=actions&query={{{s}}}"
@@ -32941,11 +32945,7 @@
   },
   "nixpkg": {
     "name": "NixOS Packages",
-    "url": "https://nixos.org/nixos/packages.html?query={{{s}}}"
-  },
-  "nixpkgs": {
-    "name": "NixOS Packages",
-    "url": "https://nixos.org/nixos/packages.html?query={{{s}}}"
+    "url": "https://search.nixos.org/packages?query={{{s}}}"
   },
   "nixtodon": {
     "name": "Nixtodon",
