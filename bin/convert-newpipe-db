@@ -23,11 +23,16 @@ var channel_id_eggex = / 'https://www.youtube.com/channel/' (word) /
 
 var NEWPIPE_DB = "newpipe.db"
 var TEMP_FOLDER_NAME = "newpipe"
-var NEWPIPE_DB_QUERY = "SELECT name, url, service_id, group_concat(tag, ',') AS tags FROM (SELECT subscriptions.name, subscriptions.url, subscriptions.service_id, '/' || feed_group.name AS tag
-FROM subscriptions
-LEFT JOIN feed_group_subscription_join AS subs_join
-LEFT JOIN feed_group
-ON subs_join.subscription_id = subscriptions.uid AND feed_group.uid = subs_join.group_id) GROUP BY name ORDER BY name COLLATE NOCASE;"
+
+# The SQL query to get the required metadata.
+var NEWPIPE_DB_QUERY = "
+    SELECT name, url, service_id, group_concat(tag, ',') AS tags FROM (
+        SELECT subscriptions.name, subscriptions.url, subscriptions.service_id, '/' || feed_group.name AS tag
+        FROM subscriptions
+        LEFT JOIN feed_group_subscription_join AS subs_join
+        LEFT JOIN feed_group
+        ON subs_join.subscription_id = subscriptions.uid AND feed_group.uid = subs_join.group_id
+    ) GROUP BY name ORDER BY name COLLATE NOCASE;"
 
 # Print the beginning of the template.
 cat <<OPML
@@ -56,13 +61,24 @@ proc print-outline(title, xml_url, html_url, tags = "") {
 # Print the channels in the OPML body.
 # This only occurs if the given file does have a Newpipe database.
 if unzip -l $FILENAME | rg --quiet $NEWPIPE_DB {
+    # Make the temporary directory (preferably on the current directory to make cleanup easier).
     mkdir $TEMP_FOLDER_NAME && unzip -q -u $FILENAME -d $TEMP_FOLDER_NAME
-    file --mime "${TEMP_FOLDER_NAME}/${NEWPIPE_DB}" | rg --quiet "application/x-sqlite3" || exit 1
+
+    # Setting up some automatic cleanup upon exit.
     trap "rm --recursive $TEMP_FOLDER_NAME" EXIT
+
+    # Quickly check if a SQLite database is in the Newpipe database folder.
+    file --mime "${TEMP_FOLDER_NAME}/${NEWPIPE_DB}" | rg --quiet "application/x-sqlite3" || exit 1
+
+    # Extract the data from the database and process them individually.
+    # Note that we formatted the data in CSV to be in one line per object since as of version 0.8.11, Oil has some problems when taking fully nested data from external commands (not yet completely verified).
+    # We have to rewrite this part once Oil fixes the issue with nested objects.
     sqlite3 "${TEMP_FOLDER_NAME}/${NEWPIPE_DB}" "${NEWPIPE_DB_QUERY}" --csv --header \
     | dasel select --parser csv --multiple --selector '.[*]' --compact --write json \
     | while read channel {
+        # We have separate each channel as a JSON object per line.
         echo $channel | json read :channel
+
         setvar name = channel['name']
         setvar url = channel['url']
         setvar service_id = channel['service_id']
