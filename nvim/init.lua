@@ -23,141 +23,187 @@ cmd [[packadd packer.nvim]]
 -- Plugins
 require("packer").startup(function()
     -- Let the package manager manage itself.
-	use {"wbthomason/packer.nvim", opt = true}
+	use { "wbthomason/packer.nvim", opt = true }
 
     -- THEMES!
-	use {"chriskempson/base16-vim"}
+	use { "chriskempson/base16-vim" }
 
     -- EditorConfig plugin
-	use {"editorconfig/editorconfig-vim"}
+	use { "editorconfig/editorconfig-vim" }
 	
     -- Colorize common color strings
-	use {'lilydjwg/colorizer'}
+	use {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require"colorizer".setup()
+    end
+  }
 
 	-- A snippets engine.
 	-- One of the must-haves for me.
-	use { 'sirver/ultisnips' }
+	use {
+    "sirver/ultisnips",
+
+	  -- Contains various snippets for UltiSnips.
+    requires = "honza/vim-snippets"
+  }
 
 	-- Text editor integration for the browser
-	use {'subnut/nvim-ghost.nvim', run = ':call nvim_ghost#installer#install()'}
+	use {"subnut/nvim-ghost.nvim", run = ":call nvim_ghost#installer#install()"}
 
-    -- Fuzzy finder of lists
-    use {
-        'nvim-telescope/telescope.nvim', 
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
-    }
-
-	-- Contains various snippets for UltiSnips.
-	use {'honza/vim-snippets'}
+  -- Fuzzy finder of lists
+  use {
+    "nvim-telescope/telescope.nvim", 
+    requires = { {"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"} }
+  }
 
 	-- A completion engine.
-	-- I chose this engine since it is linked from UltiSnips.
-    use { "hrsh7th/nvim-compe" }
+  -- nvim-cmp is mostly explicit by making the configuration process manual unlike bigger plugins like CoC
+  use {
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "quangnguyen30192/cmp-nvim-ultisnips",
+    },
+    config = function()
+      local cmp = require("cmp")
+      local t = function(str)
+        return vim.api.nvim_replace_termcodes(str, true, true, true)
+      end
+
+      local check_back_space = function()
+        local col = vim.fn.col(".") - 1
+        return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+      end
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.fn["UltiSnips#Anon"](args.body)
+          end,
+        },
+
+        sources = {
+          { name = "ultisnips" },
+          { name = "buffer" },
+          { name = "path" },
+          { name = "nvim_lua" },
+          { name = "nvim_lsp" },
+        },
+
+        mapping = {
+          ["<C-Space>"] = cmp.mapping(function(fallback)
+            if vim.fn.pumvisible() == 1 then
+              if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+                return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+              end
+
+              vim.fn.feedkeys(t("<C-n>"), "n")
+            elseif check_back_space() then
+              vim.fn.feedkeys(t("<cr>"), "n")
+            else
+              fallback()
+            end
+            end, {
+            "i",
+            "s",
+          }),
+
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if vim.fn.complete_info()["selected"] == -1 and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+              vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+            elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+              vim.fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
+            elseif vim.fn.pumvisible() == 1 then
+              vim.fn.feedkeys(t("<C-n>"), "n")
+            elseif check_back_space() then
+              vim.fn.feedkeys(t("<tab>"), "n")
+            else
+              fallback()
+            end
+          end, {
+            "i",
+            "s",
+          }),
+
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+              return vim.fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
+            elseif vim.fn.pumvisible() == 1 then
+              vim.fn.feedkeys(t("<C-p>"), "n")
+            else
+              fallback()
+            end
+          end, {
+            "i",
+            "s",
+          }),
+        }
+      })
+    end
+  }
 
 	-- A linting engine, a DAP client, and an LSP client entered into a bar.
-	use {
-        'dense-analysis/ale',
-        config = function()
-            g['ale_disable_lsp'] = 1
-            g['ale_linters'] = {
-                javascript = {"eslint", "prettier"}
-            }
-        end
-    }
-	use {'neovim/nvim-lspconfig'}
-	use {'mfussenegger/nvim-dap'}
+	use { "dense-analysis/ale" }
+	use { "neovim/nvim-lspconfig" }
+	use { "mfussenegger/nvim-dap" }
 
 	-- One of the most popular plugins.
 	-- Allows to create more substantial status bars.
-	use {
-        'vim-airline/vim-airline',
-        config = function()
-            g['airline_powerline_fonts'] = 1
-            g['airline#extensions#ale#enabled'] = 1
-        end
-    }
+	use { "vim-airline/vim-airline" }
 
 	-- Fuzzy finder for finding files freely and fastly.
-	use {'junegunn/fzf'}
-	use {'junegunn/fzf.vim'}
+	use {
+    "junegunn/fzf",
+    requires = "junegunn/fzf.vim"
+  }
 
 	-- A full LaTeX toolchain plugin for Vim.
 	-- Also a must-have for me since writing LaTeX can be a PITA.
 	-- Most of the snippets and workflow is inspired from Gilles Castel's posts (at https://castel.dev/).
 	use {
-        'lervag/vimtex',
-        cmd = 'ALEEnable',
+        "lervag/vimtex",
+        cmd = "ALEEnable",
         config = function()
             -- Vimtex configuration
-            g['tex_flavor'] = 'latex'
-            g['vimtex_view_method'] = 'zathura'
-            g['vimtex_quickfix_mode'] = 0
-            g['tex_conceal'] = 'abdmg'
-            g['vimtex_compiler_latexmk'] = {
+            g["tex_flavor"] = "latex"
+            g["vimtex_view_method"] = "zathura"
+            g["vimtex_quickfix_mode"] = 0
+            g["tex_conceal"] = "abdmg"
+            g["vimtex_compiler_latexmk"] = {
                 options = {
-                  '-bibtex',
-                  '-shell-escape',
-                  '-verbose',
-                  '-file-line-error',
+                  "-bibtex",
+                  "-shell-escape",
+                  "-verbose",
+                  "-file-line-error",
                 }
             }
 
             -- I use LuaLaTeX for my documents so let me have it as the default, please?
-            g['vimtex_compiler_latexmk_engines'] = {
-                _                = '-lualatex',
-                pdflatex         = '-pdf',
-                dvipdfex         = '-pdfdvi',
-                lualatex         = '-lualatex',
-                xelatex          = '-xelatex',
+            g["vimtex_compiler_latexmk_engines"] = {
+                _                = "-lualatex",
+                pdflatex         = "-pdf",
+                dvipdfex         = "-pdfdvi",
+                lualatex         = "-lualatex",
+                xelatex          = "-xelatex",
             }
         end
     }
 
 	-- Enable visuals for addition/deletion of lines in the gutter (side) similar to Visual Studio Code.
-	use {'airblade/vim-gitgutter'}
+	use { "airblade/vim-gitgutter" }
 
 	-- Language plugins.
-	use {'LnL7/vim-nix'}
-	use {'vmchale/dhall-vim'}
+	use { "LnL7/vim-nix" }
+	use { "vmchale/dhall-vim" }
 end)
 
-g['UltiSnipsExpandTrigger'] = "<c-j>"
+-- g['UltiSnipsExpandTrigger'] = "<c-j>"
 g['UltiSnipsEditSplit'] = "context"
 g['UltiSnipsSnippetDirectories'] = {vim.env.HOME .. "/.config/nvim/own-snippets", ".snippets"}
-
--- Compe configuration
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 120,
-    min_width = 60,
-    max_height = math.floor(vim.o.lines * 0.3),
-    min_height = 1,
-  };
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    ultisnips = true;
-    luasnip = true;
-  };
-}
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -172,29 +218,9 @@ local check_back_space = function()
     end
 end
 
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
-end
-
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  else
-    return t "<S-Tab>"
-  end
-end
-
 -- Editor configuration
 opt.completeopt = "menuone,noselect"
+opt.termguicolors = true
 opt.encoding = "utf-8"
 opt.number = true
 opt.relativenumber = true
@@ -223,8 +249,6 @@ map('i', "<Tab>", "v:lua.tab_complete()", { expr = true })
 map('s', "<Tab>", "v:lua.tab_complete()", { expr = true })
 map('i', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 map('s', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
-map('i', '<cr>', 'compe#confirm("<cr>")', { expr = true })
-map('i', '<c-space>', 'compe#complete()', { expr = true })
 map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
 map('n', '<leader>fg', '<cmd>Telescope grep_string<cr>', { noremap = true })
 map('n', '<leader>fG', '<cmd>Telescope live_grep<cr>', { noremap = true })
@@ -268,6 +292,7 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
 local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
