@@ -25,8 +25,11 @@ require("packer").startup(function()
     -- Let the package manager manage itself.
 	use { "wbthomason/packer.nvim", opt = true }
 
-    -- THEMES!
-	use { "chriskempson/base16-vim" }
+  -- THEMES!
+  use { "chriskempson/base16-vim" }
+
+  -- Custom color themes!
+  use { "rktjmp/lush.nvim" }
 
     -- EditorConfig plugin
 	use { "editorconfig/editorconfig-vim" }
@@ -39,10 +42,18 @@ require("packer").startup(function()
     end
   }
 
+  -- Start flavours
+  -- Our custom theme
+  use { "~/.config/nvim/lua/lush_theme/fds-theme.lua" }
+
 	-- A snippets engine.
 	-- One of the must-haves for me.
 	use {
     "sirver/ultisnips",
+    config = function()
+      vim.g.UltiSnipsEditSplit = "context"
+      vim.g.UltiSnipsSnippetDirectories = {vim.env.HOME .. "/.config/nvim/own-snippets", ".snippets"}
+    end,
 
 	  -- Contains various snippets for UltiSnips.
     requires = "honza/vim-snippets"
@@ -75,14 +86,14 @@ require("packer").startup(function()
       end
 
       local check_back_space = function()
-        local col = vim.fn.col(".") - 1
-        return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+        local col = fn.col(".") - 1
+        return col == 0 or fn.getline("."):sub(col, col):match("%s") ~= nil
       end
 
       cmp.setup({
         snippet = {
           expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body)
+            fn["UltiSnips#Anon"](args.body)
           end,
         },
 
@@ -96,14 +107,14 @@ require("packer").startup(function()
 
         mapping = {
           ["<C-Space>"] = cmp.mapping(function(fallback)
-            if vim.fn.pumvisible() == 1 then
-              if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-                return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+            if fn.pumvisible() == 1 then
+              if fn["UltiSnips#CanExpandSnippet"]() == 1 then
+                return fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
               end
 
-              vim.fn.feedkeys(t("<C-n>"), "n")
+              fn.feedkeys(t("<C-n>"), "n")
             elseif check_back_space() then
-              vim.fn.feedkeys(t("<cr>"), "n")
+              fn.feedkeys(t("<cr>"), "n")
             else
               fallback()
             end
@@ -113,14 +124,14 @@ require("packer").startup(function()
           }),
 
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if vim.fn.complete_info()["selected"] == -1 and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-              vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
-            elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-              vim.fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
-            elseif vim.fn.pumvisible() == 1 then
-              vim.fn.feedkeys(t("<C-n>"), "n")
+            if fn.complete_info()["selected"] == -1 and fn["UltiSnips#CanExpandSnippet"]() == 1 then
+              fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+            elseif fn["UltiSnips#CanJumpForwards"]() == 1 then
+              fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
+            elseif fn.pumvisible() == 1 then
+              fn.feedkeys(t("<C-n>"), "n")
             elseif check_back_space() then
-              vim.fn.feedkeys(t("<tab>"), "n")
+              fn.feedkeys(t("<tab>"), "n")
             else
               fallback()
             end
@@ -130,10 +141,10 @@ require("packer").startup(function()
           }),
 
           ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-              return vim.fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
-            elseif vim.fn.pumvisible() == 1 then
-              vim.fn.feedkeys(t("<C-p>"), "n")
+            if fn["UltiSnips#CanJumpBackwards"]() == 1 then
+              return fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
+            elseif fn.pumvisible() == 1 then
+              fn.feedkeys(t("<C-p>"), "n")
             else
               fallback()
             end
@@ -202,16 +213,14 @@ require("packer").startup(function()
 end)
 
 -- g['UltiSnipsExpandTrigger'] = "<c-j>"
-g['UltiSnipsEditSplit'] = "context"
-g['UltiSnipsSnippetDirectories'] = {vim.env.HOME .. "/.config/nvim/own-snippets", ".snippets"}
 
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
 local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+    local col = fn.col('.') - 1
+    if col == 0 or fn.getline('.'):sub(col, col):match('%s') then
         return true
     else
         return false
@@ -241,6 +250,7 @@ cmd "highlight clear SpellCap"
 cmd "highlight clear SpellRare"
 cmd "highlight CursorLineNr ctermfg=cyan"
 cmd "highlight Visual term=reverse cterm=reverse"
+cmd "colorscheme fds-theme"
 
 -- Keybindings
 map('i', 'jk', '<Esc>', {})
