@@ -21,7 +21,7 @@
   :hook (org-load . org-roam-mode)
   :commands
   (org-roam-buffer
-   org-roam-setup
+   org-roam-db-autosync-mode
    org-roam-capture
    org-roam-node-find)
   :preface
@@ -36,8 +36,6 @@
                  :desc "Go to a random node and split" "R" #'+org-roam-split-to-random-node
                  :desc "Find node" "f" #'org-roam-node-find
                  :desc "Org Roam capture" "c" #'org-roam-capture
-                 :desc "Org Roam setup" "s" #'org-roam-setup
-                 :desc "Org Roam teardown" "S" #'org-roam-teardown
                  :desc "Open backlinks buffer" "b" #'org-roam-buffer-toggle
 
                  (:prefix ("d" . "dailies")

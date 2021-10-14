@@ -12,5 +12,5 @@
 set -o pipefail
 
 notify-send "Select a region for the barcode (QR codes, ISBN, bar codes)"
-maim --select --hidecursor | zbarimg - --quiet | perl -pe 's|(.+?):||'
+maim --select --hidecursor --quiet | zbarimg - --quiet --oneshot --raw |  xclip -selection clipboard
 

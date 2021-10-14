@@ -249,9 +249,9 @@ proc main {
   # We'll also fill up the rest of the chapter-related data into the output data.
   for index in @(seq $[chapter_len]) {
     var index = Int(index)
-    var chapter = output_data['chapters'][index - 1]
+    setvar chapter = output_data['chapters'][index - 1]
     var start = chapter['timestamp']
-    var end = output_data['chapters'][index]['timestamp'] if index != chapter_len else null
+    var end = output_data['chapters'][index]['timestamp'] if index !== chapter_len else null
     var filename = $(printf "%.2d-%s.%s" $index $(kebab-case ${chapter['title']}) $EXTENSION)
     setvar output_data['chapters'][index - 1]['file'] = filename
 
@@ -262,7 +262,7 @@ proc main {
       setvar has_error = true
     }
 
-    append :job_queue ">&2 printf '[%d/%d] %s\\n' $[index] $[chapter_len] \"$[output_data['chapters'][index - 1]['title']]\"; ffmpeg -loglevel quiet -nostdin -i '${audio_file}' -ss ${start} $['-to ' + end if index != chapter_len else ''] ${title_slug}/${filename}"
+    append :job_queue ">&2 printf '[%d/%d] %s\\n' $[index] $[chapter_len] \"$[output_data['chapters'][index - 1]['title']]\"; ffmpeg -loglevel quiet -nostdin -i '${audio_file}' -ss ${start} $['-to ' + end if index !== chapter_len else ''] ${title_slug}/${filename}"
   }
 
   # Exit the process if an error detected.

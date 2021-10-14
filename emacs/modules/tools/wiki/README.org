@@ -1,6 +1,6 @@
 #+title: tools/wiki
-#+date: "2021-05-05 00:27:26 +08:00"
-#+date_modified: "2021-05-21 11:12:10 +08:00"
+#+date: 2021-05-05 00:27:26 +08:00
+#+date_modified: 2021-05-21 11:12:10 +08:00
 #+language: en
 
 
@@ -40,4 +40,3 @@ This module has a handful of requirements to work properly.
 
 - SQLite v3 binary is installed in order for org-roam to work.
 - The ~+anki~ feature requires Anki and the setup described from the [[https://github.com/louietan/anki-editor][project README]].
-- ~+graph~ feature needs [[https://github.com/briandowns/simple-httpd][simple-httpd]] for the server to work.

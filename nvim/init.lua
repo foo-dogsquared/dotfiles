@@ -22,8 +22,8 @@ end
 cmd [[packadd packer.nvim]]
 -- Plugins
 require("packer").startup(function()
-    -- Let the package manager manage itself.
-	use { "wbthomason/packer.nvim", opt = true }
+  -- Let the package manager manage itself.
+  use { "wbthomason/packer.nvim", opt = true }
 
   -- THEMES!
   use { "chriskempson/base16-vim" }
@@ -31,11 +31,11 @@ require("packer").startup(function()
   -- Custom color themes!
   use { "rktjmp/lush.nvim" }
 
-    -- EditorConfig plugin
-	use { "editorconfig/editorconfig-vim" }
-	
-    -- Colorize common color strings
-	use {
+  -- EditorConfig plugin
+  use { "editorconfig/editorconfig-vim" }
+
+  -- Colorize common color strings
+  use {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require"colorizer".setup()
@@ -46,21 +46,21 @@ require("packer").startup(function()
   -- Our custom theme
   use { "~/.config/nvim/lua/lush_theme/fds-theme.lua" }
 
-	-- A snippets engine.
-	-- One of the must-haves for me.
-	use {
+  -- A snippets engine.
+  -- One of the must-haves for me.
+  use {
     "sirver/ultisnips",
     config = function()
       vim.g.UltiSnipsEditSplit = "context"
       vim.g.UltiSnipsSnippetDirectories = {vim.env.HOME .. "/.config/nvim/own-snippets", ".snippets"}
     end,
 
-	  -- Contains various snippets for UltiSnips.
+    -- Contains various snippets for UltiSnips.
     requires = "honza/vim-snippets"
   }
 
-	-- Text editor integration for the browser
-	use {"subnut/nvim-ghost.nvim", run = ":call nvim_ghost#installer#install()"}
+  -- Text editor integration for the browser
+  use {"subnut/nvim-ghost.nvim", run = ":call nvim_ghost#installer#install()"}
 
   -- Fuzzy finder of lists
   use {
@@ -68,7 +68,7 @@ require("packer").startup(function()
     requires = { {"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"} }
   }
 
-	-- A completion engine.
+  -- A completion engine.
   -- nvim-cmp is mostly explicit by making the configuration process manual unlike bigger plugins like CoC
   use {
     "hrsh7th/nvim-cmp",
@@ -107,109 +107,108 @@ require("packer").startup(function()
 
         mapping = {
           ["<C-Space>"] = cmp.mapping(function(fallback)
-            if fn.pumvisible() == 1 then
+            if cmp.visible() then
               if fn["UltiSnips#CanExpandSnippet"]() == 1 then
                 return fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
               end
 
-              fn.feedkeys(t("<C-n>"), "n")
+              cmp.select_next_item()
             elseif check_back_space() then
               fn.feedkeys(t("<cr>"), "n")
             else
               fallback()
             end
-            end, {
-            "i",
-            "s",
-          }),
-
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if fn.complete_info()["selected"] == -1 and fn["UltiSnips#CanExpandSnippet"]() == 1 then
-              fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
-            elseif fn["UltiSnips#CanJumpForwards"]() == 1 then
-              fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
-            elseif fn.pumvisible() == 1 then
-              fn.feedkeys(t("<C-n>"), "n")
-            elseif check_back_space() then
-              fn.feedkeys(t("<tab>"), "n")
-            else
-              fallback()
-            end
           end, {
-            "i",
-            "s",
-          }),
+          "i",
+          "s",
+        }),
 
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if fn["UltiSnips#CanJumpBackwards"]() == 1 then
-              return fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
-            elseif fn.pumvisible() == 1 then
-              fn.feedkeys(t("<C-p>"), "n")
-            else
-              fallback()
-            end
-          end, {
-            "i",
-            "s",
-          }),
-        }
-      })
-    end
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if fn.complete_info()["selected"] == -1 and fn["UltiSnips#CanExpandSnippet"]() == 1 then
+            fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+          elseif fn["UltiSnips#CanJumpForwards"]() == 1 then
+            fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
+          elseif cmp.visible() then
+            cmp.select_next_item()
+          elseif check_back_space() then
+            fn.feedkeys(t("<tab>"), "n")
+          else
+            fallback()
+          end
+        end, {
+          "i",
+          "s",
+        }),
+
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if fn["UltiSnips#CanJumpBackwards"]() == 1 then
+          return fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
+        elseif cmp.visible() then
+          cmp.select_previous_item()
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      }),
+    }})
+  end
   }
 
-	-- A linting engine, a DAP client, and an LSP client entered into a bar.
-	use { "dense-analysis/ale" }
-	use { "neovim/nvim-lspconfig" }
-	use { "mfussenegger/nvim-dap" }
+  -- A linting engine, a DAP client, and an LSP client entered into a bar.
+  use { "dense-analysis/ale" }
+  use { "neovim/nvim-lspconfig" }
+  use { "mfussenegger/nvim-dap" }
 
-	-- One of the most popular plugins.
-	-- Allows to create more substantial status bars.
-	use { "vim-airline/vim-airline" }
+  -- One of the most popular plugins.
+  -- Allows to create more substantial status bars.
+  use { "vim-airline/vim-airline" }
 
-	-- Fuzzy finder for finding files freely and fastly.
-	use {
+  -- Fuzzy finder for finding files freely and fastly.
+  use {
     "junegunn/fzf",
     requires = "junegunn/fzf.vim"
   }
 
-	-- A full LaTeX toolchain plugin for Vim.
-	-- Also a must-have for me since writing LaTeX can be a PITA.
-	-- Most of the snippets and workflow is inspired from Gilles Castel's posts (at https://castel.dev/).
-	use {
-        "lervag/vimtex",
-        cmd = "ALEEnable",
-        config = function()
-            -- Vimtex configuration
-            g["tex_flavor"] = "latex"
-            g["vimtex_view_method"] = "zathura"
-            g["vimtex_quickfix_mode"] = 0
-            g["tex_conceal"] = "abdmg"
-            g["vimtex_compiler_latexmk"] = {
-                options = {
-                  "-bibtex",
-                  "-shell-escape",
-                  "-verbose",
-                  "-file-line-error",
-                }
-            }
+  -- A full LaTeX toolchain plugin for Vim.
+  -- Also a must-have for me since writing LaTeX can be a PITA.
+  -- Most of the snippets and workflow is inspired from Gilles Castel's posts (at https://castel.dev/).
+  use {
+    "lervag/vimtex",
+    cmd = "ALEEnable",
+    config = function()
+      -- Vimtex configuration
+      g["tex_flavor"] = "latex"
+      g["vimtex_view_method"] = "zathura"
+      g["vimtex_quickfix_mode"] = 0
+      g["tex_conceal"] = "abdmg"
+      g["vimtex_compiler_latexmk"] = {
+        options = {
+          "-bibtex",
+          "-shell-escape",
+          "-verbose",
+          "-file-line-error",
+        }
+      }
 
-            -- I use LuaLaTeX for my documents so let me have it as the default, please?
-            g["vimtex_compiler_latexmk_engines"] = {
-                _                = "-lualatex",
-                pdflatex         = "-pdf",
-                dvipdfex         = "-pdfdvi",
-                lualatex         = "-lualatex",
-                xelatex          = "-xelatex",
-            }
-        end
-    }
+      -- I use LuaLaTeX for my documents so let me have it as the default, please?
+      g["vimtex_compiler_latexmk_engines"] = {
+        _                = "-lualatex",
+        pdflatex         = "-pdf",
+        dvipdfex         = "-pdfdvi",
+        lualatex         = "-lualatex",
+        xelatex          = "-xelatex",
+      }
+    end
+  }
 
-	-- Enable visuals for addition/deletion of lines in the gutter (side) similar to Visual Studio Code.
-	use { "airblade/vim-gitgutter" }
+  -- Enable visuals for addition/deletion of lines in the gutter (side) similar to Visual Studio Code.
+  use { "airblade/vim-gitgutter" }
 
-	-- Language plugins.
-	use { "LnL7/vim-nix" }
-	use { "vmchale/dhall-vim" }
+  -- Language plugins.
+  use { "LnL7/vim-nix" }
+  use { "vmchale/dhall-vim" }
 end)
 
 -- g['UltiSnipsExpandTrigger'] = "<c-j>"
@@ -219,12 +218,12 @@ local t = function(str)
 end
 
 local check_back_space = function()
-    local col = fn.col('.') - 1
-    if col == 0 or fn.getline('.'):sub(col, col):match('%s') then
-        return true
-    else
-        return false
-    end
+  local col = fn.col('.') - 1
+  if col == 0 or fn.getline('.'):sub(col, col):match('%s') then
+    return true
+  else
+    return false
+  end
 end
 
 -- Editor configuration
