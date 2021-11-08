@@ -438,7 +438,7 @@ the guy's a wizard.]
 * https://draw.io/[draw.io] - A drawing board for your flowcharts and other charts, maybe.
 * https://www.freecadweb.org/[FreeCAD] - A general purpose 3D computer-aided design program.
 * https://inkscape.org/[Inkscape] - A vector illustration/editing program. Alternative to Adobe Illustrator.
-* http://www.kicad-pcb.org/[KiCad] - An electronic design automation suite.
+* https://www.kicad.org/[KiCad] - An electronic design automation suite.
 * https://krita.org/en/[Krita] - A painting/illustration program.
 
 
