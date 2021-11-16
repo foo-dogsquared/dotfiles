@@ -25,9 +25,6 @@ require("packer").startup(function()
   -- Let the package manager manage itself.
   use { "wbthomason/packer.nvim", opt = true }
 
-  -- THEMES!
-  use { "chriskempson/base16-vim" }
-
   -- Custom color themes!
   use { "rktjmp/lush.nvim" }
 
@@ -38,13 +35,9 @@ require("packer").startup(function()
   use {
     "norcalli/nvim-colorizer.lua",
     config = function()
-      require"colorizer".setup()
+      require("colorizer").setup()
     end
   }
-
-  -- Start flavours
-  -- Our custom theme
-  use { "~/.config/nvim/lua/lush_theme/fds-theme.lua" }
 
   -- A snippets engine.
   -- One of the must-haves for me.
@@ -64,8 +57,25 @@ require("packer").startup(function()
 
   -- Fuzzy finder of lists
   use {
-    "nvim-telescope/telescope.nvim", 
+    "nvim-telescope/telescope.nvim",
+    config = function()
+        vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
+        vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope grep_string<cr>', { noremap = true })
+        vim.api.nvim_set_keymap('n', '<leader>fG', '<cmd>Telescope live_grep<cr>', { noremap = true })
+        vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
+        vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
+    end,
     requires = { {"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"} }
+  }
+
+  -- Marks in ~~steroids~~ coconut oil
+  use {
+      "ThePrimeagen/harpoon",
+      config = function()
+        vim.api.nvim_set_keymap("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", {})
+        vim.api.nvim_set_keymap("n", "<leader>fM", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", {})
+      end,
+      requires = { {"nvim-lua/plenary.nvim"} }
   }
 
   -- A completion engine.
@@ -81,13 +91,18 @@ require("packer").startup(function()
     },
     config = function()
       local cmp = require("cmp")
-      local t = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
+
+      local has_any_words_before = function()
+        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+          return false
+        end
+
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      local check_back_space = function()
-        local col = fn.col(".") - 1
-        return col == 0 or fn.getline("."):sub(col, col):match("%s") ~= nil
+      local press = function(key)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), "n", true)
       end
 
       cmp.setup({
@@ -109,12 +124,12 @@ require("packer").startup(function()
           ["<C-Space>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if fn["UltiSnips#CanExpandSnippet"]() == 1 then
-                return fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+                return press("<C-R>=UltiSnips#ExpandSnippet()<CR>")
               end
 
               cmp.select_next_item()
-            elseif check_back_space() then
-              fn.feedkeys(t("<cr>"), "n")
+            elseif has_any_words_before() then
+              press("<Space>")
             else
               fallback()
             end
@@ -124,14 +139,14 @@ require("packer").startup(function()
         }),
 
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if fn.complete_info()["selected"] == -1 and fn["UltiSnips#CanExpandSnippet"]() == 1 then
-            fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
-          elseif fn["UltiSnips#CanJumpForwards"]() == 1 then
-            fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
+          if cmp.get_selected_entry() == nil and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+            press("<C-R>=UltiSnips#ExpandSnippet()<CR>")
+          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            press("<ESC>:call UltiSnips#JumpForwards()<CR>")
           elseif cmp.visible() then
             cmp.select_next_item()
-          elseif check_back_space() then
-            fn.feedkeys(t("<tab>"), "n")
+          elseif has_any_words_before() then
+            press("<Tab>")
           else
             fallback()
           end
@@ -142,7 +157,7 @@ require("packer").startup(function()
 
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if fn["UltiSnips#CanJumpBackwards"]() == 1 then
-          return fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
+          press("<C-R>=UltiSnips#JumpBackwards()<CR>")
         elseif cmp.visible() then
           cmp.select_previous_item()
         else
@@ -160,6 +175,7 @@ require("packer").startup(function()
   use { "dense-analysis/ale" }
   use { "neovim/nvim-lspconfig" }
   use { "mfussenegger/nvim-dap" }
+  use { "puremourning/vimspector" }
 
   -- One of the most popular plugins.
   -- Allows to create more substantial status bars.
@@ -211,8 +227,6 @@ require("packer").startup(function()
   use { "vmchale/dhall-vim" }
 end)
 
--- g['UltiSnipsExpandTrigger'] = "<c-j>"
-
 local t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
@@ -258,56 +272,6 @@ map('i', "<Tab>", "v:lua.tab_complete()", { expr = true })
 map('s', "<Tab>", "v:lua.tab_complete()", { expr = true })
 map('i', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 map('s', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
-map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
-map('n', '<leader>fg', '<cmd>Telescope grep_string<cr>', { noremap = true })
-map('n', '<leader>fG', '<cmd>Telescope live_grep<cr>', { noremap = true })
-map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
-map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
 
--- LSP config
-local nvim_lsp = require('lspconfig')
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
--- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
+-- Activating my own modules ala-Doom Emacs.
+require('lsp-user-config').setup()
