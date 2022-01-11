@@ -1,6 +1,6 @@
 -- CREDITS: pwntester/nautilus.nvim
 local lush = require('lush')
-local hsl = lush.hsl
+local hsl = lush.hsluv
 
 --[[
     base00 - Default Background
@@ -19,18 +19,6 @@ local hsl = lush.hsl
     base0D - Functions, Methods, Attribute IDs, Headings
     base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed
     base0F - Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
-
-    Alphas are Pantone 534 C = #1B365D
-    Alphas legends are TU2 = #00a4a9
-    Modifiers are Pantone 533 C = #1F2A44
-    Modifiers legends are GMK N6 = #e5a100
-    Alternate modifiers are GMK N6 = #e5a100
-    Alternate modifiers legends are Pantone 533 C = #1F2A44
-
-    Cello #23395b
-    Java #02b3af
-    Orient #005880
-    Supernova #fbca00
 ]]--
 
 local base00 = hsl('#2b221f')
@@ -76,10 +64,10 @@ vim.g.terminal_color_15 = base07.hex
 vim.g.terminal_color_background = base00.hex
 vim.g.terminal_color_foreground = base0E.hex
 
-return lush(function() 
-  return { 
+return lush(function()
+  return {
     Normal { fg = base05, bg = base00 },
-    NormalFloat { fg = base05, bg = base01 },
+    NormalFloat { fg = Normal.fg.saturate(15).lighten(5), bg = Normal.bg.saturate(15).lighten(5) },
     Bold { gui = 'bold' },
     Debug { fg = base08 },
     Directory { fg = base0D },
@@ -99,33 +87,33 @@ return lush(function()
     SpecialKey { fg = base03 },
     TooLong { fg = base08 },
     Underlined { fg = base08 },
-    Visual { bg = base02 },
-    VisualNOS { fg = base08 },
     WarningMsg { fg = base08 },
     WildMenu { fg = base08, bg = base0A },
     Title { fg = base0D },
     Conceal { fg = base0D },
     Cursor { fg = base00, bg = base05 },
     NonText { fg = base03 },
-    LineNr { fg = base02, bg = base00 },
-    LineNrNC { fg = base02, bg = base01 },
+    LineNr { fg = base02.lighten(25), bg = base00 },
+    LineNrNC { fg = base02.lighten(25), bg = base01 },
     SignColumn { fg = base01 },
     StatusLine { fg = base02, bg = base01 },
     StatusLineNC { fg = base02, bg = base01 },
     VertSplit { fg = base02, bg = base00 },
-    ColorColumn { fg = base01, bg = base01 },
-    CursorColumn { bg = base01 },
-    CursorLine { bg = base01 },
-    CursorLineNr { fg = base0A, bg = base00 },
+    ColorColumn { fg = base01.lighten(25), bg = base01.darken(25) },
+    CursorLine { bg = base01.saturate(-5).lighten(5) },
+    CursorColumn { CursorLine },
+    CursorLineNr { fg = base0A, CursorColumn },
+    Visual { CursorColumn, fg = base03.lighten(15) },
+    VisualNOS { fg = base08 },
     QuickFixLine { bg = base00 },
     QFFileName { fg = base0A },
     QFLineNr { fg = base04 },
     PMenu { fg = base05, bg = base01 },
     PMenuSel { fg = base01, bg = base05 },
     TabLineSel { fg = base00, bg = base0A },
-    TabLine { fg = base03, bg = base00 },
-    TabLineFill { fg = base03, bg = base00 },
-    EndOfBuffer { fg = base01 },
+    TabLine { fg = base03, bg = base00.darken(15) },
+    TabLineFill { fg = base03, bg = base00.darken(25) },
+    EndOfBuffer { fg = base01.lighten(20), bg = base01.darken(20) },
 
 
     -- Standard syntax highlighting
@@ -352,7 +340,6 @@ return lush(function()
     -- vimVar { fg = hue_5, bg =  none },
 
     -- Telescope highlighting
-    --TelescopeNormal { fg = base05, bg = base00 },
     TelescopeNormal { fg = base05, bg = base01 },
     TelescopeBorder { fg = base00, bg = base01 },
     TelescopePromptPrefix { fg = base0A, bg = base01 },
