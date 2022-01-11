@@ -6,30 +6,27 @@
       user-mail-address "foo.dogsquared@gmail.com")
 
 (setq doom-font (font-spec :family "Iosevka" :size 16)
-      doom-serif-font (font-spec :family "Source Serif Pro"))
+      doom-serif-font (font-spec :family "Source Serif 4"))
 
 (setq doom-theme 'doom-nord)
 
-(setq org-directory "~/writings/orgnotes"
-      org-roam-directory "~/writings/wiki"
-      org-roam-dailies-directory (f-join org-roam-directory "daily"))
+(setq org-directory "~/library/writings/wiki"
+      org-roam-directory "~/library/writings/wiki"
+      org-roam-db-location (f-join org-roam-directory "org-roam.db")
+      org-agenda-files '("~/library/writings/wiki/inbox")
+      org-roam-dailies-directory (f-join org-roam-directory "daily")
+      org-id-link-to-org-use-id t
+      +file-templates-dir (expand-file-name "templates" doom-private-dir)
+      +wiki-directory "~/library/writings/wiki"
+      org-export-coding-system 'utf-8
 
-(setq global-display-line-numbers-mode t
+      enable-local-variables "query"
+      image-use-external-converter t
+      org-startup-with-inline-images t
+
+      global-display-line-numbers-mode t
       display-line-numbers-type 'relative
-      projectile-project-search-path '("~/projects/software/" "~/writings/"))
-
-(setq
- org-id-link-to-org-use-id t
-
- +file-templates-dir (expand-file-name "templates" doom-private-dir)
- +wiki-directory "~/writings/wiki"
-
- org-journal-dir "~/writings/journal"
- org-journal-file-format "%F"
-
- enable-local-variables "query"
- image-use-external-converter t
- org-startup-with-inline-images t)
+      projectile-project-search-path '("~/library/projects/software" "~/library/writings" "~/library/projects/learning"))
 
 (add-to-list 'org-modules 'org-habit)
 (add-to-list 'org-modules 'org-checklist)

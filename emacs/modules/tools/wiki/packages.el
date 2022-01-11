@@ -6,8 +6,6 @@
   :recipe (:host github :repo "org-roam/org-roam"))
 
 (when (featurep! +biblio)
-  (package! org-ref
-    :recipe (:host github :repo "jkitchin/org-ref"))
   (package! org-roam-bibtex
     :recipe (:host github :repo "org-roam/org-roam-bibtex")))
 

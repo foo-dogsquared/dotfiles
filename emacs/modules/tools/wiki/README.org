@@ -4,35 +4,35 @@
 #+language: en
 
 
-
 * Description
 
 This module set up my personal wiki configuration with Emacs primarily with org-roam.
 Just like Emacs itself, tried my best to make it fully configurable.
 The setup uses org-roam v2.
 
+This module assumes that the wiki is used for multiple purposes such as managing different types of notes such as literature notes.
+In addition, it can also manage your cards with a single flag toggle away.
 
 ** Module flags
-
 - ~+anki~ enables Anki cards editing with [[https://github.com/louietan/anki-editor/][anki-editor]].
 - ~+biblio~ enables reference management with [[https://github.com/jkitchin/org-ref][org-ref]] and [[https://github.com/org-roam/org-roam-bibtex][org-roam-bibtex]].
 - ~+dendron~ adds [[https://dendron.so/][Dendron]]-inspired features with [[https://github.com/vicrdguez/dendroam][dendroam]].
 - ~+graph~ adds a graphical user interface for your notes.
 - ~+markdown~ adds Markdown support in org-roam.
 
-
 ** Plugins
-
 - [[https://github.com/org-roam/org-roam/][org-roam]] v2
-- [[https://github.com/louietan/anki-editor/][anki-editor]]
-- [[https://github.com/vicrdguez/dendroam][dendroam]]
-- [[https://github.com/nobiot/md-roam][md-roam]]
-- [[https://github.com/jkitchin/org-ref][org-ref]]
-- [[https://github.com/org-roam/org-roam-bibtex][org-roam-bibtex]]
-- [[https://github.com/org-roam/org-roam-ui][org-roam-ui]]
-
-
-
+- =+anki=
+  - [[https://github.com/louietan/anki-editor/][anki-editor]]
+- =+dendroam=
+  - [[https://github.com/vicrdguez/dendroam][dendroam]]
+- =+markdown=
+  - [[https://github.com/nobiot/md-roam][md-roam]]
+- =+biblio=
+  - [[https://github.com/jkitchin/org-ref][org-ref]]
+  - [[https://github.com/org-roam/org-roam-bibtex][org-roam-bibtex]]
+- =+graph=
+  - [[https://github.com/org-roam/org-roam-ui][org-roam-ui]]
 
 * Prerequisites
 
