@@ -1,0 +1,19 @@
+snippet shell "Nix shell template" b
+{ pkgs ? import <nixpkgs> {} }:
+
+with pkgs;
+
+mkShell {
+  buildInputs = [
+    ${1}
+  ];
+}
+endsnippet
+
+snippet mkDerivation "Shorthand for stdenv.mkDerivation" b
+{ stdenv, lib, $1 }:
+
+stdenv.mkDerivation rec {
+  $2
+}
+endsnippet

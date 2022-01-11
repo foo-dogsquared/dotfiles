@@ -15,13 +15,16 @@ g['syntax'] = true
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
-  api.nvim_command('packadd packer.nvim')
+  packer_bootstrap = fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 cmd [[packadd packer.nvim]]
 -- Plugins
-require("packer").startup(function()
+require("packer").startup(function(use)
+  if packer_bootstrap then
+    require("packer").sync()
+  end
+
   -- Let the package manager manage itself.
   use { "wbthomason/packer.nvim", opt = true }
 
@@ -52,14 +55,12 @@ require("packer").startup(function()
     requires = "honza/vim-snippets"
   }
 
-  -- Text editor integration for the browser
-  use {"subnut/nvim-ghost.nvim", run = ":call nvim_ghost#installer#install()"}
-
   -- Fuzzy finder of lists
   use {
     "nvim-telescope/telescope.nvim",
     config = function()
         vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
+        vim.api.nvim_set_keymap('n', '<leader>fF', '<cmd>Telescope file_browser<cr>', { noremap = true })
         vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope grep_string<cr>', { noremap = true })
         vim.api.nvim_set_keymap('n', '<leader>fG', '<cmd>Telescope live_grep<cr>', { noremap = true })
         vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
@@ -185,38 +186,6 @@ require("packer").startup(function()
   use {
     "junegunn/fzf",
     requires = "junegunn/fzf.vim"
-  }
-
-  -- A full LaTeX toolchain plugin for Vim.
-  -- Also a must-have for me since writing LaTeX can be a PITA.
-  -- Most of the snippets and workflow is inspired from Gilles Castel's posts (at https://castel.dev/).
-  use {
-    "lervag/vimtex",
-    cmd = "ALEEnable",
-    config = function()
-      -- Vimtex configuration
-      g["tex_flavor"] = "latex"
-      g["vimtex_view_method"] = "zathura"
-      g["vimtex_quickfix_mode"] = 0
-      g["tex_conceal"] = "abdmg"
-      g["vimtex_compiler_latexmk"] = {
-        options = {
-          "-bibtex",
-          "-shell-escape",
-          "-verbose",
-          "-file-line-error",
-        }
-      }
-
-      -- I use LuaLaTeX for my documents so let me have it as the default, please?
-      g["vimtex_compiler_latexmk_engines"] = {
-        _                = "-lualatex",
-        pdflatex         = "-pdf",
-        dvipdfex         = "-pdfdvi",
-        lualatex         = "-lualatex",
-        xelatex          = "-xelatex",
-      }
-    end
   }
 
   -- Enable visuals for addition/deletion of lines in the gutter (side) similar to Visual Studio Code.
