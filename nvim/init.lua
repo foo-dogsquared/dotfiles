@@ -1,24 +1,14 @@
--- Aliases
-local api = vim.api
-local g, b = vim.g, vim.b
-local cmd = vim.cmd
-local highlight = vim.highlight
-local opt, opt_local = vim.opt, vim.opt_local
-local go = vim.go
-local map = vim.api.nvim_set_keymap
-local fn = vim.fn
-
-g['mapleader'] = " "
-g['syntax'] = true
+vim.g['mapleader'] = " "
+vim.g['syntax'] = true
 
 -- Bootstrapping for the package manager
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  packer_bootstrap = vim.fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
-cmd [[packadd packer.nvim]]
+vim.cmd [[packadd packer.nvim]]
 -- Plugins
 require("packer").startup(function(use)
   if packer_bootstrap then
@@ -109,7 +99,7 @@ require("packer").startup(function(use)
       cmp.setup({
         snippet = {
           expand = function(args)
-            fn["UltiSnips#Anon"](args.body)
+            vim.fn["UltiSnips#Anon"](args.body)
           end,
         },
 
@@ -124,7 +114,7 @@ require("packer").startup(function(use)
         mapping = {
           ["<C-Space>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-              if fn["UltiSnips#CanExpandSnippet"]() == 1 then
+              if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
                 return press("<C-R>=UltiSnips#ExpandSnippet()<CR>")
               end
 
@@ -157,7 +147,7 @@ require("packer").startup(function(use)
         }),
 
       ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if fn["UltiSnips#CanJumpBackwards"]() == 1 then
+        if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
           press("<C-R>=UltiSnips#JumpBackwards()<CR>")
         elseif cmp.visible() then
           cmp.select_previous_item()
@@ -178,6 +168,35 @@ require("packer").startup(function(use)
   use { "mfussenegger/nvim-dap" }
   use { "puremourning/vimspector" }
 
+  -- tree-sitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = function()
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+      require("nvim-treesitter.configs").setup({
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = true,
+        },
+
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "gnn",
+            node_incremental = "grn",
+            scope_incremental = "grc",
+            node_decremental = "grm",
+          },
+        },
+
+          indent = { enable = true },
+        })
+      end
+  }
+
   -- One of the most popular plugins.
   -- Allows to create more substantial status bars.
   use { "vim-airline/vim-airline" }
@@ -196,51 +215,38 @@ require("packer").startup(function(use)
   use { "vmchale/dhall-vim" }
 end)
 
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
-local check_back_space = function()
-  local col = fn.col('.') - 1
-  if col == 0 or fn.getline('.'):sub(col, col):match('%s') then
-    return true
-  else
-    return false
-  end
-end
-
 -- Editor configuration
-opt.completeopt = "menuone,noselect"
-opt.termguicolors = true
-opt.encoding = "utf-8"
-opt.number = true
-opt.relativenumber = true
-opt.cursorline = true
-opt.expandtab = true
-opt.shiftwidth = 4
-opt.tabstop = 4
-opt.conceallevel = 1
-opt.list = true
-opt.listchars = { tab = "   ", trail = "·" }
-opt_local.spell = true
-opt.smartindent = true
+vim.opt.completeopt = "menuone,noselect"
+vim.opt.termguicolors = true
+vim.opt.encoding = "utf-8"
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.conceallevel = 1
+vim.opt.list = true
+vim.opt.listchars = { tab = "   ", trail = "·" }
+vim.opt_local.spell = true
+vim.opt.smartindent = true
 
 -- I have yet to solve how to do the following in Lua, lmao
-cmd "highlight clear SpellBad"
-cmd "highlight clear SpellLocal"
-cmd "highlight clear SpellCap"
-cmd "highlight clear SpellRare"
-cmd "highlight CursorLineNr ctermfg=cyan"
-cmd "highlight Visual term=reverse cterm=reverse"
-cmd "colorscheme fds-theme"
+vim.cmd "highlight clear SpellBad"
+vim.cmd "highlight clear SpellLocal"
+vim.cmd "highlight clear SpellCap"
+vim.cmd "highlight clear SpellRare"
+vim.cmd "highlight CursorLineNr ctermfg=cyan"
+vim.cmd "highlight Visual term=reverse cterm=reverse"
+vim.cmd "colorscheme fds-theme"
 
 -- Keybindings
-map('i', 'jk', '<Esc>', {})
-map('n', '<leader>hr', '<cmd>source $MYVIMRC<cr>', {})
-map('i', "<Tab>", "v:lua.tab_complete()", { expr = true })
-map('s', "<Tab>", "v:lua.tab_complete()", { expr = true })
-map('i', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
-map('s', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
+vim.api.nvim_set_keymap('i', 'jk', '<Esc>', {})
+vim.api.nvim_set_keymap('n', '<leader>hr', '<cmd>source $MYVIMRC<cr>', {})
+vim.api.nvim_set_keymap('i', "<Tab>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap('s', "<Tab>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap('i', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
+vim.api.nvim_set_keymap('s', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 
 -- Activating my own modules ala-Doom Emacs.
 require('lsp-user-config').setup()
