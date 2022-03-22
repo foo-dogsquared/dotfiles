@@ -48,15 +48,43 @@ require("packer").startup(function(use)
   -- Fuzzy finder of lists
   use {
     "nvim-telescope/telescope.nvim",
+    requires = {
+      {"nvim-lua/popup.nvim"},
+      {"nvim-lua/plenary.nvim"},
+      {"nvim-telescope/telescope-project.nvim"}
+    },
     config = function()
-        vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { noremap = true })
-        vim.api.nvim_set_keymap('n', '<leader>fF', '<cmd>Telescope file_browser<cr>', { noremap = true })
-        vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>Telescope grep_string<cr>', { noremap = true })
-        vim.api.nvim_set_keymap('n', '<leader>fG', '<cmd>Telescope live_grep<cr>', { noremap = true })
-        vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { noremap = true })
-        vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { noremap = true })
+      -- Telescope setup
+      require("telescope").setup {
+        extensions = {
+          project = {
+            base_dirs = {
+              {"~/library/projects/software", max_depth = 2},
+              {"~/library/projects/packages"},
+              {"~/library/writings"},
+              {"~/Documents"},
+            },
+          },
+        },
+      }
+
+      require("telescope").load_extension("project")
+
+      vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fF', '<cmd>lua require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir(), hidden = true })<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>lua require("telescope.builtin").grep_string()<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fG', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>ft', '<cmd>lua require("telescope.builtin").treesitter()<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fR', '<cmd>lua require("telescope.builtin").oldfiles({ only_cwd = true })<cr>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader>fA', '<cmd>lua require("telescope.builtin").resume()<cr>', { noremap = true })
+
+      -- Extensions
+      vim.api.nvim_set_keymap('n', '<leader>fp', '<cmd>lua require("telescope").extensions.project.project({})<cr>', { noremap = true })
     end,
-    requires = { {"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"} }
   }
 
   -- Marks in ~~steroids~~ coconut oil
