@@ -1,3 +1,4 @@
+-- vim: shiftwidth=2
 vim.g['mapleader'] = " "
 vim.g['syntax'] = true
 
@@ -16,7 +17,7 @@ require("packer").startup(function(use)
   end
 
   -- Let the package manager manage itself.
-  use { "wbthomason/packer.nvim", opt = true }
+  use { "wbthomason/packer.nvim" }
 
   -- Custom color themes!
   use { "rktjmp/lush.nvim" }
@@ -53,6 +54,7 @@ require("packer").startup(function(use)
       {"nvim-lua/plenary.nvim"},
       {"nvim-telescope/telescope-project.nvim"}
     },
+
     config = function()
       -- Telescope setup
       require("telescope").setup {
@@ -92,7 +94,12 @@ require("packer").startup(function(use)
       "ThePrimeagen/harpoon",
       config = function()
         vim.api.nvim_set_keymap("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", {})
-        vim.api.nvim_set_keymap("n", "<leader>fM", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", {})
+
+        local has_telescope, telescope = pcall("telescope")
+        if has_telescope then
+          vim.api.nvim_set_keymap("n", "<leader>fM", "<cmd>lua require('telescope').extensions.harpoon.harpoon({})<cr>", {})
+          require("telescope").load_extension("harpoon")
+        end
       end,
       requires = { {"nvim-lua/plenary.nvim"} }
   }
@@ -111,19 +118,6 @@ require("packer").startup(function(use)
     config = function()
       local cmp = require("cmp")
 
-      local has_any_words_before = function()
-        if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
-          return false
-        end
-
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
-
-      local press = function(key)
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), "n", true)
-      end
-
       cmp.setup({
         snippet = {
           expand = function(args)
@@ -140,58 +134,25 @@ require("packer").startup(function(use)
         },
 
         mapping = {
-          ["<C-Space>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-                return press("<C-R>=UltiSnips#ExpandSnippet()<CR>")
-              end
-
-              cmp.select_next_item()
-            elseif has_any_words_before() then
-              press("<Space>")
-            else
-              fallback()
-            end
-          end, {
-          "i",
-          "s",
-        }),
-
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.get_selected_entry() == nil and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-            press("<C-R>=UltiSnips#ExpandSnippet()<CR>")
-          elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-            press("<ESC>:call UltiSnips#JumpForwards()<CR>")
-          elseif cmp.visible() then
-            cmp.select_next_item()
-          elseif has_any_words_before() then
-            press("<Tab>")
-          else
-            fallback()
-          end
-        end, {
-          "i",
-          "s",
-        }),
-
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-          press("<C-R>=UltiSnips#JumpBackwards()<CR>")
-        elseif cmp.visible() then
-          cmp.select_previous_item()
-        else
-          fallback()
-        end
-      end, {
-        "i",
-        "s",
-      }),
-    }})
+          ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+          ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+          ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+          ["<cr>"] = cmp.mapping({
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+          }),
+        },
+      })
   end
   }
 
   -- A linting engine, a DAP client, and an LSP client entered into a bar.
-  use { "dense-analysis/ale" }
+  use {
+    "dense-analysis/ale",
+    config = function()
+      vim.g.ale_disable_lsp = 1
+    end,
+  }
   use { "neovim/nvim-lspconfig" }
   use { "mfussenegger/nvim-dap" }
   use { "puremourning/vimspector" }
@@ -199,6 +160,9 @@ require("packer").startup(function(use)
   -- tree-sitter
   use {
     "nvim-treesitter/nvim-treesitter",
+    requires = {
+      "nvim-treesitter/nvim-treesitter-textobjects"
+    },
     run = ":TSUpdate",
     config = function()
       vim.opt.foldmethod = "expr"
@@ -220,8 +184,28 @@ require("packer").startup(function(use)
           },
         },
 
-          indent = { enable = true },
-        })
+        indent = { enable = true },
+
+        -- custom text objects with nvim-treesitter-textobjects
+        -- I've just copied this from the README but they are reasonable additions to me.
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+
+            keymaps = {
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ae"] = "@block.outer",
+              ["ie"] = "@block.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = "@class.inner",
+              ["aC"] = "@conditional.outer",
+              ["iC"] = "@conditional.inner",
+            },
+          },
+        },
+      })
       end
   }
 
@@ -269,12 +253,9 @@ vim.cmd "highlight Visual term=reverse cterm=reverse"
 vim.cmd "colorscheme fds-theme"
 
 -- Keybindings
+vim.api.nvim_set_keymap('n', '<leader>bd', ':bd<cr>', {})
 vim.api.nvim_set_keymap('i', 'jk', '<Esc>', {})
 vim.api.nvim_set_keymap('n', '<leader>hr', '<cmd>source $MYVIMRC<cr>', {})
-vim.api.nvim_set_keymap('i', "<Tab>", "v:lua.tab_complete()", { expr = true })
-vim.api.nvim_set_keymap('s', "<Tab>", "v:lua.tab_complete()", { expr = true })
-vim.api.nvim_set_keymap('i', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
-vim.api.nvim_set_keymap('s', "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
 
 -- Activating my own modules ala-Doom Emacs.
 require('lsp-user-config').setup()
