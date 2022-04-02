@@ -1,2 +1,2 @@
 **/.envrc
-**/shell.nix
+.direnv
