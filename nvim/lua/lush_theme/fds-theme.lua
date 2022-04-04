@@ -36,7 +36,7 @@ local base0B = hsl('#85b26e')
 local base0C = hsl('#df937a')
 local base0D = hsl('#a15c40')
 local base0E = hsl('#8b7ab9')
-local base0F = hsl('#6f3920')
+local base0F = hsl('#7f3F83')
 
 --[[
 
@@ -95,12 +95,12 @@ return lush(function()
     NonText { fg = base03 },
     LineNr { fg = base02.lighten(25), bg = base00 },
     LineNrNC { fg = base02.lighten(25), bg = base01 },
-    SignColumn { fg = base01 },
-    StatusLine { fg = base02, bg = base01 },
-    StatusLineNC { fg = base02, bg = base01 },
+    SignColumn { fg = base01.lighten(40) },
+    StatusLine { fg = base02, bg = base01.darken(60) },
+    StatusLineNC { fg = base02, bg = base01.darken(30) },
     VertSplit { fg = base02, bg = base00 },
     ColorColumn { fg = base01.lighten(25), bg = base01.darken(25) },
-    CursorLine { bg = base01.saturate(-5).lighten(5) },
+    CursorLine { bg = base01.saturate(-5).darken(15) },
     CursorColumn { CursorLine },
     CursorLineNr { fg = base0A, CursorColumn },
     Visual { CursorColumn, fg = base03.lighten(15) },
@@ -123,7 +123,7 @@ return lush(function()
     Conditional { fg = base0E },
     Constant { fg = base09 },
     Define { fg = base0E },
-    Delimiter { fg = base0F },
+    Delimiter { fg = base0F.lighten(10) },
     Float { fg = base09 },
     Function { fg = base0D },
     Identifier { fg = base0A },
@@ -135,7 +135,7 @@ return lush(function()
     PreProc { fg = base0A },
     Repeat { fg = base0A },
     Special { fg = base0C },
-    SpecialChar { fg = base0F },
+    SpecialChar { fg = base0F.lighten(15).saturate(10) },
     Statement { fg = base08 },
     StorageClass { fg = base0A },
     String { fg = base0B },
@@ -386,7 +386,7 @@ return lush(function()
     TSConstructor { fg = base0E },
     TSKeywordFunction { fg = base0E },
     TSLiteral { fg = base04, gui = 'bold' },
-    TSVariable { fg = base03 },
+    TSVariable { fg = base03.lighten(25) },
     TSVariableBuiltin { fg = base0E },
     TSParameterReference { fg = TSParameter.fg },
     TSMethod { fg = Function.fg },
