@@ -5,8 +5,7 @@
 (setq user-full-name "Gabriel Arazas"
       user-mail-address "foo.dogsquared@gmail.com")
 
-(setq doom-font (font-spec :family "Iosevka" :size 16)
-      doom-serif-font (font-spec :family "Source Serif 4"))
+(setq doom-font (font-spec :family "Iosevka" :size 16))
 
 (setq doom-theme 'doom-nord)
 
@@ -20,9 +19,13 @@
       +wiki-directory "~/library/writings/wiki"
       org-export-coding-system 'utf-8
 
-      enable-local-variables "query"
       image-use-external-converter t
       org-startup-with-inline-images t
+      org-roam-node-display-template
+      (format "${doom-hierarchy:*} %s %s %s"
+              (propertize "${doom-type:12}" 'face 'font-lock-keyword-face)
+              (propertize "${doom-tags:12}" 'face 'org-tag)
+              (propertize "${file:30}" 'face 'font-lock-builtin-face))
 
       global-display-line-numbers-mode t
       display-line-numbers-type 'relative
