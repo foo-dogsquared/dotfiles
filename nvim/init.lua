@@ -28,11 +28,10 @@ vim.cmd "highlight clear SpellBad"
 vim.cmd "highlight clear SpellLocal"
 vim.cmd "highlight clear SpellCap"
 vim.cmd "highlight clear SpellRare"
---vim.cmd "highlight CursorLineNr ctermfg=cyan"
 vim.cmd "highlight Visual term=reverse cterm=reverse"
 vim.cmd "colorscheme fds-theme"
 
 -- Keybindings
-vim.api.nvim_set_keymap('n', '<leader>bd', ':bd<cr>', {})
-vim.api.nvim_set_keymap('i', 'jk', '<Esc>', {})
-vim.api.nvim_set_keymap('n', '<leader>hr', '<cmd>source $MYVIMRC<cr>', {})
+vim.keymap.set('n', '<leader>bd', ':bd<cr>', {})
+vim.keymap.set('i', 'jk', '<Esc>', {})
+vim.keymap.set('n', '<leader>hr', '<cmd>source $MYVIMRC<cr>', {})

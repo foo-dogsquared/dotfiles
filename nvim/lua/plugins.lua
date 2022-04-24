@@ -106,20 +106,20 @@ return require("packer").startup(function(use)
 
       require("telescope").load_extension("project")
 
-      vim.api.nvim_set_keymap('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fF', '<cmd>lua require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir(), hidden = true })<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fg', '<cmd>lua require("telescope.builtin").grep_string()<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fG', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>ft', '<cmd>lua require("telescope.builtin").treesitter()<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fR', '<cmd>lua require("telescope.builtin").oldfiles({ only_cwd = true })<cr>', { noremap = true })
-      vim.api.nvim_set_keymap('n', '<leader>fA', '<cmd>lua require("telescope.builtin").resume()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fF', '<cmd>lua require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir(), hidden = true })<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fg', '<cmd>lua require("telescope.builtin").grep_string()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fG', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>ft', '<cmd>lua require("telescope.builtin").treesitter()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fR', '<cmd>lua require("telescope.builtin").oldfiles({ only_cwd = true })<cr>', { noremap = true })
+      vim.keymap.set('n', '<leader>fA', '<cmd>lua require("telescope.builtin").resume()<cr>', { noremap = true })
 
-      -- Extensions
-      vim.api.nvim_set_keymap('n', '<leader>fp', '<cmd>lua require("telescope").extensions.project.project({})<cr>', { noremap = true })
+      -- Ekeymap.set
+      vim.keymap.set('n', '<leader>fp', '<cmd>lua require("telescope").extensions.project.project({})<cr>', { noremap = true })
     end,
   }
 
@@ -127,11 +127,11 @@ return require("packer").startup(function(use)
   use {
       "ThePrimeagen/harpoon",
       config = function()
-        vim.api.nvim_set_keymap("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", {})
+        vim.keymap.set("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", {})
 
         local has_telescope, telescope = pcall("telescope")
         if has_telescope then
-          vim.api.nvim_set_keymap("n", "<leader>fM", "<cmd>lua require('telescope').extensions.harpoon.harpoon({})<cr>", {})
+          vim.keymap.set("n", "<leader>fM", "<cmd>lua require('telescope').extensions.harpoon.harpoon({})<cr>", {})
           require("telescope").load_extension("harpoon")
         end
       end,
@@ -171,7 +171,9 @@ return require("packer").startup(function(use)
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
           ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-          ["<CR>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
+          ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+          ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+          ["<C-l>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
           ["<C-g>"] = cmp.mapping({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),

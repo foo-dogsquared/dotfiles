@@ -300,11 +300,6 @@ return lush(function()
     sassMixing { fg = base0E },
     sassMixinName { fg = base0D },
 
-    -- Signify highlighting
-    -- SignifySignAdd { fg = base0B, bg = base00 },
-    -- SignifySignChange { fg = base03, bg = base00 },
-    -- SignifySignDelete { fg = base08, bg = base00 },
-
     -- Spelling highlighting
     SpellBad { gui = 'undercurl' }, --, base08)
     SpellLocal { gui = 'undercurl' }, --, base0C)
@@ -325,19 +320,6 @@ return lush(function()
 
     -- Java highlighting
     javaOperator { fg = base0D },
-
-    -- Vim
-    -- vimCommand { fg = hue_3, bg =  none },
-    -- vimCommentTitle { fg = mono_3, gui = 'bold' },
-    -- vimFunction { fg = l.Function, bg =  none },
-    -- vimFuncName { fg = hue_3, bg =  none },
-    -- vimHighlight { fg = hue_2, bg =  none },
-    -- vimLineComment { fg = mono_3, gui = 'italic' },
-    -- vimParenSep { fg = mono_2 },
-    -- vimSep { fg = mono_2 },
-    -- vimUserFunc { fg = hue_1, bg =  none },
-    -- vimUserCommand { fg = hue_1, bg =  none },
-    -- vimVar { fg = hue_5, bg =  none },
 
     -- Telescope highlighting
     TelescopeNormal { fg = base05, bg = base01 },
