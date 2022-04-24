@@ -1,0 +1,56 @@
+snippet shell "Nix shell template" b
+{ pkgs ? import <nixpkgs> {} }:
+
+with pkgs;
+
+mkShell {
+  buildInputs = [
+    ${1}
+  ];
+}
+endsnippet
+
+snippet mkDerivation "Shorthand for stdenv.mkDerivation" b
+{ stdenv, lib, $1 }:
+
+stdenv.mkDerivation rec {
+  $2
+}
+endsnippet
+
+snippet buildGoModule "Shorthand for building Go modules" b
+{ stdenv, lib, buildGoModule, $1 }:
+
+buildGoModule rec {
+  pname = $1;
+  version = $2;
+
+  vendorSha256 = "";
+}
+endsnippet
+
+snippet homeManagerModule "A file template for " <flags>
+{ config, options, lib, pkgs, ... }:
+
+let
+  cfg = config.$1;
+in {
+  options.$1 = {
+    enable = lib.mkEnableOption "$2";
+  };
+
+  config = lib.mkIf cfg.enable {
+  };
+}
+endsnippet
+
+snippet mkOption "lib.mkOption from nixpkgs" i
+lib.mkOption {
+  type = $1;
+  description = $2;
+  default = $3;
+  example = $4;
+  $5
+}
+endsnippet
+

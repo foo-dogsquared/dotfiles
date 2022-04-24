@@ -28,18 +28,57 @@ return require("packer").startup(function(use)
 
   -- Snippets engine.
   -- A must have for me.
-  -- TODO: Port some of my personal snippets.
   use {
     "L3MON4D3/LuaSnip",
     requires = {
       "rafamadriz/friendly-snippets",
-      "molleweide/LuaSnip-snippets.nvim",
     },
     config = function ()
       require("luasnip.loaders.from_vscode").lazy_load()
       require("luasnip.loaders.from_lua").lazy_load()
+
+      local ls = require("luasnip")
+      local types = require("luasnip.util.types")
+      ls.config.set_config {
+        history = true,
+        update_events = "TextChanged,TextChangedI",
+        ext_opts = {
+          [types.choiceNode] = {
+            active = {
+              virt_text = { {"<- Current choice", "Comment"} },
+            },
+          },
+
+          [types.insertNode] = {
+            active = {
+              virt_text = { {"<>", "Comment"} },
+            },
+          },
+        },
+      }
+
+      vim.keymap.set({ "i", "s" }, "<c-j>", function()
+        if ls.jumpable(1) then
+          ls.jump(1)
+        end
+      end)
+
+      vim.keymap.set({ "i", "s" }, "<c-k>", function()
+        if ls.jumpable(-1) then
+          ls.jump(-1)
+        end
+      end)
+
+      vim.keymap.set({ "i", "s" }, "<c-l>", function()
+        if ls.expand_or_jumpable() then
+          ls.expand_or_jump()
+        end
+      end)
+
+      vim.keymap.set({ "i", "s" }, "<c-u>", function()
+        require("luasnip.extras.select_choice")()
+      end)
     end,
-    event = "InsertEnter",
   }
 
   -- Fuzzy finder of lists
