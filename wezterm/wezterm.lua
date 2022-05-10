@@ -68,7 +68,7 @@ return {
     quick_select_patterns = {
         "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
         "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
-        "sha256-[[:alpha:][:digit:]=]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
+        "sha256-[[:alpha:][:digit:]=+/]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
     },
 
     mouse_bindings = {
@@ -101,18 +101,19 @@ return {
             ActivateKeyTable = { name = "pane_navigation", timeout_milliseconds = 1000 }}},
         {key = "r", mods = "LEADER", action = wezterm.action {
             ActivateKeyTable = { name = "resize_pane", one_shot = false }}},
-        {key = "h", mods = keymod, action = wezterm.action{ ActivatePaneDirection = "Left" }},
+        {key = "h", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Left" }},
         {key = "l", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Right" }},
-        {key = "LeftArrow", mods = keymod, action = wezterm.action{ ActivatePaneDirection = "Left" }},
+        {key = "LeftArrow", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Left" }},
         {key = "DownArrow", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Down" }},
         {key = "UpArrow", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Up" }},
         {key = "RightArrow", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Right" }},
 
+        -- More pane-related niceties.
         {key = "f", mods = "LEADER", action = "TogglePaneZoomState"},
         {key = "f", mods = keymod, action = "TogglePaneZoomState"},
-
         {key = "n", mods = "LEADER", action = wezterm.action { SplitHorizontal = { domain = "CurrentPaneDomain" }}},
-        {key = "Enter", mods = keymod, action = wezterm.action { SplitHorizontal = { domain = "CurrentPaneDomain" }}},
+        {key = "n", mods = keymod, action = wezterm.action { SplitHorizontal = { domain = "CurrentPaneDomain" }}},
+        {key = "d", mods = keymod, action = wezterm.action { CloseCurrentPane = { confirm = false }}},
 
         -- Tab navigation
         {key = "t", mods = "LEADER", action = wezterm.action {
@@ -134,15 +135,15 @@ return {
                 patterns = {
                     "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
                     "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
-                    "sha256-[[:alpha:][:digit:]=]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
+                    "sha256-[[:alpha:][:digit:]=+/]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
                 }}}},
             {key = "p", action = wezterm.action { Search = { Regex = "legacyPackages[[:alpha:][:digit:]]+" }}},
             {key = "Space", action = "QuickSelect" },
         },
 
         pane_navigation = {
-            {key = "d", action = wezterm.action{ CloseCurrentPane = { confirm = false }}},
-            {key = "h", action = wezterm.action{ ActivatePaneDirection = "Left" }},
+            {key = "d", action = wezterm.action { CloseCurrentPane = { confirm = false }}},
+            {key = "h", action = wezterm.action { ActivatePaneDirection = "Left" }},
             {key = "j", action = wezterm.action { ActivatePaneDirection = "Down" }},
             {key = "k", action = wezterm.action { ActivatePaneDirection = "Up" }},
             {key = "l", action = wezterm.action { ActivatePaneDirection = "Right" }},
@@ -150,10 +151,10 @@ return {
         },
 
         tab_navigation = {
-            {key = "d", action = wezterm.action{ CloseCurrentTab = { confirm = false }}},
-            {key = "h", action = wezterm.action{ ActivateTabRelative = -1 }},
-            {key = "j", action = wezterm.action{ ActivateTab = 0 }},
-            {key = "k", action = wezterm.action{ ActivateTab = -1 }},
+            {key = "d", action = wezterm.action { CloseCurrentTab = { confirm = false }}},
+            {key = "h", action = wezterm.action { ActivateTabRelative = -1 }},
+            {key = "j", action = wezterm.action { ActivateTab = 0 }},
+            {key = "k", action = wezterm.action { ActivateTab = -1 }},
             {key = "l", action = wezterm.action { ActivateTabRelative = 1 }},
             {key = "n", action = wezterm.action { SpawnTab = "CurrentPaneDomain" }},
         },
@@ -165,6 +166,7 @@ return {
             {key = "l", action = wezterm.action { AdjustPaneSize = { "Right", 1 }}},
             {key = "q", action = "PopKeyTable" },
             {key = "Escape", action = "PopKeyTable" },
+            {key = "Enter", action = "PopKeyTable" },
         },
     },
 }
