@@ -123,9 +123,12 @@ return {
         {key = "h", mods = "LEADER", action = wezterm.action {
             ActivateKeyTable = { name = "hints", timeout_milliseconds = 1000 }}},
 
+        {key = "r", mods = keymod, action = "ReloadConfiguration" },
+
         -- Selection
         {key = "Space", mods = "LEADER", action = "QuickSelect" },
-        {key = "s", mods = keymod, action = "QuickSelect" },
+        {key = "a", mods = keymod, action = "QuickSelect" },
+        {key = "s", mods = keymod, action = wezterm.action { Search = { CaseSensitiveString = "" }}},
     },
 
     key_tables = {
@@ -136,9 +139,26 @@ return {
                     "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
                     "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
                     "sha256-[[:alpha:][:digit:]=+/]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
+                    "[[:alpha:][:digit:]=+/]{44,64}"
                 }}}},
+
+            -- Basically the equivalent of `kitty hints word`.
+            {key = "w", action = wezterm.action { QuickSelectArgs = {
+                patterns = {
+                    "\\S+"
+                }}}},
+
+            -- The equivalent to `kitty hints line`.
+            {key = "l", action = wezterm.action { QuickSelectArgs = {
+                patterns = {
+                    ".+"
+                }}}},
+
             {key = "p", action = wezterm.action { Search = { Regex = "legacyPackages[[:alpha:][:digit:]]+" }}},
+
             {key = "Space", action = "QuickSelect" },
+            {key = "s", action = "QuickSelect" },
+            {key = "f", action = wezterm.action { Search = { CaseSensitiveString = "" }}},
         },
 
         pane_navigation = {
@@ -153,8 +173,8 @@ return {
         tab_navigation = {
             {key = "d", action = wezterm.action { CloseCurrentTab = { confirm = false }}},
             {key = "h", action = wezterm.action { ActivateTabRelative = -1 }},
-            {key = "j", action = wezterm.action { ActivateTab = 0 }},
-            {key = "k", action = wezterm.action { ActivateTab = -1 }},
+            {key = "j", action = wezterm.action { ActivateTab = -1 }},
+            {key = "k", action = wezterm.action { ActivateTab = 0 }},
             {key = "l", action = wezterm.action { ActivateTabRelative = 1 }},
             {key = "n", action = wezterm.action { SpawnTab = "CurrentPaneDomain" }},
         },
