@@ -5,6 +5,7 @@ require("plugins")
 require("lsp-user-config").setup()
 
 vim.g['mapleader'] = " "
+vim.g['maplocalleader'] = ","
 vim.g['syntax'] = true
 
 -- Editor configuration

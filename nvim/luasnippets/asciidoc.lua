@@ -5,16 +5,44 @@ end
 return {
     parse("bf", "**$1**"),
     parse("it", "__$1__"),
-    parse("tt", "\\$1\\"),
     parse("sp", "^$1^"),
     parse("sb", "~$1~"),
+    s("tt",
+      fmt(
+        "{}{}{}",
+        {
+            c(1, { t "`", t "`+" }),
+            i(2, "TEXT"),
+            rep(1),
+    })),
 
     parse("foot", "footnote:[$1]"),
-    parse("a", "link:$1[$2]"),
+
+    s("link",
+      fmt(
+        "link:{}[{}]",
+        {
+          i(1, "LINK"),
+          rep(1),
+    })),
+
     parse("var", ":$1: $2"),
 
     parse("audio", "audio::$1[$2]"),
     parse("video", "video::$1[$2]"),
+
+    s("img",
+      fmt([[
+        .{}
+        image::{}[{}, {}]
+        {}
+      ]], {
+        i(1, "CAPTION"),
+        i(2, "IMAGE_PATH"),
+        i(3, "ALT_TEXT"),
+        i(4, "width=100%,height=100%"),
+        i(0),
+    })),
 
     s("fmt",
       fmt("{}{}{}", {
