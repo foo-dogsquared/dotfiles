@@ -97,4 +97,8 @@
     :after org-roam
     :hook (org-roam . org-roam-ui-mode)))
 
+(when (featurep! +krita)
+  (use-package! org-krita
+    :after org-mode
+    :hook (org-mode . org-krita-mode)))
 ;;; config.el ends here

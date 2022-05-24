@@ -25,7 +25,6 @@
        :ui
        doom
        doom-dashboard
-       doom-quit
        hl-todo
        indent-guides
        modeline
@@ -65,13 +64,11 @@
        editorconfig
        (eval +overlay)
        (lookup
-            +dictionary
-            +offline)
+        +dictionary
+        +offline)
        lsp
        magit
-       pdf
        rgb
-       upload
 
        :lang
        (cc +lsp)
@@ -87,14 +84,14 @@
        markdown
        nix
        (org +gnuplot
-         +dragndrop
-         +hugo
-         +journal
-         +noter
-         +pandoc
-         +present
-         +pretty
-         +roam2)
+            +dragndrop
+            +hugo
+            +journal
+            +noter
+            +pandoc
+            +present
+            +pretty
+            +roam2)
        raku
        (python +lsp
                +pyright
@@ -102,7 +99,10 @@
        racket
        (ruby +rails)
        (rust +lsp)
-       scheme
+       (scheme
+        +guile
+        +racket
+        +mit)
        sh
        web
 
@@ -113,4 +113,5 @@
        :tools
        (wiki +anki
              +biblio
-             +graph))
+             +graph
+             +krita))

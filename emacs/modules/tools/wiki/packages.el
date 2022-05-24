@@ -28,3 +28,7 @@
   (package! websocket)
   (package! org-roam-ui
     :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))))
+
+(when (featurep! +krita)
+  (package! org-krita
+    :recipe (:host github :repo "lepisma/org-krita" :files ("resources" "*.el"))))

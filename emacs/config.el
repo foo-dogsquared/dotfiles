@@ -7,7 +7,7 @@
 
 (setq doom-font (font-spec :family "Iosevka" :size 16))
 
-(setq doom-theme 'doom-nord)
+(setq doom-theme 'doom-material-dark)
 
 (setq org-directory "~/library/writings/wiki"
       org-roam-directory "~/library/writings/wiki"
