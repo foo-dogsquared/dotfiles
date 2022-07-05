@@ -21,7 +21,7 @@ local hsl = lush.hsluv
     base0F - Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
 ]]--
 
-local base00 = hsl('#2b221f')
+local base00 = hsl('#27221f')
 local base01 = hsl('#412c26')
 local base02 = hsl('#54352c')
 local base03 = hsl('#8d5c4c')
@@ -392,6 +392,6 @@ return lush(function()
     GitSignsChange { fg = base03 },
 
     -- Indent-Blank-Lines
-    IndentGuide { fg = base01 },
+    IndentGuide { fg = base01, bg = base05 },
   }
 end)
