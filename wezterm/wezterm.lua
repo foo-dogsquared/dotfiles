@@ -97,10 +97,9 @@ return {
         {key = "k", mods = "CTRL|ALT", action = wezterm.action { ScrollToPrompt = -1 }},
 
         -- Pane navigation.
-        {key = "p", mods = "LEADER", action = wezterm.action {
-            ActivateKeyTable = { name = "pane_navigation", timeout_milliseconds = 1000 }}},
+        {key = "p", mods = "LEADER", action = wezterm.action.ActivateKeyTable { name = "pane_navigation", timeout_milliseconds = 1000, replace_current = true, one_shot = true, }},
         {key = "r", mods = "LEADER", action = wezterm.action {
-            ActivateKeyTable = { name = "resize_pane", one_shot = false }}},
+            ActivateKeyTable = { name = "resize_pane", replace_current = true, one_shot = false }}},
         {key = "h", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Left" }},
         {key = "l", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Right" }},
         {key = "LeftArrow", mods = keymod, action = wezterm.action { ActivatePaneDirection = "Left" }},
@@ -117,11 +116,11 @@ return {
 
         -- Tab navigation
         {key = "t", mods = "LEADER", action = wezterm.action {
-            ActivateKeyTable = { name = "tab_navigation", timeout_milliseconds = 1000 }}},
+            ActivateKeyTable = { name = "tab_navigation", timeout_milliseconds = 1000, replace_current = true, one_shot = true, }}},
 
         -- Hints and quick selections
         {key = "h", mods = "LEADER", action = wezterm.action {
-            ActivateKeyTable = { name = "hints", timeout_milliseconds = 1000 }}},
+            ActivateKeyTable = { name = "hints", timeout_milliseconds = 1000, replace_current = true, one_shot = true }}},
 
         {key = "r", mods = keymod, action = "ReloadConfiguration" },
 
