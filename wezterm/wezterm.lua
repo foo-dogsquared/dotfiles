@@ -19,17 +19,11 @@ end)
 
 wezterm.on("read-scrollback", function (window, pane)
     local scrollback = pane:get_lines_as_text()
-
-    local name = os.tmpname()
-    local f = io.open(name, "w+")
-    f:write(scrollback)
-    f:flush()
-    f:close()
-
-    window:perform_action(wezterm.action{SpawnCommandInNewWindow = { args = { "nvim", name }}}, pane)
-
-    wezterm.sleep_ms(1000)
-    os.remove(name)
+    window:perform_action(wezterm.action{
+        SpawnCommandInNewWindow = {
+            args = {
+                "sh", "-c",
+                "echo", scrollback, "|", "nvim", name }}}, pane)
 end)
 
 wezterm.on("update-right-status", function (window, pane)
@@ -68,13 +62,13 @@ return {
     quick_select_patterns = {
         "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
         "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
-        "sha256-[[:alpha:][:digit:]=+/]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
+        "sha256-.{44,128}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
     },
 
     mouse_bindings = {
         { event = { Down = { streak = 3, button = "Left" }},
           action = { SelectTextAtMouseCursor = "SemanticZone" },
-          mods = "NONE" },
+          mods = keymod },
     },
 
     -- It also makes use of key tables which is defined after.
@@ -137,8 +131,8 @@ return {
                 patterns = {
                     "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
                     "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
-                    "sha256-[[:alpha:][:digit:]=+/]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
-                    "[[:alpha:][:digit:]=+/]{44,64}"
+                    "sha256-[[:alpha:][:digit:]-=+/?]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
+                    "[[:alpha:][:digit:]-=+/?]{44,64}"
                 }}}},
 
             -- Basically the equivalent of `kitty hints word`.
