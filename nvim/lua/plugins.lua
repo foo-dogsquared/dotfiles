@@ -271,10 +271,6 @@ return packer.startup({
     }
 
     use { "https://gitlab.com/HiPhish/guile.vim.git" }
-    use {
-      "eraserhd/parinfer-rust",
-      run = "nix-shell --run 'cargo build --release'",
-    }
     use { "Olical/conjure", }
   end,
   config = {
