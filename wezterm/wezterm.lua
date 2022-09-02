@@ -57,6 +57,11 @@ return {
     enable_wayland = true,
     force_reverse_video_cursor = true,
 
+    inactive_pane_hsb = {
+        saturation = 0.5,
+        brightness = 0.5,
+    };
+
     -- Quick select-related options. Quite similar to Kitty hints which is
     -- nice.
     quick_select_patterns = {
