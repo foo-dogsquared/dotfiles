@@ -74,11 +74,11 @@
 
 ;; Custom keybindings
 (map!
- (:when (featurep! :tools wiki)
+ (:when (modulep! :tools wiki)
   :leader
   :prefix "nr" :desc "Create the asset folder" "m" #'my/create-assets-folder)
 
- (:when (featurep! :editor format)
+ (:when (modulep! :editor format)
   :n "g=" #'+format/buffer))
 
 ;; A workaround for electric-indent plugin.

@@ -17,7 +17,7 @@
   (other-window 1)
   (org-roam-node-random))
 
-(when (featurep! +biblio)
+(when (modulep! +biblio)
   (defvar +wiki-references-filename "references.bib")
   (defvar +wiki-bibliography-note-filename "references.org")
   (defvar +wiki-bibliography-file (f-join +wiki-directory +wiki-references-filename))
@@ -43,7 +43,7 @@
     :config
     (+wiki/biblio-setup)))
 
-(when (featurep! +anki)
+(when (modulep! +anki)
   (defvar +anki-cards-directory-name "cards")
   (defvar +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))
 
@@ -85,11 +85,11 @@
     (setq anki-editor-create-decks 't
           +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))))
 
-(when (featurep! +dendron)
+(when (modulep! +dendron)
   (use-package! dendroam
     :after org-roam))
 
-(when (featurep! +graph)
+(when (modulep! +graph)
   (use-package! websocket
     :after org-roam)
 
@@ -97,7 +97,7 @@
     :after org-roam
     :hook (org-roam . org-roam-ui-mode)))
 
-(when (featurep! +krita)
+(when (modulep! +krita)
   (use-package! org-krita
     :after org-mode
     :hook (org-mode . org-krita-mode)))
