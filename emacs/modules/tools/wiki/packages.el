@@ -19,10 +19,6 @@
   (package! md-roam
     :recipe (:host github :repo "nobiot/md-roam" :branch "v2")))
 
-(when (modulep! +dendron)
-  (package! dendroam
-    :recipe (:host github :repo "vicrdguez/dendroam")))
-
 (when (modulep! +graph)
   (package! simple-httpd)
   (package! websocket)

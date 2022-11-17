@@ -85,10 +85,6 @@
     (setq anki-editor-create-decks 't
           +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))))
 
-(when (modulep! +dendron)
-  (use-package! dendroam
-    :after org-roam))
-
 (when (modulep! +graph)
   (use-package! websocket
     :after org-roam)
