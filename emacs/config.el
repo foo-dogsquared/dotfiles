@@ -29,7 +29,10 @@
 
       global-display-line-numbers-mode t
       display-line-numbers-type 'relative
-      projectile-project-search-path '("~/library/projects/software" "~/library/writings" "~/library/projects/learning"))
+      projectile-project-search-path '("~/library/projects/software"
+                                       "~/library/projects/packages"
+                                       "~/library/writings"
+                                       "~/library/projects/learning"))
 
 (add-to-list 'org-modules 'org-habit)
 (add-to-list 'org-modules 'org-checklist)
@@ -91,7 +94,7 @@
 
 ;; Load a custom configuration for muh wiki.
 (add-hook! 'counsel-projectile-mode-hook (lambda ()
-                                                    (message (file-name-directory (buffer-file-name)))))
+                                           (message (file-name-directory (buffer-file-name)))))
 (load-file (f-join +wiki-directory "config.el"))
 
 ;;; config.el ends here
