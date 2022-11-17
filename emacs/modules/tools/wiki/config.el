@@ -9,9 +9,15 @@
 ;; Code
 (defvar +wiki-directory "~/wiki")
 
+;; New nodes should be considered draft and has to be explicitly removed to be
+;; marked as completely. I don't have a good system for revisiting nodes, only
+;; relying on good committing practice. Adding good tagging can double that
+;; effectiveness (if there's any in the first place).
+(add-hook 'org-roam-capture-new-node-hook (lambda ()
+                                            org-roam-tag-add '("draft")))
+
 (defun +org-roam-split-to-random-node ()
   "Open a split window sensibly for a random note."
-  ; TODO: Create a window, open a random note, and that's it.
   (interactive)
   (split-window-sensibly)
   (other-window 1)
@@ -26,16 +32,16 @@
   (defun +wiki/biblio-setup ()
     "Setup the variables for the wiki config."
     (setq +wiki-bibliography-file (f-join +wiki-directory +wiki-references-filename)
-      +wiki-bibliography-note (f-join +wiki-directory +wiki-bibliography-note-filename)
+          +wiki-bibliography-note (f-join +wiki-directory +wiki-bibliography-note-filename)
 
-      org-cite-global-bibliography `(,+wiki-bibliography-file)
+          org-cite-global-bibliography `(,+wiki-bibliography-file)
 
-      citar-bibliography `(,+wiki-bibliography-file)
-      citar-notes-paths `(,+wiki-directory)
-      citar-open-note-function 'orb-citar-edit-note
+          citar-bibliography `(,+wiki-bibliography-file)
+          citar-notes-paths `(,+wiki-directory)
+          citar-open-note-function 'orb-citar-edit-note
 
-      bibtex-completion-bibliography +wiki-bibliography-file
-      bibtex-completion-notes-path +wiki-directory))
+          bibtex-completion-bibliography +wiki-bibliography-file
+          bibtex-completion-notes-path +wiki-directory))
 
   (use-package! org-roam-bibtex
     :after org-roam
@@ -68,18 +74,17 @@
     (defvar +wiki-directory nil)
 
     :init
-    (map!
-      :map org-roam-mode-map
-      :localleader
-      (:prefix ("C" . "Anki cards")
-        :desc "Push all cards in current document" :n "p" #'anki-editor-push-notes
-        :desc "Push all cards in cards directory to Anki" :n "P" #'+anki-editor-push-all-notes-to-anki
-        :desc "Retry to push failed cards" :n "r" #'anki-editor-retry-failure-notes
-        :desc "Insert a card in current document" :n "i" #'anki-editor-insert-note
-        :desc "Create a cloze region" :n "I" #'anki-editor-cloze-region
-        :desc "Export the subtree as HTML" :n "e" #'anki-editor-export-subtree-to-html
-        :desc "Remove all anki-editor-related properties in a card" :n "d" #'+anki-editor-reset-note
-        :desc "Remove all properties in all notes" :n "D" #'+anki-editor-reset-all-notes))
+    (map! :map org-mode-map
+          :localleader
+          :prefix ("C" . "Anki cards")
+          :desc "Push all cards in current document" :n "p" #'anki-editor-push-notes
+          :desc "Push all cards in cards directory to Anki" :n "P" #'+anki-editor-push-all-notes-to-anki
+          :desc "Retry to push failed cards" :n "r" #'anki-editor-retry-failure-notes
+          :desc "Insert a card in current document" :n "i" #'anki-editor-insert-note
+          :desc "Create a cloze region" :n "I" #'anki-editor-cloze-region
+          :desc "Export the subtree as HTML" :n "e" #'anki-editor-export-subtree-to-html
+          :desc "Remove all anki-editor-related properties in a card" :n "d" #'+anki-editor-reset-note
+          :desc "Remove all properties in all notes" :n "D" #'+anki-editor-reset-all-notes)
 
     :config
     (setq anki-editor-create-decks 't
@@ -91,7 +96,10 @@
 
   (use-package! org-roam-ui
     :after org-roam
-    :hook (org-roam . org-roam-ui-mode)))
+    :hook (org-roam . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t)))
 
 (when (modulep! +krita)
   (use-package! org-krita

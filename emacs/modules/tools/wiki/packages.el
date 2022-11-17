@@ -23,7 +23,7 @@
   (package! simple-httpd)
   (package! websocket)
   (package! org-roam-ui
-    :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))))
+    :recipe (:host github :repo "org-roam/org-roam-ui")))
 
 (when (modulep! +krita)
   (package! org-krita
