@@ -8,8 +8,13 @@
 
   outputs = inputs@{ self, nixpkgs, ... }:
     let systems = inputs.flake-utils.lib.defaultSystems;
-    in inputs.flake-utils.lib.eachSystem systems (system: {
+    in inputs.flake-utils.lib.eachSystem systems (system: let
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
       devShell =
-        import ./shell.nix { pkgs = import nixpkgs { inherit system; }; };
+        import ./shell.nix { inherit pkgs; };
+
+      formatter = pkgs.treefmt;
     });
 }
