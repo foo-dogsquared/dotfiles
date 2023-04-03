@@ -3,29 +3,47 @@ local module = {}
 
 local wezterm = require("wezterm")
 
-local light_theme = "Albino bark on a tree"
-local dark_theme = "Bark on a tree"
+local light_scheme, light_scheme_metadata =
+  wezterm.color.load_base16_scheme(os.getenv("HOME") .. "/library/dotfiles/base16/albino-bark-on-a-tree.yaml")
+local dark_theme, dark_theme_metadata =
+  wezterm.color.load_base16_scheme(os.getenv("HOME") .. "/library/dotfiles/base16/bark-on-a-tree.yaml")
 
 local function scheme_for_appearance()
   local scheme = wezterm.gui.get_appearance()
   if scheme == "Dark" then
-    return dark_theme
+    return dark_theme_metadata.name
   else
-    return light_theme
+    return light_scheme_metadata.name
   end
 end
 
-local albino_bark_on_a_tree =
-  wezterm.color.load_base16_scheme(os.getenv("HOME") .. "/library/dotfiles/base16/albino-bark-on-a-tree.yaml")
-local bark_on_a_tree =
-  wezterm.color.load_base16_scheme(os.getenv("HOME") .. "/library/dotfiles/base16/bark-on-a-tree.yaml")
+function module.add_base16_scheme_to_config(path, config)
+  local scheme, metadata = wezterm.color.load_base16_scheme(path)
+  config.color_schemes[metadata.name] = scheme
+
+  return config
+end
 
 --- Apply the configuration with the given table.
 -- @param config: the table containing Wezterm configuration.
 function module.apply_to_config(config)
   config.color_schemes = {}
-  config.color_schemes[light_theme] = albino_bark_on_a_tree
-  config.color_schemes[dark_theme] = bark_on_a_tree
+
+  -- Thankfully, wezterm can detect fontconfig aliases.
+  config.font = wezterm.font_with_fallback({
+    "monospace",
+    "Noto Color Emoji",
+  })
+
+  -- Desaturate any inactive panes.
+  config.inactive_pane_hsb = {
+    saturation = 0.5,
+    brightness = 0.5,
+  }
+
+  -- Set with my color schemes.
+  config.color_schemes[dark_theme_metadata.name] = dark_theme
+  config.color_schemes[light_scheme_metadata.name] = light_scheme
   config.color_scheme = scheme_for_appearance()
 
   return config

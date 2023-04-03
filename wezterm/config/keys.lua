@@ -9,13 +9,9 @@ function module.apply_to_config(config)
   -- I'm very used to setting <SPACE> as the leader so I'm continuing the tradition.
   config.leader = { key = "Space", mods = keymod, timeout_milliseconds = 1000 }
 
-  -- Quick select-related options. Quite similar to Kitty hints which is
-  -- nice.
-  config.quick_select_patterns = {
-    "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
-    "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
-    "sha256-.{44,128}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
-  }
+  -- I'm liking the workflow I have with Kitty so no thanks for the default
+  -- shortcuts. So this is what it feels like to be obnoxiously stubborn.
+  config.disable_default_key_bindings = true
 
   config.mouse_bindings = {
     {
@@ -182,7 +178,6 @@ function module.apply_to_config(config)
       { key = "Enter", action = "PopKeyTable" },
     },
   }
-
   return config
 end
 

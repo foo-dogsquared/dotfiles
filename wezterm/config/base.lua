@@ -6,9 +6,13 @@ local wezterm = require("wezterm")
 function module.apply_to_config(config)
   config.default_prog = { "bash" }
 
-  -- I'm liking the workflow I have with Kitty so no thanks for the default
-  -- shortcuts. So this is what it feels like to be obnoxiously stubborn.
-  config.disable_default_key_bindings = true
+  -- Quick select-related options. Quite similar to Kitty hints which is
+  -- nice.
+  config.quick_select_patterns = {
+    "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
+    "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
+    "sha256-.{44,128}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
+  }
 
   -- Don't tease me with the upcoming releases, man.
   config.check_for_updates = false
@@ -17,19 +21,6 @@ function module.apply_to_config(config)
   config.enable_wayland = true
   config.force_reverse_video_cursor = true
 
-  -- Desaturate any inactive panes.
-  config.inactive_pane_hsb = {
-    saturation = 0.5,
-    brightness = 0.5,
-  }
-
-  -- Thankfully, wezterm can detect fontconfig aliases.
-  config.font = wezterm.font_with_fallback({
-    "monospace",
-    "Noto Color Emoji",
-  })
-
-  config.color_scheme = "Batman"
   return config
 end
 
