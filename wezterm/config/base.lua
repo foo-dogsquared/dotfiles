@@ -21,6 +21,18 @@ function module.apply_to_config(config)
   config.enable_wayland = true
   config.force_reverse_video_cursor = true
 
+  -- Use some IME.
+  config.use_ime = true
+
+  -- Set up the visual bell.
+  config.audible_bell = "SystemBeep"
+  config.visual_bell = {
+    fade_in_function = 'EaseIn',
+    fade_in_duration_ms = 75,
+    fade_out_function = 'EaseOut',
+    fade_out_duration_ms = 75,
+  }
+
   return config
 end
 
