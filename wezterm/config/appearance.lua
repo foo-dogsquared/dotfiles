@@ -29,6 +29,8 @@ end
 function module.apply_to_config(config)
   config.color_schemes = {}
 
+  config.font_size = 16
+
   -- Thankfully, wezterm can detect fontconfig aliases.
   config.font = wezterm.font_with_fallback({
     "monospace",
@@ -45,6 +47,14 @@ function module.apply_to_config(config)
   config.color_schemes[dark_theme_metadata.name] = dark_theme
   config.color_schemes[light_scheme_metadata.name] = light_scheme
   config.color_scheme = scheme_for_appearance()
+
+  -- Disable some annoying mouse thingies.
+  config.hide_mouse_cursor_when_typing = false
+  config.pane_focus_follows_mouse = true
+
+  -- Disable some more annoyances.
+  config.enable_tab_bar = false
+  config.window_decorations = "NONE"
 
   return config
 end
