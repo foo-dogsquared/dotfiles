@@ -21,20 +21,20 @@ local hsl = lush.hsluv
     base0F - Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
 ]]--
 
-local base00 = hsl('#27221f')
+local base00 = hsl('#2b221f')
 local base01 = hsl('#412c26')
-local base02 = hsl('#54352c')
-local base03 = hsl('#8d5c4c')
+local base02 = hsl('#5c362c')
+local base03 = hsl('#a45b43')
 local base04 = hsl('#e1bcb2')
 local base05 = hsl('#f5ecea')
 local base06 = hsl('#fefefe')
 local base07 = hsl('#eb8a65')
 local base08 = hsl('#d03e68')
-local base09 = hsl('#eb914a')
+local base09 = hsl('#df937a')
 local base0A = hsl('#afa644')
 local base0B = hsl('#85b26e')
-local base0C = hsl('#df937a')
-local base0D = hsl('#a15c40')
+local base0C = hsl('#eb914a')
+local base0D = hsl('#c67f62')
 local base0E = hsl('#8b7ab9')
 local base0F = hsl('#7f3F83')
 
