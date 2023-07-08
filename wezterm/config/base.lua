@@ -4,8 +4,6 @@ local module = {}
 local wezterm = require("wezterm")
 
 function module.apply_to_config(config)
-  config.default_prog = { "bash" }
-
   -- Quick select-related options. Quite similar to Kitty hints which is
   -- nice.
   config.quick_select_patterns = {
@@ -27,10 +25,8 @@ function module.apply_to_config(config)
   -- Set up the visual bell.
   config.audible_bell = "SystemBeep"
   config.visual_bell = {
-    fade_in_function = 'EaseIn',
-    fade_in_duration_ms = 75,
-    fade_out_function = 'EaseOut',
-    fade_out_duration_ms = 75,
+    fade_in_duration_ms = 50,
+    fade_out_duration_ms = 50,
   }
 
   return config
