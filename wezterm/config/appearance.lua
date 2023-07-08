@@ -29,13 +29,13 @@ end
 function module.apply_to_config(config)
   config.color_schemes = {}
 
-  config.font_size = 16
+  config.font_size = 19
 
   -- Thankfully, wezterm can detect fontconfig aliases.
-  config.font = wezterm.font_with_fallback({
+  config.font = wezterm.font_with_fallback {
     "monospace",
     "Noto Color Emoji",
-  })
+  }
 
   -- Desaturate any inactive panes.
   config.inactive_pane_hsb = {
@@ -53,8 +53,24 @@ function module.apply_to_config(config)
   config.pane_focus_follows_mouse = true
 
   -- Disable some more annoyances.
-  config.enable_tab_bar = false
-  config.window_decorations = "NONE"
+  config.enable_tab_bar = true
+  config.enable_scroll_bar = false
+  config.tab_bar_at_bottom = true
+  config.window_decorations = "RESIZE"
+
+  -- Configuring the appearance of the tab bar.
+  config.window_frame = {
+    font = config.font,
+    font_size = config.font_size - 2,
+  }
+
+  -- Configuring the windows padding.
+  config.window_padding = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
+  }
 
   return config
 end
