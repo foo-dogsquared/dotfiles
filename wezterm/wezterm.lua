@@ -1,11 +1,8 @@
-local base = require("config/base")
-local keys = require("config/keys")
-local appearance = require("config/appearance")
+local config = require("wezterm").config_builder()
+config:set_strict_mode(true)
 
-local config = {}
-
-base.apply_to_config(config)
-keys.apply_to_config(config)
-appearance.apply_to_config(config)
+require("config/base").apply_to_config(config)
+require("config/keys").apply_to_config(config)
+require("config/appearance").apply_to_config(config)
 
 return config
