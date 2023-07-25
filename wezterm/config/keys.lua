@@ -109,6 +109,7 @@ function module.apply_to_config(config)
 
     { key = "r", mods = keymod, action = act.ReloadConfiguration },
     { key = "t", mods = keymod, action = act.ShowDebugOverlay },
+    { key = "p", mods = keymod, action = act.ActivateCommandPalette },
 
     -- Selection
     { key = "Space", mods = "LEADER", action = act.QuickSelect },
@@ -148,13 +149,6 @@ function module.apply_to_config(config)
           patterns = {
             ".+",
           },
-        },
-      },
-
-      {
-        key = "p",
-        action = act.Search {
-          Regex = "legacyPackages[[:alpha:][:digit:]]+"
         },
       },
 

@@ -48,6 +48,10 @@ function module.apply_to_config(config)
   config.color_schemes[light_scheme_metadata.name] = light_scheme
   config.color_scheme = scheme_for_appearance()
 
+  config.command_palette_fg_color = config.color_schemes[config.color_scheme].foreground
+  config.command_palette_bg_color = config.color_schemes[config.color_scheme].background
+  config.command_palette_font_size = config.font_size
+
   -- Disable some annoying mouse thingies.
   config.hide_mouse_cursor_when_typing = false
   config.pane_focus_follows_mouse = true
