@@ -3,9 +3,9 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 (setq user-full-name "Gabriel Arazas"
-      user-mail-address "foo.dogsquared@gmail.com")
+      user-mail-address "foodogsquared@foodogsquared.one")
 
-(setq doom-font (font-spec :family "Iosevka" :size 16))
+(setq doom-font (font-spec :family "Iosevka" :size 18))
 
 (setq doom-theme 'doom-material-dark)
 
