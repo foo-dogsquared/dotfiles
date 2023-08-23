@@ -69,20 +69,26 @@
        lsp
        magit
        rgb
+       tree-sitter
 
        :lang
-       (cc +lsp)
-       clojure
+       (cc +tree-sitter)
+       (clojure +lsp
+                +tree-sitter)
        common-lisp
        data
        (dart +flutter)
        emacs-lisp
-       ess
+       (ess +stan
+            +tree-sitter)
        (gdscript +lsp)
        (latex +latexmk)
-       lua
+       (lua +tree-sitter
+            +fennel
+            +lsp
+            +moonscript)
        markdown
-       nix
+       (nix +tree-sitter)
        (org +gnuplot
             +dragndrop
             +hugo
@@ -95,16 +101,24 @@
        raku
        (python +lsp
                +pyright
+               +tree-sitter
                +cython)
-       racket
-       (ruby +rails)
-       (rust +lsp)
-       (scheme
-        +guile
-        +racket
-        +mit)
-       sh
-       web
+       (racket +lsp
+               +xp)
+       (ruby +rails
+             +lsp
+             +tree-sitter)
+       (rust +lsp
+             +tree-sitter)
+       (scheme +guile
+               +racket
+               +mit)
+       (sh +fish
+           +powershell
+           +lsp
+           +tree-sitter)
+       (web +lsp
+            +tree-sitter)
 
        :config
        (default +bindings +smartparens)
