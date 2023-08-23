@@ -23,32 +23,6 @@
   (other-window 1)
   (org-roam-node-random))
 
-(when (modulep! +biblio)
-  (defvar +wiki-references-filename "references.bib")
-  (defvar +wiki-bibliography-note-filename "references.org")
-  (defvar +wiki-bibliography-file (f-join +wiki-directory +wiki-references-filename))
-  (defvar +wiki-bibliography-note (f-join +wiki-directory +wiki-bibliography-note-filename))
-
-  (defun +wiki/biblio-setup ()
-    "Setup the variables for the wiki config."
-    (setq +wiki-bibliography-file (f-join +wiki-directory +wiki-references-filename)
-          +wiki-bibliography-note (f-join +wiki-directory +wiki-bibliography-note-filename)
-
-          org-cite-global-bibliography `(,+wiki-bibliography-file)
-
-          citar-bibliography `(,+wiki-bibliography-file)
-          citar-notes-paths `(,+wiki-directory)
-          citar-open-note-function 'orb-citar-edit-note
-
-          bibtex-completion-bibliography +wiki-bibliography-file
-          bibtex-completion-notes-path +wiki-directory))
-
-  (use-package! org-roam-bibtex
-    :after org-roam
-    :preface
-    :config
-    (+wiki/biblio-setup)))
-
 (when (modulep! +anki)
   (defvar +anki-cards-directory-name "cards")
   (defvar +anki-cards-directory (f-join +wiki-directory +anki-cards-directory-name))
