@@ -13,8 +13,7 @@
 ;; marked as completely. I don't have a good system for revisiting nodes, only
 ;; relying on good committing practice. Adding good tagging can double that
 ;; effectiveness (if there's any in the first place).
-(add-hook 'org-roam-capture-new-node-hook (lambda ()
-                                            org-roam-tag-add '("draft")))
+(add-hook! 'org-roam-capture-new-node-hook (org-roam-tag-add '("draft")))
 
 (defun +org-roam-split-to-random-node ()
   "Open a split window sensibly for a random note."
