@@ -1,8 +1,6 @@
 -- A local jumpstart for creating my base configuration.
 local module = {}
 
-local wezterm = require("wezterm")
-
 function module.apply_to_config(config)
   -- Quick select-related options. Quite similar to Kitty hints which is
   -- nice.

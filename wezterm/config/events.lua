@@ -3,7 +3,7 @@ local wezterm = require("wezterm")
 local io = require("io")
 local os = require("os")
 
-wezterm.on("update-right-status", function(window, pane)
+wezterm.on("update-right-status", function(window, _)
   local key = window:active_key_table()
   if key then
     key = "TABLE: " .. key
