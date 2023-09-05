@@ -34,5 +34,6 @@ end
 
 -- The keymod to be used for the entire configuration.
 module.keymod = "CTRL|SHIFT"
+module.alt_keymod = "CTRL|SHIFT|ALT"
 
 return module

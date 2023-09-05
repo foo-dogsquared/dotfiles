@@ -4,6 +4,7 @@ local events = require("config/events")
 local act = wezterm.action
 
 local keymod = base.keymod
+local alt_keymod = base.alt_keymod
 local module = {}
 
 function module.apply_to_config(config)
@@ -94,6 +95,10 @@ function module.apply_to_config(config)
         one_shot = true,
       }),
     },
+    { mods = alt_keymod, key = "h", action = act.ActivateTabRelative(-1), },
+    { mods = alt_keymod, key = "j", action = act.ActivateTab(-1), },
+    { mods = alt_keymod, key = "k", action = act.ActivateTab(0), },
+    { mods = alt_keymod, key = "l", action = act.ActivateTabRelative(1), },
 
     -- Hints and quick selections
     {
