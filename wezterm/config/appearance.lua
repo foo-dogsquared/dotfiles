@@ -32,10 +32,10 @@ function module.apply_to_config(config)
   config.font_size = 19
 
   -- Thankfully, wezterm can detect fontconfig aliases.
-  config.font = wezterm.font_with_fallback {
+  config.font = wezterm.font_with_fallback({
     "monospace",
     "Noto Color Emoji",
-  }
+  })
 
   -- Desaturate any inactive panes.
   config.inactive_pane_hsb = {

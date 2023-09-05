@@ -26,7 +26,7 @@ function module.apply_to_config(config)
 
     {
       event = { Down = { streak = 1, button = "Left" } },
-      action = act.ExtendSelectionToMouseCursor "Word",
+      action = act.ExtendSelectionToMouseCursor("Word"),
       mods = keymod,
     },
   }
@@ -34,8 +34,8 @@ function module.apply_to_config(config)
   -- It also makes use of key tables which is defined after.
   config.keys = {
     -- Clipboard
-    { key = "c", mods = keymod, action = act.CopyTo "Clipboard" },
-    { key = "v", mods = keymod, action = act.PasteFrom "Clipboard" },
+    { key = "c", mods = keymod, action = act.CopyTo("Clipboard") },
+    { key = "v", mods = keymod, action = act.PasteFrom("Clipboard") },
 
     -- Font resize.
     { key = "+", mods = keymod, action = act.IncreaseFontSize },
@@ -54,22 +54,22 @@ function module.apply_to_config(config)
     {
       key = "p",
       mods = "LEADER",
-      action = act.ActivateKeyTable {
+      action = act.ActivateKeyTable({
         name = "pane_navigation",
         timeout_milliseconds = 1000,
         replace_current = true,
         one_shot = true,
-      },
+      }),
     },
 
     {
       key = "r",
       mods = "LEADER",
-      action = act.ActivateKeyTable {
+      action = act.ActivateKeyTable({
         name = "resize_pane",
         replace_current = true,
         one_shot = false,
-      },
+      }),
     },
 
     { key = "h", mods = keymod, action = act.ActivatePaneDirection("Left") },
@@ -98,10 +98,10 @@ function module.apply_to_config(config)
         one_shot = true,
       }),
     },
-    { mods = alt_keymod, key = "h", action = act.ActivateTabRelative(-1), },
-    { mods = alt_keymod, key = "j", action = act.ActivateTab(-1), },
-    { mods = alt_keymod, key = "k", action = act.ActivateTab(0), },
-    { mods = alt_keymod, key = "l", action = act.ActivateTabRelative(1), },
+    { mods = alt_keymod, key = "h", action = act.ActivateTabRelative(-1) },
+    { mods = alt_keymod, key = "j", action = act.ActivateTab(-1) },
+    { mods = alt_keymod, key = "k", action = act.ActivateTab(0) },
+    { mods = alt_keymod, key = "l", action = act.ActivateTabRelative(1) },
     { key = "t", mods = keymod, action = act.ShowTabNavigator },
     { key = "d", mods = alt_keymod, action = act.CloseCurrentTab({ confirm = false }) },
 
@@ -113,63 +113,63 @@ function module.apply_to_config(config)
         name = "hints",
         timeout_milliseconds = 1000,
         replace_current = true,
-        one_shot = true
+        one_shot = true,
       }),
     },
 
     { key = "r", mods = keymod, action = act.ReloadConfiguration },
     { key = "o", mods = keymod, action = act.ShowDebugOverlay },
     { key = "p", mods = keymod, action = act.ActivateCommandPalette },
-    { key = "e", mods = keymod, action = act.EmitEvent "view-last-output-in-new-pane" },
+    { key = "e", mods = keymod, action = act.EmitEvent("view-last-output-in-new-pane") },
 
     -- Selection
     { key = "Space", mods = "LEADER", action = act.QuickSelect },
     { key = "a", mods = keymod, action = act.QuickSelect },
-    { key = "s", mods = keymod, action = act.Search { CaseSensitiveString = "" } },
+    { key = "s", mods = keymod, action = act.Search({ CaseSensitiveString = "" }) },
   }
 
   config.key_tables = {
     hints = {
-      { key = "g", action = act.Search { Regex = "[0-9a-f]{6,}" } },
+      { key = "g", action = act.Search({ Regex = "[0-9a-f]{6,}" }) },
       {
         key = "h",
-        action = act.QuickSelectArgs {
+        action = act.QuickSelectArgs({
           patterns = {
             "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
             "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
             "sha256-[[:alpha:][:digit:]-=+/?]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
             "[[:alpha:][:digit:]-=+/?]{44,64}",
           },
-        },
+        }),
       },
 
       -- Basically the equivalent of `kitty hints word`.
       {
         key = "w",
-        action = act.QuickSelectArgs {
+        action = act.QuickSelectArgs({
           patterns = {
             "\\S+",
           },
-        },
+        }),
       },
 
       -- The equivalent to `kitty hints line`.
       {
         key = "l",
-        action = act.QuickSelectArgs {
+        action = act.QuickSelectArgs({
           patterns = {
             ".+",
           },
-        },
+        }),
       },
 
       { key = "Space", action = act.QuickSelect },
       { key = "s", action = act.QuickSelect },
-      { key = "f", action = act.Search { CaseSensitiveString = "" } },
+      { key = "f", action = act.Search({ CaseSensitiveString = "" }) },
     },
 
     pane_navigation = {
-      { key = "d", action = act.CloseCurrentPane { confirm = false } },
+      { key = "d", action = act.CloseCurrentPane({ confirm = false }) },
       { key = "h", action = act.ActivatePaneDirection("Left") },
       { key = "j", action = act.ActivatePaneDirection("Down") },
       { key = "k", action = act.ActivatePaneDirection("Up") },

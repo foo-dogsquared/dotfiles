@@ -5,14 +5,18 @@ function setup()
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
   local on_attach = function(client, bufnr)
-    local function keymap_set(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    local function keymap_set(...)
+      vim.api.nvim_buf_set_keymap(bufnr, ...)
+    end
+    local function buf_set_option(...)
+      vim.api.nvim_buf_set_option(bufnr, ...)
+    end
 
     -- Enable completion triggered by <c-x><c-o>
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
     -- Mappings.
-    local opts = { noremap=true, silent=true }
+    local opts = { noremap = true, silent = true }
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     keymap_set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
@@ -39,12 +43,12 @@ function setup()
   capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
   -- Enable the following language servers
-  local servers = { "clangd", "rust_analyzer", "pyright", "tsserver", "rnix", "sumneko_lua" }
+  local servers = { "clangd", "rust_analyzer", "pyright", "tsserver", "rnix", "lua_ls" }
   for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
+    nvim_lsp[lsp].setup({
       on_attach = on_attach,
       capabilities = capabilities,
-    }
+    })
   end
 end
 

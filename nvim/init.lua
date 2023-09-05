@@ -4,9 +4,9 @@
 require("plugins")
 require("lsp-user-config").setup()
 
-vim.g['mapleader'] = " "
-vim.g['maplocalleader'] = ","
-vim.g['syntax'] = true
+vim.g["mapleader"] = " "
+vim.g["maplocalleader"] = ","
+vim.g["syntax"] = true
 
 -- Editor configuration
 vim.opt.completeopt = "menuone,noselect"
@@ -25,14 +25,14 @@ vim.opt_local.spell = true
 vim.opt.smartindent = true
 
 -- I have yet to solve how to do the following in Lua, lmao
-vim.cmd "highlight clear SpellBad"
-vim.cmd "highlight clear SpellLocal"
-vim.cmd "highlight clear SpellCap"
-vim.cmd "highlight clear SpellRare"
-vim.cmd "highlight Visual term=reverse cterm=reverse"
-vim.cmd "colorscheme fds-theme"
+vim.cmd("highlight clear SpellBad")
+vim.cmd("highlight clear SpellLocal")
+vim.cmd("highlight clear SpellCap")
+vim.cmd("highlight clear SpellRare")
+vim.cmd("highlight Visual term=reverse cterm=reverse")
+vim.cmd("colorscheme fds-theme")
 
 -- Keybindings
-vim.keymap.set('n', '<leader>bd', ':bd<cr>', {})
-vim.keymap.set('i', 'jk', '<Esc>', {})
-vim.keymap.set('n', '<leader>hr', '<cmd>source $MYVIMRC<cr>', {})
+vim.keymap.set("n", "<leader>bd", ":bd<cr>", {})
+vim.keymap.set("i", "jk", "<Esc>", {})
+vim.keymap.set("n", "<leader>hr", "<cmd>source $MYVIMRC<cr>", {})

@@ -5,7 +5,7 @@
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  packer_bootstrap = vim.fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
+  packer_bootstrap = vim.fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
 end
 
 local packer = require("packer")
@@ -14,46 +14,46 @@ local util = require("packer.util")
 return packer.startup({
   function(use)
     -- Let the package manager manage itself.
-    use { "wbthomason/packer.nvim" }
+    use({ "wbthomason/packer.nvim" })
 
     -- Custom color themes!
-    use { "rktjmp/lush.nvim" }
+    use({ "rktjmp/lush.nvim" })
 
     -- EditorConfig plugin
-    use { "editorconfig/editorconfig-vim" }
+    use({ "editorconfig/editorconfig-vim" })
 
     -- Colorize common color strings
-    use {
+    use({
       "norcalli/nvim-colorizer.lua",
       config = function()
-          require("colorizer").setup()
-      end
-    }
+        require("colorizer").setup()
+      end,
+    })
 
     -- Snippets engine.
     -- A must have for me.
-    use {
+    use({
       "L3MON4D3/LuaSnip",
       requires = {
         "rafamadriz/friendly-snippets",
       },
-      config = function ()
+      config = function()
         require("luasnip.loaders.from_vscode").lazy_load()
         require("luasnip.loaders.from_lua").lazy_load()
 
         local ls = require("luasnip")
         local types = require("luasnip.util.types")
-        ls.config.set_config {
+        ls.config.set_config({
           history = true,
           update_events = "TextChanged,TextChangedI",
           ext_opts = {
             [types.choiceNode] = {
               active = {
-                virt_text = { {"<- Current choice", "Comment"} },
+                virt_text = { { "<- Current choice", "Comment" } },
               },
             },
           },
-        }
+        })
 
         vim.keymap.set({ "i", "s" }, "<c-j>", function()
           if ls.jumpable(1) then
@@ -63,13 +63,13 @@ return packer.startup({
 
         vim.keymap.set({ "i", "s" }, "<c-k>", function()
           if ls.jumpable(-1) then
-              ls.jump(-1)
+            ls.jump(-1)
           end
         end)
 
         vim.keymap.set({ "i", "s" }, "<c-l>", function()
           if ls.expand_or_jumpable() then
-              ls.expand_or_jump()
+            ls.expand_or_jump()
           end
         end)
 
@@ -77,52 +77,72 @@ return packer.startup({
           require("luasnip.extras.select_choice")()
         end)
       end,
-    }
+    })
 
     -- Fuzzy finder of lists
-    use {
+    use({
       "nvim-telescope/telescope.nvim",
       requires = {
-        {"nvim-lua/popup.nvim"},
-        {"nvim-lua/plenary.nvim"},
-        {"nvim-telescope/telescope-project.nvim"}
+        { "nvim-lua/popup.nvim" },
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-telescope/telescope-project.nvim" },
       },
 
       config = function()
         -- Telescope setup
-        require("telescope").setup {
+        require("telescope").setup({
           extensions = {
             project = {
               base_dirs = {
-                {"~/library/projects/software", max_depth = 2},
-                {"~/library/projects/packages"},
-                {"~/library/writings"},
+                { "~/library/projects/software", max_depth = 2 },
+                { "~/library/projects/packages" },
+                { "~/library/writings" },
               },
             },
           },
-        }
+        })
 
         require("telescope").load_extension("project")
 
-        vim.keymap.set('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fF', '<cmd>lua require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir(), hidden = true })<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fg', '<cmd>lua require("telescope.builtin").grep_string()<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fG', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>ft', '<cmd>lua require("telescope.builtin").treesitter()<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fR', '<cmd>lua require("telescope.builtin").oldfiles({ only_cwd = true })<cr>', { noremap = true })
-        vim.keymap.set('n', '<leader>fA', '<cmd>lua require("telescope.builtin").resume()<cr>', { noremap = true })
+        vim.keymap.set(
+          "n",
+          "<leader>ff",
+          '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<cr>',
+          { noremap = true }
+        )
+        vim.keymap.set(
+          "n",
+          "<leader>fF",
+          '<cmd>lua require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir(), hidden = true })<cr>',
+          { noremap = true }
+        )
+        vim.keymap.set("n", "<leader>fg", '<cmd>lua require("telescope.builtin").grep_string()<cr>', { noremap = true })
+        vim.keymap.set("n", "<leader>fG", '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true })
+        vim.keymap.set("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
+        vim.keymap.set("n", "<leader>fh", '<cmd>lua require("telescope.builtin").help_tags()<cr>', { noremap = true })
+        vim.keymap.set("n", "<leader>ft", '<cmd>lua require("telescope.builtin").treesitter()<cr>', { noremap = true })
+        vim.keymap.set("n", "<leader>fb", '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true })
+        vim.keymap.set("n", "<leader>fr", '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true })
+        vim.keymap.set(
+          "n",
+          "<leader>fR",
+          '<cmd>lua require("telescope.builtin").oldfiles({ only_cwd = true })<cr>',
+          { noremap = true }
+        )
+        vim.keymap.set("n", "<leader>fA", '<cmd>lua require("telescope.builtin").resume()<cr>', { noremap = true })
 
         -- Ekeymap.set
-        vim.keymap.set('n', '<leader>fp', '<cmd>lua require("telescope").extensions.project.project({})<cr>', { noremap = true })
+        vim.keymap.set(
+          "n",
+          "<leader>fp",
+          '<cmd>lua require("telescope").extensions.project.project({})<cr>',
+          { noremap = true }
+        )
       end,
-    }
+    })
 
     -- Marks in ~~steroids~~ coconut oil
-    use {
+    use({
       "ThePrimeagen/harpoon",
       config = function()
         vim.keymap.set("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", {})
@@ -133,12 +153,12 @@ return packer.startup({
           require("telescope").load_extension("harpoon")
         end
       end,
-      requires = { {"nvim-lua/plenary.nvim"} }
-    }
+      requires = { { "nvim-lua/plenary.nvim" } },
+    })
 
     -- A completion engine.
     -- nvim-cmp is mostly explicit by making the configuration process manual unlike bigger plugins like CoC
-    use {
+    use({
       "hrsh7th/nvim-cmp",
       requires = {
         "hrsh7th/cmp-buffer",
@@ -152,7 +172,7 @@ return packer.startup({
 
         cmp.setup({
           snippet = {
-            expand = function (args)
+            expand = function(args)
               ls.lsp_expand(args.body)
             end,
           },
@@ -178,25 +198,25 @@ return packer.startup({
             }),
           },
         })
-      end
-    }
+      end,
+    })
 
     -- A linting engine, a DAP client, and an LSP client entered into a bar.
-    use {
+    use({
       "dense-analysis/ale",
       config = function()
         vim.g.ale_disable_lsp = 1
       end,
-    }
-    use { "neovim/nvim-lspconfig" }
-    use { "mfussenegger/nvim-dap" }
-    use { "puremourning/vimspector" }
+    })
+    use({ "neovim/nvim-lspconfig" })
+    use({ "mfussenegger/nvim-dap" })
+    use({ "puremourning/vimspector" })
 
     -- tree-sitter
-    use {
+    use({
       "nvim-treesitter/nvim-treesitter",
       requires = {
-        "nvim-treesitter/nvim-treesitter-textobjects"
+        "nvim-treesitter/nvim-treesitter-textobjects",
       },
       run = ":TSUpdate",
       config = function()
@@ -241,38 +261,41 @@ return packer.startup({
             },
           },
         })
-      end
-    }
+      end,
+    })
 
     -- One of the most popular plugins.
     -- Allows to create more substantial status bars.
-    use { "vim-airline/vim-airline" }
+    use({ "vim-airline/vim-airline" })
 
     -- Fuzzy finder for finding files freely and fastly.
-    use {
-        "junegunn/fzf",
-        requires = "junegunn/fzf.vim"
-    }
+    use({
+      "junegunn/fzf",
+      requires = "junegunn/fzf.vim",
+    })
 
     -- Enable visuals for addition/deletion of lines in the gutter (side) similar to Visual Studio Code.
-    use { "airblade/vim-gitgutter" }
+    use({ "airblade/vim-gitgutter" })
 
     -- Language plugins.
-    use { "LnL7/vim-nix" } -- Nix
-    use { "vmchale/dhall-vim" } -- Dhall
-    use { "ziglang/zig.vim" } -- Zig
+    use({ "LnL7/vim-nix" }) -- Nix
+    use({ "vmchale/dhall-vim" }) -- Dhall
+    use({ "ziglang/zig.vim" }) -- Zig
+
+    use({ "RRethy/nvim-base16" })
 
     -- Use Neovim even inside of browsers.
-    use {
+    use({
       "glacambre/firenvim",
       run = function()
         vim.fn["firenvim#install"](0)
-      end
-    }
+      end,
+    })
 
-    use { "https://gitlab.com/HiPhish/guile.vim.git" }
-    use { "Olical/conjure", }
+    use({ "https://gitlab.com/HiPhish/guile.vim.git" })
+    use({ "Olical/conjure" })
   end,
   config = {
-    compile_path = util.join_paths(vim.fn.stdpath('data'), 'site', 'after', 'plugin', 'packer_compiled.lua'),
-}})
+    compile_path = util.join_paths(vim.fn.stdpath("data"), "site", "after", "plugin", "packer_compiled.lua"),
+  },
+})

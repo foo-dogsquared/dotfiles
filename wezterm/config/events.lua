@@ -29,11 +29,11 @@ wezterm.on("view-last-output-in-new-pane", function(_, pane)
     f:close()
   end
 
-  pane:split {
+  pane:split({
     args = { os.getenv("PAGER") or "less", tmpname },
     direction = "Bottom",
     domain = { DomainName = "local" },
-  }
+  })
 
   -- Without this, it would quickly close all of the process immediately.
   wezterm.sleep_ms(1000)
