@@ -1,7 +1,9 @@
 local wezterm = require("wezterm")
 local base = require("config/base")
-local events = require("config/events")
 local act = wezterm.action
+
+-- Take note this is required to import the events in this module.
+local _ = require("config/events")
 
 local keymod = base.keymod
 local alt_keymod = base.alt_keymod
@@ -115,6 +117,7 @@ function module.apply_to_config(config)
     { key = "r", mods = keymod, action = act.ReloadConfiguration },
     { key = "t", mods = keymod, action = act.ShowDebugOverlay },
     { key = "p", mods = keymod, action = act.ActivateCommandPalette },
+    { key = "e", mods = keymod, action = act.EmitEvent "view-last-output-in-new-pane" },
 
     -- Selection
     { key = "Space", mods = "LEADER", action = act.QuickSelect },
