@@ -84,6 +84,7 @@ function module.apply_to_config(config)
     { key = "f", mods = keymod, action = act.TogglePaneZoomState },
     { key = "n", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     { key = "n", mods = keymod, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = "n", mods = alt_keymod, action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
     { key = "d", mods = keymod, action = act.CloseCurrentPane({ confirm = false }) },
 
     -- Tab navigation
@@ -101,6 +102,8 @@ function module.apply_to_config(config)
     { mods = alt_keymod, key = "j", action = act.ActivateTab(-1), },
     { mods = alt_keymod, key = "k", action = act.ActivateTab(0), },
     { mods = alt_keymod, key = "l", action = act.ActivateTabRelative(1), },
+    { key = "t", mods = keymod, action = act.ShowTabNavigator },
+    { key = "d", mods = alt_keymod, action = act.CloseCurrentTab({ confirm = false }) },
 
     -- Hints and quick selections
     {
@@ -115,7 +118,7 @@ function module.apply_to_config(config)
     },
 
     { key = "r", mods = keymod, action = act.ReloadConfiguration },
-    { key = "t", mods = keymod, action = act.ShowDebugOverlay },
+    { key = "o", mods = keymod, action = act.ShowDebugOverlay },
     { key = "p", mods = keymod, action = act.ActivateCommandPalette },
     { key = "e", mods = keymod, action = act.EmitEvent "view-last-output-in-new-pane" },
 
