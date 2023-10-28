@@ -1,11 +1,12 @@
 return {
+  -- Need a telescope to see your johnsons.
   {
     "nvim-telescope/telescope.nvim",
     depedencies = {
-      { "nvim-lua/popup.nvim" },
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope-project.nvim" },
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-project.nvim",
     },
+    module = true,
     config = function()
       local telescope = require("telescope")
       telescope.setup {
@@ -20,9 +21,8 @@ return {
         },
       }
 
-      telescope.load_extension("project")
-
       local builtins = require("telescope.builtin")
+      local opts = { noremap = true }
       local get_builtin = function(fun, ...)
         local fargs = arg
         return function()
@@ -34,7 +34,7 @@ return {
         "n",
         "<leader>ff",
         get_builtin("find_files", { hidden = true }),
-        { noremap = true }
+        opts
       )
       vim.keymap.set(
         "n",
@@ -45,30 +45,32 @@ return {
             hidden = true,
           }
         end,
-        { noremap = true }
+        opts
       )
 
-      vim.keymap.set("n", "<leader>fg", get_builtin "grep_string", { noremap = true })
-      vim.keymap.set("n", "<leader>fG", get_builtin "live_grep", { noremap = true })
-      vim.keymap.set("n", "<leader>fb", get_builtin "buffers" , { noremap = true })
-      vim.keymap.set("n", "<leader>fh", get_builtin "help_tags", { noremap = true })
-      vim.keymap.set("n", "<leader>ft", get_builtin "treesitter", { noremap = true })
-      vim.keymap.set("n", "<leader>fb", get_builtin "buffers", { noremap = true })
-      vim.keymap.set("n", "<leader>fr", get_builtin "old_files", { noremap = true })
+      vim.keymap.set("n", "<leader>fg", get_builtin "grep_string", opts)
+      vim.keymap.set("n", "<leader>fG", get_builtin "live_grep", opts)
+      vim.keymap.set("n", "<leader>fb", get_builtin "buffers", opts)
+      vim.keymap.set("n", "<leader>fh", get_builtin "help_tags", opts)
+      vim.keymap.set("n", "<leader>ft", get_builtin "treesitter", opts)
+      vim.keymap.set("n", "<leader>fb", get_builtin "buffers", opts)
+      vim.keymap.set("n", "<leader>fr", get_builtin "old_files", opts)
+      vim.keymap.set("n", "<leader>fM", get_builtin "man_pages", opts)
       vim.keymap.set(
         "n",
         "<leader>fR",
         get_builtin("old_files", { only_cwd = true }),
-        { noremap = true }
+        opts
       )
-      vim.keymap.set("n", "<leader>fA", get_builtin "resume", { noremap = true })
+
+      vim.keymap.set("n", "<leader>fA", get_builtin "resume", opts)
 
       -- Ekeymap.set
       vim.keymap.set(
         "n",
         "<leader>fp",
-        '<cmd>lua require("telescope").extensions.project.project({})<cr>',
-        { noremap = true }
+        [[<cmd>lua require("telescope").extensions.project.project({})<cr>]],
+        opts
       )
     end,
   },
@@ -85,6 +87,6 @@ return {
         require("telescope").load_extension("harpoon")
       end
     end,
-    dependencies = { { "nvim-lua/plenary.nvim" } },
+    dependencies = { "nvim-lua/plenary.nvim" },
   }
 }
