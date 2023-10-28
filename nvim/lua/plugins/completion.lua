@@ -50,10 +50,6 @@ return {
   -- A bunch of pre-configured LSP configurations.
   "neovim/nvim-lspconfig",
 
-  -- Attach it with a debugger.
-  "mfussenegger/nvim-dap",
 
-  -- Vimspector Gadget.
-  "puremourning/vimspector",
 
 }
