@@ -5,6 +5,8 @@ return {
     dependencies = {
       "rafamadriz/friendly-snippets",
     },
+    version = "^2",
+    module = true,
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
       require("luasnip.loaders.from_lua").lazy_load()

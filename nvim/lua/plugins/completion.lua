@@ -15,6 +15,12 @@ return {
       local cmp = require("cmp")
 
       cmp.setup({
+        snippet = {
+          expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+          end,
+        },
+
         sources = {
           { name = "luasnip" },
           { name = "buffer" },
@@ -24,12 +30,17 @@ return {
         },
 
         mapping = {
-          ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-          ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-          ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-          ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
-          ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
-          ["<C-l>"] = cmp.mapping(cmp.mapping.confirm({ select = true }), { "i", "c" }),
+          ["<CR>"] = cmp.mapping.confirm(),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<Tab>"] = cmp.mapping.select_next_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<S-Tab>"] = cmp.mapping.select_next_item(),
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-l>"] = cmp.mapping.confirm { select = true },
+          ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-g>"] = cmp.mapping({
             i = cmp.mapping.abort(),
             c = cmp.mapping.close(),
