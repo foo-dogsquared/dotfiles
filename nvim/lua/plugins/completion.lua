@@ -17,7 +17,7 @@ return {
       cmp.setup({
         snippet = {
           expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            require("luasnip").lsp_expand(args.body)
           end,
         },
 
@@ -38,7 +38,7 @@ return {
           ["<C-n>"] = cmp.mapping.select_next_item(),
           ["<S-Tab>"] = cmp.mapping.select_next_item(),
           ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-l>"] = cmp.mapping.confirm { select = true },
+          ["<C-l>"] = cmp.mapping.confirm({ select = true }),
           ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-g>"] = cmp.mapping({

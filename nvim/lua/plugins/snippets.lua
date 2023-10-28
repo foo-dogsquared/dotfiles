@@ -47,6 +47,5 @@ return {
         require("luasnip.extras.select_choice")()
       end)
     end,
-  }
+  },
 }
-

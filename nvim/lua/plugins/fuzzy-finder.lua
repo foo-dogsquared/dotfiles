@@ -9,7 +9,7 @@ return {
     module = true,
     config = function()
       local telescope = require("telescope")
-      telescope.setup {
+      telescope.setup({
         extensions = {
           project = {
             base_dirs = {
@@ -19,7 +19,7 @@ return {
             },
           },
         },
-      }
+      })
 
       local builtins = require("telescope.builtin")
       local opts = { noremap = true }
@@ -30,48 +30,28 @@ return {
         end
       end
 
-      vim.keymap.set(
-        "n",
-        "<leader>ff",
-        get_builtin("find_files", { hidden = true }),
-        opts
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>fF",
-        function()
-          builtins.find_files {
-            cwd = require("telescope.utils").buffer_dir(),
-            hidden = true,
-          }
-        end,
-        opts
-      )
+      vim.keymap.set("n", "<leader>ff", get_builtin("find_files", { hidden = true }), opts)
+      vim.keymap.set("n", "<leader>fF", function()
+        builtins.find_files({
+          cwd = require("telescope.utils").buffer_dir(),
+          hidden = true,
+        })
+      end, opts)
 
-      vim.keymap.set("n", "<leader>fg", get_builtin "grep_string", opts)
-      vim.keymap.set("n", "<leader>fG", get_builtin "live_grep", opts)
-      vim.keymap.set("n", "<leader>fb", get_builtin "buffers", opts)
-      vim.keymap.set("n", "<leader>fh", get_builtin "help_tags", opts)
-      vim.keymap.set("n", "<leader>ft", get_builtin "treesitter", opts)
-      vim.keymap.set("n", "<leader>fb", get_builtin "buffers", opts)
-      vim.keymap.set("n", "<leader>fr", get_builtin "old_files", opts)
-      vim.keymap.set("n", "<leader>fM", get_builtin "man_pages", opts)
-      vim.keymap.set(
-        "n",
-        "<leader>fR",
-        get_builtin("old_files", { only_cwd = true }),
-        opts
-      )
+      vim.keymap.set("n", "<leader>fg", get_builtin("grep_string"), opts)
+      vim.keymap.set("n", "<leader>fG", get_builtin("live_grep"), opts)
+      vim.keymap.set("n", "<leader>fb", get_builtin("buffers"), opts)
+      vim.keymap.set("n", "<leader>fh", get_builtin("help_tags"), opts)
+      vim.keymap.set("n", "<leader>ft", get_builtin("treesitter"), opts)
+      vim.keymap.set("n", "<leader>fb", get_builtin("buffers"), opts)
+      vim.keymap.set("n", "<leader>fr", get_builtin("old_files"), opts)
+      vim.keymap.set("n", "<leader>fM", get_builtin("man_pages"), opts)
+      vim.keymap.set("n", "<leader>fR", get_builtin("old_files", { only_cwd = true }), opts)
 
-      vim.keymap.set("n", "<leader>fA", get_builtin "resume", opts)
+      vim.keymap.set("n", "<leader>fA", get_builtin("resume"), opts)
 
       -- Ekeymap.set
-      vim.keymap.set(
-        "n",
-        "<leader>fp",
-        [[<cmd>lua require("telescope").extensions.project.project({})<cr>]],
-        opts
-      )
+      vim.keymap.set("n", "<leader>fp", [[<cmd>lua require("telescope").extensions.project.project({})<cr>]], opts)
     end,
   },
 
@@ -88,5 +68,5 @@ return {
       end
     end,
     dependencies = { "nvim-lua/plenary.nvim" },
-  }
+  },
 }
