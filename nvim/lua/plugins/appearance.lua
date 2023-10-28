@@ -3,9 +3,6 @@ return {
   -- to Visual Studio Code.
   "airblade/vim-gitgutter",
 
-  -- Base16 support
-  "RRethy/nvim-base16",
-
   -- Make your Neovim pretty
   {
     "rktjmp/lush.nvim",
