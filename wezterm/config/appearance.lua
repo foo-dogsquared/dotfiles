@@ -29,7 +29,7 @@ end
 function module.apply_to_config(config)
   config.color_schemes = {}
 
-  config.font_size = 19
+  config.font_size = 16
 
   -- Thankfully, wezterm can detect fontconfig aliases.
   config.font = wezterm.font_with_fallback({
