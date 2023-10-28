@@ -7,7 +7,14 @@ return {
   "RRethy/nvim-base16",
 
   -- Make your Neovim pretty
-  "rktjmp/lush.nvim",
+  {
+    "rktjmp/lush.nvim",
+    priority = 1000,
+    module = true,
+    config = function()
+      vim.cmd("colorscheme fds-theme")
+    end,
+  },
 
   -- More useful status bar
   "vim-airline/vim-airline",

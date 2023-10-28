@@ -27,7 +27,6 @@ function module.setup()
   vim.cmd("highlight clear SpellCap")
   vim.cmd("highlight clear SpellRare")
   vim.cmd("highlight Visual term=reverse cterm=reverse")
-  vim.cmd("colorscheme fds-theme")
 
   -- Keybindings
   vim.keymap.set("n", "<leader>bd", ":bd<cr>", {})
