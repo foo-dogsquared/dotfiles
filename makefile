@@ -12,3 +12,7 @@ reinstall:
 .PHONY: clean
 clean:
 	./vtsm --manifest ".vtsm/${MANIFEST}.json" --commands "stow --delete {package} --target {location}" $(FLAGS)
+
+.PHONY: update
+update:
+	nix flake update --commit-lock-file --commit-lockfile-summary "flake.lock: update inputs"
