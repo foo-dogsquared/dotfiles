@@ -2,7 +2,5 @@
     "bangs": "$HOME/.config/bangs/",
     "bin": "$HOME/.local/bin/",
     "emacs": "$HOME/.config/doom",
-    "lf": "$HOME/.config/lf",
-    "newsboat": "$HOME/.config/newsboat",
     "nvim": "$HOME/.config/nvim/",
 }
