@@ -14,8 +14,10 @@ function module.apply_to_config(config)
   config.check_for_updates = false
 
   -- Enable some things for Wayland.
-  config.enable_wayland = true
-  config.force_reverse_video_cursor = true
+  if os.getenv "XDG_SESSION_TYPE" == "wayland" then
+    config.enable_wayland = true
+    config.force_reverse_video_cursor = true
+  end
 
   -- Use some IME.
   config.use_ime = true
