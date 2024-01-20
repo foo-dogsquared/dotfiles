@@ -3,12 +3,15 @@ local module = {}
 
 local wezterm = require("wezterm")
 
+local xdg_data_home = os.getenv("XDG_DATA_HOME") or "~/.local/share"
+local theme_dir = xdg_data_home .. "/base16/bark-on-a-tree"
 local light_scheme, light_scheme_metadata =
-  wezterm.color.load_base16_scheme(os.getenv("HOME") .. "/library/dotfiles/base16/albino-bark-on-a-tree.yaml")
+  wezterm.color.load_base16_scheme(theme_dir .. "/albino-bark-on-a-tree.yaml")
 local dark_theme, dark_theme_metadata =
-  wezterm.color.load_base16_scheme(os.getenv("HOME") .. "/library/dotfiles/base16/bark-on-a-tree.yaml")
+  wezterm.color.load_base16_scheme(theme_dir .. "/bark-on-a-tree.yaml")
 
 local function scheme_for_appearance()
+  -- We're just following the default XDG appearance spec.
   local scheme = wezterm.gui.get_appearance()
   if scheme == "Dark" then
     return dark_theme_metadata.name
