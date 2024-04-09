@@ -1,0 +1,6 @@
+{
+    "bin": "$HOME/.local/bin",
+    "nvim": "$XDG_CONFIG_HOME/nvim",
+    "kitty": "$XDG_CONFIG_HOME/kitty",
+    "wezterm": "$XDG_CONFIG_HOME/wezterm"
+}

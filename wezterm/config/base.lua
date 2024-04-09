@@ -32,7 +32,10 @@ function module.apply_to_config(config)
   return config
 end
 
--- The keymod to be used for the entire configuration.
+-- The keymod to be used for the entire configuration. The purpose of the
+-- keymod is to assign it as a "global modifier" for the Wezterm program since
+-- usual modifiers like CTRL and ALT are typically used for programs like Vim
+-- and Emacs. It's quite similar to tmux's prefix key for its keybindings.
 module.keymod = "CTRL|SHIFT"
 module.alt_keymod = "CTRL|SHIFT|ALT"
 

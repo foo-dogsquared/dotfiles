@@ -34,20 +34,20 @@ function module.apply_to_config(config)
   -- It also makes use of key tables which is defined after.
   config.keys = {
     -- Clipboard
-    { key = "c", mods = keymod, action = act.CopyTo("Clipboard") },
-    { key = "v", mods = keymod, action = act.PasteFrom("Clipboard") },
+    { key = "c", mods = keymod,     action = act.CopyTo("Clipboard") },
+    { key = "v", mods = keymod,     action = act.PasteFrom("Clipboard") },
 
     -- Font resize.
-    { key = "+", mods = keymod, action = act.IncreaseFontSize },
-    { key = "_", mods = keymod, action = act.DecreaseFontSize },
-    { key = ")", mods = keymod, action = act.ResetFontSize },
+    { key = "+", mods = keymod,     action = act.IncreaseFontSize },
+    { key = "_", mods = keymod,     action = act.DecreaseFontSize },
+    { key = ")", mods = keymod,     action = act.ResetFontSize },
 
     -- Scrollback
-    { key = "j", mods = keymod, action = act.ScrollByPage(1) },
-    { key = "k", mods = keymod, action = act.ScrollByPage(-1) },
+    { key = "j", mods = keymod,     action = act.ScrollByPage(1) },
+    { key = "k", mods = keymod,     action = act.ScrollByPage(-1) },
     { key = "j", mods = "CTRL|ALT", action = act.ScrollToPrompt(1) },
     { key = "k", mods = "CTRL|ALT", action = act.ScrollToPrompt(-1) },
-    { key = "G", mods = keymod, action = act.ScrollToBottom },
+    { key = "G", mods = keymod,     action = act.ScrollToBottom },
     { key = "g", mods = "CTRL|ALT", action = act.ScrollToTop },
 
     -- Pane navigation.
@@ -72,20 +72,20 @@ function module.apply_to_config(config)
       }),
     },
 
-    { key = "h", mods = keymod, action = act.ActivatePaneDirection("Left") },
-    { key = "l", mods = keymod, action = act.ActivatePaneDirection("Right") },
-    { key = "LeftArrow", mods = keymod, action = act.ActivatePaneDirection("Left") },
-    { key = "DownArrow", mods = keymod, action = act.ActivatePaneDirection("Down") },
-    { key = "UpArrow", mods = keymod, action = act.ActivatePaneDirection("Up") },
-    { key = "RightArrow", mods = keymod, action = act.ActivatePaneDirection("Right") },
+    { key = "h",          mods = keymod,     action = act.ActivatePaneDirection("Left") },
+    { key = "l",          mods = keymod,     action = act.ActivatePaneDirection("Right") },
+    { key = "LeftArrow",  mods = keymod,     action = act.ActivatePaneDirection("Left") },
+    { key = "DownArrow",  mods = keymod,     action = act.ActivatePaneDirection("Down") },
+    { key = "UpArrow",    mods = keymod,     action = act.ActivatePaneDirection("Up") },
+    { key = "RightArrow", mods = keymod,     action = act.ActivatePaneDirection("Right") },
 
     -- More pane-related niceties.
-    { key = "f", mods = "LEADER", action = act.TogglePaneZoomState },
-    { key = "f", mods = keymod, action = act.TogglePaneZoomState },
-    { key = "n", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-    { key = "n", mods = keymod, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-    { key = "n", mods = alt_keymod, action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-    { key = "d", mods = keymod, action = act.CloseCurrentPane({ confirm = false }) },
+    { key = "f",          mods = "LEADER",   action = act.TogglePaneZoomState },
+    { key = "f",          mods = keymod,     action = act.TogglePaneZoomState },
+    { key = "n",          mods = "LEADER",   action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = "n",          mods = keymod,     action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = "n",          mods = alt_keymod, action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+    { key = "d",          mods = keymod,     action = act.CloseCurrentPane({ confirm = false }) },
 
     -- Tab navigation
     {
@@ -98,12 +98,12 @@ function module.apply_to_config(config)
         one_shot = true,
       }),
     },
-    { mods = alt_keymod, key = "h", action = act.ActivateTabRelative(-1) },
-    { mods = alt_keymod, key = "j", action = act.ActivateTab(-1) },
-    { mods = alt_keymod, key = "k", action = act.ActivateTab(0) },
-    { mods = alt_keymod, key = "l", action = act.ActivateTabRelative(1) },
-    { key = "t", mods = keymod, action = act.ShowTabNavigator },
-    { key = "d", mods = alt_keymod, action = act.CloseCurrentTab({ confirm = false }) },
+    { mods = alt_keymod, key = "h",         action = act.ActivateTabRelative(-1) },
+    { mods = alt_keymod, key = "j",         action = act.ActivateTab(-1) },
+    { mods = alt_keymod, key = "k",         action = act.ActivateTab(0) },
+    { mods = alt_keymod, key = "l",         action = act.ActivateTabRelative(1) },
+    { key = "t",         mods = keymod,     action = act.ShowTabNavigator },
+    { key = "d",         mods = alt_keymod, action = act.CloseCurrentTab({ confirm = false }) },
 
     -- Hints and quick selections
     {
@@ -117,26 +117,31 @@ function module.apply_to_config(config)
       }),
     },
 
-    { key = "r", mods = keymod, action = act.ReloadConfiguration },
-    { key = "o", mods = keymod, action = act.ShowDebugOverlay },
-    { key = "p", mods = keymod, action = act.ActivateCommandPalette },
-    { key = "e", mods = keymod, action = act.EmitEvent("view-last-output-in-new-pane") },
+    { key = "h",     mods = "ALT",    action = act.AdjustPaneSize({ "Left", 1 }) },
+    { key = "j",     mods = "ALT",    action = act.AdjustPaneSize({ "Down", 1 }) },
+    { key = "k",     mods = "ALT",    action = act.AdjustPaneSize({ "Up", 1 }) },
+    { key = "l",     mods = "ALT",    action = act.AdjustPaneSize({ "Right", 1 }) },
+
+    { key = "r",     mods = keymod,   action = act.ReloadConfiguration },
+    { key = "o",     mods = keymod,   action = act.ShowDebugOverlay },
+    { key = "p",     mods = keymod,   action = act.ActivateCommandPalette },
+    { key = "e",     mods = keymod,   action = act.EmitEvent("view-last-output-in-new-pane") },
 
     -- Selection
     { key = "Space", mods = "LEADER", action = act.QuickSelect },
-    { key = "a", mods = keymod, action = act.QuickSelect },
-    { key = "s", mods = keymod, action = act.Search({ CaseSensitiveString = "" }) },
+    { key = "a",     mods = keymod,   action = act.QuickSelect },
+    { key = "s",     mods = keymod,   action = act.Search({ CaseSensitiveString = "" }) },
   }
 
   config.key_tables = {
     hints = {
-      { key = "g", action = act.Search({ Regex = "[0-9a-f]{6,}" }) },
+      { key = "g",     action = act.Search({ Regex = "[0-9a-f]{6,}" }) },
       {
         key = "h",
         action = act.QuickSelectArgs({
           patterns = {
-            "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
-            "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
+            "[0-9a-f]{7,40}",                       -- SHA1 hashes, usually used for Git.
+            "[0-9a-f]{7,64}",                       -- SHA256 hashes, used often for getting hashes for Guix packaging.
             "sha256-[[:alpha:][:digit:]-=+/?]{44}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
             "[[:alpha:][:digit:]-=+/?]{44,64}",
           },
@@ -164,8 +169,8 @@ function module.apply_to_config(config)
       },
 
       { key = "Space", action = act.QuickSelect },
-      { key = "s", action = act.QuickSelect },
-      { key = "f", action = act.Search({ CaseSensitiveString = "" }) },
+      { key = "s",     action = act.QuickSelect },
+      { key = "f",     action = act.Search({ CaseSensitiveString = "" }) },
     },
 
     pane_navigation = {
@@ -187,13 +192,13 @@ function module.apply_to_config(config)
     },
 
     resize_pane = {
-      { key = "h", action = act.AdjustPaneSize({ "Left", 1 }) },
-      { key = "j", action = act.AdjustPaneSize({ "Down", 1 }) },
-      { key = "k", action = act.AdjustPaneSize({ "Up", 1 }) },
-      { key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
-      { key = "q", action = act.PopKeyTable },
+      { key = "h",      action = act.AdjustPaneSize({ "Left", 1 }) },
+      { key = "j",      action = act.AdjustPaneSize({ "Down", 1 }) },
+      { key = "k",      action = act.AdjustPaneSize({ "Up", 1 }) },
+      { key = "l",      action = act.AdjustPaneSize({ "Right", 1 }) },
+      { key = "q",      action = act.PopKeyTable },
       { key = "Escape", action = act.PopKeyTable },
-      { key = "Enter", action = act.PopKeyTable },
+      { key = "Enter",  action = act.PopKeyTable },
     },
   }
   return config
