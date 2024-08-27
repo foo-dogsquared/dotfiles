@@ -44,9 +44,7 @@ return {
       vim.keymap.set("n", "<leader>fh", get_builtin("help_tags"), opts)
       vim.keymap.set("n", "<leader>ft", get_builtin("treesitter"), opts)
       vim.keymap.set("n", "<leader>fb", get_builtin("buffers"), opts)
-      vim.keymap.set("n", "<leader>fr", get_builtin("old_files"), opts)
       vim.keymap.set("n", "<leader>fM", get_builtin("man_pages"), opts)
-      vim.keymap.set("n", "<leader>fR", get_builtin("old_files", { only_cwd = true }), opts)
 
       vim.keymap.set("n", "<leader>fA", get_builtin("resume"), opts)
 

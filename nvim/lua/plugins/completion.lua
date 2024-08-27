@@ -109,8 +109,9 @@ return {
         "rust_analyzer",
         "pyright",
         "tsserver",
-        "nil_ls",
+        "nixd",
         "lua_ls",
+        "rubocop",
       }
       for _, lsp in ipairs(servers) do
         nvim_lsp[lsp].setup({
