@@ -11,6 +11,7 @@
 
 (setq +file-templates-dir (expand-file-name "templates" doom-user-dir)
       +wiki-directory "~/Documents/Writings/wiki"
+      nerd-icons-font-names '("SymbolsNerdFontMono-Regular.ttf")
       org-roam-node-display-template
       (format "${doom-hierarchy:*} %s %s %s"
               (propertize "${doom-type:12}" 'face 'font-lock-keyword-face)
@@ -19,13 +20,13 @@
 
       global-display-line-numbers-mode t
       display-line-numbers-type 'relative
-      projectile-project-search-path '("~/library/projects/software"
-                                       "~/library/projects/packages"
-                                       "~/library/writings"
-                                       "~/library/projects/learning"))
+      projectile-project-search-path '("~/Projects/software"
+                                       "~/Projects/packages"
+                                       "~/Documents/Writings"))
 
-(add-to-list 'org-modules 'org-habit)
-(add-to-list 'org-modules 'org-checklist)
+(map!
+ (:when (modulep! :editor format)
+  :n "g=" #'+format/buffer))
 
 (after! tex
   (TeX-engine-set "luatex")
