@@ -19,7 +19,8 @@
        japanese
 
        :completion
-       (company +childframe)
+       (corfu +icons
+              +orderless)
        (vertico +icons)
 
        :ui
@@ -110,9 +111,6 @@
              +tree-sitter)
        (rust +lsp
              +tree-sitter)
-       (scheme +guile
-               +racket
-               +mit)
        (sh +fish
            +powershell
            +lsp
