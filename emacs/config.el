@@ -9,14 +9,8 @@
 
 (setq doom-theme 'doom-material-dark)
 
-(setq org-directory "~/library/writings/wiki"
-      org-id-link-to-org-use-id t
-      +file-templates-dir (expand-file-name "templates" doom-private-dir)
-      +wiki-directory "~/library/writings/wiki"
-      org-export-coding-system 'utf-8
-
-      image-use-external-converter t
-      org-startup-with-inline-images t
+(setq +file-templates-dir (expand-file-name "templates" doom-user-dir)
+      +wiki-directory "~/Documents/Writings/wiki"
       org-roam-node-display-template
       (format "${doom-hierarchy:*} %s %s %s"
               (propertize "${doom-type:12}" 'face 'font-lock-keyword-face)

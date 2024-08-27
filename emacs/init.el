@@ -125,7 +125,8 @@
 
        ;; My custom modules should be placed here.
        :tools
-       (wiki +anki
+       (wiki +sensible-config
+             +anki
              +biblio
              +graph
              +krita))
