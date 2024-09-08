@@ -78,6 +78,7 @@ function module.apply_to_config(config)
     { key = "DownArrow",  mods = keymod,     action = act.ActivatePaneDirection("Down") },
     { key = "UpArrow",    mods = keymod,     action = act.ActivatePaneDirection("Up") },
     { key = "RightArrow", mods = keymod,     action = act.ActivatePaneDirection("Right") },
+    { key = "^",          mods = keymod,     action = act.ActivateLastTab },
 
     -- More pane-related niceties.
     { key = "f",          mods = "LEADER",   action = act.TogglePaneZoomState },

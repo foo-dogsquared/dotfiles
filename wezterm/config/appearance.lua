@@ -6,9 +6,9 @@ local wezterm = require("wezterm")
 local xdg_data_home = os.getenv("XDG_DATA_HOME") or "~/.local/share"
 local theme_dir = xdg_data_home .. "/base16/bark-on-a-tree"
 local light_scheme, light_scheme_metadata =
-  wezterm.color.load_base16_scheme(theme_dir .. "/albino-bark-on-a-tree.yaml")
+    wezterm.color.load_base16_scheme(theme_dir .. "/albino-bark-on-a-tree.yaml")
 local dark_theme, dark_theme_metadata =
-  wezterm.color.load_base16_scheme(theme_dir .. "/bark-on-a-tree.yaml")
+    wezterm.color.load_base16_scheme(theme_dir .. "/bark-on-a-tree.yaml")
 
 local function scheme_for_appearance()
   -- We're just following the default XDG appearance spec.
@@ -62,7 +62,7 @@ function module.apply_to_config(config)
   -- Disable some more annoyances.
   config.enable_tab_bar = true
   config.enable_scroll_bar = false
-  config.tab_bar_at_bottom = true
+  config.tab_bar_at_bottom = false
   config.window_decorations = "RESIZE"
 
   -- Configuring the appearance of the tab bar.
