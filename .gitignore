@@ -1,3 +1,5 @@
+# Expected to be individualized per setup.
+emacs/custom.el
 
 ### Lua ###
 # Compiled Lua sources
