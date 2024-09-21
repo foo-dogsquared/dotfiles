@@ -45,7 +45,27 @@ folder with its buffer filename."
         (message "Directory '%s' has been created." target-dir))
     (message "Not in the wiki directory.")))
 
+;; Push new custom link types.
+(defun +wiki-org-init-custom-links-h ()
+  (pushnew! org-link-abbrev-alist
+            '("sourcehut" . "https://sr.ht/%s")
+            '("brave"     . "https://search.brave.com/search?q=")))
+
+(add-hook! 'org-load-hook
+           #'+wiki-org-init-custom-links-h)
+
 (when (modulep! +sensible-config)
+  ;; Overriding some of the options. Unfortunately, some of them have to be
+  ;; overridden after org-roam has been loaded.
+  (with-eval-after-load "org-roam"
+    (setq org-roam-node-display-template
+          (format "${doom-hierarchy:*} %s %s"
+                  (propertize "${doom-tags:15}" 'face 'org-tag)
+                  (propertize "${file:60}" 'face 'font-lock-default-face)))
+
+    (cl-defmethod org-roam-node-slug :around ((node org-roam-node))
+                  (string-replace "_" "-" (cl-call-next-method))))
+
   (setq org-directory +wiki-directory
 
         ;; Setting up org-roam.
@@ -93,6 +113,7 @@ folder with its buffer filename."
   (defvar +wiki-anki-cards-directory (f-join +wiki-directory +wiki-anki-cards-directory-name))
 
   (defun +anki-editor-push-all-notes-to-anki ()
+
     (interactive)
     (anki-editor-push-notes nil nil (directory-files-recursively +wiki-anki-cards-directory "\\.*org" nil)))
 
