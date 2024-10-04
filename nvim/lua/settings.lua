@@ -17,7 +17,7 @@ function module.setup()
   vim.opt.tabstop = 4
   vim.opt.conceallevel = 1
   vim.opt.list = true
-  vim.opt.listchars = { tab = "   ", trail = "·" }
+  vim.opt.listchars = { tab = "↦  ", trail = "·" }
   vim.opt_local.spell = true
   vim.opt.smartindent = true
 
