@@ -1,5 +1,9 @@
 # Expected to be individualized per setup.
 emacs/custom.el
+.*.envrc
+
+# Custom data sources.
+data/
 
 ### Lua ###
 # Compiled Lua sources
