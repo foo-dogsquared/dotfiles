@@ -1,0 +1,59 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i python3 -p python3Packages.requests
+
+import os
+import requests
+import csv
+import time
+import json
+import subprocess
+import sys
+
+# This is a modified script from
+# <https://gist.github.com/Suleman-Elahi/f6c00a986ea80f8fe58e20df28c97ca9>
+# allowing to generate passwords through a command and some polish on the code.
+#
+# The biggest difference is it is configured through the environment variables
+# rather than modifying the script.
+#
+# Anyways, as of 2024-09-16, MXRoute uses DirectAdmin and it does have an API
+# at <https://www.directadmin.com/api.html>. Just create your own script around
+# its REST API for this like you always do.
+prefix = "MXROUTE_SERVER"
+server_login = os.environ[f"{prefix}_NAME"]
+server_pass = os.environ[f"{prefix}_LOGIN_KEY"]
+server_endpoint_url = os.environ[f"{prefix}_URL"] + "/CMD_API_EMAIL_POP"
+pwgen_command = os.environ[f"{prefix}_PASSCOMMAND"] or "generate-password"
+
+template = {
+  "json": "yes",
+  "action": "create",
+  "limit": "7200",
+}
+
+with open(sys.argv[1], newline="\n") as csvfile:
+  reader = csv.DictReader(csvfile)
+  for row in reader:
+    data = dict(template)
+    data["user"] = row["email"].split("@")[0].lower()
+    data["quota"] = row["quota"]
+    data["domain"] = row["email"].split("@")[1].lower()
+
+    print(data, server_endpoint_url)
+    password = subprocess.run(
+      pwgen_command, stdout=subprocess.PIPE, check=True, shell=True
+    ).stdout
+    data["passwd2"] = str(password)
+    data["passwd"] = str(password)
+
+    response = requests.post(
+    server_endpoint_url,
+    headers={"Content-Type": "application/x-www-form-urlencoded"},
+      auth=(server_login, server_pass),
+      data=json.dumps(data),
+      timeout=5,
+    )
+    print("Status: ", response.status_code, " User ", data["user"], " created !!")
+
+    # Sleeping to slow down the request.
+    time.sleep(2)
