@@ -58,11 +58,6 @@ folder with its buffer filename."
   ;; Overriding some of the options. Unfortunately, some of them have to be
   ;; overridden after org-roam has been loaded.
   (with-eval-after-load "org-roam"
-    (setq org-roam-node-display-template
-          (format "${doom-hierarchy:*} %s %s"
-                  (propertize "${doom-tags:15}" 'face 'org-tag)
-                  (propertize "${file:60}" 'face 'font-lock-default-face)))
-
     (cl-defmethod org-roam-node-slug :around ((node org-roam-node))
                   (string-replace "_" "-" (cl-call-next-method))))
 
@@ -87,10 +82,6 @@ folder with its buffer filename."
         org-id-link-to-org-use-id t
         org-startup-with-inline-images t
         image-use-external-converter t)
-
-  ;; Add extra org-modules for our default Org-mode workflow.
-  (add-to-list 'org-modules 'org-habit)
-  (add-to-list 'org-modules 'org-checklist)
 
   ;; Automate updating timestamps on save.
   (add-hook! 'before-save-hook 'time-stamp))
