@@ -1,17 +1,20 @@
 #!/usr/bin/env ysh
 
-proc main {
-  var arg1 = ARGV[0]
-  case (arg1) {
+proc main(...args) {
+  var subcommand = args[0]
+  shift 1
+  case (subcommand) {
     passphrase {
-      gopass pwgen --xkcd --lang en --one-per-line --xkcdnumbers --xkcdcapitalize 5 | head -n1
+      gopass pwgen --xkcd --lang en --one-per-line --xkcdnumbers --xkcdcapitalize @[args] | head -n1
     }
     password {
-      gopass pwgen --symbols --one-per-line 32 | head -n1
+      gopass pwgen --symbols --one-per-line @[args] | head -n1
+    }
+    secret {
+      dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64
     }
     encode-argon2 {
-      var randomized_phrase = $(openssl rand -base64 32)
-      write -- $[ARGV[1]] | argon2 $randomized_phrase -e -id -k 65540 -t 3 -p 4
+      write -- $[args[1]] | argon2 $(openssl rand -base64 32) -e -id -k 65540 -t 3 -p 4
     }
     (else) {
       echo "Invalid subcommand: '$[arg1]'." 1>&2
