@@ -41,8 +41,8 @@ local base0F = hsl("#7f3F83")
 
 --[[
 
-  Define additional colors if defined in the theme. Fallback to base00 - base07 
-  if not defined. 
+  Define additional colors if defined in the theme. Fallback to base00 - base07
+  if not defined.
 
 ]]
 
@@ -65,6 +65,7 @@ vim.g.terminal_color_15 = base07.hex
 vim.g.terminal_color_background = base00.hex
 vim.g.terminal_color_foreground = base0E.hex
 
+-- @diagnostic disable: undefined-global
 return lush(function()
   return {
     Normal({ fg = base05, bg = base00 }),
@@ -301,10 +302,10 @@ return lush(function()
     sassMixinName({ fg = base0D }),
 
     -- Spelling highlighting
-    SpellBad({ gui = "undercurl" }), --, base08)
+    SpellBad({ gui = "undercurl" }),   --, base08)
     SpellLocal({ gui = "undercurl" }), --, base0C)
-    SpellCap({ gui = "undercurl" }), --, base0D)
-    SpellRare({ gui = "undercurl" }), --, base0E)
+    SpellCap({ gui = "undercurl" }),   --, base0D)
+    SpellRare({ gui = "undercurl" }),  --, base0E)
 
     -- Startify highlighting
     StartifyBracket({ fg = base03 }),
