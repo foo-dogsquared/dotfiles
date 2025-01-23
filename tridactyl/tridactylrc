@@ -1,0 +1,192 @@
+" This enforces Tridactyl to only have this file as the source of truth.
+" Also the first time you open Firefox with this Tridactyl configuration, you
+" might want to restart immediately since the autocontainers are not in
+" effect.
+sanitise tridactyllocal tridactylsync
+
+" Tridactyl settings.
+set viewsource default
+set auconcreatecontainer true
+
+" This is giving me the most trouble since I use multiple extensions that
+" makes use of contextual identities like Facebook and Google containers. If
+" this is in strict mode, it'll result in Tridactyl and the other container
+" extensions fighting for the control of the tab and infinitely reloading the
+" tab. Not the greatest experience.
+set autocontainmode relaxed
+set minincsearchlen 4
+
+" Disable update checks entirely. We're going to rely on the distro's
+" packaging (or on nixpkgs entirely) to install the native messenger.
+set update.nag false
+set update.nativeinstallcmd echo
+
+" Additional and modified keybindings.
+bind yt tabduplicate
+bind yf hint -y
+
+bind gK elementunhide
+
+bind gR reader --tab
+
+" Make it closer to Vim, I guess since we're going to use closer functions
+" with the `d` prefix.
+unbind d
+bind dd tabclose
+
+unbind f
+unbind F
+bind ff hint
+bind fF hint -t
+bind fB hint -b
+bind fI hint -I
+bind fz hint -z
+
+" Recontaining them nicefully.
+bind qQ recontain Personal
+bind qW recontain Work
+bind qe recontain Banking
+bind qE recontain Shopping
+bind qC recontain Chat
+bind qq recontain Cooking
+
+" Sorting them nicefully.
+bind qss tabsort --url
+bind qsS tabsort --containers
+bind qst tabsort --title
+
+bind <C-Q> fillcmdline containerclose
+
+bind dQ containerclose Personal
+bind dW containerclose Work
+bind de containerclose Banking
+bind dE containerclose Shopping
+bind dg containerclose Gaming
+bind dC containerclose Chat
+bind dc containerclose Cooking
+
+" Assuming the Google and Facebook containers extensions are installed.
+bind dF containerclose Facebook
+bind dG containerclose Google
+bind dA containerclose Amazon
+bind dM containerclose Microsoft
+
+" My default set of containers. Take note, we're assuming Facebook and Google
+" containers extension is already installed and there's a reasonable set of
+" default containers that are already configured for us.
+containercreate Personal blue fingerprint
+containercreate Self-hosted pink fingerprint
+containercreate Work red briefcase
+containercreate Banking green dollar
+containercreate Shopping pink cart
+containercreate Gaming turquoise chill
+containercreate Chat blue chill
+containercreate Cooking orange food
+
+" Most of the MOOC are for personal purposes so it is in "Personal" container.
+autocontain -s coursera\.org Personal
+autocontain -s skillshare\.org Personal
+autocontain -s edx\.org Personal
+
+" Most of the news site I PERSONALLY visit are in "Personal" container, yes?
+" Ideally, I should visit via web subscriptions in my Thunderbird thingy.
+autocontain -s phoronix\.com Personal
+autocontain -s omgubuntu\.co\.uk Personal
+autocontain -s omglinux\.com Personal
+autocontain -s lwn\.net Personal
+
+" Ideally, this should be in Tangram or similar.
+autocontain -s discourse\.nixos\.org Personal
+autocontain -s discourse\.gohugo\.io Personal
+autocontain -s .+\.github\.io Personal
+autocontain -s .+\.gitlab\.io Personal
+
+" My communication chat apps. Facebook Messenger should be in its own
+" container.
+autocontain -s discord\.com Chat
+autocontain -s .+\.zulipchat\.com Chat
+autocontain -s element\.io Chat
+autocontain -s rocket\.chat Chat
+autocontain -s revolt\.chat Chat
+autocontain -s slack\.com Chat
+autocontain -s telegram\.com Chat
+
+" My self-hosted instances and my personal domain.
+autocontain -s .+\.local Self-hosted
+autocontain -s .+\.internal Self-hosted
+autocontain -s .+\.theinternaltld Self-hosted
+autocontain -s foodogsquared\.one Self-hosted
+
+" Most software forges should be separated.
+autocontain -s github\.com Work
+autocontain -s gitlab\.com Work
+autocontain -s archive\.softwareheritage\.com Work
+autocontain -s sourcegraph\.com Work
+
+autocontain -s app\.netlify\.com Work
+autocontain -s hetzner\.com Work
+autocontain -s digitalocean\.com Work
+autocontain -s aws\.amazon\.com Work
+autocontain -s mxroute\.com Work
+autocontain -s mailbox\.org Work
+autocontain -s cloud\.oracle\.com Work
+autocontain -s tailscale\.com Work
+autocontain -s cloudflare\.com Work
+
+" So does most freelancing sites.
+autocontain -s upwork\.com Work
+autocontain -s monster\.com Work
+autocontain -s foundit\.com(\.ph?) Work
+autocontain -s fiverr\.com Work
+autocontain -s (ph\.?)linkedin\.com Work
+autocontain -s jobstreet\.com(\.ph?) Work
+autocontain -s (ph\.?)jobstreet\.com(\.ph?) Work
+autocontain -s vscode\.dev Work
+
+" Shopping, shopping, shopping!
+autocontain -s yelp\.com Shopping
+autocontain -s shopee\.(com|ph) Shopping
+autocontain -s lazada\.com(\.ph?) Shopping
+autocontain -s amazon\.com Shopping
+autocontain -s ebay\.com Shopping
+autocontain -s foodpanda\.(com|ph) Shopping
+autocontain -s carousell\.ph Shopping
+autocontain -s slickdeals\.net Shopping
+
+" What's a shopping spree without your wallet.
+autocontain -s paypal\.com(\.ph?) Banking
+autocontain -s unionbankph\.com Banking
+autocontain -s bdo\.com\.ph Banking
+autocontain -s bpi\.com\.ph Banking
+autocontain -s gcash\.com Banking
+autocontain -s paymaya\.com Banking
+autocontain -s metamask\.io Banking
+autocontain -s uphold\.com Banking
+
+" Potato gaming.
+autocontain -s gog\.com Gaming
+autocontain -s epicgames\.com Gaming
+autocontain -s steampowered\.com Gaming
+autocontain -s gamejolt\.com Gaming
+autocontain -s itch\.io Gaming
+
+" My word games. THIS IS WHAT PURE UNADULTERATED GAMING LOOKS LIKE!
+autocontain -s nytimes\.com/games Gaming
+autocontain -s merriam-webster\.com/games Gaming
+autocontain -s britannica\.com/games Gaming
+autocontain -s wafflegame\.net Gaming
+autocontain -s duotrigordle\.com Gaming
+
+seturl nytimes\.com/games disable true
+seturl merriam-webster\.com/games disable true
+seturl britannica\.com/games disable true
+
+" My cooking gotos.
+autocontain -s lecremedelacrumb\.com Cooking
+autocontain -s cookingclassy\.com Cooking
+autocontain -s panlasangpinoy\.com Cooking
+
+" Ignore all of the keybindings.
+blacklistadd https://design.penpot.app
+
+" vim: ft=vim
