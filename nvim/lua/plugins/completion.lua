@@ -108,7 +108,7 @@ return {
         "clangd",
         "rust_analyzer",
         "pyright",
-        "tsserver",
+        "ts_ls",
         "nixd",
         "lua_ls",
         "rubocop",

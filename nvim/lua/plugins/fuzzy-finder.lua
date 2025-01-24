@@ -10,6 +10,13 @@ return {
     config = function()
       local telescope = require("telescope")
       telescope.setup({
+        defaults = {
+          layout_config = {
+            height = 0.95,
+            width = 0.9,
+            anchor_padding = 0,
+          },
+        },
         extensions = {
           project = {
             base_dirs = {
@@ -30,23 +37,26 @@ return {
         end
       end
 
-      vim.keymap.set("n", "<leader>ff", get_builtin("find_files", { hidden = true }), opts)
+      vim.keymap.set("n", "<leader>ff", get_builtin("find_files", { hidden = true, preview = false }), {
+        noremap = true,
+        desc = "Find files in project",
+      })
       vim.keymap.set("n", "<leader>fF", function()
         builtins.find_files({
           cwd = require("telescope.utils").buffer_dir(),
           hidden = true,
+          preview = false,
         })
-      end, opts)
+      end, { noremap = true, desc = "Find files in current directory" })
 
-      vim.keymap.set("n", "<leader>fg", get_builtin("grep_string"), opts)
-      vim.keymap.set("n", "<leader>fG", get_builtin("live_grep"), opts)
-      vim.keymap.set("n", "<leader>fb", get_builtin("buffers"), opts)
-      vim.keymap.set("n", "<leader>fh", get_builtin("help_tags"), opts)
-      vim.keymap.set("n", "<leader>ft", get_builtin("treesitter"), opts)
-      vim.keymap.set("n", "<leader>fb", get_builtin("buffers"), opts)
-      vim.keymap.set("n", "<leader>fM", get_builtin("man_pages"), opts)
+      vim.keymap.set("n", "<leader>fg", get_builtin("grep_string"), { noremap = true, desc = "Grep for string in cursor" })
+      vim.keymap.set("n", "<leader>fG", get_builtin("live_grep"), { noremap = true, desc = "Grep for string in project" })
+      vim.keymap.set("n", "<leader>fb", get_builtin("buffers"), { noremap = true, desc = "Search currently opened buffers" })
+      vim.keymap.set("n", "<leader>fh", get_builtin("help_tags"), { noremap = true, desc = "Search help pages" })
+      vim.keymap.set("n", "<leader>ft", get_builtin("treesitter"), { noremap = true, desc = "Search treesitter objects" })
+      vim.keymap.set("n", "<leader>fM", get_builtin("man_pages"), { noremap = true, desc = "Search manpages" })
 
-      vim.keymap.set("n", "<leader>fA", get_builtin("resume"), opts)
+      vim.keymap.set("n", "<leader>fA", get_builtin("resume"), { noremap = true, desc = "Return last search" })
 
       -- Ekeymap.set
       vim.keymap.set("n", "<leader>fp", [[<cmd>lua require("telescope").extensions.project.project({})<cr>]], opts)
@@ -57,7 +67,7 @@ return {
   {
     "ThePrimeagen/harpoon",
     config = function()
-      vim.keymap.set("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", {})
+      vim.keymap.set("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = "Add mark to file" })
 
       local has_telescope, telescope = pcall("telescope")
       if has_telescope then
