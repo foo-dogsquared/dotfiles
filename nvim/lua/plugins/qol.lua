@@ -71,7 +71,10 @@ return {
 
   {
     "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "nvim-telescope/telescope.nvim",
+    },
 
     opts = {
       default_file_explorer = true,
@@ -83,6 +86,7 @@ return {
 
     keys = {
       { "-", "<cmd>Oil<CR>", { desc = "Open parent directory in file explorer" } },
+      { "<C-->", function () require("oil").open(vim.fn.getcwd()) end, { desc = "Open current working directory in file explorer" } },
     },
   },
 }

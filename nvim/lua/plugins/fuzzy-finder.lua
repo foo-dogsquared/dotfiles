@@ -5,6 +5,7 @@ return {
     depedencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-project.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
     module = true,
     config = function()
@@ -25,6 +26,7 @@ return {
               { "~/library/writings" },
             },
           },
+          fzf = { },
         },
       })
 
@@ -55,10 +57,10 @@ return {
       vim.keymap.set("n", "<leader>fh", get_builtin("help_tags"), { noremap = true, desc = "Search help pages" })
       vim.keymap.set("n", "<leader>ft", get_builtin("treesitter"), { noremap = true, desc = "Search treesitter objects" })
       vim.keymap.set("n", "<leader>fM", get_builtin("man_pages"), { noremap = true, desc = "Search manpages" })
+      vim.keymap.set("n", "<leader>fS", get_builtin("spell_suggest"), { noremap = true, desc = "Pick spell suggestions" })
 
       vim.keymap.set("n", "<leader>fA", get_builtin("resume"), { noremap = true, desc = "Return last search" })
 
-      -- Ekeymap.set
       vim.keymap.set("n", "<leader>fp", [[<cmd>lua require("telescope").extensions.project.project({})<cr>]], opts)
     end,
   },
