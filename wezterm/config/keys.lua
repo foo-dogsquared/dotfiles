@@ -2,9 +2,6 @@ local wezterm = require("wezterm")
 local base = require("config/base")
 local act = wezterm.action
 
--- Take note this is required to import the events in this module.
-local _ = require("config/events")
-
 local keymod = base.keymod
 local alt_keymod = base.alt_keymod
 local module = {}
