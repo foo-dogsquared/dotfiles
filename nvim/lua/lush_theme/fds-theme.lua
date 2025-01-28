@@ -394,5 +394,9 @@ return lush(function()
 
     -- Indent-Blank-Lines
     IndentGuide({ fg = base01, bg = base05 }),
+
+    -- snacks.nvim
+    SnacksIndentScope({ fg = base0C, gui = "bold" }),
+    SnacksIndentChunk({ fg = base0C, gui = "bold" }),
   }
 end)

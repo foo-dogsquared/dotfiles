@@ -17,7 +17,7 @@ function module.setup()
   vim.opt.tabstop = 4
   vim.opt.conceallevel = 1
   vim.opt.list = true
-  vim.opt.listchars = { tab = "↦  ", trail = "·" }
+  vim.opt.listchars = { tab = "↦ ", trail = "·" }
   vim.opt_local.spell = true
   vim.opt.smartindent = true
 
@@ -28,10 +28,13 @@ function module.setup()
   vim.cmd("highlight clear SpellRare")
   vim.cmd("highlight Visual term=reverse cterm=reverse")
 
-  -- Keybindings
+  -- Basic keybindings
   vim.keymap.set("n", "<leader>bd", ":bd<cr>", {})
-  vim.keymap.set("i", "jk", "<Esc>", {})
+  vim.keymap.set("i", "jk", "<Esc>", { desc = "Escape" })
   vim.keymap.set("n", "<leader>hr", "<cmd>source $MYVIMRC<cr>", {})
+
+  vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Execute Lua under cursor" })
+  vim.keymap.set("v", "<leader>x", ":lua<CR>", { desc = "Execute Lua under cursor" })
 end
 
 return module
