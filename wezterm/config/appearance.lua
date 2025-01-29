@@ -7,10 +7,8 @@ local wezterm = require("wezterm")
 -- same code fetching the colors all over various config files.
 local xdg_data_home = os.getenv("XDG_DATA_HOME") or "~/.local/share"
 local theme_dir = xdg_data_home .. "/base16/bark-on-a-tree"
-local light_scheme, light_scheme_metadata =
-    wezterm.color.load_base16_scheme(theme_dir .. "/albino-bark-on-a-tree.yaml")
-local dark_theme, dark_theme_metadata =
-    wezterm.color.load_base16_scheme(theme_dir .. "/bark-on-a-tree.yaml")
+local light_scheme, light_scheme_metadata = wezterm.color.load_base16_scheme(theme_dir .. "/albino-bark-on-a-tree.yaml")
+local dark_theme, dark_theme_metadata = wezterm.color.load_base16_scheme(theme_dir .. "/bark-on-a-tree.yaml")
 
 local function scheme_for_appearance()
   -- We're just following the default XDG appearance spec.
@@ -75,7 +73,7 @@ function module.apply_to_config(config)
   -- Configuring the windows padding.
   config.window_padding = {
     left = 0,
-    right = '1cell',
+    right = "1cell",
     top = 0,
     bottom = 0,
   }

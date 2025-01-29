@@ -26,7 +26,7 @@ return {
               { "~/library/writings" },
             },
           },
-          fzf = { },
+          fzf = {},
         },
       })
 
@@ -51,13 +51,38 @@ return {
         })
       end, { noremap = true, desc = "Find files in current directory" })
 
-      vim.keymap.set("n", "<leader>fg", get_builtin("grep_string"), { noremap = true, desc = "Grep for string in cursor" })
-      vim.keymap.set("n", "<leader>fG", get_builtin("live_grep"), { noremap = true, desc = "Grep for string in project" })
-      vim.keymap.set("n", "<leader>fb", get_builtin("buffers"), { noremap = true, desc = "Search currently opened buffers" })
+      vim.keymap.set(
+        "n",
+        "<leader>fg",
+        get_builtin("grep_string"),
+        { noremap = true, desc = "Grep for string in cursor" }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>fG",
+        get_builtin("live_grep"),
+        { noremap = true, desc = "Grep for string in project" }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>fb",
+        get_builtin("buffers"),
+        { noremap = true, desc = "Search currently opened buffers" }
+      )
       vim.keymap.set("n", "<leader>fh", get_builtin("help_tags"), { noremap = true, desc = "Search help pages" })
-      vim.keymap.set("n", "<leader>ft", get_builtin("treesitter"), { noremap = true, desc = "Search treesitter objects" })
+      vim.keymap.set(
+        "n",
+        "<leader>ft",
+        get_builtin("treesitter"),
+        { noremap = true, desc = "Search treesitter objects" }
+      )
       vim.keymap.set("n", "<leader>fM", get_builtin("man_pages"), { noremap = true, desc = "Search manpages" })
-      vim.keymap.set("n", "<leader>fS", get_builtin("spell_suggest"), { noremap = true, desc = "Pick spell suggestions" })
+      vim.keymap.set(
+        "n",
+        "<leader>fS",
+        get_builtin("spell_suggest"),
+        { noremap = true, desc = "Pick spell suggestions" }
+      )
 
       vim.keymap.set("n", "<leader>fA", get_builtin("resume"), { noremap = true, desc = "Return last search" })
 
@@ -69,7 +94,12 @@ return {
   {
     "ThePrimeagen/harpoon",
     config = function()
-      vim.keymap.set("n", "<leader>fm", "<cmd>lua require('harpoon.mark').add_file()<cr>", { desc = "Add mark to file" })
+      vim.keymap.set(
+        "n",
+        "<leader>fm",
+        "<cmd>lua require('harpoon.mark').add_file()<cr>",
+        { desc = "Add mark to file" }
+      )
 
       local has_telescope, telescope = pcall("telescope")
       if has_telescope then

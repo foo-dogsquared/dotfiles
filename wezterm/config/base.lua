@@ -5,8 +5,8 @@ function module.apply_to_config(config)
   -- Quick select-related options. Quite similar to Kitty hints which is
   -- nice.
   config.quick_select_patterns = {
-    "[0-9a-f]{7,40}",   -- SHA1 hashes, usually used for Git.
-    "[0-9a-f]{7,64}",   -- SHA256 hashes, used often for getting hashes for Guix packaging.
+    "[0-9a-f]{7,40}", -- SHA1 hashes, usually used for Git.
+    "[0-9a-f]{7,64}", -- SHA256 hashes, used often for getting hashes for Guix packaging.
     "sha256-.{44,128}", -- SHA256 hashes in Base64, used often in getting hashes for Nix packaging.
   }
 
@@ -14,7 +14,7 @@ function module.apply_to_config(config)
   config.check_for_updates = false
 
   -- Enable some things for Wayland.
-  if os.getenv "XDG_SESSION_TYPE" == "wayland" then
+  if os.getenv("XDG_SESSION_TYPE") == "wayland" then
     config.enable_wayland = true
     config.front_end = "WebGpu"
     config.force_reverse_video_cursor = true
@@ -22,6 +22,7 @@ function module.apply_to_config(config)
 
   -- Use some IME.
   config.use_ime = true
+  config.xim_im_name = "ibus"
 
   -- Set up the visual bell.
   config.audible_bell = "SystemBeep"

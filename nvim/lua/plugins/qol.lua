@@ -20,7 +20,7 @@ return {
       },
       input = { enabled = true },
       notifier = { enabled = true },
-      git = { enabled = true, },
+      git = { enabled = true },
       lazygit = {
         enabled = vim.fn.executable("lazygit") == 1,
       },
@@ -35,9 +35,27 @@ return {
       words = { enabled = true },
     },
     keys = {
-      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Open blame lines for current file" },
-      { "<leader>gg", function() Snacks.lazygit() end, desc = "Open lazygit" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Open current file history in lazygit" },
+      {
+        "<leader>gb",
+        function()
+          Snacks.git.blame_line()
+        end,
+        desc = "Open blame lines for current file",
+      },
+      {
+        "<leader>gg",
+        function()
+          Snacks.lazygit()
+        end,
+        desc = "Open lazygit",
+      },
+      {
+        "<leader>gf",
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = "Open current file history in lazygit",
+      },
     },
     init = function()
       vim.api.nvim_create_autocmd("User", {
@@ -58,7 +76,9 @@ return {
           Snacks.toggle.option("relativenumber", { name = "Relative number" }):map("<leader>uL")
           Snacks.toggle.diagnostics():map("<leader>ud")
           Snacks.toggle.line_number():map("<leader>ul")
-          Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
+          Snacks.toggle
+            .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+            :map("<leader>uc")
           Snacks.toggle.treesitter():map("<leader>uT")
           Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark style" }):map("<leader>ub")
           Snacks.toggle.inlay_hints():map("<leader>uh")
@@ -86,7 +106,13 @@ return {
 
     keys = {
       { "-", "<cmd>Oil<CR>", { desc = "Open parent directory in file explorer" } },
-      { "<C-->", function () require("oil").open(vim.fn.getcwd()) end, { desc = "Open current working directory in file explorer" } },
+      {
+        "<C-->",
+        function()
+          require("oil").open(vim.fn.getcwd())
+        end,
+        { desc = "Open current working directory in file explorer" },
+      },
     },
   },
 }

@@ -44,7 +44,7 @@ function module.apply_to_config(config)
   end)
 
   -- Maximize the terminal on startup.
-  wezterm.on('gui-startup', function(cmd)
+  wezterm.on("gui-startup", function(cmd)
     local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
     window:gui_window():maximize()
   end)

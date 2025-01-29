@@ -302,10 +302,10 @@ return lush(function()
     sassMixinName({ fg = base0D }),
 
     -- Spelling highlighting
-    SpellBad({ gui = "undercurl" }),   --, base08)
+    SpellBad({ gui = "undercurl" }), --, base08)
     SpellLocal({ gui = "undercurl" }), --, base0C)
-    SpellCap({ gui = "undercurl" }),   --, base0D)
-    SpellRare({ gui = "undercurl" }),  --, base0E)
+    SpellCap({ gui = "undercurl" }), --, base0D)
+    SpellRare({ gui = "undercurl" }), --, base0E)
 
     -- Startify highlighting
     StartifyBracket({ fg = base03 }),
