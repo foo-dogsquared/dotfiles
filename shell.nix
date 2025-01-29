@@ -10,12 +10,13 @@ mkShell {
     # Language servers for...
     lua-language-server # ...Lua.
     pyright # ...Python.
-    rnix-lsp # ...Nix.
+    nixd # ...Nix.
 
     # Formatters for...
     treefmt # ...everything under the sun.
     stylua # ...Lua.
     nixpkgs-fmt # ...Nix.
     black # ...Python.
+    nufmt # ... Nushell.
   ];
 }

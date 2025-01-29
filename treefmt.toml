@@ -1,3 +1,7 @@
 [formatter.lua]
 command = "stylua"
 includes = [ "*.lua" ]
+
+[formatter.nu]
+command = "nufmt"
+includes = [ "*.nu" ]
