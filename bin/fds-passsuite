@@ -1,28 +1,34 @@
-#!/usr/bin/env ysh
+#!/usr/bin/env nu
 
-proc main(...args) {
-  var subcommand = args[0]
-  shift 1
-  case (subcommand) {
-    passphrase {
-      gopass pwgen --xkcd --lang en --one-per-line --xkcdnumbers --xkcdcapitalize @[args] | head -n1
-    }
-    password {
-      gopass pwgen --symbols --one-per-line @[args] | head -n1
-    }
-    secret {
-      dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64
-    }
-    encode-argon2 {
-      write -- $[args[1]] | argon2 $(openssl rand -base64 32) -e -id -k 65540 -t 3 -p 4
-    }
-    (else) {
-      echo "Invalid subcommand: '$[arg1]'." 1>&2
-      exit 1
-    }
-  }
+# Generate a passphrase.
+def "main passphrase" --wrapped [
+  ...rest: string # Additional arguments to be added to the passphrase generation command.
+] {
+  gopass pwgen --xkcd --lang en --one-per-line --xkcdnumbers --xkcdcapitalize ...$rest | head -n1
 }
 
-if is-main {
-  main @ARGV
+# Generate a password.
+def "main password" --wrapped [
+  ...rest # Additional arguments to be added to the password generation command.
+] {
+  gopass pwgen --symbols --one-per-line ...$rest | head -n1
+}
+
+# Generate a randomly-generated base64-encoded string.
+def "main secret" [] {
+  dd if=/dev/urandom bs=32 count=1 2>/dev/null | base64
+}
+
+# Encode the given string to argon2.
+def "main encode-argon2" [
+  string # The string to be encoded.
+] {
+  $string | argon2 (openssl rand -base64 32) -e -id -k 65540 -t 3 -p 4
+}
+
+# A toolbelt for anything secret-related. It can be used to generate a
+# passphrase, password, and encode into several variants.
+def "main" [] {
+    help main | print -e
+    exit 0
 }
