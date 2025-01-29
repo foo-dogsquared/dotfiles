@@ -13,6 +13,11 @@
 # executing.
 # - FZF_ALT_C_COMMAND contains the executable and its arguments used for
 # entering directories (with Alt+C keybinding).
+#
+# Note that most of the values from their respective variables are converted
+# over from what would how fzf normally expects it to be.
+
+use std/dirs
 
 let __fzf_defaults = [
     --height ($env.FZF_TMUX_HEIGHT? | default "40%")
@@ -25,24 +30,24 @@ let envconvert_cmdstring = {
     to_string: { |s| $s | str join ' ' }
 }
 
-def __fzf_select [...flags: string] {
+def __fzf_select --wrapped [...rest: string] {
     with-env {
         FZF_CTRL_T_COMMAND: ($env.FZF_CTRL_T_COMMAND? | default "fzf")
         FZF_DEFAULT_OPTS: ($env.FZF_DEFAULT_OPTS? | default $__fzf_defaults)
     } {
-        fzf ...$flags ...$env.FZF_DEFAULT_OPTS
+        fzf ...$rest ...$env.FZF_DEFAULT_OPTS
     }
 }
 
-def __fzf_cd [...flags: string] {
+def __fzf_cd --wrapped [...rest: string] {
     with-env {
         FZF_DEFAULT_OPTS: ($env.FZF_DEFAULT_OPTS | default $__fzf_defaults)
     } {
         if "FZF_ALT_C_COMMAND" in $env {
             let command = $env.FZF_ALT_C_COMMAND
-            run-external ($command | get 0) ...($command | range 1..) | fzf ...$env.FZF_DEFAULT_OPTS ...$flags
+            run-external ($command | get 0) ...($command | range 1..) | fzf ...$env.FZF_DEFAULT_OPTS ...$rest
         } else {
-            fzf ...$env.FZF_DEFAULT_OPTS --walker=dir,hidden,follow ...$flags
+            fzf ...$env.FZF_DEFAULT_OPTS --walker=dir,hidden,follow ...$rest
         }
     }
 }
@@ -85,7 +90,7 @@ $env.config.keybindings = $env.config.keybindings | append [
         mode: [emacs vi_normal vi_insert]
         event: {
             send: ExecuteHostCommand
-            cmd: "cd (__fzf_cd)"
+            cmd: "dirs add (__fzf_cd)"
         }
     }
 ]
