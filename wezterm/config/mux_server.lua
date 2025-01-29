@@ -8,9 +8,9 @@ function module.apply_to_config(config)
 
   config.tls_clients = {
     {
-      name = "mux.foodogsquared.one",
-      remote_address = "mux.foodogsquared.one:9801",
-      bootstrap_via_ssh = "plover@mux.foodogsquared.one",
+      name = "foodogsquared.one",
+      remote_address = "plover.foodogsquared.one:9801",
+      bootstrap_via_ssh = "plover@plover.foodogsquared.one",
     },
   }
 

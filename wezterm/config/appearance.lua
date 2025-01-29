@@ -3,6 +3,8 @@ local module = {}
 
 local wezterm = require("wezterm")
 
+-- This has to be setup outside of this configuration. I don't want to have the
+-- same code fetching the colors all over various config files.
 local xdg_data_home = os.getenv("XDG_DATA_HOME") or "~/.local/share"
 local theme_dir = xdg_data_home .. "/base16/bark-on-a-tree"
 local light_scheme, light_scheme_metadata =
@@ -61,9 +63,8 @@ function module.apply_to_config(config)
 
   -- Disable some more annoyances.
   config.enable_tab_bar = true
-  config.enable_scroll_bar = false
   config.tab_bar_at_bottom = false
-  config.window_decorations = "RESIZE"
+  config.window_decorations = "NONE"
 
   -- Configuring the appearance of the tab bar.
   config.window_frame = {
@@ -74,7 +75,7 @@ function module.apply_to_config(config)
   -- Configuring the windows padding.
   config.window_padding = {
     left = 0,
-    right = 0,
+    right = '1cell',
     top = 0,
     bottom = 0,
   }

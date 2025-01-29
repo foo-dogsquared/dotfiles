@@ -6,6 +6,19 @@ local keymod = base.keymod
 local alt_keymod = base.alt_keymod
 local module = {}
 
+local copy_mode = nil
+if wezterm.gui then
+  copy_mode = wezterm.gui.default_key_tables().copy_mode
+  table.insert(
+    copy_mode,
+    {
+      key = 'z',
+      mods = keymod,
+      action = act.CopyMode { MoveBackwardZoneOfType = 'Output' },
+    }
+  )
+end
+
 function module.apply_to_config(config)
   -- I'm very used to setting <SPACE> as the leader so I'm continuing the tradition.
   config.leader = { key = "Space", mods = keymod, timeout_milliseconds = 1000 }
@@ -100,7 +113,7 @@ function module.apply_to_config(config)
     { mods = alt_keymod, key = "j",         action = act.ActivateTab(-1) },
     { mods = alt_keymod, key = "k",         action = act.ActivateTab(0) },
     { mods = alt_keymod, key = "l",         action = act.ActivateTabRelative(1) },
-    { key = "t",         mods = keymod,     action = act.ShowTabNavigator },
+    { key = "t",         mods = alt_keymod, action = act.ShowTabNavigator },
     { key = "d",         mods = alt_keymod, action = act.CloseCurrentTab({ confirm = false }) },
 
     -- Hints and quick selections
@@ -123,6 +136,7 @@ function module.apply_to_config(config)
     { key = "r",     mods = keymod,   action = act.ReloadConfiguration },
     { key = "o",     mods = keymod,   action = act.ShowDebugOverlay },
     { key = "p",     mods = keymod,   action = act.ActivateCommandPalette },
+    { key = "y",     mods = keymod,   action = act.ActivateCopyMode },
     { key = "e",     mods = keymod,   action = act.EmitEvent("view-last-output-in-new-pane") },
 
     -- Selection
@@ -198,6 +212,8 @@ function module.apply_to_config(config)
       { key = "Escape", action = act.PopKeyTable },
       { key = "Enter",  action = act.PopKeyTable },
     },
+
+    copy_mode = copy_mode,
   }
   return config
 end
