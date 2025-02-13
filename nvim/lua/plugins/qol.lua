@@ -1,3 +1,5 @@
+local _fds = require("../foodogsquared")
+
 return {
   {
     "folke/snacks.nvim",
@@ -89,6 +91,7 @@ return {
     end,
   },
 
+  -- Oil and vinegar goes well as oil and your computer.
   {
     "stevearc/oil.nvim",
     dependencies = {
@@ -100,7 +103,7 @@ return {
       default_file_explorer = true,
       columns = { "icon", "permissions" },
       view_options = {
-        hidden = true,
+        show_hidden = true,
       },
     },
 
@@ -114,5 +117,30 @@ return {
         { desc = "Open current working directory in file explorer" },
       },
     },
+  },
+
+  {
+    "mrjones2014/smart-splits.nvim",
+    version = ">=1.0.0",
+    lazy = _fds.utils.to_bool(os.getenv("WEZTERM_CONFIG_DIR")),
+    keys = {
+      { "<C-h>",
+        function() require("smart-splits").move_cursor_left() end, { desc = "smart-splits move cursor left" } },
+      { "<C-j>",
+        function() require("smart-splits").move_cursor_down() end, { desc = "smart-splits move cursor down" } },
+      { "<C-k>",
+        function() require("smart-splits").move_cursor_up() end, { desc = "smart-splits move cursor up" } },
+      { "<C-l>",
+        function() require("smart-splits").move_cursor_right() end, { desc = "smart-splits move cursor right" } },
+      { "<C-\\>",
+        function() require("smart-splits").move_cursor_previous() end, { desc = "smart-splits move cursor previous" } },
+    },
+  },
+
+  {
+    "mrjones2014/legendary.nvim",
+    version = ">=2.0.0",
+    dependencies = { 'kkharji/sqlite.lua' },
+    priority = 10000,
   },
 }
