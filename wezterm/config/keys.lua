@@ -90,8 +90,8 @@ function module.apply_to_config(config)
     -- More pane-related niceties.
     { key = "f", mods = "LEADER", action = act.TogglePaneZoomState },
     { key = "f", mods = keymod, action = act.TogglePaneZoomState },
-    { key = "n", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-    { key = "n", mods = keymod, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = "n", mods = "LEADER", action = act.SplitPane({ direction = "Right", size = { Percent = 37 } }) },
+    { key = "n", mods = keymod, action = act.SplitPane({ direction = "Right", size = { Percent = 37 } }) },
     { key = "n", mods = alt_keymod, action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
     { key = "d", mods = keymod, action = act.CloseCurrentPane({ confirm = false }) },
 
