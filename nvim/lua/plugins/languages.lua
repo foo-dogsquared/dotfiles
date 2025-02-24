@@ -11,4 +11,7 @@ return {
 
   -- Zig
   "ziglang/zig.vim",
+
+  -- Justfiles
+  "NoahTheDuke/vim-just",
 }
