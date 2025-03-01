@@ -45,7 +45,7 @@ def __fzf_cd --wrapped [...rest: string] {
     } {
         if "FZF_ALT_C_COMMAND" in $env {
             let command = $env.FZF_ALT_C_COMMAND
-            run-external ($command | get 0) ...($command | range 1..) | fzf ...$env.FZF_DEFAULT_OPTS ...$rest
+            run-external ($command | get 0) ...($command | slice 1..) | fzf ...$env.FZF_DEFAULT_OPTS ...$rest
         } else {
             fzf ...$env.FZF_DEFAULT_OPTS --walker=dir,hidden,follow ...$rest
         }
