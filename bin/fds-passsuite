@@ -1,17 +1,32 @@
 #!/usr/bin/env nu
 
+# This script also accepts several environment variables overriding the default
+# arguments in each of the subcommand.
+#
+# * FDS_PASSSUITE_PASSPHRASE_ARGS for passphrase generation.
+# * FDS_PASSSUITE_PASSWORD_ARGS for password generation.
+# * FDS_PASSSUITE_DICEWARE_ARGS for username generation.
+
 # Generate a passphrase.
 def "main passphrase" --wrapped [
   ...rest: string # Additional arguments to be added to the passphrase generation command.
 ] {
-  gopass pwgen --xkcd --lang en --one-per-line --xkcdnumbers --xkcdcapitalize ...$rest | head -n1
+  with-env {
+    FDS_PASSSUITE_PASSPHRASE_ARGS: ($env.FDS_PASSSUITE_PASSPHRASE_ARGS? | default [ --xkcd --lang en --one-per-line --xkcdnumbers --xkcdcapitalize ])
+  } {
+    gopass pwgen ...$env.FDS_PASSSUITE_PASSPHRASE_ARGS ...$rest | head -n1
+  }
 }
 
 # Generate a password.
 def "main password" --wrapped [
   ...rest # Additional arguments to be added to the password generation command.
 ] {
-  gopass pwgen --symbols --one-per-line ...$rest | head -n1
+  with-env {
+    FDS_PASSSUITE_PASSWORD_ARGS: ($env.FDS_PASSSUITE_PASSWORD_ARGS? | default [ --symbols --one-per-line ])
+  } {
+    gopass pwgen ...$env.FDS_PASSSUITE_PASSWORD_ARGS ...$rest | head -n1
+  }
 }
 
 # Generate a randomly-generated base64-encoded string.
@@ -24,6 +39,17 @@ def "main encode-argon2" [
   string # The string to be encoded.
 ] {
   $string | argon2 (openssl rand -base64 32) -e -id -k 65540 -t 3 -p 4
+}
+
+# Generate a predictable username.
+def "main username" --wrapped [
+  ...rest # Additional arguments to be added to the username generation password.
+] {
+  with-env {
+    FDS_PASSSUITE_DICEWARE_ARGS: ($env.FDS_PASSSUITE_DICEWARE_ARGS? | default [ --specials 0 --num 3 ])
+  } {
+    diceware ...$env.FDS_PASSSUITE_DICEWARE_ARGS ...$rest
+  }
 }
 
 # A toolbelt for anything secret-related. It can be used to generate a
