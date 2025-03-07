@@ -68,7 +68,7 @@ folder with its buffer filename."
         org-roam-directory +wiki-directory
         org-roam-dailies-directory (f-join org-roam-directory "daily")
         org-roam-db-location (f-join org-roam-directory "org-roam.db")
-        org-agenda-files '(,(f-join org-roam-directory "inbox"))
+        org-agenda-files `(,(f-join org-roam-directory "inbox"))
 
         ;; Setting up the bibliography-related stuff for this notebook.
         citar-bibliography `(,(f-join +wiki-directory "references.bib"))
