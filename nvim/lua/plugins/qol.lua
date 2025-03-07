@@ -35,6 +35,18 @@ return {
         which_key = pcall(require, "which-key"),
       },
       words = { enabled = true },
+      zen = {
+        enabled = true,
+        zoom = {
+          toggles = {
+            dim = true,
+            git_signs = false,
+            diagnostics = false,
+            inlay_hints = false,
+          },
+          win = { width = 0, },
+        },
+      },
     },
     keys = {
       {
@@ -57,6 +69,13 @@ return {
           Snacks.lazygit.log_file()
         end,
         desc = "Open current file history in lazygit",
+      },
+      {
+        "<leader>Z",
+        function()
+          Snacks.zen()
+        end,
+        desc = "Toggle zen mode",
       },
     },
     init = function()
