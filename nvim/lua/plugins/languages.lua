@@ -14,4 +14,7 @@ return {
 
   -- Justfiles
   "NoahTheDuke/vim-just",
+
+  -- Tridactyl
+  "tridactyl/vim-tridactyl",
 }
