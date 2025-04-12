@@ -25,3 +25,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("settings").setup()
 require("lazy").setup("plugins")
+
+if vim.g.neovide then
+  require("foodogsquared/neovide").setup()
+end
