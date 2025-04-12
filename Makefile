@@ -13,14 +13,14 @@ reinstall:
 clean:
 	./vtsm --manifest ".vtsm/${MANIFEST}.json" --commands "stow --delete {package} --target {location}" $(FLAGS)
 
-.PHONY: update
-update:
+.PHONY: update-flake
+update-flake:
 	nix flake update --commit-lock-file --commit-lockfile-summary "flake.lock: update inputs"
 
 .PHONY: dry-run
 dry-run:
 	./vtsm --manifest ".vtsm/${MANIFEST}.json" --commands "stow --stow {package} --target {location} --simulate"
 
-.PHONY: nvim-lockfile-update
-nvim-lockfile-update:
+.PHONY: update-nvim-lockfile
+update-nvim-lockfile:
 	git checkout -- ./nvim/lazy-lock.json && nvim --headless "+Lazy! sync" "+qa" && git commit --message "nvim: update lazy.nvim lockfile as of $(shell date "+%F")" -- ./nvim/lazy-lock.json
